@@ -24,6 +24,12 @@ The "Facts and data" section of BRIEF.md is the authority on sources. This file 
 | [ESPN](https://www.espn.com) | Current team rosters |
 | Each team's official website | Official current rosters, to cross-check ESPN. Their terms on scraping and AI use must be checked before the app connects to them; until then, check by hand. |
 
+## News ticker (to choose)
+
+| Source | Used for |
+| --- | --- |
+| Not chosen yet (ESPN is a candidate) | Real-time NBA and NFL headlines for the crawl along the bottom of the screen. Check the source's terms on scraping and AI use before connecting it. |
+
 ## Manual only (check numbers by hand; don't connect these to the app)
 
 From the brief:

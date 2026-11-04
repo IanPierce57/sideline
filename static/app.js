@@ -8,25 +8,26 @@ const MAX_BUBBLE_CHARS = 170;   // longer lines are split into two subtitle card
 const $ = (id) => document.getElementById(id);
 
 const PEOPLE = {
+  // Card text is background and personality only. How each one argues shows up on air.
   hal: {
     name: "Hal Brennan", role: "Moderator",
-    blurb: "Thirty years of overnight call-in radio. He lets the argument run, then brings everyone back.",
-    lean: "Takes the calls. Never takes a side.",
+    blurb: "Hosted overnight call-in sports radio for thirty years before Sideline. Calm, warm, and unhurried, he sounds like he's heard every argument before and still enjoys this one.",
+    before: "Before Sideline: overnight radio",
   },
   royce: {
     name: "Royce Stanhope", role: "Host · The Columnist",
-    blurb: "Forty years in press boxes. He wins with the story, and one number you'll remember.",
-    lean: "Leans on the eye test and the big moment.",
+    blurb: "Grew up in Irving, Texas, close enough to the old Cowboys stadium to hear the crowd on Sundays. Forty years a newspaper columnist, a Cowboys fan for life, and the best-dressed man on set.",
+    before: "Before Sideline: newspaper columnist",
   },
   deacon: {
     name: "Deacon Pettiford", role: "Host · Hall of Famer",
-    blurb: "A ringless Hall of Fame linebacker who taught himself the math. Show him the number.",
-    lean: "Leans on analytics.",
+    blurb: "Raised by his great-aunt Inez on a South Carolina tobacco farm. Thirteen seasons at linebacker for Kansas City and a spot in the Hall of Fame, but never a ring. Direct, a little loud, and never without a toothpick.",
+    before: "Before Sideline: Chiefs linebacker",
   },
   lonnie: {
     name: "Lonnie Fairweather", role: "Host · Former Front Office",
-    blurb: "Fifteen years arguing against every big decision before teams made it. Always lands on a call.",
-    lean: "Leans on the cap sheet and the roster.",
+    blurb: "The youngest of six in Duluth, Minnesota, where every sibling picked a different team. Left college eleven credits short for an unpaid NBA video-room job, then spent fifteen years in front offices. Warm, curious, and the calmest man at the desk.",
+    before: "Before Sideline: NBA and NFL front offices",
   },
 };
 const CALLER_TYPES = {
@@ -141,13 +142,6 @@ function showIdle() {
   $("show-tag").textContent = "Sideline";
   setNameplate("Hal Brennan", "Moderator");
   showBubble("hal", "Lines are open. Ask the desk anything NBA or NFL, and these three will argue it out.");
-  setTicker([
-    ["Tonight", "Ask the desk any NBA or NFL topic, current or all-time"],
-    ["Royce Stanhope", "The eye test and the big moment"],
-    ["Deacon Pettiford", "Show me the number"],
-    ["Lonnie Fairweather", "What's the actual decision?"],
-    ["Hal Brennan", "Lines are open"],
-  ]);
 }
 
 let preshowTimer = null;
@@ -166,11 +160,6 @@ function showPreshow(topic) {
   setRight("PRE-SHOW", "On air in about a minute");
   setCamera("caller", "Line 1", "Caller<br><span class=\"gold\">Holding</span>");
   $("show-tag").textContent = "Pre-show";
-  setTicker([
-    ["Pre-show", "The desk is getting ready"],
-    ["Line 1", "Your caller is holding"],
-    ["Up next", topic],
-  ]);
 }
 Studio.onScene((scene) => {
   setNameplate(scene.name, scene.title);
@@ -283,13 +272,6 @@ async function play(newScript) {
   setCenter(script.topic.toUpperCase(), `Line 1 · ${script.caller.name} from ${script.caller.city}`);
   setRight(format, `Caller: ${script.caller.name}, ${script.caller.city}`);
   $("show-tag").textContent = format.replace("?", "");
-  setTicker([
-    ["Tonight", script.topic],
-    ["Format", format],
-    ["On the line", `${script.caller.name} from ${script.caller.city}, ${(CALLER_TYPES[script.caller.type] || "caller").toLowerCase()}`],
-    ["At the desk", "Royce Stanhope · Deacon Pettiford · Lonnie Fairweather"],
-    ["Moderator", "Hal Brennan"],
-  ]);
   $("controls").hidden = false;
   playCard();
 }
@@ -366,8 +348,17 @@ for (const id of ["hal", "royce", "deacon", "lonnie"]) {
   Studio.portrait(portrait, id);
   card.append(portrait);
   card.insertAdjacentHTML("beforeend",
-    `<h3>${person.name}</h3><div class="role">${person.role}</div><p>${person.blurb}</p><div class="lean">${person.lean}</div>`);
+    `<h3>${person.name}</h3><div class="role">${person.role}</div><p>${person.blurb}</p><div class="lean">${person.before}</div>`);
   $("cast-grid").append(card);
 }
+
+// The ticker at the bottom is the news crawl. It will carry real-time NBA and NFL
+// headlines once the news source is built (see BRIEF.md, Screen and sound).
+// Until then it shows a placeholder, never made-up headlines.
+const NEWS_PLACEHOLDER = [
+  ["Sideline", "Real-time NBA and NFL headlines will run here"],
+  ["Lines are open", "Ask the desk any NBA or NFL topic, current or all-time"],
+];
+setTicker(NEWS_PLACEHOLDER);
 
 showIdle();

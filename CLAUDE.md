@@ -29,6 +29,10 @@ Step 1 has its own rules in `generate.py` (`STEP_1_RULES`). They override the bi
 
 Every character's look is in their bible ("## Look"). The pixel studio follows those; don't change a look without asking.
 
+News ticker (decided Nov 4): the crawl along the bottom of the screen will carry real-time NBA and NFL headlines from a source checked against its terms. Until then it shows a placeholder (`NEWS_PLACEHOLDER` in `static/app.js`); never fill it with made-up headlines.
+
+Cast cards on the page describe background and personality only, not how anyone argues.
+
 Roster check (decided Nov 4): rosters come from ESPN, cross-checked against each team's official website. Check those sites' terms on scraping and AI use before connecting to them.
 
 ## How to run it
