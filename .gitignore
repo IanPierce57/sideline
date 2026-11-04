@@ -1,0 +1,11 @@
+# Your API key lives here. Never commit it.
+.env
+
+# Python's private copy of installed packages
+.venv/
+__pycache__/
+
+# Generated debate scripts (they stay on your computer)
+runs/
+
+.DS_Store
