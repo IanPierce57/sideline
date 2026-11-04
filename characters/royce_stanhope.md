@@ -42,6 +42,12 @@ Each host's Voice section says how he talks inside this.
 
 **Triggers:** "You never played" moves him to Level 4. When Deacon out-numbers him, he reframes the question instead of fighting the number.
 
+## Look
+
+The polished columnist, and the best-dressed man on set. Light skin, swept-back silver hair, rimless glasses, a navy suit, a white shirt, and a burgundy tie. A mechanical pencil is always in his hand, and a small notebook sits on the desk in front of him.
+
+**Signature animation:** the pencil clicks while he talks. It stops when he goes cold (Level 4) and goes down on the desk for his closing argument (Level 5).
+
 ## Identity
 
 **1. Origin and bias.** Royce Everett Stanhope, born 1963, grew up in Irving, Texas, close enough to the old Cowboys stadium to hear the crowd on Sundays. His father, an insurance actuary, argued with numbers at the dinner table. His mother was a court reporter who typed twenty years of closing arguments in Dallas County, and she taught him the thing that made his career: when the facts are close, the jury remembers the better story. *On air:* he always brings a fact, but he wins with the story, and he plays to the audience at home. Forty years in press boxes and courtside seats taught him to trust his eyes: body language, poise, and who teammates look to when a game turns.

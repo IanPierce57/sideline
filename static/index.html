@@ -4,52 +4,116 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>The Receipts</title>
-  <style>
-    /* Deliberately plain. The pixel studio replaces all of this in a later step. */
-    [hidden] { display: none !important; }
-    body { font-family: system-ui, sans-serif; max-width: 760px; margin: 40px auto; padding: 0 16px; background: #fff; color: #111; }
-    form { display: flex; gap: 8px; }
-    #topic { flex: 1; font-size: 16px; padding: 8px; }
-    button { font-size: 16px; padding: 8px 14px; }
-    #status { margin: 16px 0; color: #555; min-height: 1.4em; }
-    #status.error { color: #b00020; }
-    #banner { font-weight: bold; margin-top: 24px; }
-    #stage { border: 2px solid #111; min-height: 140px; padding: 20px; margin-top: 8px; }
-    #speaker { font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; }
-    #delivery { color: #777; font-size: 14px; margin-left: 6px; }
-    #line { font-size: 22px; line-height: 1.4; margin-top: 8px; }
-    #controls { margin-top: 8px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-    #progress { color: #555; font-size: 14px; margin-left: auto; }
-    #past { margin-top: 32px; font-size: 14px; }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>The Receipts</h1>
+  <header class="masthead">
+    <div class="logo"><span class="logo-tag">THE</span> RECEIPTS</div>
+    <div class="masthead-sub">NBA and NFL debate. Every host brings 'em.</div>
+  </header>
 
-  <form id="form">
-    <input id="topic" placeholder="Type an NBA or NFL topic" autocomplete="off" required>
-    <button id="go" type="submit">Go</button>
-  </form>
+  <!-- The TV: pixel studio on the canvas, broadcast graphics on top -->
+  <main class="tv-frame">
+    <div class="tv" id="tv">
+      <canvas id="studio" aria-label="The Receipts studio"></canvas>
 
-  <div id="status"></div>
+      <!-- Back-wall monitors -->
+      <div class="monitor left">
+        <div class="mon-head" id="cam-name">HAL BRENNAN</div>
+        <div class="mon-body">
+          <canvas class="portrait" id="cam-portrait" width="32" height="32"></canvas>
+          <div class="mon-info" id="cam-info">Moderator<br><span class="gold">Lines open</span></div>
+        </div>
+      </div>
+      <div class="monitor center">
+        <div class="mon-brand">&middot; THE RECEIPTS &middot;</div>
+        <div class="mon-topic" id="center-topic">ASK THE DESK</div>
+        <div class="mon-foot" id="center-foot">NBA &middot; NFL &middot; current or all-time</div>
+      </div>
+      <div class="monitor right">
+        <div class="mon-format" id="right-format">TONIGHT</div>
+        <div class="mon-rule"></div>
+        <div class="mon-source" id="right-source">Every host brings receipts</div>
+      </div>
 
-  <div id="banner" hidden></div>
-  <div id="stage" hidden>
-    <div><span id="speaker"></span><span id="delivery"></span></div>
-    <div id="line"></div>
+      <div class="bubble" id="bubble"><p id="bubble-text"></p><span class="tail" id="tail"></span></div>
+
+      <div class="show-tag" id="show-tag">The Receipts</div>
+      <div class="nameplate">
+        <span class="nameplate-name" id="nameplate-name">Hal Brennan</span>
+        <span class="nameplate-title" id="nameplate-title">Moderator</span>
+      </div>
+      <div class="bug">
+        <span class="bug-show">The Receipts</span>
+        <span class="bug-live" id="bug-live">OFF AIR</span>
+        <span class="bug-clock" id="bug-clock">--:--</span>
+      </div>
+
+      <div class="ticker">
+        <span class="ticker-label">RECEIPTS</span>
+        <div class="ticker-track"><div class="ticker-move" id="ticker"></div></div>
+      </div>
+    </div>
+  </main>
+
+  <div class="controls" id="controls" hidden>
+    <button type="button" class="pixel-btn small" id="pause">Pause</button>
+    <button type="button" class="pixel-btn small" id="replay">Replay</button>
+    <span class="progress" id="progress"></span>
   </div>
-  <div id="controls" hidden>
-    <button id="pause" type="button">Pause</button>
-    <button id="replay" type="button">Replay</button>
-    <span id="progress"></span>
+
+  <div class="lower">
+    <!-- Where you type the topic -->
+    <section class="desk-console">
+      <div class="console-head">
+        <span class="console-tag">CALL-IN LINE</span>
+        <h2 class="console-title">Ask the desk</h2>
+        <span class="lines" id="lines"><i class="lamp"></i><span id="lines-text">Lines are open</span></span>
+      </div>
+      <form id="form" class="console-form">
+        <label for="topic" class="sr-only">Your NBA or NFL topic</label>
+        <input id="topic" placeholder="Type any NBA or NFL topic..." autocomplete="off" maxlength="200" required>
+        <button id="go" type="submit" class="pixel-btn red">Ask the desk</button>
+      </form>
+      <div class="examples">
+        <span class="examples-label">TRY:</span>
+        <button type="button" class="chip">Is Patrick Mahomes the best quarterback of all time?</button>
+        <button type="button" class="chip">Should the Lakers buy or sell before the trade deadline?</button>
+        <button type="button" class="chip">Who wins the Super Bowl this season?</button>
+      </div>
+      <p class="console-status" id="status" role="status"></p>
+    </section>
+
+    <!-- Sources: fills in once the research step exists -->
+    <section class="sources">
+      <div class="sources-head">
+        <h2>SOURCES</h2><span class="aside">(the receipts)</span>
+        <span class="right">Every number is checkable</span>
+      </div>
+      <div class="source-row">
+        <div class="who">THE RECEIPTS</div>
+        <div class="what">Sources for each segment show up here while it's on air.</div>
+      </div>
+      <div class="source-row">
+        <div class="who">STEP 1</div>
+        <div class="what">For now the hosts argue from general claims, with no stats, so there's nothing to cite yet.</div>
+      </div>
+    </section>
   </div>
 
-  <div id="past">
-    <label>Replay a saved script:
-      <select id="runs"><option value="">(choose one)</option></select>
-    </label>
-  </div>
+  <!-- Meet the desk -->
+  <section class="cast">
+    <div class="cast-head">
+      <h2>The Desk</h2>
+      <p>One moderator, three hosts, three kinds of evidence.</p>
+    </div>
+    <div class="cast-grid" id="cast-grid"></div>
+  </section>
 
+  <script src="studio.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

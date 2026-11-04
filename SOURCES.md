@@ -17,6 +17,13 @@ The "Facts and data" section of BRIEF.md is the authority on sources. This file 
 | [ESPN](https://www.espn.com) | Second source for basic stats |
 | [NFL.com](https://www.nfl.com) | Official NFL stats and injury reports. Check by hand. |
 
+## Rosters (topic check)
+
+| Source | Used for |
+| --- | --- |
+| [ESPN](https://www.espn.com) | Current team rosters |
+| Each team's official website | Official current rosters, to cross-check ESPN. Their terms on scraping and AI use must be checked before the app connects to them; until then, check by hand. |
+
 ## Manual only (check numbers by hand; don't connect these to the app)
 
 From the brief:

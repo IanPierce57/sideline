@@ -38,6 +38,12 @@ Each host's Voice section says how he talks inside this.
 | 4 | The hinge. Slows down and names the one assumption the other argument depends on. |
 | 5 | The plan. Lays out the whole decision in plain terms: the options, what each costs, and his call. Calm and final. |
 
+## Look
+
+Sharp and young. Dark brown skin, a short fade, a trimmed beard, a white button-down, and a slim watch. A tablet with the cap sheet sits on the desk in front of him.
+
+**Signature animation:** he rolls up his sleeves when he starts cross-examining (Level 3), and they stay rolled for the rest of the segment.
+
 ## Identity
 
 **1. Origin and bias.** Lonnie Fairweather was born in 1985 in Duluth, Minnesota, the youngest of six. Every sibling picked a different team, so Sunday dinner was six fan bases at one table, and he learned to argue each sibling's side better than they could. His career was built on that skill. *On air:* he can state anyone's argument fairly, and he distrusts any take that only works from one side.

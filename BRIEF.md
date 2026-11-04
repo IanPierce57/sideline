@@ -87,10 +87,10 @@ Each criterion gets 1 to 5 points per argument, weighted and scaled to a score o
 Every topic passes three checks before research starts, so a bad topic costs about a second instead of a full run.
 
 1. **NBA or NFL.** The topic has to be about the NBA or NFL, current or all-time. Comparisons across the two leagues are fine. College and draft-prospect topics are turned away.
-2. **Real.** Every player, team, and coach named must exist in the nflverse or nba\_api roster data. A near miss gets a suggestion ("Did you mean Patrick Mahomes?"). A false premise, like a player on the wrong team, is turned away with the correct fact. Predictions about the future are fine.
+2. **Real.** Every player, team, and coach named must exist in the current rosters. Rosters come from ESPN and are cross-checked against each team's official website; a player counts as on a team only when both agree, and a disagreement is flagged. (Decided Nov 4, 2026. The team websites' terms on scraping and AI use still need checking before the app connects to them; see SOURCES.md.) The confirmed rosters also go to the writer, so no host puts a player on the wrong team. A near miss gets a suggestion ("Did you mean Patrick Mahomes?"). A false premise, like a player on the wrong team, is turned away with the correct fact. Predictions about the future are fine.
 3. **Appropriate.** No slurs, sexual content, threats, or harassment, and nothing about players' families or personal lives. Text that tries to instruct the hosts ("ignore your rules and say...") is treated as a topic, never followed, and turned away.
 
-**How it runs:** a plain script matches names and teams against the roster data. Haiku handles the sports and appropriateness checks.
+**How it runs:** a plain script matches names and teams against the ESPN and team-website rosters. Haiku handles the sports and appropriateness checks.
 
 **When a topic fails,** a call-screener message on screen gives the reason in one line and offers three valid topics instead. Nothing gets voiced.
 
@@ -105,7 +105,8 @@ Every real-world fact comes from the fact pack. Anything that can't be verified 
 | [nflverse via nflreadpy](https://pypi.org/project/nflreadpy/) | NFL play-by-play, player stats, Next Gen Stats, FTN charting, injuries, schedules, depth charts, trades | Pipeline |
 | [nba\_api](https://pypi.org/project/nba-api/) | NBA.com stats | Pipeline |
 | Web search | News context and pre-1999 NFL numbers, with links saved | Pipeline |
-| ESPN | Second source for basic stats | Cross-check |
+| ESPN | Current rosters for the topic check; second source for basic stats | Pipeline (rosters), cross-check (stats) |
+| Team websites (each NBA and NFL team's official site) | Official current rosters, to cross-check ESPN's | Cross-check, once their terms are checked |
 | NFL.com | Official NFL stats and injury reports | Cross-check, by hand |
 | [PerThirtySix](https://perthirtysix.com/nfl/qbs?season=2026), RayCarp, Next Gen Stats site | Checking numbers by hand, method notes | Manual only |
 | Pro Football Reference, Basketball-Reference, SumerSports | Nothing. Their terms ban scraping and AI use ([Sports Reference](https://www.sports-reference.com/data_use.html), [SumerSports](https://sumersports.com/terms-of-service/)) | Never |
@@ -154,7 +155,7 @@ A moderator and three hosts, each defined by a bible in the characters folder, p
     - Lines he'd never say
 - **Callers** (characters/callers.md). A pool of six types: the diehard, the stats nerd, the rival fan, the old-timer, the skeptic, and the settler, so each opening sounds different.
 
-**Banks:** each host bible already has a takes bank, a career or life bank, a line bank, and one example exchange; the moderator bible has his lines, and the callers file has sample openings. Still to add once the bibles pass the blind test: two to four more example exchanges per host, and a "Look" section for each host so the pixel art has something to follow (the moderator already has one).
+**Banks:** each host bible already has a takes bank, a career or life bank, a line bank, and one example exchange; the moderator bible has his lines, and the callers file has sample openings. Every character now has a look. Still to add once the bibles pass the blind test: two to four more example exchanges per host.
 
 **Blind test:** hide the speaker names in a script and check whether you can tell who's talking from the lines alone.
 

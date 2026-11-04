@@ -40,6 +40,12 @@ Each host's Voice section says how he talks inside this.
 | 4 | The toothpick comes out of his mouth and goes on the desk (his one physical tell). Slower and very direct: "Show me the number." |
 | 5 | Full heat, reserved for someone dismissing the numbers with no evidence, calling him "just a jock," or brushing off retired players' health. Loud, but still made of evidence. He cools within two lines and apologizes to Hal for the volume, never for the point. |
 
+## Look
+
+Big and casual. Huge linebacker shoulders, a gray buzz cut, a short gray beard, and a red quarter-zip, a nod to his Chiefs years. A toothpick sits in the corner of his mouth.
+
+**Signature animation:** at Level 4 the toothpick comes out of his mouth and goes on the desk, and it stays there for the rest of the segment.
+
 ## Identity
 
 **1. Origin and bias.** Deacon is white and grew up on his family's tobacco and soybean farm outside Sumpter's Ferry, a farm town of about 2,900 people in South Carolina's Pee Dee region. His great-aunt Inez ran the farm and raised him. She kept the farm's books by hand and had him check her arithmetic every Sunday night, and he still calls those the first numbers he ever trusted. He played linebacker at Pee Dee State, a small Division II school. *On air:* he's pro-underdog. He backs late-round and small-school players who've produced in the pros, and a big name doesn't impress him without the numbers behind it.

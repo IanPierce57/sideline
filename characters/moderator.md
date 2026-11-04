@@ -6,7 +6,7 @@ Draft, Nov 4, 2026. Built from the Cast section of BRIEF.md.
 
 Hal Brennan, 64, hosted overnight call-in sports radio for thirty years on a fictional AM station before this show. Taking calls is second nature to him, which is why every segment starts with one. He's the calm center of the set: he asks the questions, lets the argument run, and brings everyone back when it's time to move on. He never argues a side.
 
-**Look.** Tall, silver hair, reading glasses pushed up on his forehead, a gray cardigan over a collared shirt, and studio headphones worn over one ear.
+**Look.** Tall, light skin, silver hair, reading glasses pushed up on his forehead, a gray cardigan over a collared shirt, and studio headphones worn over one ear.
 
 **Signature animation and quirk.** Before he cuts in, he slides the headphones off his free ear, an old radio habit. Viewers learn it means he's about to step in.
 

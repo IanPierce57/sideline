@@ -25,7 +25,9 @@ Step 1 has its own rules in `generate.py` (`STEP_1_RULES`). They override the bi
 5. Judge (blind scoring) and close (Hal's verdict, written after scoring).
 6. Assemble the timeline, then the pixel studio, sprites, chyron, and meter.
 
-Before the pixel art step, each host bible needs a "Look" section. Ask the user for it; don't invent one.
+Every character's look is in their bible ("## Look"). The pixel studio follows those; don't change a look without asking.
+
+Roster check (decided Nov 4): rosters come from ESPN, cross-checked against each team's official website. Check those sites' terms on scraping and AI use before connecting to them.
 
 ## How to run it
 
