@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Receipts</title>
+  <style>
+    /* Deliberately plain. The pixel studio replaces all of this in a later step. */
+    body { font-family: system-ui, sans-serif; max-width: 760px; margin: 40px auto; padding: 0 16px; background: #fff; color: #111; }
+    form { display: flex; gap: 8px; }
+    #topic { flex: 1; font-size: 16px; padding: 8px; }
+    button { font-size: 16px; padding: 8px 14px; }
+    #status { margin: 16px 0; color: #555; min-height: 1.4em; }
+    #status.error { color: #b00020; }
+    #banner { font-weight: bold; margin-top: 24px; }
+    #stage { border: 2px solid #111; min-height: 140px; padding: 20px; margin-top: 8px; }
+    #speaker { font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; }
+    #delivery { color: #777; font-size: 14px; margin-left: 6px; }
+    #line { font-size: 22px; line-height: 1.4; margin-top: 8px; }
+    #controls { margin-top: 8px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    #progress { color: #555; font-size: 14px; margin-left: auto; }
+    #past { margin-top: 32px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>The Receipts</h1>
+
+  <form id="form">
+    <input id="topic" placeholder="Type an NBA or NFL topic" autocomplete="off" required>
+    <button id="go" type="submit">Go</button>
+  </form>
+
+  <div id="status"></div>
+
+  <div id="banner" hidden></div>
+  <div id="stage" hidden>
+    <div><span id="speaker"></span><span id="delivery"></span></div>
+    <div id="line"></div>
+  </div>
+  <div id="controls" hidden>
+    <button id="pause" type="button">Pause</button>
+    <button id="replay" type="button">Replay</button>
+    <span id="progress"></span>
+  </div>
+
+  <div id="past">
+    <label>Replay a saved script:
+      <select id="runs"><option value="">(choose one)</option></select>
+    </label>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

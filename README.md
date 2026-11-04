@@ -1,0 +1,78 @@
+# The Receipts
+
+Type an NBA or NFL topic, and AI writes a 3-to-5-minute debate between a moderator (Hal) and three hosts (Royce, Deacon, Lonnie), then plays it as subtitles. The full spec is in [BRIEF.md](BRIEF.md); the characters are in [characters/](characters/).
+
+**Current step: 1 of the pipeline (an ugly version you can see working).** Scripts have no real stats yet, no scoring, and no pixel art.
+
+## One-time setup: add your API key
+
+Your key is a password for the Claude API. It goes in a file called `.env` that git never saves, so it stays on your computer only.
+
+1. Get a key at [console.anthropic.com](https://console.anthropic.com) under **API Keys**. It starts with `sk-ant-`.
+2. In Terminal, open the key file in TextEdit:
+
+   ```bash
+   open -e ~/Documents/the-receipts/.env
+   ```
+
+3. The last line reads `ANTHROPIC_API_KEY=`. Paste your key right after the `=`, with no spaces or quotes, so it looks like `ANTHROPIC_API_KEY=sk-ant-...`.
+4. Save (Command-S) and close TextEdit.
+
+Never paste the key into a chat, the page, or any other file.
+
+## Run it
+
+```bash
+~/Documents/the-receipts/start.sh
+```
+
+The first time, it spends about a minute installing Python packages. Then it opens http://localhost:8000 in your browser. Type a topic, press **Go**, and wait about a minute while it writes. The script then plays one line at a time, and each line stays up about as long as it takes to say it (150 words per minute).
+
+To stop it, click the Terminal window and press **Control-C**.
+
+The **Replay a saved script** menu at the bottom plays any earlier run without calling the API again.
+
+## Where scripts are saved
+
+Every run gets its own folder named by date and time, like `runs/2026-11-04_14-30-05/script.json`. Each file holds:
+
+- `topic`: what you typed
+- `format`: `debate`, `buy_or_sell`, or `prediction` (the AI picks)
+- `caller`: the caller type, first name, and city
+- `lines`: every line, with `line` (number), `speaker`, `speaker_name`, `text`, `delivery` (calm, heated, laughing, and so on), and `argument` (which argument it belongs to; blank for the caller and Hal)
+- `word_count`, `estimated_minutes`, and `warnings` (plain checks for length, stray numbers, and leftover placeholders)
+- `meta`: the model, how long it took, and how many tokens it used
+
+The `runs/` folder isn't saved to git, so delete old runs whenever you like.
+
+## Write a script without the page
+
+```bash
+cd ~/Documents/the-receipts && .venv/bin/python generate.py "Who wins the Super Bowl this season?"
+```
+
+It prints the script in Terminal and saves it to `runs/` the same way.
+
+## Files
+
+| File | What it is |
+| --- | --- |
+| `BRIEF.md` | The project spec. The rules everything else follows. |
+| `SOURCES.md` | Every stats source, and whether the app may use it. |
+| `characters/` | One bible per character, plus `callers.md`. |
+| `generate.py` | Builds the prompt from the brief and bibles, asks Claude for the script, checks it, and saves it. |
+| `server.py` | The small local web server that the page talks to. |
+| `static/index.html`, `static/app.js` | The plain webpage: topic box, Go button, subtitle player. |
+| `start.sh` | The one command that sets up and starts everything. |
+| `requirements.txt` | The Python packages the project needs. |
+| `.env.example` | A blank copy of the key file. Your real key goes in `.env`. |
+| `originals/` | The PDFs and files these Markdown copies were made from. |
+| `CLAUDE.md` | Instructions for future Claude Code sessions. |
+
+## If Python is missing
+
+This Mac already has Python 3.11. On another computer, download Python 3 from [python.org/downloads](https://www.python.org/downloads/), run the installer, then run `start.sh` again.
+
+## Cost
+
+Each script is one Sonnet call. The bibles are about 25,000 tokens and get cached, so repeat runs within a few minutes cost less. Each run's real token counts are saved in its `meta` section.
