@@ -30,6 +30,7 @@ const PEOPLE = {
     before: "Before Sideline: NBA and NFL front offices",
   },
 };
+const HOSTS = ["royce", "deacon", "lonnie"];
 const CALLER_TYPES = {
   diehard: "The diehard", stats_nerd: "The stats nerd", rival_fan: "The rival fan",
   old_timer: "The old-timer", skeptic: "The skeptic", settler: "The settler",
@@ -41,6 +42,7 @@ const FORMATS = { debate: "DEBATE", buy_or_sell: "BUY OR SELL?", prediction: "PR
 function setNameplate(name, title) {
   $("nameplate-name").textContent = name;
   $("nameplate-title").textContent = title;
+  $("phone-name").textContent = name;          // subtitles under the TV on small screens
 }
 
 function setCamera(id, name, info) {
@@ -91,7 +93,9 @@ function showBubble(anchorId, text, revealSeconds = 0) {
     tail.style.left = "";
   } else {
     const width = 46;
-    const left = Math.min(Math.max(xPct - width / 2, 1.5), 98.5 - width);
+    // while a stat is up on the right-hand monitor, keep the bubble out of its way
+    const rightEdge = $("right-stat").hidden ? 98.5 : 69;
+    const left = Math.min(Math.max(xPct - width / 2, 1.5), rightEdge - width);
     bubble.style.left = `${left}%`;
     bubble.style.top = "auto";
     bubble.style.bottom = `${((Studio.size.H - y) / Studio.size.H) * 100 + 2.5}%`;
@@ -103,12 +107,13 @@ function showBubble(anchorId, text, revealSeconds = 0) {
 
 function typeText(text, seconds) {
   clearInterval(typing);
-  const p = $("bubble-text");
-  if (!seconds) { p.textContent = text; return; }
+  const targets = [$("bubble-text"), $("phone-text")];
+  const write = (t) => { for (const el of targets) el.textContent = t; };
+  if (!seconds) { write(text); return; }
   const started = performance.now();
   typing = setInterval(() => {
     const k = Math.min(1, (performance.now() - started) / (seconds * 1000));
-    p.textContent = text.slice(0, Math.ceil(text.length * k));
+    write(text.slice(0, Math.ceil(text.length * k)));
     if (k >= 1) clearInterval(typing);
   }, 30);
 }
@@ -131,11 +136,108 @@ function setOnAir(on) {
   $("bug-live").classList.toggle("on", on);
 }
 
+// ---------- Stat chyron, score meter, and end card ----------
+
+// A stat from the fact pack: { value, label, definition, source, asOf }.
+function showChyron(stat, sample) {
+  $("stat-value").textContent = stat.value;
+  $("stat-label").textContent = stat.label;
+  $("stat-def").textContent = stat.definition;
+  $("stat-foot").textContent = `Source: ${stat.source} · ${stat.asOf}`;
+  $("stat-sample").hidden = !sample;
+  $("right-default").hidden = true;
+  const layer = $("right-stat");
+  layer.hidden = false;
+  layer.style.animation = "none"; void layer.offsetWidth; layer.style.animation = "";   // replay the pop-in
+}
+function hideChyron() {
+  $("right-stat").hidden = true;
+  $("right-default").hidden = false;
+}
+
+// Scores out of 100, e.g. { royce: 66, deacon: 74 }. Hosts not listed keep their score.
+let scores = {};
+function setScores(update, sample) {
+  Object.assign(scores, update);
+  $("scorecard").hidden = false;
+  $("score-sample").hidden = !sample;
+  const best = Math.max(...HOSTS.map((h) => scores[h] ?? -1));
+  for (const host of HOSTS) {
+    const value = scores[host];
+    $(`num-${host}`).textContent = value == null ? "--" : String(Math.round(value));
+    $(`bar-${host}`).style.width = value == null ? "0" : `${value}%`;
+    $(`num-${host}`).parentElement.classList.toggle("lead", value != null && value === best);
+  }
+}
+function hideScores() { scores = {}; $("scorecard").hidden = true; }
+
+function showEndCard() {
+  const sample = !!script.sample;
+  $("end-sample").hidden = !sample;
+  $("end-topic").textContent = script.topic;
+  const rows = $("end-rows");
+  rows.innerHTML = "";
+  for (const host of HOSTS) {
+    // each host's last line is his final answer
+    const last = [...script.lines].reverse().find((line) => line.speaker === host);
+    if (!last) continue;
+    let text = spokenText(last.text);
+    if (text.length > 150) text = `${text.slice(0, 147).trim()}...`;
+    const row = document.createElement("div");
+    row.className = "end-row";
+    const face = document.createElement("canvas");
+    face.width = 32; face.height = 32;
+    Studio.portrait(face, host);
+    row.append(face);
+    row.insertAdjacentHTML("beforeend", `<div><b>${PEOPLE[host].name}</b><span>${escapeHtml(text)}</span></div>`);
+    rows.append(row);
+  }
+  const sources = script.sources || [];
+  $("end-sources").textContent = sources.length
+    ? `Sources: ${sources.join(" · ")}`
+    : "Sources: none this segment. No stats yet, so nothing to cite.";
+  $("endcard").hidden = false;
+}
+function hideEndCard() { $("endcard").hidden = true; }
+
+function clearGraphics() { hideChyron(); hideScores(); hideEndCard(); }
+
+// ---------- Desk-slam sound (made in code, no audio file) ----------
+
+let soundOn = true;
+let audio = null;
+function thump() {
+  if (!soundOn) return;
+  audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+  const now = audio.currentTime;
+  const osc = audio.createOscillator();
+  const gain = audio.createGain();
+  osc.type = "square";
+  osc.frequency.setValueAtTime(120, now);
+  osc.frequency.exponentialRampToValueAtTime(38, now + 0.18);
+  gain.gain.setValueAtTime(0.35, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+  osc.connect(gain).connect(audio.destination);
+  osc.start(now);
+  osc.stop(now + 0.26);
+}
+Studio.onSlam(() => {
+  const tv = $("tv");
+  tv.classList.remove("shake"); void tv.offsetWidth; tv.classList.add("shake");
+  thump();
+});
+$("sound").addEventListener("click", () => {
+  soundOn = !soundOn;
+  $("sound").textContent = soundOn ? "Sound: on" : "Sound: off";
+  $("sound").setAttribute("aria-pressed", String(soundOn));
+});
+
 // ---------- The screens: idle, pre-show, countdown, live, done ----------
 
 function showIdle() {
   Studio.setMode("idle");
   setOnAir(false);
+  clearGraphics();
   setCenter("ASK THE DESK", "NBA · NFL · current or all-time");
   setRight("TONIGHT", "NBA · NFL · call-in debate");
   setCamera("hal", "Hal Brennan", "Moderator<br><span class=\"gold\">Lines open</span>");
@@ -147,7 +249,8 @@ function showIdle() {
 let preshowTimer = null;
 function showPreshow(topic) {
   stopPlayback();
-  $("controls").hidden = true;
+  clearGraphics();
+  setPlayButtons(false);
   Studio.setMode("preshow");
   setOnAir(false);
   const started = Date.now();
@@ -184,13 +287,17 @@ function countdown() {
   });
 }
 
+let endTimer = null;
 function showDone() {
   Studio.setMode("done");
+  hideChyron();
   setCenter("THAT'S THE BOARD", "Ask the desk another one");
-  setTimeout(() => setOnAir(false), 1500);
+  setNameplate("Hal Brennan", "That's the board");
+  typeText("That's the board.", 0);
   setLines("", "Lines are open");
   setStatus("That's the board. Ask the desk another one.");
   $("progress").textContent = "Finished";
+  endTimer = setTimeout(() => { setOnAir(false); showEndCard(); }, 1200);
 }
 
 // ---------- Playing a script ----------
@@ -225,7 +332,7 @@ function buildCards(lines) {
     }
     if (current || !chunks.length) chunks.push(current);
     const isCutIn = line.speaker === "hal" && hostHasSpoken;
-    if (["royce", "deacon", "lonnie"].includes(line.speaker)) hostHasSpoken = true;
+    if (HOSTS.includes(line.speaker)) hostHasSpoken = true;
     chunks.forEach((text, i) => out.push({ line, text, first: i === 0, isCutIn, seconds: secondsFor(text) }));
   }
   return out;
@@ -235,7 +342,12 @@ function playCard() {
   if (cardIndex >= cards.length) { Studio.silence(); hideBubble(); showDone(); return; }
   const card = cards[cardIndex];
   const { line } = card;
-  if (card.first) Studio.speak(line.speaker, line.delivery, line.text, card.isCutIn);
+  if (card.first) {
+    Studio.speak(line.speaker, line.delivery, line.text, card.isCutIn);
+    // Later pipeline steps attach these to lines: a fact-pack stat, and the judge's scores.
+    if (line.stat) showChyron(line.stat, !!script.sample); else hideChyron();
+    if (line.score) setScores(line.score, !!script.sample);
+  }
 
   if (line.speaker === "caller") {
     const caller = script.caller;
@@ -253,14 +365,22 @@ function playCard() {
 
 function stopPlayback() {
   clearTimeout(lineTimer);
+  clearTimeout(endTimer);
   clearInterval(typing);
   paused = false;
   Studio.setPaused(false);
   $("pause").textContent = "Pause";
 }
 
+function setPlayButtons(enabled) {
+  $("pause").disabled = !enabled;
+  $("replay").disabled = !enabled;
+}
+
 async function play(newScript) {
   stopPlayback();
+  clearGraphics();
+  setPlayButtons(false);
   script = newScript;
   cards = buildCards(script.lines);
   cardIndex = 0;
@@ -272,7 +392,8 @@ async function play(newScript) {
   setCenter(script.topic.toUpperCase(), `Line 1 · ${script.caller.name} from ${script.caller.city}`);
   setRight(format, `Caller: ${script.caller.name}, ${script.caller.city}`);
   $("show-tag").textContent = format.replace("?", "");
-  $("controls").hidden = false;
+  if (script.sample) setScores({}, true);   // the preview shows the meter from the start
+  setPlayButtons(true);
   playCard();
 }
 
@@ -300,7 +421,6 @@ $("form").addEventListener("submit", async (event) => {
     clearInterval(preshowTimer);
     showIdle();
     setCenter("LINE DROPPED", "Try that one again");
-    setNameplate("Hal Brennan", "Moderator");
     showBubble("hal", "Looks like we lost the line. Give us another call.");
     setLines("", "Lines are open");
     setStatus(error.message, true);
@@ -330,8 +450,52 @@ $("pause").addEventListener("click", () => {
 });
 
 $("replay").addEventListener("click", () => { if (script) play(script); });
+$("end-replay").addEventListener("click", () => { if (script) play(script); });
+$("end-ask").addEventListener("click", () => {
+  $("topic").scrollIntoView({ behavior: "smooth", block: "center" });
+  $("topic").focus();
+});
 
-// ---------- Clock and cast cards ----------
+// ---------- Preview: every graphic, with clearly marked sample data ----------
+
+const PREVIEW = {
+  sample: true,
+  topic: "Graphics preview (sample data)",
+  format: "debate",
+  caller: { type: "settler", name: "Sam", city: "Denver" },
+  sources: ["Sample data, not real"],
+  lines: [
+    { line: 1, speaker: "hal", delivery: "warm", argument: null,
+      text: "This is a graphics preview. Every number you see here is sample data, not real." },
+    { line: 2, speaker: "deacon", delivery: "confident", argument: 1, score: { deacon: 71 },
+      text: "Sample line. Over on the right monitor, that's the stat chyron.",
+      stat: { value: "+0.21", label: "EPA per dropback", definition: "How many points each pass play adds to what a team expects to score.", source: "Sample data", asOf: "Through Week 9" } },
+    { line: 3, speaker: "royce", delivery: "exasperated", argument: 2, score: { royce: 66 },
+      text: "Sample line. This is me turning away with my arms crossed." },
+    { line: 4, speaker: "deacon", delivery: "slam", argument: 3, score: { deacon: 74 },
+      text: "Sample line. And this is the desk slam. Turn the sound on." },
+    { line: 5, speaker: "lonnie", delivery: "fired_up", argument: 4, score: { lonnie: 69 },
+      text: "Sample line. Here's me standing up to make a point." },
+    { line: 6, speaker: "royce", delivery: "quiet", argument: 2, text: "Sample final answer: this shows up on the end card." },
+    { line: 7, speaker: "deacon", delivery: "calm", argument: 3, text: "Sample final answer: mine does too." },
+    { line: 8, speaker: "lonnie", delivery: "calm", argument: 4, text: "Sample final answer: and so does mine." },
+    { line: 9, speaker: "hal", delivery: "warm", argument: null, text: "That's the end of the preview." },
+  ],
+};
+$("preview").addEventListener("click", () => {
+  setStatus("Playing the graphics preview. Everything marked SAMPLE is made-up data.");
+  play(PREVIEW);
+});
+
+// ---------- Logo, tab icon, clock, and cast cards ----------
+
+Studio.logo($("logo"));
+const icon = document.createElement("canvas");
+icon.width = 16; icon.height = 16;
+Studio.icon(icon);
+const link = document.createElement("link");
+link.rel = "icon"; link.href = icon.toDataURL("image/png");
+document.head.append(link);
 
 function tickClock() {
   $("bug-clock").textContent = new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
@@ -339,7 +503,7 @@ function tickClock() {
 tickClock();
 setInterval(tickClock, 10000);
 
-for (const id of ["hal", "royce", "deacon", "lonnie"]) {
+for (const id of ["hal", ...HOSTS]) {
   const person = PEOPLE[id];
   const card = document.createElement("article");
   card.className = "card";

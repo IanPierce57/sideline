@@ -31,6 +31,8 @@ Type a topic under **Ask the desk** and press the button. While the script is wr
 
 To stop it, click the Terminal window and press **Control-C**.
 
+**Preview graphics (sample data)** under the screen plays a short demo of the graphics that later steps fill with real data: the stat chyron, the score bug, the big reactions (standing up, the desk slam, turning away), and the end card. Everything in it is stamped SAMPLE. **Sound** turns the desk-slam thump on or off.
+
 ## Where scripts are saved
 
 Every run gets its own folder named by date and time, like `runs/2026-11-04_14-30-05/script.json`. Each file holds:

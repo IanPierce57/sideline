@@ -161,12 +161,12 @@ A moderator and three hosts, each defined by a bible in the characters folder, p
 
 ## Screen and sound
 
-An 8-bit studio, the same set every time, with the page around it themed to match.
+An 8-bit studio, the same set every time, with the page around it themed to match. The set says NBA and NFL at a glance: a night stadium behind the desk where a football field runs into a basketball court along one painted sideline, a football and a basketball on the desk, and a hardwood floor. No league, team, or network logos.
 
 - **Subtitles first.** Lines appear as pixel-font subtitles paced at speaking speed, with the speaker's name, while his character animates. Voices are a stretch goal.
 - **Pixel art.** Claude Code draws all the characters and the set in code.
 - **Emotion** comes through body animation driven by each line's delivery tag: leaning in, pointing, standing up, slamming the desk, throwing hands up, turning away. Each character's tell from his bible (Royce's pencil, Deacon's toothpick, Lonnie's sleeves, Hal's headphones) is part of his animation set.
-- **On screen:** subtitles, a topic banner, a stat chyron whenever a stat comes up, a meter showing each host's score as arguments are judged, and a source list at the end.
+- **On screen:** subtitles (a speech bubble over whoever is talking), a topic banner, a stat chyron on the right-hand monitor whenever a stat comes up, a score bug across the top showing each host's score as arguments are judged, and an end card with each host's final answer and the source list.
 - **Sound:** no theme music. A desk-slam effect is optional.
 - **News ticker:** the crawl along the bottom carries real-time NBA and NFL headlines, rotating, pulled from a news source that's been checked against its terms on scraping and AI use, and credited. Source not chosen yet (ESPN is a candidate). Until it's built, the ticker shows a placeholder, never invented headlines.
 - **Cast cards:** the page introduces Hal and the hosts by background and personality only. How each one argues (their kind of evidence, catchphrases) should come through on air, not in the descriptions.

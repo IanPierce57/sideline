@@ -35,6 +35,15 @@ Cast cards on the page describe background and personality only, not how anyone 
 
 Roster check (decided Nov 4): rosters come from ESPN, cross-checked against each team's official website. Check those sites' terms on scraping and AI use before connecting to them.
 
+## Hooks for later steps (already built into the page)
+
+- A line can carry `"stat": {"value", "label", "definition", "source", "asOf"}`; the page shows it on the stat chyron while that line plays.
+- A line can carry `"score": {"royce": 66, ...}`; the score bug at the top updates when that line plays.
+- A script can carry `"sources": [...]`; the end card lists them.
+- The writer may use three big-reaction deliveries: `fired_up` (stands), `slam` (desk slam, with a shake and an optional sound), `exasperated` (turns away).
+- **Preview graphics (sample data)** under the TV demos all of this with data stamped SAMPLE. Never show sample numbers anywhere else.
+- `Studio.renderOnce()` draws a single frame, for testing when the browser tab is in the background.
+
 ## How to run it
 
 ```bash

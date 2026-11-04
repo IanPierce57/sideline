@@ -52,6 +52,8 @@ DELIVERIES = [
     "calm", "warm", "curious", "confident", "building", "emphatic",
     "heated", "cold", "quiet", "laughing", "sarcastic", "dismissive",
     "frustrated", "conceding",
+    # Big reactions, for rare moments: stands up, slams the desk, turns away.
+    "fired_up", "slam", "exasperated",
 ]
 
 FORMATS = ["debate", "buy_or_sell", "prediction"]
@@ -118,7 +120,12 @@ Each line:
 - speaker: one of caller, hal, royce, deacon, lonnie.
 - text: exactly what is said out loud. Stage directions from the bibles, like
   "(the pencil stops)", may open a line in parentheses; keep them rare.
-- delivery: one tag for how it's said, from the allowed list.
+- delivery: one tag for how it's said, from the allowed list. Three tags are
+  big physical reactions the studio animates: "fired_up" (he stands up),
+  "slam" (he slams the desk), and "exasperated" (he turns away, arms crossed).
+  Use them only when the topic earns a blowup, at most two in a segment, and
+  only in character: Deacon is the one who gets loud, Royce goes cold instead,
+  Lonnie almost never does, and Hal never does.
 - argument: which argument this line belongs to, or null.
   * Number arguments 1, 2, 3... in the order they first appear.
   * A new number starts each time a host makes a new claim or a rebuttal

@@ -22,6 +22,11 @@ const Studio = (() => {
     g.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h));
   }
 
+  // A random-number helper that gives the same numbers every time, so the crowd
+  // in the stands looks the same on every visit.
+  let seed = 20261104;
+  function rand() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+
   // ---------- A tiny 5x7 pixel font for the signs drawn into the set ----------
   const GLYPHS = {
     R: ["11110", "10001", "10001", "11110", "10100", "10010", "10001"],
@@ -67,6 +72,7 @@ const Studio = (() => {
     building: "lean", confident: "lean", emphatic: "point", heated: "pump",
     frustrated: "handsup", conceding: "handsup", laughing: "laugh",
     sarcastic: "turn", dismissive: "turn", cold: "cold", quiet: "still",
+    fired_up: "stand", slam: "slam", exasperated: "away",
   };
 
   // ---------- What's happening right now ----------
@@ -74,6 +80,7 @@ const Studio = (() => {
     mode: "idle", speaker: null, delivery: "calm", paused: false,
     props: null, countdown: 0, dim: 0, modeAt: 0,
     scene: -1, sceneAt: 0, onScene: null, onAir: false,
+    lineAt: 0, slammed: false, onSlam: null,
     artist: { x: -24, from: -24, to: -24, at: 0, target: null },
     producer: { at: -1e9, x: 344, to: 344 },
     nextBlink: {}, blinkUntil: {}, glance: {}, glanceUntil: {},
@@ -111,10 +118,37 @@ const Studio = (() => {
     R(0, 0, W, 7, "#060b20");
     R(0, 7, W, 2, "#26335f");
     for (let x = 6; x < W; x += 22) { R(x, 5, 6, 3, "#3a4675"); R(x + 1, 8, 4, 1, "#ffe7a1"); }
-    // back wall with vertical panels
-    R(0, 9, W, 95, "#1a3a93");
-    for (let x = 0; x < W; x += 12) { R(x, 9, 1, 95, "#16348a"); R(x + 1, 9, 1, 95, "#1e43a3"); }
-    for (let x = 6; x < W; x += 22) { g.fillStyle = "rgba(255,231,161,0.05)"; g.fillRect(x - 3, 9, 12, 34); }
+    // Behind the desk: a night stadium. A football field on the left runs into a
+    // basketball court on the right, with one painted sideline across both.
+    // night sky
+    for (const [y, h, c] of [[9, 12, "#070d2a"], [21, 13, "#0b1440"], [34, 14, "#111d55"]]) R(0, y, W, h, c);
+    // crowd in the stands
+    R(0, 48, W, 42, "#1b2450");
+    const crowd = ["#3a4a8a", "#5a3a5a", "#8a6a4a", "#c7a27a", "#2f3f6f", "#d8323a", "#f4b740", "#e9eefc", "#6b4226", "#4a7a9a"];
+    for (let y = 49; y < 89; y += 2) {
+      if ((y - 49) % 10 === 8) { R(0, y, W, 1, "#121a3f"); continue; }   // aisle railings
+      for (let x = (y % 4 === 1 ? 0 : 1); x < W; x += 2) {
+        if (rand() < 0.78) R(x, y, 1, 1, crowd[(rand() * crowd.length) | 0]);
+      }
+    }
+    // light towers, in the gaps between the monitors
+    for (const x of [100, 218, 2, 315]) {
+      R(x, 22, 2, 66, "#3a4675");
+      R(x - 5, 13, 12, 7, "#232c58");
+      for (let bx = 0; bx < 3; bx++) for (let by = 0; by < 2; by++) R(x - 4 + bx * 4, 14 + by * 3, 2, 2, "#fff6d0");
+      g.fillStyle = "rgba(255,240,200,0.10)"; g.fillRect(x - 12, 9, 26, 26);
+      g.fillStyle = "rgba(255,240,200,0.05)"; g.fillRect(x - 20, 9, 42, 44);
+    }
+    // the field (football) and the court (basketball)
+    for (let x = 0; x < 160; x += 8) R(x, 90, 8, 14, (x / 8) % 2 ? "#2a7234" : "#2f7d3a");
+    for (let x = 4; x < 160; x += 16) R(x, 90, 1, 14, "#e9eefc");
+    for (let x = 12; x < 160; x += 16) { R(x, 93, 1, 1, "#e9eefc"); R(x, 98, 1, 1, "#e9eefc"); }
+    for (let y = 90; y < 104; y++) R(160, y, 160, 1, y % 2 ? "#c98a4b" : "#bf8243");
+    for (let x = 166; x < W; x += 13) R(x, 90 + (x % 3) * 3, 1, 3, "#a8703c");
+    R(286, 91, 34, 10, "#9d1f27");                          // the paint
+    R(286, 91, 1, 10, "#f2efe6"); R(286, 91, 34, 1, "#f2efe6");
+    R(160, 90, 1, 14, "#f2efe6");                           // where the field meets the court
+    R(0, 101, W, 1, "#ffffff");                             // the sideline
     // rail behind the desk
     R(0, 104, W, 1, "#6f8ff0"); R(0, 105, W, 3, "#3456c2"); R(0, 108, W, 1, "#f4b740"); R(0, 109, W, 1, "#d8323a");
     // lower wall panels with rivets
@@ -125,10 +159,27 @@ const Studio = (() => {
         for (const [dx, dy] of [[3, 3], [26, 3], [3, 16], [26, 16]]) R(x + 2 + dx, y + dy, 1, 1, "#6f86d6");
       }
     }
-    // floor
-    R(0, 160, W, 20, "#0a1640");
-    for (let y = 162; y < H; y += 3) R(0, y, W, 1, "#0c1a4b");
+    // hardwood floor with a painted sideline
+    R(0, 160, W, 20, "#a8703c");
+    for (let y = 162; y < H; y += 3) R(0, y, W, 1, "#9a6634");
+    for (let y = 160; y < H; y += 3) for (let x = (y * 7) % 23; x < W; x += 23) R(x, y, 1, 3, "#8e5c2e");
+    R(0, 164, W, 2, "#f2efe6");
     g = screen;
+  }
+
+  // Game balls for the desk.
+  function football(x, y) {   // 12 x 6, top-left at (x, y)
+    R(x + 2, y, 8, 1, "#7a3f1c"); R(x, y + 1, 12, 4, "#7a3f1c"); R(x + 2, y + 5, 8, 1, "#5e2f14");
+    R(x + 2, y + 1, 8, 1, "#9b5a2c");
+    R(x + 1, y + 1, 1, 4, "#f2efe6"); R(x + 10, y + 1, 1, 4, "#f2efe6");
+    R(x + 4, y + 2, 4, 1, "#f2efe6"); R(x + 4, y + 1, 1, 1, "#f2efe6"); R(x + 6, y + 1, 1, 1, "#f2efe6");
+  }
+  function basketball(x, y) { // 9 x 9, top-left at (x, y)
+    const rows = [[2, 5], [1, 7], [0, 9], [0, 9], [0, 9], [0, 9], [0, 9], [1, 7], [2, 5]];
+    rows.forEach(([dx, w], dy) => R(x + dx, y + dy, w, 1, dy > 5 ? "#b85d1c" : "#e07a2c"));
+    R(x + 4, y, 1, 9, "#1a1412"); R(x, y + 4, 9, 1, "#1a1412");
+    R(x + 1, y + 1, 1, 2, "#1a1412"); R(x + 1, y + 6, 1, 2, "#1a1412"); R(x + 7, y + 1, 1, 2, "#1a1412"); R(x + 7, y + 6, 1, 2, "#1a1412");
+    R(x + 2, y + 1, 1, 1, "#f2a05a");
   }
   paintBackground();
 
@@ -157,6 +208,9 @@ const Studio = (() => {
     R(111, DESK + 9, 98, 23, "#0f2463"); R(111, DESK + 9, 98, 1, "#3a63d6"); R(111, DESK + 31, 98, 1, "#08163f");
     pixelText("SIDELINE", 114, DESK + 15, 2, "#0a1433");
     pixelText("SIDELINE", 113, DESK + 14, 2, "#ffffff");
+    // a football and a basketball on either side of the logo
+    football(97, DESK + 17);
+    basketball(213, DESK + 15);
     // stripes at the base
     R(36, DESK + 34, 248, 2, "#d8323a"); R(36, DESK + 36, 248, 1, "#f4b740"); R(36, DESK + 37, 248, 3, "#0c1a4a");
     g.fillStyle = "rgba(0,0,0,0.35)"; g.fillRect(30, DESK + 40, 260, 2);
@@ -191,7 +245,8 @@ const Studio = (() => {
     P(8, 3, 1, 13, c.shade);
     P(-10, 7, 1, 4, c.skin); P(9, 7, 1, 4, c.shade);
     if (c.blush) { P(-7, 12, 2, 1, c.blush); P(5, 12, 2, 1, c.blush); }
-    P(-1, 11, 2, 2, c.shade);
+    const mx = o.mx || 0;   // turning away shifts the nose and mouth to one side
+    P(-1 + mx, 11, 2, 2, c.shade);
 
     // eyes
     const lx = o.lx || 0, ly = o.ly || 0;
@@ -217,10 +272,10 @@ const Studio = (() => {
     }
 
     // mouth
-    if (o.mouth === "open") { P(-2, 14, 4, 3, "#5e1a1f"); P(-2, 14, 4, 1, "#f2f2f2"); }
-    else if (o.mouth === "wide") { P(-3, 14, 6, 3, "#5e1a1f"); P(-3, 14, 6, 1, "#f2f2f2"); }
+    if (o.mouth === "open") { P(-2 + mx, 14, 4, 3, "#5e1a1f"); P(-2 + mx, 14, 4, 1, "#f2f2f2"); }
+    else if (o.mouth === "wide") { P(-3 + mx, 14, 6, 3, "#5e1a1f"); P(-3 + mx, 14, 6, 1, "#f2f2f2"); }
     else if (o.mouth === "smile") { P(-3, 14, 1, 1, c.lip); P(-2, 15, 4, 1, c.lip); P(2, 14, 1, 1, c.lip); }
-    else P(-2, 15, 4, 1, c.lip);
+    else P(-2 + mx, 15, 4, 1, c.lip);
 
     HAIR[id](P, c, o);
   }
@@ -308,6 +363,12 @@ const Studio = (() => {
   }
 
   // Things on the desk.
+  // Game balls on little stands at each end of the desk.
+  function deskBalls() {
+    R(36, 117, 10, 1, "#c8cdd8"); R(40, 116, 2, 1, "#c8cdd8"); football(35, 110);
+    R(275, 117, 11, 1, "#c8cdd8"); R(279, 116, 3, 1, "#c8cdd8"); basketball(276, 107);
+  }
+
   function deskItems(id, cx, t, act) {
     if (id === "hal") { R(cx - 22, 116, 9, 2, "#f4f1e6"); R(cx - 21, 116, 7, 1, "#d8d2bf"); }
     if (id === "royce") { R(cx - 22, 116, 9, 3, "#efe4c2"); R(cx - 22, 119, 9, 1, "#c9bc94"); }
@@ -403,7 +464,7 @@ const Studio = (() => {
 
   function personState(id, t) {
     const c = CAST[id];
-    const o = { lx: 0, ly: 0, blink: false, squint: false, mouth: "closed", brow: "flat", pose: "rest", bob: 0, act: null };
+    const o = { lx: 0, ly: 0, mx: 0, blink: false, squint: false, mouth: "closed", brow: "flat", pose: "rest", bob: 0, act: null };
     // blinking
     if (t >= S.nextBlink[id]) { S.blinkUntil[id] = t + 130; S.nextBlink[id] = t + 2400 + Math.random() * 4200; }
     o.blink = t < S.blinkUntil[id];
@@ -434,6 +495,18 @@ const Studio = (() => {
         if (o.pose === "turn") { o.brow = "raise"; o.lx = 1; }
         if (o.pose === "cold") { o.brow = "low"; o.squint = true; }
         if (o.pose === "still") o.mouth = flap ? "open" : "closed";
+        if (o.pose === "stand") { o.bob = -7; o.brow = "angry"; }
+        if (o.pose === "away") { o.lx = 3; o.mx = 2; o.brow = "low"; }
+        if (o.pose === "slam") {
+          // hands go up, then come down hard on the desk
+          const since = t - S.lineAt;
+          o.brow = "angry";
+          if (since < 320) { o.pose = "handsup"; o.bob = -2; o.mouth = "closed"; }
+          else {
+            if (!S.slammed) { S.slammed = true; if (S.onSlam) S.onSlam(); }
+            o.pose = "rest"; o.bob = since < 470 ? 1 : 0;
+          }
+        }
       } else {
         const target = S.speaker === "caller" ? 52 : (CAST[S.speaker] ? CAST[S.speaker].x : c.x);
         o.lx = target < c.x - 4 ? -1 : target > c.x + 4 ? 1 : 0;
@@ -451,7 +524,7 @@ const Studio = (() => {
     return o;
   }
 
-  function frame(t) {
+  function frame(t, once) {
     updateScene(t);
     // lights: dimmer before the show, full when live
     const targetDim = S.mode === "preshow" || S.mode === "countdown" ? 0.24 : 0;
@@ -468,6 +541,8 @@ const Studio = (() => {
 
     g = screen;
     g.drawImage(bg, 0, 0);
+    // camera flashes in the crowd
+    if (Math.random() < 0.35) R(Math.random() * W, 49 + Math.random() * 38, 1, 1, "#ffffff");
     drawOnAirSign();
 
     const states = {};
@@ -484,23 +559,32 @@ const Studio = (() => {
     for (const id in CAST) {
       const c = CAST[id], o = states[id];
       const hy = HEAD_TOP - c.tall + o.bob;
-      chair(c.x, hy, id === "deacon");
+      chair(c.x, HEAD_TOP - c.tall, id === "deacon");   // the chair stays put when he stands
       drawPerson(id, c.x, hy, Object.assign({ bottom: DESK, phonesOff: S.props.phonesOff, toothpick: S.props.toothpick }, o));
       o.hy = hy;
       // arms raised above the desk
-      if (o.pose === "point") o.hand = raisedArm(id, c.x, hy, 1, 0, true);
+      if (o.pose === "point" || o.pose === "stand") o.hand = raisedArm(id, c.x, hy, 1, 0, true);
+      if (o.pose === "away") {
+        // arms crossed over the chest
+        const sleeve = sleeveOf(id);
+        R(c.x - c.half + 2, hy + 27, c.half * 2 - 4, 5, sleeve);
+        R(c.x - c.half + 2, hy + 27, c.half * 2 - 4, 1, "rgba(255,255,255,0.15)");
+        R(c.x - c.half + 3, hy + 27, 4, 4, c.skin); R(c.x + c.half - 7, hy + 28, 4, 4, c.skin);
+      }
       if (o.pose === "pump") o.hand = raisedArm(id, c.x, hy, 1, ((t / 220) | 0) % 2 ? 3 : 0, true);
       if (o.pose === "handsup" || (o.act === "stretch" && o.bob)) { raisedArm(id, c.x, hy, -1, 0, false); o.hand = raisedArm(id, c.x, hy, 1, 0, false); }
       if (o.act === "miccheck") raisedArm(id, c.x, hy - 6, -1, 0, false);
     }
 
     drawDesk();
+    deskBalls();
 
     for (const id in CAST) {
       const c = CAST[id], o = states[id], cx = c.x, hy = o.hy;
       deskItems(id, cx, t, o.act);
-      const raisedRight = o.pose === "point" || o.pose === "pump" || o.pose === "handsup" || (o.act === "stretch" && o.bob);
-      const raisedLeft = o.pose === "handsup" || o.act === "miccheck" || (o.act === "stretch" && o.bob);
+      const armsOff = o.pose === "away" || o.pose === "stand";   // crossed, or standing with the other arm down
+      const raisedRight = armsOff || o.pose === "point" || o.pose === "pump" || o.pose === "handsup" || (o.act === "stretch" && o.bob);
+      const raisedLeft = armsOff || o.pose === "handsup" || o.act === "miccheck" || (o.act === "stretch" && o.bob);
       const holding = o.act === "notes" || o.act === "tablet";
 
       if (holding) {
@@ -544,6 +628,7 @@ const Studio = (() => {
         const click = S.speaker === "royce" && S.mode === "live" && S.props.pencil === "hand" && !S.paused ? ((t / 260) | 0) % 2 : 0;
         if (raisedRight && o.hand) pencilInHand(o.hand.x + 3, o.hand.y - 6, click);
         else if (!raisedRight) pencilInHand(cx + 5, 107, click);
+        else if (o.pose === "away") pencilInHand(cx + c.half - 5, hy + 22, 0);
       }
     }
 
@@ -558,7 +643,7 @@ const Studio = (() => {
     }
 
     if (S.dim > 0.005) { g.fillStyle = `rgba(4,8,30,${S.dim.toFixed(3)})`; g.fillRect(0, 0, W, H); }
-    requestAnimationFrame(frame);
+    if (!once) requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
 
@@ -581,8 +666,10 @@ const Studio = (() => {
     setPaused(paused) { S.paused = paused; },
     onScene(callback) { S.onScene = callback; },
     // Someone starts a line. Their bible tells set the props.
+    onSlam(callback) { S.onSlam = callback; },
     speak(id, delivery, text, isCutIn) {
       S.speaker = id; S.delivery = delivery;
+      S.lineAt = performance.now(); S.slammed = false;
       const lower = (text || "").toLowerCase();
       const pr = S.props;
       pr.phonesOff = id === "hal" && isCutIn;
@@ -608,6 +695,35 @@ const Studio = (() => {
       return { x: 52, y: 74 };   // the caller is on the left monitor
     },
     size: { W, H },
+    // For testing: draw a single frame right now (useful when the page is in the background).
+    renderOnce() { frame(performance.now(), true); },
+    // The Sideline logo: a phone handset badge, SIDE on red, LINE on navy, and a
+    // dashed chalk sideline underneath. Draws on a 130 x 26 canvas.
+    logo(target) {
+      g = target.getContext("2d");
+      g.clearRect(0, 0, 130, 26);
+      // handset badge
+      R(1, 3, 20, 18, "#f4b740"); R(2, 2, 18, 1, "#f4b740"); R(2, 21, 18, 1, "#f4b740");
+      R(5, 6, 12, 3, "#0a1433"); R(4, 7, 3, 7, "#0a1433"); R(15, 7, 3, 7, "#0a1433");
+      R(7, 12, 8, 6, "#d8323a"); R(8, 13, 6, 1, "#f4f1e6"); R(8, 15, 6, 1, "#f4f1e6");
+      // SIDE / LINE
+      R(24, 3, 52, 18, "#d8323a"); R(24, 3, 52, 1, "#ff5a64");
+      pixelText("SIDE", 27, 5, 2, "#ffffff");
+      R(76, 3, 53, 18, "#11224f"); R(76, 3, 53, 1, "#2a57c9");
+      pixelText("LINE", 79, 5, 2, "#ffffff");
+      // chalk sideline
+      for (let x = 24; x < 129; x += 7) R(x, 23, 4, 2, "#e9eefc");
+      g = screen;
+    },
+    // A 16 x 16 icon for the browser tab.
+    icon(target) {
+      g = target.getContext("2d");
+      R(0, 0, 16, 16, "#d8323a");
+      R(3, 3, 10, 2, "#ffffff"); R(2, 4, 3, 5, "#ffffff"); R(11, 4, 3, 5, "#ffffff");
+      R(5, 8, 6, 4, "#f4b740");
+      for (let x = 1; x < 16; x += 4) R(x, 14, 2, 1, "#ffffff");
+      g = screen;
+    },
     // A head-and-shoulders portrait for the monitors and the cast cards (32 x 32 canvas).
     portrait(target, id) {
       const pg = target.getContext("2d");
