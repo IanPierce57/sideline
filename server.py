@@ -77,7 +77,7 @@ class Handler(SimpleHTTPRequestHandler):
 
     def log_message(self, format, *args):
         # Keep the terminal quiet except for generation requests.
-        if "/api/generate" in (args[0] if args else ""):
+        if getattr(self, "path", "").startswith("/api/generate"):
             super().log_message(format, *args)
 
 
