@@ -1,8 +1,8 @@
-# The Receipts
+# Sideline
 
 Type an NBA or NFL topic, and AI writes a 3-to-5-minute debate between a moderator (Hal) and three hosts (Royce, Deacon, Lonnie), then plays it as subtitles. The full spec is in [BRIEF.md](BRIEF.md); the characters are in [characters/](characters/).
 
-**Current step: 1 of the pipeline (an ugly version you can see working).** Scripts have no real stats yet, no scoring, and no pixel art.
+**Current step: 1 of the pipeline, with the pixel studio.** Scripts have no real stats and no scoring yet, and there are no voices.
 
 ## One-time setup: add your API key
 
@@ -25,11 +25,11 @@ Never paste the key into a chat, the page, or any other file. To change keys lat
 ~/Documents/the-receipts/start.sh
 ```
 
-The first time, it spends about a minute installing Python packages. Then it opens http://localhost:8000 in your browser. Type a topic, press **Go**, and wait about a minute while it writes. The script then plays one line at a time, and each line stays up about as long as it takes to say it (150 words per minute).
+The first time, it spends about a minute installing Python packages. Then it opens http://localhost:8000 in your browser. The page only works while this is running.
+
+Type a topic under **Ask the desk** and press the button. While the script is written (about a minute), you watch the pre-show: makeup, research, a mic check, the floor producer. Then a 3-2-1 countdown, the ON AIR sign lights, and the segment plays one line at a time in a speech bubble over whoever is talking. Each line stays up about as long as it takes to say it (150 words per minute). **Pause** and **Replay** sit under the screen.
 
 To stop it, click the Terminal window and press **Control-C**.
-
-The **Replay a saved script** menu at the bottom plays any earlier run without calling the API again.
 
 ## Where scripts are saved
 
@@ -61,7 +61,10 @@ It prints the script in Terminal and saves it to `runs/` the same way.
 | `characters/` | One bible per character, plus `callers.md`. |
 | `generate.py` | Builds the prompt from the brief and bibles, asks Claude for the script, checks it, and saves it. |
 | `server.py` | The small local web server that the page talks to. |
-| `static/index.html`, `static/app.js` | The plain webpage: topic box, Go button, subtitle player. |
+| `static/index.html` | The page: the TV, the Ask the desk console, sources, the cast, and credits. |
+| `static/style.css` | The broadcast look: colors, pixel fonts, monitors, name plate, ticker. |
+| `static/studio.js` | Draws the pixel studio and the characters in code, and animates them. |
+| `static/app.js` | Runs the show: pre-show, countdown, then the segment line by line. |
 | `start.sh` | The one command that sets up and starts everything. |
 | `set_key.sh` | Saves your API key into `.env` through a pop-up box, without showing it. |
 | `requirements.txt` | The Python packages the project needs. |

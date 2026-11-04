@@ -16,7 +16,7 @@ Nov 3, 2026 · @Ian (aligned with the bibles Nov 4, 2026)
 - [x] Data sources chosen and checked against their terms
 - [x] Character bibles drafted for serious debate
 - [x] Subtitles first, voices later; Claude Code draws the pixel art
-- [x] Working name: The Receipts
+- [x] Name: Sideline (renamed from The Receipts on Nov 4, 2026)
 - [x] Project folder holding this brief (saved as BRIEF.md), the bibles, and SOURCES.md
 
 **Not done yet**
@@ -26,7 +26,7 @@ Nov 3, 2026 · @Ian (aligned with the bibles Nov 4, 2026)
 
 ## What it is
 
-Working name: **The Receipts**, because every host has to bring them.
+Name: **Sideline**, a sports call-in debate show: a caller gets on the line, and the desk argues it out. (Renamed from The Receipts on Nov 4, 2026.)
 
 A webpage that generates a three-to-five-minute NBA or NFL debate on any topic you type, current or all-time. A moderator and three pixel-art co-hosts argue it out in an 8-bit studio, in subtitles, using real stats that are researched and fact-checked first. A background judge scores every argument, and the most persuasive host wins.
 
@@ -168,7 +168,9 @@ An 8-bit studio, the same set every time, with the page around it themed to matc
 - **Emotion** comes through body animation driven by each line's delivery tag: leaning in, pointing, standing up, slamming the desk, throwing hands up, turning away. Each character's tell from his bible (Royce's pencil, Deacon's toothpick, Lonnie's sleeves, Hal's headphones) is part of his animation set.
 - **On screen:** subtitles, a topic banner, a stat chyron whenever a stat comes up, a meter showing each host's score as arguments are judged, and a source list at the end.
 - **Sound:** no theme music. A desk-slam effect is optional.
-- **Branding:** working name The Receipts, with a logo.
+- **Branding:** Sideline, with a logo.
+- **Credits and disclaimer** on the page: everyone on the show is fictional and everything they say is AI-generated opinion; callers are never real people (no parodies of real athletes, broadcasters, or public figures); the show isn't affiliated with the NBA, NFL, ESPN, or any team; every stat source and voice dataset is credited wherever its license asks.
+- **Voices (last, stretch goal).** Use a free, local text-to-speech tool such as Piper, with ready-made voices trained on open datasets like LibriTTS-R and VCTK (CC BY 4.0). Pick one distinct voice each for Hal, Royce, Deacon, and Lonnie, plus a few for callers. Check each voice's license before using it, and add the dataset credits to the page.
 
 ## How it's built
 

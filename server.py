@@ -83,7 +83,7 @@ class Handler(SimpleHTTPRequestHandler):
 
 def main() -> None:
     server = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
-    print(f"The Receipts is running at http://localhost:{PORT}")
+    print(f"Sideline is running at http://localhost:{PORT}")
     print("Press Control-C here to stop it.")
     try:
         server.serve_forever()

@@ -1,5 +1,5 @@
 #!/bin/bash
-# start.sh: the one command that starts The Receipts.
+# start.sh: the one command that starts Sideline.
 # It sets up Python packages the first time, then starts the server and opens the page.
 set -e
 cd "$(dirname "$0")"

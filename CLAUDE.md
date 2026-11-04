@@ -1,4 +1,6 @@
-# The Receipts: notes for Claude Code
+# Sideline: notes for Claude Code
+
+The show was called The Receipts until Nov 4, 2026. The project folder keeps that name (`~/Documents/the-receipts`), but the show is Sideline everywhere else.
 
 The person building this has never coded. Explain what you're doing in plain language as you go, and keep code simple: Python for the server, plain HTML and JavaScript for the page, no frameworks.
 

@@ -1,4 +1,4 @@
-/* The Receipts: an 8-bit sports-broadcast look.
+/* Sideline: an 8-bit sports-broadcast look.
    The studio art is drawn on the canvas (studio.js); everything with words is HTML on top. */
 
 :root {
@@ -293,3 +293,14 @@ body {
 .card .role { font-family: var(--round); font-weight: 600; color: var(--gold); font-size: 16px; }
 .card p { margin: 12px 0; font-family: var(--body); color: #c3cbe8; font-size: 16px; line-height: 1.5; }
 .card .lean { font-family: var(--body); color: var(--dim); font-size: 14px; }
+
+/* Credits and disclaimer */
+.credits {
+  max-width: 1120px; margin: 36px auto 0; padding: 18px 24px 8px;
+  background: var(--navy-900); border: 2px solid #15265e; position: relative;
+}
+.credits::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: linear-gradient(var(--gold), var(--red)); }
+.credits h2 { margin: 0 0 10px; font-family: var(--pixel); font-weight: 700; font-size: 20px; color: #fff; }
+.credits h2 .aside { font-family: var(--round); font-weight: 400; font-size: 15px; color: var(--muted); }
+.credits p { margin: 0 0 12px; font-family: var(--body); font-size: 15px; line-height: 1.5; color: var(--muted); max-width: 80ch; }
+.credits strong { color: var(--text); }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Receipts</title>
+  <title>Sideline</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
@@ -11,14 +11,14 @@
 </head>
 <body>
   <header class="masthead">
-    <div class="logo"><span class="logo-tag">THE</span> RECEIPTS</div>
-    <div class="masthead-sub">NBA and NFL debate. Every host brings 'em.</div>
+    <div class="logo"><span class="logo-tag">SIDE</span>LINE</div>
+    <div class="masthead-sub">The NBA and NFL call-in debate show.</div>
   </header>
 
   <!-- The TV: pixel studio on the canvas, broadcast graphics on top -->
   <main class="tv-frame">
     <div class="tv" id="tv">
-      <canvas id="studio" aria-label="The Receipts studio"></canvas>
+      <canvas id="studio" aria-label="Sideline studio"></canvas>
 
       <!-- Back-wall monitors -->
       <div class="monitor left">
@@ -29,31 +29,31 @@
         </div>
       </div>
       <div class="monitor center">
-        <div class="mon-brand">&middot; THE RECEIPTS &middot;</div>
+        <div class="mon-brand">&middot; SIDELINE &middot;</div>
         <div class="mon-topic" id="center-topic">ASK THE DESK</div>
         <div class="mon-foot" id="center-foot">NBA &middot; NFL &middot; current or all-time</div>
       </div>
       <div class="monitor right">
         <div class="mon-format" id="right-format">TONIGHT</div>
         <div class="mon-rule"></div>
-        <div class="mon-source" id="right-source">Every host brings receipts</div>
+        <div class="mon-source" id="right-source">NBA · NFL · call-in debate</div>
       </div>
 
       <div class="bubble" id="bubble"><p id="bubble-text"></p><span class="tail" id="tail"></span></div>
 
-      <div class="show-tag" id="show-tag">The Receipts</div>
+      <div class="show-tag" id="show-tag">Sideline</div>
       <div class="nameplate">
         <span class="nameplate-name" id="nameplate-name">Hal Brennan</span>
         <span class="nameplate-title" id="nameplate-title">Moderator</span>
       </div>
       <div class="bug">
-        <span class="bug-show">The Receipts</span>
+        <span class="bug-show">Sideline</span>
         <span class="bug-live" id="bug-live">OFF AIR</span>
         <span class="bug-clock" id="bug-clock">--:--</span>
       </div>
 
       <div class="ticker">
-        <span class="ticker-label">RECEIPTS</span>
+        <span class="ticker-label">SIDELINE</span>
         <div class="ticker-track"><div class="ticker-move" id="ticker"></div></div>
       </div>
     </div>
@@ -90,11 +90,11 @@
     <!-- Sources: fills in once the research step exists -->
     <section class="sources">
       <div class="sources-head">
-        <h2>SOURCES</h2><span class="aside">(the receipts)</span>
+        <h2>SOURCES</h2><span class="aside">(where the numbers come from)</span>
         <span class="right">Every number is checkable</span>
       </div>
       <div class="source-row">
-        <div class="who">THE RECEIPTS</div>
+        <div class="who">SIDELINE</div>
         <div class="what">Sources for each segment show up here while it's on air.</div>
       </div>
       <div class="source-row">
@@ -112,6 +112,15 @@
     </div>
     <div class="cast-grid" id="cast-grid"></div>
   </section>
+
+  <!-- Credits and disclaimer -->
+  <footer class="credits">
+    <h2>CREDITS <span class="aside">(the fine print)</span></h2>
+    <p><strong>Everyone on Sideline is fictional.</strong> Hal Brennan, Royce Stanhope, Deacon Pettiford, Lonnie Fairweather, and every caller are made-up characters. Everything they say is AI-generated opinion, written by Claude. Callers are never real people.</p>
+    <p><strong>Not affiliated.</strong> Sideline isn't connected to or endorsed by the NBA, the NFL, ESPN, or any team, player, or broadcaster. Team and player names are used only to talk about them.</p>
+    <p><strong>Stats.</strong> Once the research step is on, every number comes from the sources in the Sources panel, with credit given wherever a source's license asks for it.</p>
+    <p><strong>Fonts.</strong> Pixelify Sans and Silkscreen, from Google Fonts (SIL Open Font License).</p>
+  </footer>
 
   <script src="studio.js"></script>
   <script src="app.js"></script>

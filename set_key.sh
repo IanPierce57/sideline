@@ -4,7 +4,7 @@
 cd "$(dirname "$0")"
 
 KEY="$(osascript \
-  -e 'set reply to display dialog "Paste your Anthropic API key (it starts with sk-ant-), then click Save." default answer "" with hidden answer buttons {"Cancel", "Save"} default button "Save" with title "The Receipts"' \
+  -e 'set reply to display dialog "Paste your Anthropic API key (it starts with sk-ant-), then click Save." default answer "" with hidden answer buttons {"Cancel", "Save"} default button "Save" with title "Sideline"' \
   -e 'text returned of reply' 2>/dev/null)"
 
 if [ $? -ne 0 ] || [ -z "$KEY" ]; then

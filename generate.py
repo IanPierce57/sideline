@@ -90,12 +90,12 @@ The research step does not exist yet, so there is no fact pack. Until it does:
 SCRIPT_INSTRUCTIONS = """\
 YOUR JOB
 
-Write one segment of The Receipts for the topic the user gives you. Follow the
+Write one segment of Sideline for the topic the user gives you. Follow the
 Debate rules, the moderator bible (Hal), the three host bibles (Royce, Deacon,
 Lonnie), the callers file, and the step 1 rules above.
 
 Segment flow:
-1. Hal takes the call: "You're on The Receipts. Go ahead, <name> from <city>."
+1. Hal takes the call: "You're on the Sideline. Go ahead, <name> from <city>."
 2. The caller asks the user's question in their own words (one to three
    sentences), in the voice of the caller type that fits the topic best.
 3. Hal restates the question in one plain sentence and names the format.
@@ -156,7 +156,7 @@ def build_system_prompt() -> str:
     """Debate rules + Cast from the brief, then every character file."""
     brief = (PROJECT / "BRIEF.md").read_text()
     parts = [
-        "You are the writer for The Receipts, an NBA and NFL debate show.",
+        "You are the writer for Sideline, an NBA and NFL call-in debate show.",
         "# From BRIEF.md\n\n" + section(brief, "Debate rules") + "\n\n" + section(brief, "Cast"),
     ]
     # Sorted so the prompt is byte-identical every run (keeps the cache warm).

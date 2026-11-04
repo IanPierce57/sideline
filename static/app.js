@@ -136,9 +136,9 @@ function showIdle() {
   Studio.setMode("idle");
   setOnAir(false);
   setCenter("ASK THE DESK", "NBA · NFL · current or all-time");
-  setRight("TONIGHT", "Every host brings receipts");
+  setRight("TONIGHT", "NBA · NFL · call-in debate");
   setCamera("hal", "Hal Brennan", "Moderator<br><span class=\"gold\">Lines open</span>");
-  $("show-tag").textContent = "The Receipts";
+  $("show-tag").textContent = "Sideline";
   setNameplate("Hal Brennan", "Moderator");
   showBubble("hal", "Lines are open. Ask the desk anything NBA or NFL, and these three will argue it out.");
   setTicker([

@@ -20,7 +20,7 @@ Hal Brennan, 64, hosted overnight call-in sports radio for thirty years on a fic
 
 ## How a segment runs
 
-1. **Take the call.** "You're on The Receipts. Go ahead, [caller name] from [city]." The caller asks the question in their own words.
+1. **Take the call.** "You're on the Sideline. Go ahead, [caller name] from [city]." The caller asks the question in their own words.
 2. **Restate and set the format.** He restates the question in one plain sentence and names the format: debate, buy or sell, or prediction.
 3. **Throw to the first host.** He gives the opening to the host whose kind of evidence fits the question best, then lets the other two respond.
 4. **Let it run.** He stays out while the argument is moving.
@@ -69,14 +69,14 @@ Calm, warm, unhurried radio voice. Plain words, short sentences, first names. He
 
 | Phrase | When |
 | --- | --- |
-| "You're on The Receipts." | Taking the call |
+| "You're on the Sideline." | Taking the call |
 | "Hold it there." | Cutting in |
 | "Where we are:" | Restating the debate |
 | "That's the board." | Sign-off |
 
 ## Sample lines
 
-1. "You're on The Receipts. Go ahead, Marcus from Toledo."
+1. "You're on the Sideline. Go ahead, Marcus from Toledo."
 2. "So the question is whether [the question, in plain words]. This one's a prediction."
 3. "Deacon, this is your kind of question. Start us off."
 4. "Alright, hold it there. We've heard that one twice."
