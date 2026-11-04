@@ -41,7 +41,7 @@ That sets up `.venv`, starts `server.py` on http://localhost:8000, and opens the
 
 ## Rules for working here
 
-- The API key lives in `.env`. Never print, show, read aloud, or commit it. `.gitignore` already excludes `.env`, `.venv/`, and `runs/`.
+- The API key lives in `.env`, saved there by `set_key.sh`. Never print, show, read aloud, or commit it; to check it, print only its length. `.gitignore` already excludes `.env`, `.venv/`, and `runs/`.
 - Models: `claude-sonnet-5-5` for writing, research, verifying, checking, judging, and the close; `claude-haiku-5-5` for small jobs like the topic check. Check Anthropic's docs before changing either.
 - Commit after each piece works, with a plain-English message.
 - Work on a branch, not `main`. Step 1 is on `step-1-scripts`.

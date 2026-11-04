@@ -31,6 +31,10 @@ CHARACTERS = PROJECT / "characters"
 # The writer model. "Sonnet for writing" (BRIEF.md, How it's built).
 MODEL = "claude-sonnet-5-5"
 
+# Years that appear in the hosts' own bibles (Royce's receipts, Deacon's career).
+# Hosts may say these in step 1; the number check ignores them.
+BIBLE_YEARS = r"\b(?:1990|2002|2011|2016|2017|2019)\b|'(?:16|17|19)\b"
+
 WORDS_PER_MINUTE = 150
 TARGET_WORDS = (450, 750)  # 3 to 5 minutes at speaking pace
 
@@ -122,11 +126,21 @@ Each line:
   * A host's follow-up line that continues the same argument keeps its number.
   * Caller and Hal lines are always null. A short reaction that argues
     nothing ("Hah.", "Come on.") is null.
+  * Each argument number belongs to exactly one host. Never give a line the
+    number of another host's argument; answering it starts a new number.
   * Every host should have at least two numbered arguments.
 
 Write it so a reader could tell who's talking with the names hidden: each
 host's voice, evidence lean, signature move, and temperature come from his
 bible. Catchphrases at most once per segment each.
+
+Keep it fresh. The line banks, sample lines, and example exchanges show how
+each character sounds; they are not lines to reuse. Write new lines in that
+voice for this topic. Don't open with a line-bank line, and use at most one
+line-bank line per character, reworded. Hal's cut-ins should fit the moment,
+not repeat his sample lines. Lonnie's switch is rare: only when a co-host
+brings a new fact or argument that changes the decision, never just because
+someone landed a good line. Most segments, nobody switches.
 """
 
 
@@ -204,14 +218,21 @@ def check_script(lines: list[dict]) -> list[str]:
     if not TARGET_WORDS[0] <= words <= TARGET_WORDS[1]:
         warnings.append(f"{words} spoken words, outside the {TARGET_WORDS[0]}-{TARGET_WORDS[1]} target")
     for line in lines:
-        if line["speaker"] in ("royce", "deacon", "lonnie") and re.search(r"\d", line["text"]):
-            warnings.append(f"line {line['line']} ({line['speaker_name']}) contains a digit: {line['text']!r}")
+        # Years from the hosts' own bible receipts are allowed; anything else is a stray number.
+        text = re.sub(BIBLE_YEARS, "", line["text"])
+        if line["speaker"] in ("royce", "deacon", "lonnie") and re.search(r"\d", text):
+            warnings.append(f"line {line['line']} ({line['speaker_name']}) contains a number: {line['text']!r}")
         if "[" in line["text"]:
             warnings.append(f"line {line['line']} has a bracket, maybe a leftover placeholder")
     hosts_args = {}
+    owners = {}
     for line in lines:
         if line["argument"] is not None:
             hosts_args.setdefault(line["speaker"], set()).add(line["argument"])
+            owner = owners.setdefault(line["argument"], line["speaker"])
+            if owner != line["speaker"]:
+                warnings.append(f"line {line['line']}: argument {line['argument']} belongs to "
+                                f"{SPEAKERS[owner]} but {line['speaker_name']} used it")
     for host in ("royce", "deacon", "lonnie"):
         if len(hosts_args.get(host, ())) < 2:
             warnings.append(f"{SPEAKERS[host]} has fewer than two numbered arguments")
@@ -294,8 +315,16 @@ def generate_script(topic: str) -> tuple[Path, dict]:
         },
     }
 
-    run_dir = RUNS / datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    run_dir.mkdir(parents=True, exist_ok=True)
+    # One folder per run, named by date and time. If two runs finish in the
+    # same second, wait a second so they never share a folder.
+    RUNS.mkdir(exist_ok=True)
+    while True:
+        run_dir = RUNS / datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        try:
+            run_dir.mkdir()
+            break
+        except FileExistsError:
+            time.sleep(1)
     (run_dir / "script.json").write_text(json.dumps(script, indent=2, ensure_ascii=False))
     return run_dir, script
 

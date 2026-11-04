@@ -8,17 +8,16 @@ Type an NBA or NFL topic, and AI writes a 3-to-5-minute debate between a moderat
 
 Your key is a password for the Claude API. It goes in a file called `.env` that git never saves, so it stays on your computer only.
 
-1. Get a key at [console.anthropic.com](https://console.anthropic.com) under **API Keys**. It starts with `sk-ant-`.
-2. In Terminal, open the key file in TextEdit:
+1. At [console.anthropic.com](https://console.anthropic.com), go to **API Keys** → **Create Key**, then click the **Copy** button in the window that appears. (The list of keys only shows a shortened version, which won't work.)
+2. Run:
 
    ```bash
-   open -e ~/Documents/the-receipts/.env
+   ~/Documents/the-receipts/set_key.sh
    ```
 
-3. The last line reads `ANTHROPIC_API_KEY=`. Paste your key right after the `=`, with no spaces or quotes, so it looks like `ANTHROPIC_API_KEY=sk-ant-...`.
-4. Save (Command-S) and close TextEdit.
+3. Paste the key into the pop-up box and click **Save**. Terminal should say `Saved` and the key's length (about 106 characters).
 
-Never paste the key into a chat, the page, or any other file.
+Never paste the key into a chat, the page, or any other file. To change keys later, run `set_key.sh` again.
 
 ## Run it
 
@@ -64,6 +63,7 @@ It prints the script in Terminal and saves it to `runs/` the same way.
 | `server.py` | The small local web server that the page talks to. |
 | `static/index.html`, `static/app.js` | The plain webpage: topic box, Go button, subtitle player. |
 | `start.sh` | The one command that sets up and starts everything. |
+| `set_key.sh` | Saves your API key into `.env` through a pop-up box, without showing it. |
 | `requirements.txt` | The Python packages the project needs. |
 | `.env.example` | A blank copy of the key file. Your real key goes in `.env`. |
 | `originals/` | The PDFs and files these Markdown copies were made from. |
