@@ -106,32 +106,26 @@ def _check_current_team(f: dict) -> dict:
 
 
 def _check_honor(f: dict) -> dict:
-    """Super Bowl rings: was he on the winning team's roster (nflverse)? Awards: does
-    Wikidata record the same count? Anything else has no second source and is dropped."""
+    """Wikipedia is trusted for career honors (decided Nov 4, 2026). Where a second
+    source exists it's still checked: Super Bowl rings against nflverse's Super Bowl
+    winners' rosters, major awards against Wikidata. If one disagrees, Wikipedia's
+    number is used and the disagreement is logged, like Sleeper for stats."""
+    other, theirs = None, None
     if f["honor"] == "sb_champion" and f.get("gsis_id"):
         sched = nflv.schedules().filter((pl.col("game_type") == "SB") & pl.col("result").is_not_null())
         winners = {(r["season"], r["home_team"] if r["result"] > 0 else r["away_team"]) for r in sched.iter_rows(named=True)}
         ro = nflv.rosters_all().filter(pl.col("gsis_id") == f["gsis_id"])
-        rings = sorted({r["season"] for r in ro.iter_rows(named=True) if (r["season"], r["team"]) in winners})
-        f["checked_against"], f["check_value"] = "nflverse (Super Bowl winners' rosters)", len(rings)
-        if len(rings) == f["value"]:
-            f["status"] = "verified"
-        else:
-            f.update(status="dropped", note=f"Wikipedia says {f['value']}, nflverse rosters show {len(rings)}")
-        return f
-    if f.get("wikidata") and f.get("qid"):
-        n = wiki.wikidata_award_count(f["qid"], f["wikidata"])
-        if n is None:
-            f.update(status="dropped", checked_against="Wikidata",
-                     note="Wikidata doesn't record this award for him, so it can't be cross-checked")
-            return f
-        f["checked_against"], f["check_value"] = "Wikidata", n
-        if n == f["value"]:
-            f["status"] = "verified"
-        else:
-            f.update(status="dropped", note=f"Wikipedia says {f['value']}, Wikidata says {n}")
-        return f
-    f.update(status="dropped", note="no second source for this honor yet")
+        other = "nflverse (Super Bowl winners' rosters)"
+        theirs = len({r["season"] for r in ro.iter_rows(named=True) if (r["season"], r["team"]) in winners})
+    elif f.get("wikidata") and f.get("qid"):
+        other, theirs = "Wikidata", wiki.wikidata_award_count(f["qid"], f["wikidata"])
+    if theirs is None:
+        f.update(status="trusted", checked_against="Wikipedia (trusted on its own)")
+    elif theirs == f["value"]:
+        f.update(status="verified", checked_against=other, check_value=theirs)
+    else:
+        f.update(status="verified_wikipedia_used", checked_against=other, check_value=theirs,
+                 note=f"Wikipedia says {f['value']}, {other} says {theirs}; using Wikipedia's")
     return f
 
 
@@ -220,7 +214,7 @@ def check_all(candidates: list[dict], progress=lambda *a: None) -> tuple[list[di
         else:
             rejected.append({"subject": f.get("subject"), "stat": f.get("label") or f.get("stat"),
                              "scope": f.get("scope"), "what_we_found": f.get("say"), "reason": f.get("note")})
-        if f["status"] == "verified_sleeper_used":
+        if f["status"] in ("verified_sleeper_used", "verified_wikipedia_used"):
             rejected.append({"subject": f["subject"], "stat": f.get("label"), "scope": f.get("scope"),
                              "what_we_found": f.get("say"), "reason": f"kept, but the sources disagreed: {f['note']}"})
     for i, f in enumerate(passed, start=1):

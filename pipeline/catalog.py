@@ -355,7 +355,9 @@ def honors(card: dict) -> list[dict]:
         return [_fact(**base, stat="honors", label="career honors", status="dropped", note="no Wikipedia page found")]
     facts = []
     for key, item in got["items"].items():
-        years = f" ({', '.join(item['years'])})" if item["years"] else ""
+        # Show the years only when they add up to the count Wikipedia states (a guard
+        # against misreading the infobox); otherwise just the count.
+        years = f" ({', '.join(item['years'])})" if item["years"] and len(item["years"]) == item["count"] else ""
         shown = f"{item['count']}× {item['label']}" if item["count"] > 1 else item["label"]
         facts.append(_fact(**base, stat=f"honor_{key}", honor=key, label=item["label"], value=item["count"],
                            years=item["years"], say=f"{shown}{years}", wikidata=item["wikidata"], list_page=item["list_page"],

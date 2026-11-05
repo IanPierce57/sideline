@@ -25,9 +25,9 @@ These Markdown files are the master copies. They were converted from the PDFs in
 
 Run `.venv/bin/python tests/accuracy.py` to recheck the sources (free; no API calls).
 
-**Scope:** current players only (Nov 4). Honors come from Wikipedia and pass only with a second source (Super Bowl rings vs nflverse rosters; major awards vs Wikidata); QB playoff records from nflverse scores with starts checked against Sleeper.
+**Scope:** current players only (Nov 4). Honors come from Wikipedia, trusted on its own (Nov 4), still cross-checked where possible (Super Bowl rings vs nflverse rosters; major awards vs Wikidata; Wikipedia wins a disagreement, which is logged); QB playoff records from nflverse scores with starts checked against Sleeper.
 
-**Known gaps:** NBA titles, Pro Bowls, All-Star and All-Pro selections have no second source (dropped), and Wikidata is missing many recent awards (e.g. Josh Allen's 2024 MVP), so those get dropped too; no contract or cap data (Spotrac and Over The Cap forbid automated use; Lonnie argues money in general terms); Wikipedia rate-limits bursts of requests (they're spaced and cached daily); after a line is cut, the lines around it aren't re-smoothed yet; spelled-out decimals ("twenty point nine") aren't checked; no judge or scoring yet (Hal names no winner).
+**Known gaps:** no contract or cap data (Spotrac and Over The Cap forbid automated use; Lonnie argues money in general terms); Wikipedia rate-limits bursts of requests (they're spaced and cached daily); after a line is cut, the lines around it aren't re-smoothed yet; spelled-out decimals ("twenty point nine") aren't checked; no judge or scoring yet (Hal names no winner).
 
 **Next, in the order under "How it's built" in BRIEF.md:** judge (blind scoring) and the close; the news ticker source; voices last.
 

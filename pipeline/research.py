@@ -146,8 +146,8 @@ Rules:
 - Cover both sides of the argument fairly, with comparable numbers for the main current rivals.
 - Prefer numbers that can be checked: NFL stats before 2009 and NBA stats before 2017-18 can't be, so they'll be dropped.
   For veterans, use career totals only if the career started in 2009 or later (NFL); otherwise use single seasons.
-- honors: career awards and titles (Super Bowl rings, MVPs, Finals MVPs, Player of the Year), checked against a
-  second source. qb_playoff_record: a quarterback's playoff wins and losses as a starter.
+- honors: career awards and titles from Wikipedia (Super Bowl rings, NBA titles, MVPs, Finals MVPs, Player of
+  the Year, Pro Bowls, All-Star and All-Pro selections). Get honors for every player who'll come up. qb_playoff_record: a quarterback's playoff wins and losses as a starter.
 - Advanced NFL stats only exist for single regular seasons from 2016 on.
 - The current NFL season is {sleeper.state('nfl')['season']}, with stats through Week {nfl_week}. The current NBA season
   is {int(sleeper.state('nba')['season'])}-{str(int(sleeper.state('nba')['season']) + 1)[-2:]}, in progress.

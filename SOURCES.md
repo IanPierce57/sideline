@@ -12,7 +12,7 @@ The "Facts and data" section of BRIEF.md is the authority on sources. This file 
 
 For the NBA, Sleeper is the only source so far, so NBA stats can't pass the two-source check until a second NBA source is added (balldontlie is the candidate).
 
-| [Wikipedia](https://en.wikipedia.org/w/api.php) | Career titles and awards from player infoboxes. CC BY-SA 4.0; official API; credit "Honors: Wikipedia". Added Nov 4, 2026. |
+| [Wikipedia](https://en.wikipedia.org/w/api.php) | Career titles and awards from player infoboxes, trusted on its own for honors (decided Nov 4, 2026). CC BY-SA 4.0; official API; credit "Honors: Wikipedia". |
 
 ## Cross-check (the checker agent's second source)
 
@@ -20,7 +20,7 @@ For the NBA, Sleeper is the only source so far, so NBA stats can't pass the two-
 | --- | --- |
 | nflverse play-by-play, recomputed | Advanced NFL stats (EPA and the like) worked out again from the raw plays, a different calculation from the one the research agent used |
 | [NFL.com](https://www.nfl.com) | Official NFL stats and injury reports. Check by hand. |
-| [Wikidata](https://www.wikidata.org) | Cross-check for major awards (MVP, Finals MVP, Player of the Year). CC0. Many recent awards aren't recorded yet, so those get dropped. |
+| [Wikidata](https://www.wikidata.org) | Cross-check for major awards (MVP, Finals MVP, Player of the Year). CC0. Many recent awards aren't recorded yet; those pass on Wikipedia alone. |
 | nflverse Super Bowl results and season rosters | Cross-check for Super Bowl rings |
 
 | Sleeper stats | The independent second source for basic NFL stats, and the second roster source for the NFL (checked against nflverse rosters) |
