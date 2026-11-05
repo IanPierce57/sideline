@@ -13,6 +13,7 @@ It only listens on your own computer (127.0.0.1), so nobody else can reach it.
 import json
 import re
 import threading
+import time
 import traceback
 import uuid
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -30,6 +31,34 @@ RUN_NAME = re.compile(r"^\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}$")
 # Segments being made right now, by job ID. Each one runs in its own thread.
 JOBS = {}
 JOBS_LOCK = threading.Lock()
+
+
+# The news ticker. The page never waits on a refresh: it gets whatever is cached,
+# and a stale cache is refreshed in the background (at most once an hour).
+NEWS_LOCK = threading.Lock()
+
+
+def _refresh_news() -> None:
+    from dotenv import load_dotenv
+    from pipeline import news
+    load_dotenv(PROJECT / ".env")
+    if not NEWS_LOCK.acquire(blocking=False):
+        return                      # a refresh is already running
+    try:
+        news.headlines(force=True)
+    except Exception:
+        traceback.print_exc()
+    finally:
+        NEWS_LOCK.release()
+
+
+def news_for_page() -> dict:
+    from pipeline import news
+    cached = json.loads(news.CACHE_FILE.read_text()) if news.CACHE_FILE.exists() else {}
+    if time.time() - cached.get("fetched", 0) > news.MAX_AGE_SECONDS:
+        threading.Thread(target=_refresh_news, daemon=True).start()
+    return {"headlines": cached.get("headlines", []), "trending": cached.get("trending", []),
+            "fetched": cached.get("fetched")}
 
 
 def run_job(job_id: str, topic: str, chosen: list) -> None:
@@ -101,6 +130,8 @@ class Handler(SimpleHTTPRequestHandler):
                     continue
                 runs.append({"name": folder.parent.name, "topic": topic})
             return self.send_json(200, runs)
+        if self.path == "/api/news":
+            return self.send_json(200, news_for_page())
         if self.path.startswith("/api/job/"):
             job_id = self.path.removeprefix("/api/job/")
             with JOBS_LOCK:

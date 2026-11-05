@@ -1,10 +1,20 @@
 #!/bin/bash
-# set_key.sh: saves your Anthropic API key into .env without showing it on screen.
+# set_key.sh: saves an API key into .env without showing it on screen.
+#   ./set_key.sh          your Anthropic key (Claude)
+#   ./set_key.sh gnews    your GNews key (the news ticker; free at gnews.io)
 # A Mac pop-up box asks for the key; it's hidden as dots while you paste.
+# Other keys already in .env are left alone.
 cd "$(dirname "$0")"
 
+WHICH="${1:-anthropic}"
+if [ "$WHICH" = "gnews" ]; then
+  NAME="GNEWS_API_KEY"; LABEL="GNews"; PATTERN='^[A-Za-z0-9]{20,64}$'; HINT="about 32 letters and numbers"
+else
+  NAME="ANTHROPIC_API_KEY"; LABEL="Anthropic"; PATTERN='^sk-ant-[A-Za-z0-9_-]{60,}$'; HINT="it starts with sk-ant- and is about 100 characters"
+fi
+
 KEY="$(osascript \
-  -e 'set reply to display dialog "Paste your Anthropic API key (it starts with sk-ant-), then click Save." default answer "" with hidden answer buttons {"Cancel", "Save"} default button "Save" with title "Sideline"' \
+  -e "set reply to display dialog \"Paste your $LABEL API key, then click Save.\" default answer \"\" with hidden answer buttons {\"Cancel\", \"Save\"} default button \"Save\" with title \"Sideline\"" \
   -e 'text returned of reply' 2>/dev/null)"
 
 if [ $? -ne 0 ] || [ -z "$KEY" ]; then
@@ -15,16 +25,17 @@ fi
 # Remove any spaces or line breaks that came along with the paste.
 KEY="$(printf '%s' "$KEY" | tr -d '[:space:]')"
 
-if [[ ! "$KEY" =~ ^sk-ant-[A-Za-z0-9_-]{60,}$ ]]; then
-  echo "That doesn't look like a full key, so nothing was saved. What the paste looked like:"
-  echo "  - length: ${#KEY} characters (a full key is about 100)"
-  if [[ "$KEY" == sk-ant-* ]]; then echo "  - starts with sk-ant-: yes"; else echo "  - starts with sk-ant-: NO"; fi
-  ODD="$(printf '%s' "$KEY" | LC_ALL=C tr -d 'A-Za-z0-9_-' | LC_ALL=C tr -c '.*\n' '?' | fold -w1 | sort -u | tr -d '\n')"
-  if [ -n "$ODD" ]; then echo "  - has characters a real key never has: $ODD  (dots or stars mean a shortened, masked copy)"; fi
-  echo "Create a new key in the Console, click its Copy button, then run this again."
+if [[ ! "$KEY" =~ $PATTERN ]]; then
+  echo "That doesn't look like a full $LABEL key ($HINT), so nothing was saved."
+  echo "  - length: ${#KEY} characters"
+  echo "Copy it again from the $LABEL website, then run this again."
   exit 1
 fi
 
-printf '# Paste your Anthropic API key right after the = sign, with no spaces or quotes.\nANTHROPIC_API_KEY=%s\n' "$KEY" > .env
+# Replace this key's line in .env (or add it), keeping every other line.
+touch .env
+grep -v "^$NAME=" .env > .env.tmp || true
+printf '%s=%s\n' "$NAME" "$KEY" >> .env.tmp
+mv .env.tmp .env
 chmod 600 .env
-echo "Saved. Your key is in .env (${#KEY} characters), which git never commits."
+echo "Saved. Your $LABEL key is in .env (${#KEY} characters), which git never commits."

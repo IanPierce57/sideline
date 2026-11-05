@@ -583,13 +583,26 @@ for (const id of ["hal", ...HOSTS]) {
   $("cast-grid").append(card);
 }
 
-// The ticker at the bottom is the news crawl. It will carry real-time NBA and NFL
-// headlines once the news source is built (see BRIEF.md, Screen and sound).
-// Until then it shows a placeholder, never made-up headlines.
+// The ticker at the bottom is the news crawl: real-time NFL and NBA headlines, each
+// confirmed by two outlets (pipeline/news.py), plus Sleeper's most-added players.
+// Until confirmed headlines arrive it shows a placeholder, never made-up headlines.
 const NEWS_PLACEHOLDER = [
-  ["Sideline", "Real-time NBA and NFL headlines will run here"],
-  ["Lines are open", "Ask the desk any NBA or NFL topic, current or all-time"],
+  ["Sideline", "Live NFL and NBA headlines are on the way"],
+  ["Lines are open", "Ask the desk any NFL or NBA topic about current players"],
 ];
 setTicker(NEWS_PLACEHOLDER);
+
+async function loadNews() {
+  try {
+    const news = await (await fetch("/api/news")).json();
+    const items = news.headlines.map((h) => [h.league, `${h.text} (${h.outlets.join(", ")})`]);
+    for (const t of news.trending || []) items.push([`${t.league} · via Sleeper`, t.text]);
+    if (items.length) setTicker(items);
+  } catch (error) {
+    /* keep whatever the ticker shows now */
+  }
+}
+loadNews();
+setInterval(loadNews, 5 * 60 * 1000);
 
 showIdle();

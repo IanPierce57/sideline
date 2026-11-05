@@ -37,11 +37,12 @@ The NBA has no second source yet.
 | [MySportsFeeds](https://www.mysportsfeeds.com/feed-pricing/) | NFL and NBA feeds; personal plans from about $5/month per league, stats extra. | Paid fallback. Terms not checked. |
 | NFL team websites | Official current rosters | Terms not checked. By hand only. |
 
-## News ticker (to choose)
+## News ticker
 
 | Source | Used for |
 | --- | --- |
-| Not chosen yet | Real-time NBA and NFL headlines for the crawl along the bottom of the screen. Check the source's terms on scraping and AI use before connecting it. Sleeper's trending players (credited) could fill the ticker in the meantime. |
+| [GNews](https://gnews.io) (free plan) | The day's NFL and NBA headlines. Terms (checked Nov 4, 2026): free use is "personal, academic, evaluation, and other non-commercial use"; "reasonable caching" allowed; articles about 12 hours late. Key goes in .env via `./set_key.sh gnews`. A story runs only if two or more outlets report it. |
+| [Sleeper](https://docs.sleeper.com/) trending | Most-added players, credited "via Sleeper". |
 
 ## Manual only (check numbers by hand; don't connect these to the app)
 
@@ -81,5 +82,6 @@ Added later. Their terms have not been checked, so they stay manual only until s
 | NBA team websites | Ruled out Nov 4, 2026. They live on NBA.com, under the same blocking and terms. |
 | NFL.com and NFL Next Gen Stats site | Ruled out for the app Nov 4, 2026. NFL terms forbid "systematic retrieval of data" without written consent. (Next Gen Stats numbers still come in through nflverse.) |
 | StatMuse | Ruled out Nov 4, 2026. Terms ban bots, scrapers, and machine learning or AI use. |
+| Google News RSS | Ruled out Nov 4, 2026. The feed says it's "made available solely for the purpose of rendering Google News results within a personal feed reader"; "any other use of the feed is expressly prohibited." |
 | Spotrac | Ruled out for the app Nov 4, 2026. Terms forbid "systematically extract, collect or harvest" data, data mining or robots, and putting its material in any database. Fine to read by hand. |
 | Over The Cap (and nflverse's contracts dataset, which comes from it) | Ruled out for the app Nov 4, 2026, unless licensed. Terms forbid "any systematic retrieval, by manual, automated or other means" to compile a database, and any robot or spider. Licenses: support@overthecap.com. |
