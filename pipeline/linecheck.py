@@ -83,7 +83,7 @@ def _allowed_for(facts: list[dict]) -> list[tuple[float, float, bool]]:
                 allowed.append((round(n, -2), 1e-6, True))        # "about 37,700"
                 allowed.append((round(n, -3), 1e-6, True))
         # numbers inside the fact's own description: sample, season, rank, as-of week
-        for text in (f.get("sample"), f.get("scope"), f.get("rank"), f.get("as_of"), f.get("say")):
+        for text in (f.get("sample"), f.get("scope"), f.get("rank"), f.get("as_of"), f.get("say"), f.get("definition")):
             for m in re.findall(r"\d[\d,]*(?:\.\d+)?", str(text or "")):
                 allowed.append((float(m.replace(",", "")), 1e-6, False))
                 if len(m) == 4 and m.isdigit():
@@ -91,12 +91,14 @@ def _allowed_for(facts: list[dict]) -> list[tuple[float, float, bool]]:
     return allowed
 
 
-def check_numbers(lines: list[dict], facts_by_id: dict) -> list[dict]:
-    """Lines with a number that doesn't match a cited fact."""
+def check_numbers(lines: list[dict], facts_by_id: dict, topic: str = "") -> list[dict]:
+    """Lines with a number that doesn't match a cited fact. Numbers in the caller's
+    own question (the topic) are allowed anywhere: "top-10" isn't a stat claim."""
     problems = []
+    topic_numbers = [(v, 1e-6, False) for v, _, _ in _numbers_in(topic)]
     for line in lines:
         cited = [facts_by_id[i] for i in line.get("facts", []) if i in facts_by_id]
-        allowed = _allowed_for(cited)
+        allowed = _allowed_for(cited) + topic_numbers
         bad = []
         for value, said, hedged in _numbers_in(line["text"]):
             if value in BIBLE_NUMBERS.get(line["speaker"], set()):
@@ -163,11 +165,11 @@ def rewrite(lines: list[dict], problems: list[dict], pack: list[dict], client: a
 
 
 def run(lines: list[dict], facts: list[dict], pack: list[dict], context: str, client: anthropic.Anthropic,
-        progress=lambda *a: None) -> tuple[list[dict], list[dict]]:
+        progress=lambda *a: None, topic: str = "") -> tuple[list[dict], list[dict]]:
     """Check, rewrite once, re-check, cut what still fails. Returns (lines, log)."""
     by_id = {f["id"]: f for f in facts}
     log = []
-    number_problems = check_numbers(lines, by_id)
+    number_problems = check_numbers(lines, by_id, topic)
     claim_problems = check_claims(lines, pack, context, client)
     progress("line_check", {"checked": len(lines), "flagged": len({p['line'] for p in number_problems + claim_problems})})
     problems = number_problems + claim_problems
@@ -187,7 +189,7 @@ def run(lines: list[dict], facts: list[dict], pack: list[dict], context: str, cl
         fix = fixes.get(line["line"])
         if fix:
             candidate = dict(line, text=fix["text"], facts=[i for i in fix["facts"] if i in by_id])
-            still = check_numbers([candidate], by_id)
+            still = check_numbers([candidate], by_id, topic)
             if not still:
                 out.append(candidate)
                 log.append({"line": line["line"], "speaker": line["speaker"], "said": original,

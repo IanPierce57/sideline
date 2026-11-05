@@ -60,8 +60,13 @@ def _check_advanced(f: dict) -> dict:
     # Agree at least to the precision we show on air, and to one more decimal
     # when the source publishes that much (muffed shows some stats to 2 places).
     published_decimals = len(repr(theirs).split(".")[1]) if "." in repr(theirs) else 0
-    places = max(f["decimals"], min(f["decimals"] + 1, published_decimals))
-    if round(ours, places) == round(theirs, places):
+    # Same number if ours is within half a unit of their last published decimal.
+    # (Re-rounding a value that sits exactly halfway can tip either way in a computer.)
+    if abs(ours - theirs) <= 0.5 * 10 ** -published_decimals + 1e-9:
+        if published_decimals < f["decimals"]:      # they publish fewer decimals: show only what's confirmed
+            f["decimals"] = published_decimals
+            shown = catalog.say(ours, published_decimals, pct=f["stat"] == "success_rate")
+            f["say"] = ("+" + shown) if f["say"].startswith("+") else shown
         f["status"] = "verified"
         if published.get("rank") and published.get("population"):
             f["rank"] = f"ranked {published['rank']} of {published['population']} qualifying players (muffed.ai)"
@@ -226,3 +231,17 @@ def pack_for_writer(facts: list[dict]) -> list[dict]:
     """The fields the script writer needs, nothing else."""
     keep = ("id", "league", "subject", "label", "say", "scope", "sample", "definition", "rank", "as_of", "source")
     return [{k: f[k] for k in keep if f.get(k) not in (None, "")} for f in facts]
+
+
+def merge(facts: list[dict], more: list[dict]) -> list[dict]:
+    """Add newly verified facts to the pack, skipping repeats, and renumber F1, F2, ..."""
+    seen = {(f.get("subject_key"), f["stat"], f.get("scope")) for f in facts}
+    combined = list(facts)
+    for f in more:
+        key = (f.get("subject_key"), f["stat"], f.get("scope"))
+        if key not in seen:
+            seen.add(key)
+            combined.append(f)
+    for i, f in enumerate(combined, start=1):
+        f["id"] = f"F{i}"
+    return combined

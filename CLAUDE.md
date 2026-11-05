@@ -12,6 +12,13 @@ The person building this has never coded. Explain what you're doing in plain lan
 
 These Markdown files are the master copies. They were converted from the PDFs in `originals/` and aligned on Nov 4, 2026. The user also has older drafts in Claude Docs, which may differ. If something is unclear or two documents contradict each other, ask the user instead of guessing, and keep the documents aligned when you change one.
 
+## The rule that matters most
+
+If a number can't be cross-referenced or otherwise confirmed correct, cross it off and go to something else. It never reaches
+the script; `generate.py` runs one more research round for confirmable replacements (step 3b), checked the same way. Numbers
+from the sources the user chose to trust on their own (Sleeper for stats, Wikipedia for honors) count as confirmed. Never
+loosen this rule without asking.
+
 ## Where we are
 
 **Built (Nov 4, 2026):** a typed topic goes through the whole fact pipeline, then plays in the pixel studio.

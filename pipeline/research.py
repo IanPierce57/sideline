@@ -161,12 +161,14 @@ qb_playoff_record: playoff wins and losses as the starting quarterback (NFL QBs;
 
 
 def research(topic: str, fmt: str, named: list[dict], client: anthropic.Anthropic,
-             progress=lambda *a: None) -> list[dict]:
-    """Runs the research agent. Returns candidate facts (unverified)."""
+             progress=lambda *a: None, follow_up: str = "", rounds: int = 5) -> list[dict]:
+    """Runs the research agent. Returns candidate facts (unverified).
+    follow_up: extra instructions, e.g. the list of crossed-off stats to replace."""
     candidates: list[dict] = []
     known = {c["key"]: c for c in named}
     intro = "\n".join(f"- {players.describe(c)}: key {c['key']}" for c in named) or "- (none named)"
-    messages = [{"role": "user", "content": f"Topic: {topic}\n\nPlayers named in the topic, already confirmed:\n{intro}"}]
+    messages = [{"role": "user", "content": f"Topic: {topic}\n\nPlayers named in the topic, already confirmed:\n{intro}"
+                 + (f"\n\n{follow_up}" if follow_up else "")}]
 
     def run_tool(name: str, args: dict) -> str:
         if name == "find_player":
@@ -208,7 +210,7 @@ def research(topic: str, fmt: str, named: list[dict], client: anthropic.Anthropi
                                 "note": fact.get("note") if fact.get("status") == "dropped" else ""})
         return json.dumps(results)
 
-    for _ in range(5):                       # at most five rounds of tool calls
+    for _ in range(rounds):                  # at most this many rounds of tool calls
         reply = client.messages.create(
             model=RESEARCH_MODEL, max_tokens=8000, system=_research_rules(fmt), tools=TOOLS,
             output_config={"effort": "low"}, messages=messages,

@@ -98,7 +98,9 @@ Every topic passes three checks before research starts, so a bad topic costs abo
 
 ## Facts and data
 
-Every real-world fact comes from the fact pack. Anything that can't be verified gets rewritten or cut. SOURCES.md repeats this table and adds reference sites that stay manual only.
+Every real-world fact comes from the fact pack. Anything that can't be verified gets rewritten or cut.
+
+**The core rule (Nov 4, 2026):** if a number can't be cross-referenced or otherwise confirmed correct, cross it off and go to something else. It never reaches the script; the research agent gets one more round to find a confirmable replacement, which goes through the same checks. (Numbers from sources the user chose to trust on their own, Sleeper for stats and Wikipedia for honors, count as confirmed.) SOURCES.md repeats this table and adds reference sites that stay manual only.
 
 | Source | Used for | Role |
 | --- | --- | --- |

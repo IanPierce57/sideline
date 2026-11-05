@@ -314,6 +314,25 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
     progress("step", {"step": "verify", "text": "Checking every number against a second source"})
     t = time.time()
     facts, stat_log = verify.check_all(candidates, progress)
+
+    # 3b. Anything that couldn't be confirmed is crossed off. Go find something else:
+    # one more research round for checkable replacements, checked the same way.
+    crossed_off = [r for r in stat_log if not r["reason"].startswith("kept")]
+    if crossed_off:
+        progress("step", {"step": "research", "text": f"Replacing {len(crossed_off)} crossed-off stats"})
+        listing = "\n".join(f"- {r['subject']}: {r['stat']} ({r.get('scope') or 'n/a'}): {r['reason']}" for r in crossed_off)
+        kept = "\n".join(f"- {f['subject']}: {f['label']} ({f.get('scope')})" for f in facts)
+        more = research.research(topic, check["format"], named, client, progress, rounds=2, follow_up=(
+            "These stats couldn't be confirmed, so they were crossed off:\n" + listing +
+            "\n\nAlready confirmed (don't ask for these again):\n" + kept +
+            "\n\nFind replacements that can be confirmed and still serve the argument: other seasons or stats "
+            "for the same players, or comparable numbers for other current players. Don't re-request anything "
+            "crossed off. If nothing fits, reply \"done\"."))
+        if more:
+            candidates += more
+            more_facts, more_log = verify.check_all(more, progress)
+            facts = verify.merge(facts, more_facts)
+            stat_log += more_log
     timings["verify"] = round(time.time() - t, 1)
     pack = verify.pack_for_writer(facts)
     progress("verified", {"found": len(candidates), "passed": len(facts),
@@ -356,7 +375,7 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
     # 5. Check every line
     progress("step", {"step": "check", "text": "Checking every line of the script"})
     t = time.time()
-    lines, line_log = linecheck.run(lines, facts, pack, context, client, progress)
+    lines, line_log = linecheck.run(lines, facts, pack, context, client, progress, topic)
     timings["line_check"] = round(time.time() - t, 1)
 
     # The stat chyron shows each fact the first time it's cited.
