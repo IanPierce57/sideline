@@ -19,6 +19,7 @@ import json
 import os
 import re
 import time
+import urllib.error
 import urllib.parse
 from datetime import datetime, timedelta, timezone
 from urllib.parse import urlparse
@@ -35,7 +36,11 @@ BLOCKED = ("espn.com", "espn.go.com", "nfl.com", "nba.com", "statmuse.com", "spo
            "spotrac.com", "overthecap.com")
 OPINION = re.compile(r"\b(picks?|odds|predictions?|predict|power rankings?|rankings|mock draft|fantasy|start/sit|"
                      r"start or sit|sleepers?|bets?|betting|parlay|props?|best bets|grades?|takeaways|"
-                     r"overreactions?|winners and losers|what we learned|podcast|live updates|how to watch|tv channel)\b", re.I)
+                     r"overreactions?|winners and losers|what we learned|podcast|live updates|how to watch|tv channel|"
+                     # rumors and guesses aren't confirmed news either (decided Nov 4, 2026)
+                     r"rumou?rs?|rumored|reportedly|could|should|would|might|may|urged|pitch|proposed|potential|"
+                     r"plan b|targets?|linked|interest(ed)?|eyeing|buzz|speculation|ideas?|options|"
+                     r"markets?|kalshi|polymarket|promo|bonus|sportsbooks?|ranks?|ranked|trending)\b", re.I)
 NEWS_WORDS = ("trade", "traded", "acquire", "acquires", "deal", "sign", "signs", "signed", "extension", "release",
               "released", "waive", "waived", "cut", "injury", "injured", "hurt", "out", "return", "returns",
               "questionable", "doubtful", "ruled out", "reserve", "suspend", "suspended", "fire", "fired", "hire",
@@ -53,14 +58,31 @@ NBA_TEAMS = ["Hawks", "Celtics", "Nets", "Hornets", "Bulls", "Cavaliers", "Maver
 
 # ---------- Fetching (GNews) ----------
 
-QUERIES = {"NFL": ["NFL", "NFL trade OR injury OR signs"], "NBA": ["NBA", "NBA trade OR injury OR signs"]}
+# Five narrow searches per league (10 articles each on the free plan) give more chances
+# for two outlets to cover the same story. 10 searches every 6 hours = about 40 a day of
+# the free plan's 100.
+QUERIES = {league: [league, f"{league} injury OR injured", f"{league} trade OR traded OR acquires",
+                    f"{league} signs OR signed OR released OR waived", f"{league} beat OR beats OR defeat"]
+           for league in ("NFL", "NBA")}
 
 
 def _gnews(query: str, key: str) -> list[dict]:
+    """One GNews search. The free plan turns away requests sent too close together,
+    so they're spaced out, retried once after a pause, and skipped if they still fail
+    (a missing query just means fewer headlines, never made-up ones)."""
     url = "https://gnews.io/api/v4/search?" + urllib.parse.urlencode(
         {"q": query, "lang": "en", "country": "us", "max": 10, "sortby": "publishedAt", "apikey": key})
     name = "gnews/" + re.sub(r"\W+", "_", query)
-    return get_json(url, name, max_age_hours=MAX_AGE_SECONDS / 3600).get("articles", [])
+    for attempt in range(2):
+        time.sleep(2 if attempt == 0 else 5)
+        try:
+            return get_json(url, name, max_age_hours=MAX_AGE_SECONDS / 3600).get("articles", [])
+        except urllib.error.HTTPError as e:
+            if e.code != 429:
+                break                    # don't print the error: its URL contains the key
+        except OSError:
+            break
+    return []
 
 
 # ---------- Confirming ----------
@@ -98,7 +120,7 @@ def confirm(articles: list[dict], league: str, player_names: list[str], now: dat
         if any(domain.endswith(b) for b in BLOCKED):
             continue                                   # banned outlets never appear
         if OPINION.search(title):
-            crossed.append({"headline": title, "reason": "opinion or betting, not news"})
+            crossed.append({"headline": title, "reason": "opinion, rumor, or betting, not news"})
             continue
         try:
             published = datetime.fromisoformat(a["publishedAt"].replace("Z", "+00:00"))

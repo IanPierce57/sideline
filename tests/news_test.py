@@ -12,7 +12,7 @@ NOW = datetime(2026, 11, 5, 18, 0, tzinfo=timezone.utc)
 H = lambda hours: (NOW - timedelta(hours=hours)).isoformat().replace("+00:00", "Z")   # noqa: E731
 A = lambda title, outlet, domain, hours=3: {"title": title, "publishedAt": H(hours), "url": f"https://{domain}/x",  # noqa: E731
                                             "source": {"name": outlet, "url": f"https://{domain}"}}
-PLAYERS = ["Jacoby Brissett", "Jack Campbell", "Patrick Mahomes", "Myles Garrett"]
+PLAYERS = ["Jacoby Brissett", "Jack Campbell", "Patrick Mahomes", "Myles Garrett", "Jonathan Taylor"]
 
 ARTICLES = [
     A("Cardinals trade QB Jacoby Brissett to Ravens", "CBS Sports", "cbssports.com"),
@@ -26,6 +26,8 @@ ARTICLES = [
     A("League announces new broadcast deal", "Reuters", "reuters.com"),                                     # no player or team
     A("Bears and Packers combine for wild finish", "AP", "apnews.com"),
     A("Bears win wild finish over Packers on late field goal", "NBC Sports", "nbcsports.com"),              # same story (teams + win)
+    A("New Jonathan Taylor trade rumors on Colts' asking price", "Bleacher Report", "bleacherreport.com"),  # rumor
+    A("Vikings have potential Jonathan Taylor 'Plan B' at trade deadline", "Heavy", "heavy.com"),           # rumor: two rumors aren't a confirmation
 ]
 
 kept, crossed = news.confirm(ARTICLES, "NFL", PLAYERS, now=NOW)
@@ -41,7 +43,7 @@ got = {w for w in expected_kept if any(w in k["text"] for k in kept)}
 problems = []
 if got != expected_kept:
     problems.append(f"expected stories about {sorted(expected_kept)}, got {sorted(got)}")
-if any("Mahomes" in k["text"] or "picks" in k["text"] or "broadcast" in k["text"] or "Garrett" in k["text"] for k in kept):
+if any("Mahomes" in k["text"] or "picks" in k["text"] or "broadcast" in k["text"] or "Garrett" in k["text"] or "Taylor" in k["text"] for k in kept):
     problems.append("something that should have been crossed off got through")
 if any(o == "ESPN" for k in kept for o in k["outlets"]):
     problems.append("a banned outlet appeared")
