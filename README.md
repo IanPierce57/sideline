@@ -2,7 +2,11 @@
 
 Type an NBA or NFL topic, and AI writes a 3-to-5-minute debate between a moderator (Hal) and three hosts (Royce, Deacon, Lonnie), then plays it as subtitles. The full spec is in [BRIEF.md](BRIEF.md); the characters are in [characters/](characters/).
 
-**Current step: 1 of the pipeline, with the pixel studio.** Scripts have no real stats and no scoring yet, and there are no voices.
+**Where it stands:** real, double-checked stats; the pixel studio; no scoring or voices yet.
+
+**How a segment is made (about 1.5 to 2 minutes):** a topic check, then a research agent that requests stats from nflverse and Sleeper, then a checker that re-fetches every number from a second source (Sleeper, or muffed.ai for advanced stats) and drops anything that doesn't match, then the writer (allowed to use only those numbers), then a line checker that reads every number in the script. Each run's folder also has `fact_pack.json` (every verified stat) and `rejection_log.json` (every stat and line that was dropped, fixed, or cut, and why).
+
+To recheck the data sources (free, no API credits): `.venv/bin/python tests/accuracy.py`
 
 ## One-time setup: add your API key
 

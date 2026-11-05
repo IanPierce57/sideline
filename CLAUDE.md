@@ -14,18 +14,20 @@ These Markdown files are the master copies. They were converted from the PDFs in
 
 ## Where we are
 
-**Step 1 is built:** a typed topic becomes a Sonnet-written script (caller, Hal, three hosts, Hal's wrap-up). It's saved to `runs/<date>_<time>/script.json` and played as subtitles on a plain page.
+**Built (Nov 4, 2026):** a typed topic goes through the whole fact pipeline, then plays in the pixel studio.
 
-Step 1 has its own rules in `generate.py` (`STEP_1_RULES`). They override the bibles until the research step exists: no real-world numbers, no research-step placeholders, no specific real scenes or quotes, and no winner. Hosts may use their fictional bible backstories. Remove or loosen these rules as later steps arrive.
+1. **Topic check** (`pipeline/research.py`, Haiku): NBA/NFL only, appropriate, names resolved by ID. Same-name players are confirmed with the user when two or more current players share the name (or all are retired).
+2. **Research agent** (`pipeline/research.py`, Sonnet): picks stats from the catalog through tools. It never types a number.
+3. **Checker** (`pipeline/verify.py`, plain code): every fact re-fetched from a second source and compared. NFL basic stats vs Sleeper (Sleeper wins disagreements); NFL advanced stats and team records vs muffed.ai (exact match or dropped); NBA stats and tackles from Sleeper alone; NFL before 2009 and NBA before 2017-18 can't be checked, so they're dropped.
+4. **Writer** (`generate.py`, Sonnet): only fact-pack numbers; every line lists the fact IDs it uses (`FACT_RULES`).
+5. **Line checker** (`pipeline/linecheck.py`): code checks every number in every line against the facts it cites; an AI reader flags unsupported claims; failed lines are rewritten once, then cut.
+6. Each run saves `script.json`, `fact_pack.json`, and `rejection_log.json` in `runs/<date>_<time>/`.
 
-**Next, in the order under "How it's built" in BRIEF.md, one step at a time:**
+Run `.venv/bin/python tests/accuracy.py` to recheck the sources (free; no API calls).
 
-1. Topic in: the topic check (roster matching plus Haiku) and Haiku picking the format.
-2. Research: the research agent pulls stats from nflverse (nflreadpy) and the NBA source once it's chosen, plus web search.
-3. Verify: a separate checker agent re-gets each stat on its own and cross-checks it. Only passed stats go into the fact pack, and every drop goes in the rejection log.
-4. Write with the fact pack, then check every line's numbers against it.
-5. Judge (blind scoring) and close (Hal's verdict, written after scoring).
-6. Assemble the timeline, then the pixel studio, sprites, chyron, and meter.
+**Known gaps:** no playoff win-loss records or Super Bowl/title counts yet (no second source); no contract or cap data (Lonnie argues money in general terms); after a line is cut, the lines around it aren't re-smoothed yet; spelled-out decimals ("twenty point nine") aren't checked; no judge or scoring yet (Hal names no winner).
+
+**Next, in the order under "How it's built" in BRIEF.md:** judge (blind scoring) and the close; the news ticker source; voices last.
 
 Every character's look is in their bible ("## Look"). The pixel studio follows those; don't change a look without asking.
 

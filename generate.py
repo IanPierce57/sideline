@@ -58,35 +58,38 @@ DELIVERIES = [
 
 FORMATS = ["debate", "buy_or_sell", "prediction"]
 
-# Rules for step 1 only. They sit on top of the bibles until research exists.
-STEP_1_RULES = """\
-STEP 1 RULES. These override the bibles wherever they conflict.
+# Rules about facts. They sit on top of the bibles, which show [Research-step ...]
+# placeholders where real numbers go; the fact pack supplies the real numbers.
+FACT_RULES = """\
+FACT RULES. These override the bibles wherever they conflict.
 
-The research step does not exist yet, so there is no fact pack. Until it does:
-
-1. No numbers about the real world. Hosts must not cite any stat, count,
-   percentage, ranking number, record, score, salary, or year about real
-   players, teams, or games. Not in digits, not spelled out ("forty touchdowns",
-   "three rings"), not as "about" or "roughly". Make the argument with general
-   claims instead: "his efficiency's been elite for years", "he's won it more
-   than once", "they've been one of the best defenses in the league".
-2. No research-step placeholders. Never write a bracketed placeholder like
-   [Research-step stat: ...]. The bibles use them; this script must not.
-3. No specific real-world scenes or quotes. Don't describe a particular game,
-   play, or score, and don't quote a real player or coach. Talk about patterns
-   and well-known reputations instead ("he's been at his best in January").
-4. Host backstories are allowed. Hosts may use the fictional careers and
-   receipts in their own bibles, years included (Royce's spring 2017 Kansas
-   City call, Deacon's 13 seasons, Lonnie's red-team job). Those are checked
-   against the bibles, not the real world.
-5. Current-season caution. You don't have this season's data. For current
-   topics, argue from roster construction, reputations, and how teams are
-   built, not from this season's records or results.
-6. No winner. The judge and scoring don't exist yet, so Hal does NOT announce
-   a winner, say "on the scorecard", or hint at who argued better. After the
-   final answers, Hal restates where each host landed in one plain sentence
-   (using "Where we are:" or similar), thanks the caller by name, and signs
-   off with "That's the board."
+1. Numbers come only from the fact pack. Every number a host says about the
+   real world (a stat, count, percentage, rank, record, season, or sample) must
+   come from a fact in the fact pack, and that line must list the fact's ID in
+   "facts". Say it the way the fact's "say" field has it. Rates may round to one
+   decimal, and "about" is only for rounding a real number. Never estimate,
+   remember, or invent a number, and never write a [Research-step ...] placeholder.
+2. Say the scope when it matters: "in 2022", "for his career", "in the playoffs",
+   "this season, through Week 8". A single season is never a career number.
+   Compare like with like (career to career, season to season).
+3. The first time an advanced stat comes up, someone explains it in one plain
+   sentence, using the fact's definition.
+4. Real-world claims without numbers (a player's current team, an injury, a
+   title, a record) must agree with the fact pack. Use the current_team facts:
+   never put a player on a team the fact pack contradicts. If the fact pack
+   doesn't cover something, keep it general or make it clearly an opinion.
+5. No specific real-world scenes or quotes. Don't describe a particular play or
+   game, and don't quote a real player or coach.
+6. Not every line needs a number. Use facts where they win the point: Royce lands
+   one memorable number, Deacon stacks two or three. Lonnie has no contract or
+   cap figures in the fact pack, so he keeps money talk general.
+7. Host backstories are allowed. Hosts may use the fictional careers and receipts
+   in their own bibles, years included. Those come from the bibles, not the world.
+8. No winner. The judge and scoring don't exist yet, so Hal does NOT announce a
+   winner, say "on the scorecard", or hint at who argued better. After the final
+   answers, Hal restates where each host landed in one plain sentence (using
+   "Where we are:" or similar), thanks the caller by name, and signs off with
+   "That's the board."
 """
 
 SCRIPT_INSTRUCTIONS = """\
@@ -94,7 +97,7 @@ YOUR JOB
 
 Write one segment of Sideline for the topic the user gives you. Follow the
 Debate rules, the moderator bible (Hal), the three host bibles (Royce, Deacon,
-Lonnie), the callers file, and the step 1 rules above.
+Lonnie), the callers file, and the fact rules above.
 
 Segment flow:
 1. Hal takes the call: "You're on the Sideline. Go ahead, <name> from <city>."
@@ -106,7 +109,7 @@ Segment flow:
    while new arguments keep coming, and cuts in (headphones off one ear) only
    for the reasons in his bible.
 6. When new arguments run out, Hal asks for one-sentence final answers.
-7. Hal wraps up with no winner (step 1 rule 6).
+7. Hal wraps up with no winner (fact rule 8).
 
 Format: pick exactly one.
 - "debate": a question with sides (who's better, is X the greatest, is Y overrated).
@@ -126,6 +129,8 @@ Each line:
   Use them only when the topic earns a blowup, at most two in a segment, and
   only in character: Deacon is the one who gets loud, Royce goes cold instead,
   Lonnie almost never does, and Hal never does.
+- facts: the IDs of every fact-pack fact this line uses (e.g. ["F3", "F7"]),
+  or [] if it uses none. Every real-world number in the line needs one.
 - argument: which argument this line belongs to, or null.
   * Number arguments 1, 2, 3... in the order they first appear.
   * A new number starts each time a host makes a new claim or a rebuttal
@@ -169,7 +174,7 @@ def build_system_prompt() -> str:
     # Sorted so the prompt is byte-identical every run (keeps the cache warm).
     for path in sorted(CHARACTERS.glob("*.md")):
         parts.append(f"# characters/{path.name}\n\n{path.read_text().strip()}")
-    parts.append(STEP_1_RULES)
+    parts.append(FACT_RULES)
     parts.append(SCRIPT_INSTRUCTIONS)
     return "\n\n---\n\n".join(parts)
 
@@ -200,9 +205,10 @@ OUTPUT_SCHEMA = {
                     "speaker": {"type": "string", "enum": list(SPEAKERS)},
                     "text": {"type": "string"},
                     "delivery": {"type": "string", "enum": DELIVERIES},
+                    "facts": {"type": "array", "items": {"type": "string"}},
                     "argument": {"anyOf": [{"type": "integer"}, {"type": "null"}]},
                 },
-                "required": ["speaker", "text", "delivery", "argument"],
+                "required": ["speaker", "text", "delivery", "facts", "argument"],
                 "additionalProperties": False,
             },
         },
@@ -225,10 +231,6 @@ def check_script(lines: list[dict]) -> list[str]:
     if not TARGET_WORDS[0] <= words <= TARGET_WORDS[1]:
         warnings.append(f"{words} spoken words, outside the {TARGET_WORDS[0]}-{TARGET_WORDS[1]} target")
     for line in lines:
-        # Years from the hosts' own bible receipts are allowed; anything else is a stray number.
-        text = re.sub(BIBLE_YEARS, "", line["text"])
-        if line["speaker"] in ("royce", "deacon", "lonnie") and re.search(r"\d", text):
-            warnings.append(f"line {line['line']} ({line['speaker_name']}) contains a number: {line['text']!r}")
         if "[" in line["text"]:
             warnings.append(f"line {line['line']} has a bracket, maybe a leftover placeholder")
     hosts_args = {}
@@ -246,79 +248,157 @@ def check_script(lines: list[dict]) -> list[str]:
     return warnings
 
 
-def generate_script(topic: str) -> tuple[Path, dict]:
-    """Write a script for one topic, save it, and return (run folder, script)."""
+class TopicProblem(Exception):
+    """The topic check turned the topic away, or needs the user to pick a player."""
+    def __init__(self, details: dict):
+        super().__init__(details.get("reason") or "Which player did you mean?")
+        self.details = details
+
+
+def _source_line(fact: dict) -> str:
+    """One plain line for the end card's source list."""
+    checked = str(fact.get("checked_against") or "")
+    if fact["stat"] == "current_team":
+        return "Current rosters: Sleeper" + (", checked against nflverse" if "nflverse" in checked else "")
+    if "muffed" in checked:
+        return "Advanced stats: nflverse, checked against muffed.ai (" + fact.get("credit", "Data via nflverse") + ")"
+    if fact["source"] == "Sleeper":
+        return f"{fact['league']} stats: Sleeper"
+    return f"{fact['league']} stats: nflverse, checked against Sleeper"
+
+
+def _chyron(fact: dict) -> dict:
+    """What the stat chyron shows for one fact."""
+    checked = fact.get("checked_against") or ""
+    return {"value": fact["say"], "label": f"{fact['subject']} · {fact['label']}",
+            "definition": fact.get("definition", ""),
+            "source": _source_line(fact).split(": ", 1)[1],
+            "asOf": f"{fact.get('scope', '')} · {fact.get('as_of', '')}".strip(" ·")}
+
+
+def generate_script(topic: str, progress=None, chosen: list[str] | None = None) -> tuple[Path, dict]:
+    """Research, verify, write, and check a segment for one topic. Saves the run
+    and returns (run folder, script). progress(event, details) reports each step.
+    chosen: player keys the user picked when a name matched more than one player."""
+    from pipeline import linecheck, research, verify
+
+    progress = progress or (lambda *a: None)
     topic = topic.strip()
     if not topic:
         raise ValueError("Type a topic first.")
 
     load_dotenv(PROJECT / ".env")
     if not os.environ.get("ANTHROPIC_API_KEY", "").strip():
-        raise RuntimeError("No API key yet. Paste it into the .env file (see README.md).")
+        raise RuntimeError("No API key yet. Run set_key.sh (see README.md).")
     client = anthropic.Anthropic()  # reads ANTHROPIC_API_KEY from .env
-
     started = time.time()
+    timings = {}
+
+    # 1. Topic check
+    progress("step", {"step": "topic", "text": "Screening the call"})
+    t = time.time()
+    check = research.check_topic(topic, client, chosen=set(chosen or []))
+    timings["topic_check"] = round(time.time() - t, 1)
+    if not check["ok"]:
+        raise TopicProblem(check)
+    named = check["players"]
+    progress("topic", {"format": check["format"], "players": [p["name"] for p in named]})
+
+    # 2. Research
+    progress("step", {"step": "research", "text": "Pulling stats"})
+    t = time.time()
+    candidates = research.research(topic, check["format"], named, client, progress)
+    timings["research"] = round(time.time() - t, 1)
+
+    # 3. Verify
+    progress("step", {"step": "verify", "text": "Checking every number against a second source"})
+    t = time.time()
+    facts, stat_log = verify.check_all(candidates, progress)
+    timings["verify"] = round(time.time() - t, 1)
+    pack = verify.pack_for_writer(facts)
+    progress("verified", {"found": len(candidates), "passed": len(facts),
+                          "dropped": sum(1 for r in stat_log if not r["reason"].startswith("kept"))})
+
+    # 4. Write, with the fact pack
+    progress("step", {"step": "write", "text": "Writing the segment"})
+    context = (f"Format (from the topic check): {check['format']}. Today is {datetime.now():%B %-d, %Y}. "
+               "Current teams and anything else about the real world: see the fact pack.")
+    t = time.time()
     with client.beta.messages.stream(
         model=MODEL,
         max_tokens=32000,
         thinking={"type": "adaptive"},
-        output_config={
-            "effort": "high",
-            "format": {"type": "json_schema", "schema": OUTPUT_SCHEMA},
-        },
+        output_config={"effort": "high", "format": {"type": "json_schema", "schema": OUTPUT_SCHEMA}},
         # If a safety check declines the request, the API retries it on another model.
         betas=["server-side-fallback-2026-07-01"],
         fallbacks="default",
-        system=[{
-            "type": "text",
-            "text": build_system_prompt(),
-            # The bibles are the same every run, so cache them (cheaper and faster).
-            "cache_control": {"type": "ephemeral"},
-        }],
-        messages=[{"role": "user", "content": f"Topic: {topic}"}],
+        system=[{"type": "text", "text": build_system_prompt(),
+                 # The bibles are the same every run, so cache them (cheaper and faster).
+                 "cache_control": {"type": "ephemeral"}}],
+        messages=[{"role": "user", "content": f"Topic: {topic}\n\n{context}\n\n"
+                   f"Fact pack (every number you may use):\n{json.dumps(pack, indent=1, ensure_ascii=False)}"}],
     ) as stream:
         response = stream.get_final_message()
-    seconds = round(time.time() - started, 1)
+    timings["write"] = round(time.time() - t, 1)
 
     if response.stop_reason == "refusal":
         raise RuntimeError("Claude declined to write this one. Try rewording the topic.")
     if response.stop_reason == "max_tokens":
         raise RuntimeError("The script got cut off before it finished. Try again.")
-
-    text = next(block.text for block in response.content if block.type == "text")
-    data = json.loads(text)
+    data = json.loads(next(block.text for block in response.content if block.type == "text"))
 
     caller = data["caller"]
     names = dict(SPEAKERS, caller=f"{caller['name']} from {caller['city']}")
-    lines = []
-    for number, line in enumerate(data["lines"], start=1):
-        lines.append({
-            "line": number,
-            "speaker": line["speaker"],
-            "speaker_name": names[line["speaker"]],
-            "text": line["text"].strip(),
-            "delivery": line["delivery"],
-            "argument": line["argument"],
-        })
+    lines = [{"line": n, "speaker": l["speaker"], "speaker_name": names[l["speaker"]], "text": l["text"].strip(),
+              "delivery": l["delivery"], "facts": l["facts"], "argument": l["argument"]}
+             for n, l in enumerate(data["lines"], start=1)]
 
+    # 5. Check every line
+    progress("step", {"step": "check", "text": "Checking every line of the script"})
+    t = time.time()
+    lines, line_log = linecheck.run(lines, facts, pack, context, client, progress)
+    timings["line_check"] = round(time.time() - t, 1)
+
+    # The stat chyron shows each fact the first time it's cited.
+    by_id = {f["id"]: f for f in facts}
+    shown = set()
+    for line in lines:
+        for fid in line.get("facts", []):
+            fact = by_id.get(fid)
+            if fact and fact["stat"] != "current_team" and fid not in shown:
+                line["stat"] = _chyron(fact)
+                shown.add(fid)
+                break
+
+    used = {fid for line in lines for fid in line.get("facts", [])}
+    sources = sorted({_source_line(by_id[i]) for i in used if i in by_id})
     words = sum(count_words(line["text"]) for line in lines)
     script = {
         "topic": topic,
-        "format": data["format"],
+        "format": check["format"],
         "caller": caller,
+        "players": [p["name"] for p in named],
         "word_count": words,
         "estimated_minutes": round(words / WORDS_PER_MINUTE, 1),
         "warnings": check_script(lines),
+        "sources": sources,
         "lines": lines,
         "meta": {
-            "step": 1,
+            "step": 2,
             "model": response.model,
             "created": datetime.now().isoformat(timespec="seconds"),
-            "generation_seconds": seconds,
-            "input_tokens": response.usage.input_tokens,
-            "cache_read_tokens": response.usage.cache_read_input_tokens,
-            "cache_write_tokens": response.usage.cache_creation_input_tokens,
-            "output_tokens": response.usage.output_tokens,
+            "generation_seconds": round(time.time() - started, 1),
+            "timings": timings,
+            "stats_found": len(candidates),
+            "stats_verified": len(facts),
+            "stats_dropped": sum(1 for r in stat_log if not r["reason"].startswith("kept")),
+            "facts_used": len(used),
+            "lines_checked": len(lines) + sum(1 for e in line_log if e["action"] == "cut"),
+            "lines_rewritten": sum(1 for e in line_log if e["action"] == "rewritten"),
+            "lines_cut": sum(1 for e in line_log if e["action"] == "cut"),
+            "writer_input_tokens": response.usage.input_tokens,
+            "writer_cache_read_tokens": response.usage.cache_read_input_tokens,
+            "writer_output_tokens": response.usage.output_tokens,
         },
     }
 
@@ -333,6 +413,9 @@ def generate_script(topic: str) -> tuple[Path, dict]:
         except FileExistsError:
             time.sleep(1)
     (run_dir / "script.json").write_text(json.dumps(script, indent=2, ensure_ascii=False))
+    (run_dir / "fact_pack.json").write_text(json.dumps(facts, indent=2, ensure_ascii=False, default=str))
+    (run_dir / "rejection_log.json").write_text(json.dumps({"stats": stat_log, "lines": line_log}, indent=2, ensure_ascii=False))
+    progress("done", {"run": run_dir.name})
     return run_dir, script
 
 
@@ -350,15 +433,27 @@ def main() -> None:
     except anthropic.APIConnectionError:
         print("Couldn't reach the Claude API. Check your internet connection.")
         sys.exit(1)
+    except TopicProblem as problem:
+        d = problem.details
+        if d.get("confirm"):
+            for c in d["confirm"]:
+                print(f"'{c['asked']}' could be: " + "; ".join(f"{x['label']} [{x['key']}]" for x in c["choices"]))
+        else:
+            print("Topic turned away:", d.get("reason"), "| Try:", "; ".join(d.get("suggestions", [])))
+        sys.exit(1)
     except RuntimeError as problem:
         print(problem)
         sys.exit(1)
     print()
     for line in script["lines"]:
-        print(f"{line['speaker_name'].upper()} [{line['delivery']}]: {line['text']}")
+        cites = f"  {line['facts']}" if line.get("facts") else ""
+        print(f"{line['speaker_name'].upper()} [{line['delivery']}]: {line['text']}{cites}")
     print()
+    m = script["meta"]
     print(f"Format: {script['format']}   Words: {script['word_count']} "
-          f"(~{script['estimated_minutes']} min)   Took: {script['meta']['generation_seconds']}s")
+          f"(~{script['estimated_minutes']} min)   Took: {m['generation_seconds']}s {m['timings']}")
+    print(f"Stats: {m['stats_found']} found, {m['stats_verified']} verified, {m['stats_dropped']} dropped, "
+          f"{m['facts_used']} used | Lines: {m['lines_checked']} checked, {m['lines_rewritten']} rewritten, {m['lines_cut']} cut")
     for warning in script["warnings"]:
         print(f"WARNING: {warning}")
     print(f"Saved to {run_dir.relative_to(PROJECT)}/script.json")

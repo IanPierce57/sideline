@@ -260,7 +260,7 @@ function showPreshow(topic) {
   };
   tick();
   preshowTimer = setInterval(tick, 1000);
-  setRight("PRE-SHOW", "On air in about a minute");
+  setRight("PRE-SHOW", "On air in about two minutes");
   setCamera("caller", "Line 1", "Caller<br><span class=\"gold\">Holding</span>");
   $("show-tag").textContent = "Pre-show";
 }
@@ -399,24 +399,49 @@ async function play(newScript) {
 
 // ---------- Asking the desk ----------
 
-$("form").addEventListener("submit", async (event) => {
-  event.preventDefault();
-  const topic = $("topic").value.trim();
-  if (!topic) return;
+// The pre-show's control room shows what the pipeline is really doing.
+const STEP_NAMES = { start: "ON THE LINE", topic: "SCREENING", research: "PULLING STATS",
+                     verify: "CHECKING STATS", write: "WRITING", check: "LINE CHECK" };
+function showControlRoom(job) {
+  const c = job.counts || {};
+  const step = job.step || {};
+  let detail = `Stats found ${c.found || 0} · verified ${c.verified || 0} · dropped ${c.dropped || 0}`;
+  if (c.lines_checked != null) {
+    detail = `Lines checked ${c.lines_checked} · flagged ${c.lines_flagged || 0}`
+      + (c.lines_rewritten != null ? ` · fixed ${c.lines_rewritten} · cut ${c.lines_cut}` : "");
+  }
+  setRight(STEP_NAMES[step.step] || "PRE-SHOW", detail);
+  setStatus(`${step.text || "Working"}... ${detail}`);
+}
+
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+let chosenPlayers = [];
+async function askDesk(topic) {
   $("go").disabled = true;
   setLines("busy", "Patching you through");
-  setStatus("You're on hold. The desk is getting ready (usually about a minute).");
   showPreshow(topic);
   try {
-    const response = await fetch("/api/generate", {
+    const start = await fetch("/api/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ topic }),
+      body: JSON.stringify({ topic, chosen: chosenPlayers }),
     });
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error || "Something went wrong.");
-    setStatus(`Script saved to runs/${data.run}/script.json`);
-    await play(data);
+    const started = await start.json();
+    if (!start.ok) throw new Error(started.error || "Something went wrong.");
+    let job;
+    for (;;) {
+      await wait(900);
+      job = await (await fetch(`/api/job/${started.job}`)).json();
+      if (job.state !== "running") break;
+      showControlRoom(job);
+    }
+    if (job.state === "topic") return screenCall(topic, job.topic);
+    if (job.state === "error") throw new Error(job.error);
+    chosenPlayers = [];
+    const m = job.script.meta;
+    setStatus(`On air. ${m.stats_verified} of ${m.stats_found} stats verified, ${m.lines_rewritten} lines fixed, ${m.lines_cut} cut. Saved to runs/${job.script.run}/`);
+    await play(job.script);
   } catch (error) {
     clearInterval(preshowTimer);
     showIdle();
@@ -427,6 +452,48 @@ $("form").addEventListener("submit", async (event) => {
   } finally {
     $("go").disabled = false;
   }
+}
+
+// The call screener: a topic that was turned away, or a name that needs a choice.
+function screenCall(topic, details) {
+  clearInterval(preshowTimer);
+  showIdle();
+  setLines("", "Lines are open");
+  const status = $("status");
+  status.className = "console-status";
+  status.innerHTML = "";
+  if (details.confirm) {
+    const ask = details.confirm[0];
+    setCenter("QUICK QUESTION", "Before we go to air");
+    showBubble("hal", `Before we go to air: which ${ask.asked} do you mean?`);
+    status.append(`Which ${ask.asked} do you mean? `);
+    for (const choice of ask.choices) {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "chip"; b.textContent = choice.label;
+      b.addEventListener("click", () => { chosenPlayers.push(choice.key); askDesk(topic); });
+      status.append(b, " ");
+    }
+    return;
+  }
+  setCenter("CALL SCREENED", "Try another topic");
+  showBubble("hal", `The call screener stopped that one. ${details.reason}`);
+  status.className = "console-status error";
+  status.append(details.reason + " ");
+  for (const idea of details.suggestions || []) {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.textContent = idea;
+    b.addEventListener("click", () => { $("topic").value = idea; $("topic").focus(); });
+    status.append(b, " ");
+  }
+}
+
+$("form").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const topic = $("topic").value.trim();
+  if (!topic) return;
+  chosenPlayers = [];
+  setStatus("You're on hold. The desk is getting ready (usually about two minutes).");
+  askDesk(topic);
 });
 
 for (const chip of document.querySelectorAll(".chip")) {
