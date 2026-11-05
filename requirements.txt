@@ -1,2 +1,4 @@
 anthropic>=2.4,<3
 python-dotenv>=1.0
+nflreadpy>=0.1.5
+certifi

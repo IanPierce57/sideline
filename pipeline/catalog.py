@@ -1,0 +1,354 @@
+"""The stat catalog: every stat the show can cite, where it comes from, and how
+it's checked. This is the only place numbers enter the show.
+
+Each function returns candidate facts: a value fetched by code (never typed by
+an AI) plus everything needed to check it later. verify.py does the checking.
+
+Sources and checks (decided Nov 4, 2026; see SOURCES.md):
+  NFL basic stats     nflverse, checked against Sleeper (Sleeper wins a disagreement)
+  NFL advanced stats  calculated from nflverse, checked against muffed.ai (exact match or dropped)
+  NFL team records    nflverse game results, checked against muffed.ai
+  NBA stats           Sleeper (trusted on its own), 2017-18 season onward
+  Current team        Sleeper (plus nflverse rosters for the NFL)
+"""
+
+import polars as pl
+
+from . import nflv, players, sleeper
+
+# ---------- What can be asked for ----------
+
+# NFL counting stats: name -> (nflverse column, Sleeper key, label, definition)
+NFL_COUNTS = {
+    "games": ("games", "gp", "games played", "Games he played in."),
+    "passing_yards": ("passing_yards", "pass_yd", "passing yards", "Yards gained on completed passes."),
+    "passing_tds": ("passing_tds", "pass_td", "passing touchdowns", "Touchdown passes thrown."),
+    "interceptions": ("passing_interceptions", "pass_int", "interceptions thrown", "Passes intercepted by the defense."),
+    "completions": ("completions", "pass_cmp", "completions", "Passes caught."),
+    "pass_attempts": ("attempts", "pass_att", "pass attempts", "Passes thrown."),
+    "sacks_taken": ("sacks_suffered", "pass_sack", "times sacked", "Times sacked."),
+    "rushing_yards": ("rushing_yards", "rush_yd", "rushing yards", "Yards gained running the ball."),
+    "rushing_tds": ("rushing_tds", "rush_td", "rushing touchdowns", "Touchdowns scored running the ball."),
+    "carries": ("carries", "rush_att", "carries", "Running plays where he carried the ball."),
+    "receptions": ("receptions", "rec", "receptions", "Passes he caught."),
+    "receiving_yards": ("receiving_yards", "rec_yd", "receiving yards", "Yards gained on catches."),
+    "receiving_tds": ("receiving_tds", "rec_td", "receiving touchdowns", "Touchdowns scored on catches."),
+    "targets": ("targets", "rec_tgt", "targets", "Passes thrown his way."),
+    # Defense. Tested Nov 4, 2026 (2018-2025): these agree 98-100% between the sources.
+    "sacks": ("def_sacks", "idp_sack", "sacks", "Times he sacked the quarterback (half sacks count as 0.5)."),
+    "def_interceptions": ("def_interceptions", "idp_int", "interceptions", "Passes he intercepted."),
+    "passes_defended": ("def_pass_defended", "idp_pass_def", "passes defended", "Passes he broke up or intercepted."),
+    "forced_fumbles": ("def_fumbles_forced", "idp_ff", "forced fumbles", "Fumbles he caused."),
+    "qb_hits": ("def_qb_hits", "idp_qb_hit", "QB hits", "Times he hit the quarterback as or after he threw."),
+    # These agree only 15-77%: the two sources count tackles differently (a scorer's judgment
+    # call), so they come from Sleeper alone, which the user trusts (Nov 4, 2026).
+    "solo_tackles": (None, "idp_tkl_solo", "solo tackles", "Tackles he made by himself."),
+    "total_tackles": (None, "idp_tkl", "total tackles", "Solo tackles plus assisted tackles."),
+    "tackles_for_loss": (None, "idp_tkl_loss", "tackles for loss", "Tackles behind the line of scrimmage."),
+}
+SLEEPER_ONLY = {k for k, v in NFL_COUNTS.items() if v[0] is None}
+# Rates built from two verified counts: name -> (top, bottom, multiply, decimals, label, definition)
+NFL_RATES = {
+    "completion_pct": ("completions", "pass_attempts", 100, 1, "completion percentage", "Share of passes caught, in percent."),
+    "yards_per_attempt": ("passing_yards", "pass_attempts", 1, 1, "yards per pass attempt", "Passing yards divided by passes thrown."),
+    "yards_per_carry": ("rushing_yards", "carries", 1, 1, "yards per carry", "Rushing yards divided by carries."),
+    "yards_per_catch": ("receiving_yards", "receptions", 1, 1, "yards per catch", "Receiving yards divided by catches."),
+}
+# NFL advanced stats, one regular season at a time (2016 on, so muffed.ai can check them):
+# name -> (muffed metric, decimals, label, plain-English definition, how we calculate it)
+NFL_ADVANCED = {
+    "epa_per_dropback": ("qb_epa.epa_per_dropback", 2, "EPA per dropback",
+                         "Expected points added per dropback: how much each pass attempt, sack, or scramble raised or lowered the points his team should expect on that drive.", "pbp"),
+    "success_rate": ("qb_epa.success_rate", 1, "dropback success rate",
+                     "Share of his dropbacks that raised his team's expected points, in percent.", "pbp"),
+    "cpoe_nflfastr": ("qb_cpoe_nflfastr.cpoe_nflfastr", 1, "CPOE (nflverse model)",
+                      "Completion percentage over expected, from nflverse's model: how much more often his passes were caught than the difficulty of the throws predicted, in percentage points.", "pbp"),
+    "cpoe_ngs": ("qb_cpoe_ngs.cpoe", 1, "CPOE (Next Gen Stats model)",
+                 "Completion percentage over expected, from the NFL's Next Gen Stats model, in percentage points.", "ngs_passing"),
+    "any_a": ("qb_anya.any_a", 2, "adjusted net yards per attempt (ANY/A)",
+              "Passing yards per dropback, with touchdowns worth 20 extra yards, interceptions costing 45, and sack yardage taken off.", "anya"),
+    "time_to_throw": ("qb_ngs_passing.avg_time_to_throw", 2, "average time to throw",
+                      "Seconds from the snap to the throw, on average (Next Gen Stats).", "ngs_passing"),
+    "ryoe_per_carry": ("rb_ryoe.rush_yards_over_expected_per_att", 2, "rush yards over expected per carry",
+                       "Rushing yards beyond what the blocking and defenders' positions predicted, per carry (Next Gen Stats).", "ngs_rushing"),
+    "avg_separation": ("receiving_ngs.avg_separation", 2, "average separation",
+                       "Average distance in yards between him and the nearest defender when the ball arrived (Next Gen Stats).", "ngs_receiving"),
+}
+# NBA (Sleeper): name -> (Sleeper key, label, definition)
+NBA_TOTALS = {
+    "games": ("gp", "games played", "Games he played in."),
+    "points": ("pts", "points", "Points scored."),
+    "rebounds": ("reb", "rebounds", "Rebounds grabbed."),
+    "assists": ("ast", "assists", "Assists."),
+    "steals": ("stl", "steals", "Steals."),
+    "blocks": ("blk", "blocks", "Blocked shots."),
+    "turnovers": ("to", "turnovers", "Turnovers."),
+    "threes_made": ("tpm", "three-pointers made", "Three-point shots made."),
+}
+NBA_PER_GAME = {"points_per_game": "points", "rebounds_per_game": "rebounds", "assists_per_game": "assists",
+                "steals_per_game": "steals", "blocks_per_game": "blocks", "turnovers_per_game": "turnovers"}
+NBA_PCTS = {"fg_pct": ("fgm", "fga", "field goal percentage"), "three_pct": ("tpm", "tpa", "three-point percentage"),
+            "ft_pct": ("ftm", "fta", "free throw percentage")}
+
+NBA_FIRST_SEASON = 2017          # Sleeper's NBA stats start with 2017-18
+SLEEPER_NFL_FIRST_SEASON = 2009  # Sleeper's NFL stats start with 2009
+MUFFED_FIRST_SEASON = 2016
+
+# nflverse writes a few team codes differently from Sleeper
+NFLVERSE_TEAM = {"LAR": "LA"}
+
+
+def stat_menu() -> str:
+    """The list of stats, for the research agent's instructions."""
+    lines = ["NFL player stats (scope: one season, or career; regular season or playoffs):"]
+    lines += [f"  {k}: {v[2]}" for k, v in NFL_COUNTS.items()]
+    lines += [f"  {k}: {v[4]}" for k, v in NFL_RATES.items()]
+    lines.append("NFL advanced stats (one regular season, 2016 or later):")
+    lines += [f"  {k}: {v[2]}" for k, v in NFL_ADVANCED.items()]
+    lines.append("NFL team stats: team_record (one regular season, 2016 or later)")
+    lines.append("NBA player stats (one regular season, 2017-18 or later; season 2025 means 2025-26):")
+    lines += [f"  {k}: {v[1]}" for k, v in NBA_TOTALS.items()]
+    lines += [f"  {k}: {k.replace('_', ' ')}" for k in NBA_PER_GAME]
+    lines += [f"  {k}: {v[2]}" for k, v in NBA_PCTS.items()]
+    return "\n".join(lines)
+
+
+# ---------- Helpers ----------
+
+def say(value, decimals=0, pct=False) -> str:
+    """How a number should look (and be said): 5,097 / 64.5% / +0.17."""
+    if value is None:
+        return ""
+    if decimals == 0:
+        text = f"{int(round(value)):,}"
+    else:
+        text = f"{value:,.{decimals}f}"
+    return text + ("%" if pct else "")
+
+
+def _season_label(league: str, season: int) -> str:
+    return f"{season}-{str(season + 1)[-2:]}" if league == "NBA" else str(season)
+
+
+def _as_of(league: str, season: int) -> str:
+    sport = league.lower()
+    current = int(sleeper.state(sport)["season"])
+    if season < current:
+        return "final"
+    if league == "NFL":
+        return f"through Week {nflv.latest_week(season)}"
+    return "season in progress"
+
+
+def _fact(**fields) -> dict:
+    base = {"status": "unchecked", "checked_against": None, "check_value": None, "note": ""}
+    base.update(fields)
+    return base
+
+
+# ---------- NFL player stats ----------
+
+def _nfl_seasons(card: dict, scope: dict) -> list[int]:
+    df = nflv.player_stats_by_season().filter(pl.col("player_id") == card["gsis_id"])
+    stype = "POST" if scope.get("playoffs") else "REG"
+    df = df.filter(pl.col("season_type") == stype)
+    if scope.get("season"):
+        return [scope["season"]] if scope["season"] in df["season"].to_list() else []
+    return sorted(df["season"].to_list())
+
+
+def nfl_player(card: dict, stat: str, scope: dict) -> list[dict]:
+    """Counts and rates for one NFL player, for one season or the career."""
+    if not card.get("gsis_id"):
+        return [_fact(subject=card["name"], stat=stat, status="dropped", note="no nflverse ID for this player")]
+    if stat in NFL_ADVANCED:
+        return [nfl_advanced(card, stat, scope.get("season"))]
+    if stat in NFL_RATES:
+        top, bottom, mult, dec, label, definition = NFL_RATES[stat]
+        parts = [nfl_player(card, top, scope)[0], nfl_player(card, bottom, scope)[0]]
+        fact = _fact(league="NFL", subject=card["name"], subject_key=card["key"], stat=stat, label=label,
+                     definition=definition, scope=parts[0].get("scope"), sample=parts[0].get("sample"),
+                     source="nflverse", as_of=parts[0].get("as_of"), credit="Data via nflverse",
+                     depends_on=parts, rate=(mult, dec), pct=mult == 100)
+        return [fact]
+    if stat not in NFL_COUNTS:
+        return [_fact(subject=card["name"], stat=stat, status="dropped", note=f"unknown stat '{stat}'")]
+
+    col, sl_key, label, definition = NFL_COUNTS[stat]
+    if stat in SLEEPER_ONLY:
+        return [nfl_sleeper_only(card, stat, scope)]
+    seasons = _nfl_seasons(card, scope)
+    if not seasons:
+        return [_fact(subject=card["name"], stat=stat, status="dropped",
+                      note="no games found for that season" if scope.get("season") else "no games found")]
+    stype = "POST" if scope.get("playoffs") else "REG"
+    df = nflv.player_stats_by_season().filter((pl.col("player_id") == card["gsis_id"]) &
+                                              (pl.col("season_type") == stype) & pl.col("season").is_in(seasons))
+    value = float(df[col].sum() or 0)
+    value = int(value) if value.is_integer() else value     # half sacks stay as .5
+    games = int(df["games"].sum() or 0)
+    kind = "playoffs" if scope.get("playoffs") else "regular season"
+    if scope.get("season"):
+        scope_text = f"{scope['season']} {kind}"
+    else:
+        scope_text = f"career {kind}, {seasons[0]}-{seasons[-1]}"
+    return [_fact(league="NFL", subject=card["name"], subject_key=card["key"], stat=stat, label=label,
+                  definition=definition, value=value, say=say(value, 0 if isinstance(value, int) else 1), scope=scope_text,
+                  sample=f"{games} games", seasons=seasons, season_type=stype, sleeper_key=sl_key,
+                  source="nflverse", as_of=_as_of("NFL", seasons[-1]), credit="Data via nflverse")]
+
+
+def nfl_sleeper_only(card: dict, stat: str, scope: dict) -> dict:
+    """Tackle stats: Sleeper alone (the sources define tackles differently)."""
+    _, sl_key, label, definition = NFL_COUNTS[stat]
+    kind = "post" if scope.get("playoffs") else "regular"
+    seasons = [scope["season"]] if scope.get("season") else _nfl_seasons(card, scope)
+    base = dict(league="NFL", subject=card["name"], subject_key=card["key"], stat=stat, label=label,
+                definition=definition, source="Sleeper", credit="Data via Sleeper")
+    if not seasons or min(seasons) < SLEEPER_NFL_FIRST_SEASON:
+        return _fact(**base, status="dropped", note=f"Sleeper's NFL stats start in {SLEEPER_NFL_FIRST_SEASON}")
+    value = games = 0
+    for season in seasons:
+        row = sleeper.season_stats("nfl", season, kind).get(card["sleeper_id"], {})
+        value += row.get(sl_key) or 0
+        games += row.get("gp") or 0
+    scope_text = (f"{seasons[0]} " if scope.get("season") else f"career {seasons[0]}-{seasons[-1]}, ") + \
+        ("playoffs" if scope.get("playoffs") else "regular season")
+    return _fact(**base, value=value, say=say(value, 1 if value % 1 else 0), scope=scope_text,
+                 sample=f"{int(games)} games", as_of=_as_of("NFL", seasons[-1]), status="trusted",
+                 checked_against="Sleeper (trusted on its own; nflverse counts tackles differently)")
+
+
+def nfl_advanced(card: dict, stat: str, season: int | None) -> dict:
+    metric, dec, label, definition, how = NFL_ADVANCED[stat]
+    season = season or int(sleeper.state("nfl")["season"])
+    base = dict(league="NFL", subject=card["name"], subject_key=card["key"], stat=stat, label=label,
+                definition=definition, scope=f"{season} regular season", season=season, muffed_metric=metric,
+                decimals=dec, source="nflverse", as_of=_as_of("NFL", season), gsis_id=card["gsis_id"],
+                credit="Data via nflverse" + (" · NFL Next Gen Stats via nflverse" if how.startswith("ngs") else ""))
+    if season < MUFFED_FIRST_SEASON:
+        return _fact(**base, status="dropped", note=f"advanced stats can only be checked from {MUFFED_FIRST_SEASON} on")
+    value, sample = None, ""
+    g = card["gsis_id"]
+    if how == "pbp":
+        plays = nflv.pbp(season).filter(pl.col("season_type") == "REG")
+        if stat in ("epa_per_dropback", "success_rate"):
+            d = plays.filter((pl.col("qb_dropback") == 1) & (pl.col("id") == g))
+            if d.height:
+                value = d["epa"].mean() if stat == "epa_per_dropback" else (d["epa"] > 0).mean() * 100
+                sample = f"{d.height} dropbacks"
+        else:
+            d = plays.filter((pl.col("passer_player_id") == g) & pl.col("cpoe").is_not_null())
+            if d.height:
+                value, sample = d["cpoe"].mean(), f"{d.height} pass attempts"
+    elif how == "anya":
+        df = nflv.player_stats_by_season().filter((pl.col("player_id") == g) & (pl.col("season") == season) &
+                                                  (pl.col("season_type") == "REG"))
+        if df.height:
+            r = df.row(0, named=True)
+            dropbacks = (r["attempts"] or 0) + (r["sacks_suffered"] or 0)
+            if dropbacks:
+                value = ((r["passing_yards"] or 0) + 20 * (r["passing_tds"] or 0) - 45 * (r["passing_interceptions"] or 0)
+                         - abs(r["sack_yards_lost"] or 0)) / dropbacks   # stored as a negative number
+                sample = f"{dropbacks} dropbacks"
+    else:
+        kind = how.split("_", 1)[1]
+        column = {"cpoe_ngs": "completion_percentage_above_expectation", "time_to_throw": "avg_time_to_throw",
+                  "ryoe_per_carry": "rush_yards_over_expected_per_att", "avg_separation": "avg_separation"}[stat]
+        df = nflv.nextgen(kind).filter((pl.col("player_gsis_id") == g) & (pl.col("season") == season) &
+                                      (pl.col("season_type") == "REG") & (pl.col("week") == 0))
+        if df.height:
+            value = df[column][0]
+            count_col = {"passing": "attempts", "rushing": "rush_attempts", "receiving": "targets"}[kind]
+            sample = f"{df[count_col][0]} {count_col.replace('_', ' ')}"
+    if value is None:
+        return _fact(**base, status="dropped", note="no data for that player and season")
+    signed = stat in ("epa_per_dropback", "cpoe_nflfastr", "cpoe_ngs", "ryoe_per_carry")
+    shown = say(value, dec, pct=stat == "success_rate")
+    if signed and value > 0:
+        shown = "+" + shown
+    return _fact(**base, value=value, say=shown, sample=sample)
+
+
+def nfl_team_record(team: str, season: int) -> dict:
+    code = NFLVERSE_TEAM.get(team, team)
+    games = nflv.schedules().filter((pl.col("season") == season) & (pl.col("game_type") == "REG") &
+                                    pl.col("result").is_not_null() &
+                                    ((pl.col("home_team") == code) | (pl.col("away_team") == code)))
+    wins = losses = ties = 0
+    for g in games.iter_rows(named=True):
+        margin = g["result"] if g["home_team"] == code else -g["result"]   # result = home minus away
+        wins += margin > 0
+        losses += margin < 0
+        ties += margin == 0
+    record = f"{wins}-{losses}" + (f"-{ties}" if ties else "")
+    base = dict(league="NFL", subject=team, subject_key=f"nflteam:{code}", stat="team_record", label="regular-season record",
+                definition="Wins and losses in regular-season games.", value={"wins": wins, "losses": losses, "ties": ties},
+                say=record, scope=f"{season} regular season", season=season, team_code=code, sample=f"{wins + losses + ties} games",
+                source="nflverse", as_of=_as_of("NFL", season), credit="Data via nflverse")
+    if not games.height:
+        return _fact(**base, status="dropped", note="no games found")
+    if season < MUFFED_FIRST_SEASON:
+        return _fact(**base, status="dropped", note=f"team records can only be checked from {MUFFED_FIRST_SEASON} on")
+    return _fact(**base)
+
+
+# ---------- NBA player stats (Sleeper, trusted) ----------
+
+def nba_player(card: dict, stat: str, scope: dict) -> list[dict]:
+    season = scope.get("season") or int(sleeper.state("nba")["season"])
+    label_season = _season_label("NBA", season)
+    base = dict(league="NBA", subject=card["name"], subject_key=card["key"], stat=stat,
+                scope=f"{label_season} regular season", source="Sleeper", as_of=_as_of("NBA", season),
+                credit="Data via Sleeper")
+    if scope.get("playoffs"):
+        return [_fact(**base, status="dropped", note="NBA playoff stats aren't available yet")]
+    if season < NBA_FIRST_SEASON:
+        return [_fact(**base, status="dropped", note="NBA stats are only available from 2017-18 on")]
+    row = sleeper.season_stats("nba", season).get(card["sleeper_id"])
+    if not row or not row.get("gp"):
+        return [_fact(**base, status="dropped", note="no games found for that season")]
+    gp = int(row["gp"])
+    if stat in NBA_TOTALS:
+        key, label, definition = NBA_TOTALS[stat]
+        value = int(row.get(key) or 0)
+        shown = say(value)
+    elif stat in NBA_PER_GAME:
+        key, label, definition = NBA_TOTALS[NBA_PER_GAME[stat]]
+        value = round((row.get(key) or 0) / gp, 1)
+        label, definition = f"{label} per game", f"{definition[:-1]} per game, on average."
+        shown = say(value, 1)
+    elif stat in NBA_PCTS:
+        made, tried, label = NBA_PCTS[stat]
+        if not row.get(tried):
+            return [_fact(**base, status="dropped", note="no attempts")]
+        value = round(100 * row[made] / row[tried], 1)
+        definition = f"Share of attempts made, in percent ({int(row[made])} of {int(row[tried])})."
+        shown = say(value, 1, pct=True)
+    else:
+        return [_fact(**base, status="dropped", note=f"unknown stat '{stat}'")]
+    return [_fact(**base, label=label, definition=definition, value=value, say=shown, sample=f"{gp} games",
+                  status="trusted", checked_against="Sleeper (trusted on its own)")]
+
+
+# ---------- Current team and status ----------
+
+def current_status(card: dict) -> dict:
+    """Which team he's on right now, and whether he's hurt."""
+    team = card["team"] or "no team (free agent or retired)"
+    injury = f", listed as {card['injury_status']}" if card.get("injury_status") else ""
+    fact = _fact(league=card["league"], subject=card["name"], subject_key=card["key"], stat="current_team",
+                 label="current team", value=card["team"], say=f"{team}{injury}",
+                 definition="The team he's on right now, per the current roster.", scope="today",
+                 source="Sleeper", as_of="today", credit="Data via Sleeper", position=card["position"],
+                 gsis_id=card.get("gsis_id"))
+    return fact
+
+
+def get(card: dict, stat: str, scope: dict) -> list[dict]:
+    """Fetch one stat for one player (candidate facts, not yet checked)."""
+    if stat == "current_team":
+        return [current_status(card)]
+    if card["league"] == "NFL":
+        return nfl_player(card, stat, scope)
+    return nba_player(card, stat, scope)
