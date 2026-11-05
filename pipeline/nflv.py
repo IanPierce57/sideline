@@ -64,3 +64,9 @@ def sleeper_to_gsis() -> dict:
     players whose Sleeper record is missing the nflverse ID."""
     x = nfl.load_ff_playerids().filter(pl.col("sleeper_id").is_not_null() & pl.col("gsis_id").is_not_null())
     return {str(int(s)): g for s, g in zip(x["sleeper_id"].to_list(), x["gsis_id"].to_list())}
+
+
+@lru_cache(maxsize=1)
+def rosters_all() -> pl.DataFrame:
+    """Season rosters since 1999 (one row per player per team per season)."""
+    return nfl.load_rosters(seasons=True)

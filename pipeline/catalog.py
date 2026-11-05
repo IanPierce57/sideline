@@ -14,7 +14,7 @@ Sources and checks (decided Nov 4, 2026; see SOURCES.md):
 
 import polars as pl
 
-from . import nflv, players, sleeper
+from . import nflv, players, sleeper, wiki
 
 # ---------- What can be asked for ----------
 
@@ -345,10 +345,56 @@ def current_status(card: dict) -> dict:
     return fact
 
 
+def honors(card: dict) -> list[dict]:
+    """Career titles and awards from Wikipedia's infobox; each is checked in verify.py."""
+    got = wiki.honors(card["name"], card["league"], card.get("position"))
+    base = dict(league=card["league"], subject=card["name"], subject_key=card["key"], source="Wikipedia",
+                as_of="today", credit="Honors: Wikipedia (CC BY-SA)", scope="career", qid=got["qid"],
+                gsis_id=card.get("gsis_id"))
+    if not got["page"]:
+        return [_fact(**base, stat="honors", label="career honors", status="dropped", note="no Wikipedia page found")]
+    facts = []
+    for key, item in got["items"].items():
+        years = f" ({', '.join(item['years'])})" if item["years"] else ""
+        shown = f"{item['count']}× {item['label']}" if item["count"] > 1 else item["label"]
+        facts.append(_fact(**base, stat=f"honor_{key}", honor=key, label=item["label"], value=item["count"],
+                           years=item["years"], say=f"{shown}{years}", wikidata=item["wikidata"], list_page=item["list_page"],
+                           definition=f"From his Wikipedia page: {item['line']}", sample=f"{item['count']} time(s)"))
+    return facts or [_fact(**base, stat="honors", label="career honors", status="dropped", note="no honors listed")]
+
+
+def qb_playoff_record(card: dict) -> dict:
+    """Playoff wins and losses as the starting quarterback, from official scores."""
+    g = card.get("gsis_id")
+    games = nflv.schedules().filter((pl.col("game_type") != "REG") & pl.col("result").is_not_null() &
+                                    ((pl.col("home_qb_id") == g) | (pl.col("away_qb_id") == g)))
+    wins = losses = 0
+    seasons = []
+    for row in games.iter_rows(named=True):
+        margin = row["result"] if row["home_qb_id"] == g else -row["result"]
+        wins += margin > 0
+        losses += margin < 0
+        seasons.append(row["season"])
+    base = dict(league="NFL", subject=card["name"], subject_key=card["key"], stat="qb_playoff_record",
+                label="playoff record as a starting QB", definition="Playoff wins and losses in games he started at quarterback.",
+                value={"wins": wins, "losses": losses}, say=f"{wins}-{losses}", seasons=sorted(set(seasons)),
+                sample=f"{wins + losses} playoff starts", scope="career playoffs", source="nflverse",
+                as_of="final", credit="Data via nflverse", starts=wins + losses)
+    if not games.height:
+        return _fact(**base, status="dropped", note="no playoff starts")
+    return _fact(**base)
+
+
 def get(card: dict, stat: str, scope: dict) -> list[dict]:
     """Fetch one stat for one player (candidate facts, not yet checked)."""
     if stat == "current_team":
         return [current_status(card)]
+    if stat == "honors":
+        return honors(card)
+    if stat == "qb_playoff_record":
+        if card["league"] != "NFL":
+            return [_fact(subject=card["name"], stat=stat, status="dropped", note="NFL quarterbacks only")]
+        return [qb_playoff_record(card)]
     if card["league"] == "NFL":
         return nfl_player(card, stat, scope)
     return nba_player(card, stat, scope)

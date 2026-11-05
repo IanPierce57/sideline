@@ -44,6 +44,11 @@ topics are turned away; past drafts as history are fine); or it includes slurs,
 sexual content, threats, harassment, or anything about players' families or
 personal lives. Comparisons across the two leagues are fine. Predictions are fine.
 
+Sideline covers current players only. If the topic is mainly about a retired player
+(for example "Is Michael Jordan the GOAT?" or "Brady vs. Montana"), turn it away and
+explain that the show covers current players. A current player compared with "anyone
+ever" is fine; the hosts just won't cite retired players' numbers.
+
 Pick the format: "debate" (a question with sides), "buy_or_sell" (a team or
 front-office decision), or "prediction" (a future outcome). List every real
 player named or clearly meant, by full name."""
@@ -74,6 +79,8 @@ def check_topic(topic: str, client: anthropic.Anthropic, chosen: set | None = No
         # match is retired. When exactly one is a current player, it's him.
         current = [m for m in found["matches"] if m["active"] and m["team"]]
         real = current if len(current) == 1 else [m for m in found["matches"] if m["active"] or (m["years_exp"] or 0) > 0]
+        # Current players only (decided Nov 4, 2026).
+        found["matches"] = [m for m in found["matches"] if m["active"]]
         picked = [m for m in found["matches"] if m["key"] in (chosen or set())]
         if picked:
             resolved.append(picked[0])
@@ -85,6 +92,10 @@ def check_topic(topic: str, client: anthropic.Anthropic, chosen: set | None = No
             unknown.append((name, [players.describe(s) for s in found["suggestions"]]))
     if unknown:
         name, close = unknown[0]
+        retired = any(m for lg in leagues for m in players.find(name, lg)["matches"])
+        if retired:
+            return {"ok": False, "reason": f"Sideline only covers current players, and {name} isn't playing now.",
+                    "suggestions": data["suggestions"][:3]}
         hint = f" Did you mean {close[0].split(' (')[0]}?" if close else ""
         return {"ok": False, "reason": f"We couldn't find a player named {name}.{hint}", "suggestions": data["suggestions"][:3]}
     if confirm:
@@ -130,9 +141,13 @@ What each host leans on:
 
 Rules:
 - Always get current_team for every player who'll come up.
-- Cover both sides of the argument fairly. For "best ever" topics, get comparable numbers for the main rivals too.
+- Sideline covers current players only. Never look up or pull numbers for retired players, even for
+  "best ever" topics; compare the current player with other current players instead.
+- Cover both sides of the argument fairly, with comparable numbers for the main current rivals.
 - Prefer numbers that can be checked: NFL stats before 2009 and NBA stats before 2017-18 can't be, so they'll be dropped.
-  For older players, use single seasons from 2009 on (NFL) or 2017-18 on (NBA), or skip the numbers.
+  For veterans, use career totals only if the career started in 2009 or later (NFL); otherwise use single seasons.
+- honors: career awards and titles (Super Bowl rings, MVPs, Finals MVPs, Player of the Year), checked against a
+  second source. qb_playoff_record: a quarterback's playoff wins and losses as a starter.
 - Advanced NFL stats only exist for single regular seasons from 2016 on.
 - The current NFL season is {sleeper.state('nfl')['season']}, with stats through Week {nfl_week}. The current NBA season
   is {int(sleeper.state('nba')['season'])}-{str(int(sleeper.state('nba')['season']) + 1)[-2:]}, in progress.
@@ -140,7 +155,9 @@ Rules:
 
 Stats you can ask for (stat names exactly as written):
 {catalog.stat_menu()}
-current_team: which team he's on right now (any player)"""
+current_team: which team he's on right now (any player)
+honors: his career awards and titles (any player; no season needed)
+qb_playoff_record: playoff wins and losses as the starting quarterback (NFL QBs; no season needed)"""
 
 
 def research(topic: str, fmt: str, named: list[dict], client: anthropic.Anthropic,
@@ -155,7 +172,7 @@ def research(topic: str, fmt: str, named: list[dict], client: anthropic.Anthropi
         if name == "find_player":
             got = players.find(args["name"], args["league"])
             rows = []
-            for c in got["matches"][:5]:
+            for c in [m for m in got["matches"] if m["active"]][:5]:   # current players only
                 known[c["key"]] = c
                 rows.append({"key": c["key"], "player": players.describe(c), "years_in_league": c["years_exp"], "active": c["active"]})
             if not rows:
@@ -177,6 +194,9 @@ def research(topic: str, fmt: str, named: list[dict], client: anthropic.Anthropi
                 except (KeyError, ValueError):
                     results.append({"request": req, "error": "unknown player key; use find_player first"})
                     continue
+            if not card["active"]:
+                results.append({"request": req, "error": "Sideline only covers current players; skip retired players"})
+                continue
             scope = {"playoffs": req.get("playoffs", False)}
             if not req.get("career"):
                 scope["season"] = req.get("season")

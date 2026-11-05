@@ -17,7 +17,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 import polars as pl
 
-from . import catalog, muffed, nflv, sleeper
+from . import catalog, muffed, nflv, sleeper, wiki
 
 
 def _check_nfl_count(f: dict) -> dict:
@@ -105,9 +105,69 @@ def _check_current_team(f: dict) -> dict:
     return f
 
 
+def _check_honor(f: dict) -> dict:
+    """Super Bowl rings: was he on the winning team's roster (nflverse)? Awards: does
+    Wikidata record the same count? Anything else has no second source and is dropped."""
+    if f["honor"] == "sb_champion" and f.get("gsis_id"):
+        sched = nflv.schedules().filter((pl.col("game_type") == "SB") & pl.col("result").is_not_null())
+        winners = {(r["season"], r["home_team"] if r["result"] > 0 else r["away_team"]) for r in sched.iter_rows(named=True)}
+        ro = nflv.rosters_all().filter(pl.col("gsis_id") == f["gsis_id"])
+        rings = sorted({r["season"] for r in ro.iter_rows(named=True) if (r["season"], r["team"]) in winners})
+        f["checked_against"], f["check_value"] = "nflverse (Super Bowl winners' rosters)", len(rings)
+        if len(rings) == f["value"]:
+            f["status"] = "verified"
+        else:
+            f.update(status="dropped", note=f"Wikipedia says {f['value']}, nflverse rosters show {len(rings)}")
+        return f
+    if f.get("wikidata") and f.get("qid"):
+        n = wiki.wikidata_award_count(f["qid"], f["wikidata"])
+        if n is None:
+            f.update(status="dropped", checked_against="Wikidata",
+                     note="Wikidata doesn't record this award for him, so it can't be cross-checked")
+            return f
+        f["checked_against"], f["check_value"] = "Wikidata", n
+        if n == f["value"]:
+            f["status"] = "verified"
+        else:
+            f.update(status="dropped", note=f"Wikipedia says {f['value']}, Wikidata says {n}")
+        return f
+    f.update(status="dropped", note="no second source for this honor yet")
+    return f
+
+
+def _check_qb_playoff_record(f: dict) -> dict:
+    """The wins come from official scores; the starts are checked against Sleeper."""
+    if min(f["seasons"]) < catalog.SLEEPER_NFL_FIRST_SEASON:
+        f.update(status="dropped", note="includes playoff starts before 2009, which can't be double-checked")
+        return f
+    sid = f["subject_key"].split(":", 1)[1]
+    starts = 0
+    for season in f["seasons"]:
+        starts += (sleeper.season_stats("nfl", season, "post").get(sid) or {}).get("gs") or 0
+    f["checked_against"], f["check_value"] = "Sleeper (playoff starts)", starts
+    if int(starts) == f["starts"]:
+        f["status"] = "verified"
+    else:
+        f.update(status="dropped", note=f"nflverse shows {f['starts']} playoff starts, Sleeper {int(starts)}")
+    return f
+
+
 def _check_one(f: dict) -> dict:
+    """Check one fact. If the check itself fails (a source is down), drop the fact."""
+    try:
+        return _check(f)
+    except Exception as problem:
+        f.update(status="dropped", note=f"the check couldn't run ({type(problem).__name__}: {problem}), so it's left out")
+        return f
+
+
+def _check(f: dict) -> dict:
     if f["status"] in ("dropped", "trusted"):
         return f
+    if f.get("honor"):
+        return _check_honor(f)
+    if f["stat"] == "qb_playoff_record":
+        return _check_qb_playoff_record(f)
     if f["stat"] == "current_team":
         return _check_current_team(f)
     if f["stat"] == "team_record":

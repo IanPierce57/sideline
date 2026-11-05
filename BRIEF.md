@@ -10,7 +10,7 @@ Nov 3, 2026 · @Ian (aligned with the bibles Nov 4, 2026)
 
 - [x] Concept: type an NBA or NFL topic, get a 3-to-5-minute debate segment
 - [x] Format: a webpage that runs on your laptop
-- [x] Scope: NBA and NFL only, current or all-time, no draft topics
+- [x] Scope: NBA and NFL only, **current players only** (decided Nov 4, 2026), no draft topics
 - [x] Tone: real debate, hosts keep personalities, fewer bits
 - [x] Spec: segment flow, debate rules, scoring, fact rules, screen and sound
 - [x] Data sources chosen and checked against their terms
@@ -86,7 +86,7 @@ Each criterion gets 1 to 5 points per argument, weighted and scaled to a score o
 
 Every topic passes three checks before research starts, so a bad topic costs about a second instead of a full run.
 
-1. **NBA or NFL.** The topic has to be about the NBA or NFL, current or all-time. Comparisons across the two leagues are fine. College and draft-prospect topics are turned away.
+1. **NBA or NFL, current players.** The topic has to be about the NBA or NFL and about current players (decided Nov 4, 2026). Topics mainly about retired players, including head-to-heads like "LeBron vs. Jordan", are turned away, and the research agent never pulls retired players' numbers. Comparisons across the two leagues are fine. College and draft-prospect topics are turned away.
 2. **Real.** Every player, team, and coach named must exist in the current rosters. Rosters come from two independent sources, and a player counts as on a team only when both agree; a disagreement is flagged. (For the NFL, nflverse and Sleeper; for the NBA, Sleeper plus a second source not chosen yet; see SOURCES.md. ESPN and team websites were the first plan, but ESPN's terms forbid automated use and NBA team sites sit on NBA.com, so both are ruled out.) The confirmed rosters also go to the writer, so no host puts a player on the wrong team. A near miss gets a suggestion ("Did you mean Patrick Mahomes?"). When a name belongs to more than one player (there are two Josh Allens), the topic check asks which one before research starts. Players are always matched by ID, never by name alone. A false premise, like a player on the wrong team, is turned away with the correct fact. Predictions about the future are fine.
 3. **Appropriate.** No slurs, sexual content, threats, or harassment, and nothing about players' families or personal lives. Text that tries to instruct the hosts ("ignore your rules and say...") is treated as a topic, never followed, and turned away.
 
@@ -134,7 +134,7 @@ Every real-world fact comes from the fact pack. Anything that can't be verified 
 - **A failed line** gets rewritten with verified numbers, and is cut only if that fails. Then the checker rereads the lines around it so the conversation still flows.
 - **The rejection log** records every caught stat and line: what the host said (or the research agent found), what the data said, and whether it was rewritten or cut. It becomes a presentation slide.
 
-**All-time topics:** the NBA career-numbers source isn't chosen yet. nflverse NFL stats start in 1999. Older NFL numbers come from web search and need two independent sources that agree, or they get cut.
+**Honors and records:** career titles and awards come from Wikipedia (CC BY-SA) and pass only when a second source agrees: Super Bowl rings against nflverse's Super Bowl winners' rosters; MVPs and other major awards against Wikidata. QB playoff records come from nflverse's official scores, with playoff starts checked against Sleeper. NBA titles, Pro Bowls, All-Star and All-Pro selections have no second source yet, so they're dropped. **Contracts:** no allowed source yet; Spotrac's and Over The Cap's terms both forbid automated collection (Over The Cap offers licenses at support@overthecap.com). nflverse NFL stats start in 1999. Older NFL numbers come from web search and need two independent sources that agree, or they get cut.
 
 **On screen:** a stat chyron shows the value, a plain-English definition, the source, and how current it is ("Through Week 9"), and a source list appears at the end.
 

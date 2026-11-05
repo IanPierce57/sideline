@@ -12,12 +12,16 @@ The "Facts and data" section of BRIEF.md is the authority on sources. This file 
 
 For the NBA, Sleeper is the only source so far, so NBA stats can't pass the two-source check until a second NBA source is added (balldontlie is the candidate).
 
+| [Wikipedia](https://en.wikipedia.org/w/api.php) | Career titles and awards from player infoboxes. CC BY-SA 4.0; official API; credit "Honors: Wikipedia". Added Nov 4, 2026. |
+
 ## Cross-check (the checker agent's second source)
 
 | Source | Used for |
 | --- | --- |
 | nflverse play-by-play, recomputed | Advanced NFL stats (EPA and the like) worked out again from the raw plays, a different calculation from the one the research agent used |
 | [NFL.com](https://www.nfl.com) | Official NFL stats and injury reports. Check by hand. |
+| [Wikidata](https://www.wikidata.org) | Cross-check for major awards (MVP, Finals MVP, Player of the Year). CC0. Many recent awards aren't recorded yet, so those get dropped. |
+| nflverse Super Bowl results and season rosters | Cross-check for Super Bowl rings |
 
 | Sleeper stats | The independent second source for basic NFL stats, and the second roster source for the NFL (checked against nflverse rosters) |
 
@@ -55,8 +59,6 @@ Added later. Their terms have not been checked, so they stay manual only until s
 | --- | --- | --- |
 | [NFL Savant](https://nflsavant.com) | NFL | Play-by-play and advanced team and player stats. Confirm which seasons it covers. |
 | [rbsdm.com](https://rbsdm.com/stats/stats/) | NFL | EPA per play and CPOE by quarterback |
-| [Over The Cap](https://overthecap.com) | NFL | Cap space, contracts, guarantees, dead money |
-| [Spotrac](https://www.spotrac.com) | NFL and NBA | Contracts and cap position |
 | [NBA RAPM](https://nbarapm.com) | NBA | RAPM, multi-year impact, DARKO, LEBRON, RAPTOR (RAPTOR is history only) |
 | [databallr](https://databallr.com) | NBA | Impact metrics, with/without lineup splits, shot quality, contracts |
 | [RealGM advanced stats](https://basketball.realgm.com/nba/stats/2026/Advanced_Stats/Qualified/points/All/desc/1/Regular_Season) | NBA | True shooting, usage, assist and turnover rates, ratings |
@@ -79,3 +81,5 @@ Added later. Their terms have not been checked, so they stay manual only until s
 | NBA team websites | Ruled out Nov 4, 2026. They live on NBA.com, under the same blocking and terms. |
 | NFL.com and NFL Next Gen Stats site | Ruled out for the app Nov 4, 2026. NFL terms forbid "systematic retrieval of data" without written consent. (Next Gen Stats numbers still come in through nflverse.) |
 | StatMuse | Ruled out Nov 4, 2026. Terms ban bots, scrapers, and machine learning or AI use. |
+| Spotrac | Ruled out for the app Nov 4, 2026. Terms forbid "systematically extract, collect or harvest" data, data mining or robots, and putting its material in any database. Fine to read by hand. |
+| Over The Cap (and nflverse's contracts dataset, which comes from it) | Ruled out for the app Nov 4, 2026, unless licensed. Terms forbid "any systematic retrieval, by manual, automated or other means" to compile a database, and any robot or spider. Licenses: support@overthecap.com. |

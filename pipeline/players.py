@@ -7,6 +7,7 @@ topic check can ask which one."""
 
 import difflib
 import re
+import unicodedata
 
 from . import sleeper
 
@@ -15,7 +16,10 @@ SKILL = {"nfl": {"QB", "RB", "WR", "TE", "K", "DEF", "LB", "DL", "DB", "DE", "DT
 
 
 def _norm(name: str) -> str:
-    return re.sub(r"[^a-z]", "", name.lower().replace("jr", "").replace("iii", "").replace("ii", ""))
+    """Compare names without accents, punctuation, or suffixes: Jokić = Jokic, T.J. = TJ."""
+    plain = unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode()
+    plain = re.sub(r"\b(jr|sr|ii|iii|iv)\b\.?", "", plain.lower())
+    return re.sub(r"[^a-z]", "", plain)
 
 
 def _gsis(sport: str, pid: str, p: dict):
