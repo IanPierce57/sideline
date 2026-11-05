@@ -57,8 +57,7 @@ def news_for_page() -> dict:
     cached = json.loads(news.CACHE_FILE.read_text()) if news.CACHE_FILE.exists() else {}
     if time.time() - cached.get("fetched", 0) > news.MAX_AGE_SECONDS:
         threading.Thread(target=_refresh_news, daemon=True).start()
-    return {"headlines": cached.get("headlines", []), "trending": cached.get("trending", []),
-            "fetched": cached.get("fetched")}
+    return {"headlines": cached.get("headlines", []), "fetched": cached.get("fetched")}
 
 
 def run_job(job_id: str, topic: str, chosen: list) -> None:

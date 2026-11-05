@@ -23,7 +23,7 @@ Your key is a password for the Claude API. It goes in a file called `.env` that 
 
 Never paste the key into a chat, the page, or any other file. To change keys later, run `set_key.sh` again.
 
-**Optional: the news ticker.** Sign up free at [gnews.io](https://gnews.io), copy your API key, and run `~/Documents/the-receipts/set_key.sh gnews`. Without it, the ticker shows Sleeper's most-added players only.
+**Optional: the news ticker.** Sign up free at [gnews.io](https://gnews.io), copy your API key, and run `~/Documents/the-receipts/set_key.sh gnews`. Without it, the ticker shows a short Sideline placeholder.
 
 ## Run it
 

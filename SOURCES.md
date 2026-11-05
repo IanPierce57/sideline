@@ -42,7 +42,6 @@ The NBA has no second source yet.
 | Source | Used for |
 | --- | --- |
 | [GNews](https://gnews.io) (free plan) | The day's NFL and NBA headlines. Terms (checked Nov 4, 2026): free use is "personal, academic, evaluation, and other non-commercial use"; "reasonable caching" allowed; articles about 12 hours late. Key goes in .env via `./set_key.sh gnews`. A story runs only if two or more outlets report it. |
-| [Sleeper](https://docs.sleeper.com/) trending | Most-added players, credited "via Sleeper". |
 
 ## Manual only (check numbers by hand; don't connect these to the app)
 

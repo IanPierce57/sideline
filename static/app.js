@@ -584,7 +584,7 @@ for (const id of ["hal", ...HOSTS]) {
 }
 
 // The ticker at the bottom is the news crawl: real-time NFL and NBA headlines, each
-// confirmed by two outlets (pipeline/news.py), plus Sleeper's most-added players.
+// confirmed by two outlets (pipeline/news.py). No fantasy trends (decided Nov 4, 2026).
 // Until confirmed headlines arrive it shows a placeholder, never made-up headlines.
 const NEWS_PLACEHOLDER = [
   ["Sideline", "Live NFL and NBA headlines are on the way"],
@@ -596,7 +596,6 @@ async function loadNews() {
   try {
     const news = await (await fetch("/api/news")).json();
     const items = news.headlines.map((h) => [h.league, `${h.text} (${h.outlets.join(", ")})`]);
-    for (const t of news.trending || []) items.push([`${t.league} · via Sleeper`, t.text]);
     if (items.length) setTicker(items);
   } catch (error) {
     /* keep whatever the ticker shows now */

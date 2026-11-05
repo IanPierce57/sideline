@@ -40,7 +40,7 @@ Run `.venv/bin/python tests/accuracy.py` to recheck the sources (free; no API ca
 
 Every character's look is in their bible ("## Look"). The pixel studio follows those; don't change a look without asking.
 
-News ticker (decided Nov 4): `pipeline/news.py` pulls the day's headlines from GNews's free plan (free and delayed is fine; accuracy matters most). Headlines are shown verbatim with the outlet, and a story runs only if two or more outlets report it. Without a GNews key it shows Sleeper trending only. Never fill it with made-up headlines. Test: `.venv/bin/python tests/news_test.py`.
+News ticker (decided Nov 4): `pipeline/news.py` pulls the day's headlines from GNews's free plan (free and delayed is fine; accuracy matters most). Headlines are shown verbatim with the outlet, and a story runs only if two or more outlets report it. No Sleeper most-added players (decided Nov 4). With no confirmed headlines it shows the placeholder (`NEWS_PLACEHOLDER` in `static/app.js`). Never fill it with made-up headlines. Test: `.venv/bin/python tests/news_test.py`.
 
 Cast cards on the page describe background and personality only, not how anyone argues.
 

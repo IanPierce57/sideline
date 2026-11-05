@@ -12,7 +12,7 @@ How headlines stay accurate (decided Nov 4, 2026), with no AI rewriting anything
   - Opinion isn't news: picks, odds, power rankings, mock drafts, and fantasy advice
     are skipped. So are banned outlets (ESPN, NFL.com, NBA.com; see SOURCES.md).
   - Today's news only.
-Sleeper's most-added players fill in, credited to Sleeper. Refreshed at most every 6 hours.
+Refreshed at most every 6 hours. No fantasy trends (decided Nov 4, 2026).
 """
 
 import json
@@ -168,35 +168,14 @@ def confirm(articles: list[dict], league: str, player_names: list[str], now: dat
     return kept, crossed
 
 
-# ---------- Sleeper trending ----------
-
-def _trending() -> list[dict]:
-    """Sleeper's most-added players today, credited to Sleeper."""
-    items = []
-    for sport in ("nfl", "nba"):
-        try:
-            rows = sleeper.trending(sport, "add", 5)
-        except Exception:
-            continue
-        names = []
-        for r in rows:
-            p = sleeper.players(sport).get(str(r.get("player_id")))
-            if p and p.get("full_name"):
-                names.append(f"{p['full_name']} ({p.get('team') or 'FA'})")
-        if names:
-            items.append({"league": sport.upper(), "text": "Most added in fantasy today: " + ", ".join(names[:4]),
-                          "outlets": ["Sleeper"]})
-    return items
-
-
 def headlines(force: bool = False) -> dict:
-    """Confirmed headlines plus Sleeper trending, refreshed at most every 6 hours."""
+    """Confirmed headlines, refreshed at most every 6 hours."""
     if CACHE_FILE.exists() and not force:
         cached = json.loads(CACHE_FILE.read_text())
         if time.time() - cached.get("fetched", 0) < MAX_AGE_SECONDS:
             return cached
     key = os.environ.get("GNEWS_API_KEY", "").strip()
-    result = {"headlines": [], "crossed_off": [], "fetched": time.time(), "trending": _trending(),
+    result = {"headlines": [], "crossed_off": [], "fetched": time.time(),
               "note": "" if key else "No GNews key yet: run ./set_key.sh gnews"}
     if key:
         for league, queries in QUERIES.items():
