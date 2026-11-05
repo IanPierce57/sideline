@@ -21,7 +21,7 @@ Step 1 has its own rules in `generate.py` (`STEP_1_RULES`). They override the bi
 **Next, in the order under "How it's built" in BRIEF.md, one step at a time:**
 
 1. Topic in: the topic check (roster matching plus Haiku) and Haiku picking the format.
-2. Research: the research agent pulls stats from nflverse (nflreadpy) and nba_api, plus web search.
+2. Research: the research agent pulls stats from nflverse (nflreadpy) and the NBA source once it's chosen, plus web search.
 3. Verify: a separate checker agent re-gets each stat on its own and cross-checks it. Only passed stats go into the fact pack, and every drop goes in the rejection log.
 4. Write with the fact pack, then check every line's numbers against it.
 5. Judge (blind scoring) and close (Hal's verdict, written after scoring).
@@ -33,7 +33,7 @@ News ticker (decided Nov 4): the crawl along the bottom of the screen will carry
 
 Cast cards on the page describe background and personality only, not how anyone argues.
 
-Roster check (decided Nov 4): rosters come from ESPN, cross-checked against each team's official website. Check those sites' terms on scraping and AI use before connecting to them.
+Sources (Nov 4): ESPN, nba_api (NBA.com stats), and NBA team websites are ruled out; see the Never table in SOURCES.md and never connect them. The NBA source and the second (cross-check) source aren't chosen yet. Sleeper is the leading candidate, and the user still has to decide whether its undocumented stats feed is OK to use. Rosters need two independent sources that agree.
 
 ## Hooks for later steps (already built into the page)
 

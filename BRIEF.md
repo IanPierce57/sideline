@@ -87,10 +87,10 @@ Each criterion gets 1 to 5 points per argument, weighted and scaled to a score o
 Every topic passes three checks before research starts, so a bad topic costs about a second instead of a full run.
 
 1. **NBA or NFL.** The topic has to be about the NBA or NFL, current or all-time. Comparisons across the two leagues are fine. College and draft-prospect topics are turned away.
-2. **Real.** Every player, team, and coach named must exist in the current rosters. Rosters come from ESPN and are cross-checked against each team's official website; a player counts as on a team only when both agree, and a disagreement is flagged. (Decided Nov 4, 2026. The team websites' terms on scraping and AI use still need checking before the app connects to them; see SOURCES.md.) The confirmed rosters also go to the writer, so no host puts a player on the wrong team. A near miss gets a suggestion ("Did you mean Patrick Mahomes?"). A false premise, like a player on the wrong team, is turned away with the correct fact. Predictions about the future are fine.
+2. **Real.** Every player, team, and coach named must exist in the current rosters. Rosters come from two independent sources, and a player counts as on a team only when both agree; a disagreement is flagged. (For the NFL, nflverse plus a second source; for the NBA, sources not chosen yet. Sleeper is the leading candidate for both; see SOURCES.md. ESPN and team websites were the first plan, but ESPN's terms forbid automated use and NBA team sites sit on NBA.com, so both are ruled out.) The confirmed rosters also go to the writer, so no host puts a player on the wrong team. A near miss gets a suggestion ("Did you mean Patrick Mahomes?"). A false premise, like a player on the wrong team, is turned away with the correct fact. Predictions about the future are fine.
 3. **Appropriate.** No slurs, sexual content, threats, or harassment, and nothing about players' families or personal lives. Text that tries to instruct the hosts ("ignore your rules and say...") is treated as a topic, never followed, and turned away.
 
-**How it runs:** a plain script matches names and teams against the ESPN and team-website rosters. Haiku handles the sports and appropriateness checks.
+**How it runs:** a plain script matches names and teams against the two roster sources. Haiku handles the sports and appropriateness checks.
 
 **When a topic fails,** a call-screener message on screen gives the reason in one line and offers three valid topics instead. Nothing gets voiced.
 
@@ -103,19 +103,19 @@ Every real-world fact comes from the fact pack. Anything that can't be verified 
 | Source | Used for | Role |
 | --- | --- | --- |
 | [nflverse via nflreadpy](https://pypi.org/project/nflreadpy/) | NFL play-by-play, player stats, Next Gen Stats, FTN charting, injuries, schedules, depth charts, trades | Pipeline |
-| [nba\_api](https://pypi.org/project/nba-api/) | NBA.com stats | Pipeline |
 | Web search | News context and pre-1999 NFL numbers, with links saved | Pipeline |
-| ESPN | Current rosters for the topic check; second source for basic stats | Pipeline (rosters), cross-check (stats) |
-| Team websites (each NBA and NFL team's official site) | Official current rosters, to cross-check ESPN's | Cross-check, once their terms are checked |
+| Second source for basic stats and rosters | Not chosen yet (Sleeper is the leading candidate; see SOURCES.md) | Cross-check |
+| NBA source | Not chosen yet (Sleeper or balldontlie; see SOURCES.md) | Pipeline |
 | NFL.com | Official NFL stats and injury reports | Cross-check, by hand |
 | [PerThirtySix](https://perthirtysix.com/nfl/qbs?season=2026), RayCarp, Next Gen Stats site | Checking numbers by hand, method notes | Manual only |
+| ESPN, nba\_api (NBA.com stats), NBA team websites | Nothing. Ruled out Nov 4, 2026: ESPN's terms forbid automated access and AI use; NBA.com blocks programs and bars database use (details in SOURCES.md) | Never |
 | Pro Football Reference, Basketball-Reference, SumerSports | Nothing. Their terms ban scraping and AI use ([Sports Reference](https://www.sports-reference.com/data_use.html), [SumerSports](https://sumersports.com/terms-of-service/)) | Never |
 
 **Two agents build the fact pack.** A research agent finds the stats; a separate checker agent proves them. Only stats the checker passes go into the fact pack, and the script writer sees nothing else.
 
 1. **Research agent.** Reads the topic, decides which stats the debate needs, and pulls them from the pipeline sources with code. Each stat is saved with its value, exact definition, sample size, source, and an "as of" date.
 2. **Checker agent.** Gets each stat again on its own, without seeing the research agent's value, then compares the two with a plain script:
-    - Basic stats are matched against a second source (ESPN). The official source wins, and a mismatch means flag or drop.
+    - Basic stats are matched against a second, independent source (not chosen yet; see SOURCES.md). The official source wins, and a mismatch means flag or drop.
     - Advanced stats are recomputed from the raw data (for example, nflverse play-by-play) under the same definition.
     - Pre-1999 NFL numbers need two independent web sources that agree.
     - Sample-size minimums are enforced.
@@ -134,7 +134,7 @@ Every real-world fact comes from the fact pack. Anything that can't be verified 
 - **A failed line** gets rewritten with verified numbers, and is cut only if that fails. Then the checker rereads the lines around it so the conversation still flows.
 - **The rejection log** records every caught stat and line: what the host said (or the research agent found), what the data said, and whether it was rewritten or cut. It becomes a presentation slide.
 
-**All-time topics:** NBA career numbers come from nba\_api, though older seasons carry fewer stat types. nflverse NFL stats start in 1999. Older NFL numbers come from web search and need two independent sources that agree, or they get cut.
+**All-time topics:** the NBA career-numbers source isn't chosen yet. nflverse NFL stats start in 1999. Older NFL numbers come from web search and need two independent sources that agree, or they get cut.
 
 **On screen:** a stat chyron shows the value, a plain-English definition, the source, and how current it is ("Through Week 9"), and a source list appears at the end.
 
@@ -168,7 +168,7 @@ An 8-bit studio, the same set every time, with the page around it themed to matc
 - **Emotion** comes through body animation driven by each line's delivery tag: leaning in, pointing, standing up, slamming the desk, throwing hands up, turning away. Each character's tell from his bible (Royce's pencil, Deacon's toothpick, Lonnie's sleeves, Hal's headphones) is part of his animation set.
 - **On screen:** subtitles (a speech bubble over whoever is talking), a topic banner, a stat chyron on the right-hand monitor whenever a stat comes up, a score bug across the top showing each host's score as arguments are judged, and an end card with each host's final answer and the source list.
 - **Sound:** no theme music. A desk-slam effect is optional.
-- **News ticker:** the crawl along the bottom carries real-time NBA and NFL headlines, rotating, pulled from a news source that's been checked against its terms on scraping and AI use, and credited. Source not chosen yet (ESPN is a candidate). Until it's built, the ticker shows a placeholder, never invented headlines.
+- **News ticker:** the crawl along the bottom carries real-time NBA and NFL headlines, rotating, pulled from a news source that's been checked against its terms on scraping and AI use, and credited. Source not chosen yet (ESPN is ruled out by its terms). Until it's built, the ticker shows a placeholder, never invented headlines.
 - **Cast cards:** the page introduces Hal and the hosts by background and personality only. How each one argues (their kind of evidence, catchphrases) should come through on air, not in the descriptions.
 - **Branding:** Sideline, with a logo.
 - **Credits and disclaimer** on the page: everyone on the show is fictional and everything they say is AI-generated opinion; callers are never real people (no parodies of real athletes, broadcasters, or public figures); the show isn't affiliated with the NBA, NFL, ESPN, or any team; every stat source and voice dataset is credited wherever its license asks.
@@ -181,7 +181,7 @@ Everything runs on your laptop: a small local server starts each generation, and
 **Pipeline**
 
 1. **Topic in.** Run the topic check, then sort the topic into a format: debate, buy or sell, or prediction.
-2. **Research.** The research agent pulls stats from nflverse or nba\_api, plus news and pre-1999 NFL numbers from web search.
+2. **Research.** The research agent pulls stats from nflverse (NFL) and the NBA source once it's chosen, plus news and pre-1999 NFL numbers from web search.
 3. **Verify.** The checker agent re-gets each stat on its own and cross-checks it (see Facts and data). Only passed stats enter the fact pack; dropped ones go in the rejection log.
 4. **Write.** Produce the debate as structured lines: speaker, text, delivery, the fact IDs each line uses, and which argument it belongs to.
 5. **Check.** A plain script matches every number in the script against the fact pack, and an AI checker handles other claims. Failed lines get rewritten or cut, and everything is logged.
@@ -199,7 +199,7 @@ Everything runs on your laptop: a small local server starts each generation, and
 Get an ugly version working end to end, with a plain page showing a scored, subtitled segment, by November 9. Then improve it. The dates are a guide for making sure everything gets addressed, not a fixed order.
 
 - [ ] **Nov 4-5:** Set up Claude Code and the API key. Put the brief and bibles in the project folder. Generate text scripts from a typed topic, read five, and fix the bibles.
-- [ ] **Nov 6-7:** Data pull from nflverse and nba\_api, the topic check, the research and checker agents, the fact pack, the number checker, and the rejection log.
+- [ ] **Nov 6-7:** Data pull from nflverse and the NBA source, the topic check, the research and checker agents, the fact pack, the number checker, and the rejection log.
 - [ ] **Nov 8:** The judge, scoring, and the close. Time a full run from topic to finished script.
 - [ ] **Nov 9-11:** The webpage: input box, studio, sprites, subtitles, player, loading screen, chyron, and meter.
 - [ ] **Nov 12:** Test 20 topics and fix what breaks.

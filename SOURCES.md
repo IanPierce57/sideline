@@ -6,29 +6,35 @@ The "Facts and data" section of BRIEF.md is the authority on sources. This file 
 
 | Source | Used for |
 | --- | --- |
-| [nflverse via nflreadpy](https://github.com/nflverse/nflreadpy) | NFL play-by-play, player stats, Next Gen Stats, FTN charting, injuries, schedules, depth charts, trades |
-| [nba_api](https://github.com/swar/nba_api) | NBA.com stats |
+| [nflverse via nflreadpy](https://github.com/nflverse/nflreadpy) | NFL play-by-play, player stats, Next Gen Stats, FTN charting, injuries, schedules, depth charts, rosters, trades. Tested Nov 4, 2026: works, current through Week 8. |
 | Web search | News context and pre-1999 NFL numbers, with links saved |
 
-## Cross-check (the checker agent uses these as the second source for basic stats)
+There is no NBA source yet. See "Candidates" below.
+
+## Cross-check (the checker agent's second source)
 
 | Source | Used for |
 | --- | --- |
-| [ESPN](https://www.espn.com) | Second source for basic stats |
+| nflverse play-by-play, recomputed | Advanced NFL stats (EPA and the like) worked out again from the raw plays, a different calculation from the one the research agent used |
 | [NFL.com](https://www.nfl.com) | Official NFL stats and injury reports. Check by hand. |
 
-## Rosters (topic check)
+There is no independent second source for basic stats yet. See "Candidates" below.
 
-| Source | Used for |
-| --- | --- |
-| [ESPN](https://www.espn.com) | Current team rosters |
-| Each team's official website | Official current rosters, to cross-check ESPN. Their terms on scraping and AI use must be checked before the app connects to them; until then, check by hand. |
+## Candidates (tested Nov 4, 2026; waiting on a decision)
+
+| Source | What it offers | Status |
+| --- | --- | --- |
+| [Sleeper API](https://docs.sleeper.com/) | Free for non-commercial use, no key. Documented: current NFL and NBA players with team, position, injury status, and depth chart; trending adds and drops (credit Sleeper when shown); the current season and week. Undocumented: weekly and season stats for both leagues (Mahomes' Week 8 matched nflverse exactly). | Leading candidate for rosters, injuries, and the second stats source. The undocumented stats feed needs a yes from the user. |
+| [balldontlie](https://www.balldontlie.io/) | NBA developer API. Free tier has no stats; $9.99/month adds every game's player stats; $39.99/month adds season averages and standings. | Possible NBA source. Terms not checked yet. |
+| [MyFantasyLeague API](https://api.myfantasyleague.com/2026/api_info) | Free "in almost any way"; NFL players and injuries. Says it will never provide raw player stats. | Possible extra NFL roster and injury check only. |
+| [MySportsFeeds](https://www.mysportsfeeds.com/feed-pricing/) | NFL and NBA feeds; personal plans from about $5/month per league, stats extra. | Paid fallback. Terms not checked. |
+| NFL team websites | Official current rosters | Terms not checked. By hand only. |
 
 ## News ticker (to choose)
 
 | Source | Used for |
 | --- | --- |
-| Not chosen yet (ESPN is a candidate) | Real-time NBA and NFL headlines for the crawl along the bottom of the screen. Check the source's terms on scraping and AI use before connecting it. |
+| Not chosen yet | Real-time NBA and NFL headlines for the crawl along the bottom of the screen. Check the source's terms on scraping and AI use before connecting it. Sleeper's trending players (credited) could fill the ticker in the meantime. |
 
 ## Manual only (check numbers by hand; don't connect these to the app)
 
@@ -65,3 +71,6 @@ Added later. Their terms have not been checked, so they stay manual only until s
 | Pro Football Reference, Basketball-Reference | Sports Reference's terms ban scraping and AI use (linked in BRIEF.md) |
 | SumerSports | Terms ban scraping and AI use |
 | PFF, Cleaning the Glass | Paid; the app can't reach them |
+| ESPN (site, rosters, stats, news, and its public JSON feeds) | Ruled out Nov 4, 2026. ESPN is covered by Disney's terms, which forbid accessing content "using a robot, spider, script, or other automated means" and any use with AI tools. |
+| nba_api / NBA.com stats | Ruled out Nov 4, 2026. NBA.com blocks programs unless they pretend to be a web browser, and its terms bar using the stats in anything that "features a database." |
+| NBA team websites | Ruled out Nov 4, 2026. They live on NBA.com, under the same blocking and terms. |
