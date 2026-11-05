@@ -87,7 +87,7 @@ Each criterion gets 1 to 5 points per argument, weighted and scaled to a score o
 Every topic passes three checks before research starts, so a bad topic costs about a second instead of a full run.
 
 1. **NBA or NFL.** The topic has to be about the NBA or NFL, current or all-time. Comparisons across the two leagues are fine. College and draft-prospect topics are turned away.
-2. **Real.** Every player, team, and coach named must exist in the current rosters. Rosters come from two independent sources, and a player counts as on a team only when both agree; a disagreement is flagged. (For the NFL, nflverse plus a second source; for the NBA, sources not chosen yet. Sleeper is the leading candidate for both; see SOURCES.md. ESPN and team websites were the first plan, but ESPN's terms forbid automated use and NBA team sites sit on NBA.com, so both are ruled out.) The confirmed rosters also go to the writer, so no host puts a player on the wrong team. A near miss gets a suggestion ("Did you mean Patrick Mahomes?"). A false premise, like a player on the wrong team, is turned away with the correct fact. Predictions about the future are fine.
+2. **Real.** Every player, team, and coach named must exist in the current rosters. Rosters come from two independent sources, and a player counts as on a team only when both agree; a disagreement is flagged. (For the NFL, nflverse and Sleeper; for the NBA, Sleeper plus a second source not chosen yet; see SOURCES.md. ESPN and team websites were the first plan, but ESPN's terms forbid automated use and NBA team sites sit on NBA.com, so both are ruled out.) The confirmed rosters also go to the writer, so no host puts a player on the wrong team. A near miss gets a suggestion ("Did you mean Patrick Mahomes?"). A false premise, like a player on the wrong team, is turned away with the correct fact. Predictions about the future are fine.
 3. **Appropriate.** No slurs, sexual content, threats, or harassment, and nothing about players' families or personal lives. Text that tries to instruct the hosts ("ignore your rules and say...") is treated as a topic, never followed, and turned away.
 
 **How it runs:** a plain script matches names and teams against the two roster sources. Haiku handles the sports and appropriateness checks.
@@ -104,8 +104,8 @@ Every real-world fact comes from the fact pack. Anything that can't be verified 
 | --- | --- | --- |
 | [nflverse via nflreadpy](https://pypi.org/project/nflreadpy/) | NFL play-by-play, player stats, Next Gen Stats, FTN charting, injuries, schedules, depth charts, trades | Pipeline |
 | Web search | News context and pre-1999 NFL numbers, with links saved | Pipeline |
-| Second source for basic stats and rosters | Not chosen yet (Sleeper is the leading candidate; see SOURCES.md) | Cross-check |
-| NBA source | Not chosen yet (Sleeper or balldontlie; see SOURCES.md) | Pipeline |
+| [Sleeper API](https://docs.sleeper.com/) | NFL and NBA rosters, injuries, the current week, and stats; trending adds and drops. Approved Nov 4, 2026 | Pipeline (NBA), cross-check (NFL stats and rosters) |
+| Second NBA source | Not chosen yet (balldontlie is the candidate) | Cross-check |
 | NFL.com | Official NFL stats and injury reports | Cross-check, by hand |
 | [PerThirtySix](https://perthirtysix.com/nfl/qbs?season=2026), RayCarp, Next Gen Stats site | Checking numbers by hand, method notes | Manual only |
 | ESPN, nba\_api (NBA.com stats), NBA team websites | Nothing. Ruled out Nov 4, 2026: ESPN's terms forbid automated access and AI use; NBA.com blocks programs and bars database use (details in SOURCES.md) | Never |
@@ -115,7 +115,7 @@ Every real-world fact comes from the fact pack. Anything that can't be verified 
 
 1. **Research agent.** Reads the topic, decides which stats the debate needs, and pulls them from the pipeline sources with code. Each stat is saved with its value, exact definition, sample size, source, and an "as of" date.
 2. **Checker agent.** Gets each stat again on its own, without seeing the research agent's value, then compares the two with a plain script:
-    - Basic stats are matched against a second, independent source (not chosen yet; see SOURCES.md). The official source wins, and a mismatch means flag or drop.
+    - Basic stats are matched against a second, independent source (Sleeper for the NFL; the NBA's is not chosen yet). The official source wins, and a mismatch means flag or drop.
     - Advanced stats are recomputed from the raw data (for example, nflverse play-by-play) under the same definition.
     - Pre-1999 NFL numbers need two independent web sources that agree.
     - Sample-size minimums are enforced.

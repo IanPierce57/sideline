@@ -33,7 +33,7 @@ News ticker (decided Nov 4): the crawl along the bottom of the screen will carry
 
 Cast cards on the page describe background and personality only, not how anyone argues.
 
-Sources (Nov 4): ESPN, nba_api (NBA.com stats), and NBA team websites are ruled out; see the Never table in SOURCES.md and never connect them. The NBA source and the second (cross-check) source aren't chosen yet. Sleeper is the leading candidate, and the user still has to decide whether its undocumented stats feed is OK to use. Rosters need two independent sources that agree.
+Sources (Nov 4): ESPN, nba_api (NBA.com stats), and NBA team websites are ruled out; see the Never table in SOURCES.md and never connect them. Sleeper is approved (Nov 4), including its undocumented stats feed: it's the second source for NFL stats and rosters and the first NBA source. The NBA still needs a second source (balldontlie is the candidate), so NBA stats can't pass verification yet. Rosters need two independent sources that agree.
 
 ## Hooks for later steps (already built into the page)
 

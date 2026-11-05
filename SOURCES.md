@@ -7,9 +7,10 @@ The "Facts and data" section of BRIEF.md is the authority on sources. This file 
 | Source | Used for |
 | --- | --- |
 | [nflverse via nflreadpy](https://github.com/nflverse/nflreadpy) | NFL play-by-play, player stats, Next Gen Stats, FTN charting, injuries, schedules, depth charts, rosters, trades. Tested Nov 4, 2026: works, current through Week 8. |
+| [Sleeper API](https://docs.sleeper.com/) | Approved Nov 4, 2026, including its undocumented stats feed. Current NFL and NBA players (team, position, injury status, depth chart), the current season and week, weekly and season stats for both leagues, and trending adds and drops. Free for non-commercial use; credit Sleeper wherever its trending data is shown. Ask for the full player list at most once a day, and stay well under 1,000 calls a minute. |
 | Web search | News context and pre-1999 NFL numbers, with links saved |
 
-There is no NBA source yet. See "Candidates" below.
+For the NBA, Sleeper is the only source so far, so NBA stats can't pass the two-source check until a second NBA source is added (balldontlie is the candidate).
 
 ## Cross-check (the checker agent's second source)
 
@@ -18,13 +19,14 @@ There is no NBA source yet. See "Candidates" below.
 | nflverse play-by-play, recomputed | Advanced NFL stats (EPA and the like) worked out again from the raw plays, a different calculation from the one the research agent used |
 | [NFL.com](https://www.nfl.com) | Official NFL stats and injury reports. Check by hand. |
 
-There is no independent second source for basic stats yet. See "Candidates" below.
+| Sleeper stats | The independent second source for basic NFL stats, and the second roster source for the NFL (checked against nflverse rosters) |
+
+The NBA has no second source yet.
 
 ## Candidates (tested Nov 4, 2026; waiting on a decision)
 
 | Source | What it offers | Status |
 | --- | --- | --- |
-| [Sleeper API](https://docs.sleeper.com/) | Free for non-commercial use, no key. Documented: current NFL and NBA players with team, position, injury status, and depth chart; trending adds and drops (credit Sleeper when shown); the current season and week. Undocumented: weekly and season stats for both leagues (Mahomes' Week 8 matched nflverse exactly). | Leading candidate for rosters, injuries, and the second stats source. The undocumented stats feed needs a yes from the user. |
 | [balldontlie](https://www.balldontlie.io/) | NBA developer API. Free tier has no stats; $9.99/month adds every game's player stats; $39.99/month adds season averages and standings. | Possible NBA source. Terms not checked yet. |
 | [MyFantasyLeague API](https://api.myfantasyleague.com/2026/api_info) | Free "in almost any way"; NFL players and injuries. Says it will never provide raw player stats. | Possible extra NFL roster and injury check only. |
 | [MySportsFeeds](https://www.mysportsfeeds.com/feed-pricing/) | NFL and NBA feeds; personal plans from about $5/month per league, stats extra. | Paid fallback. Terms not checked. |
