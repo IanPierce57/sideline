@@ -27,6 +27,7 @@ The NBA has no second source yet.
 
 | Source | What it offers | Status |
 | --- | --- | --- |
+| [muffed.ai](https://muffed.ai/mcp) | NFL advanced stats (EPA per dropback, success rate, Next Gen Stats CPOE, and more) through a free, read-only MCP server built for AI assistants (`https://muffed.ai/api/mcp`, no key). Built on nflverse, so it confirms our calculations and definitions match a published source; it doesn't independently confirm the raw data. Tested Nov 4, 2026: 2025 EPA per dropback matched for all 25 QBs it ranks, to four decimals. Terms: free for individuals; "email first" before building it into a product (hello@muffed.ai); no bulk scraping; carry the credit line "Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse" everywhere its numbers appear. | Leading candidate to cross-reference NFL advanced stats. Waiting on the user to email them. |
 | [balldontlie](https://www.balldontlie.io/) | NBA developer API. Free tier has no stats; $9.99/month adds every game's player stats; $39.99/month adds season averages and standings. | Possible NBA source. Terms not checked yet. |
 | [MyFantasyLeague API](https://api.myfantasyleague.com/2026/api_info) | Free "in almost any way"; NFL players and injuries. Says it will never provide raw player stats. | Possible extra NFL roster and injury check only. |
 | [MySportsFeeds](https://www.mysportsfeeds.com/feed-pricing/) | NFL and NBA feeds; personal plans from about $5/month per league, stats extra. | Paid fallback. Terms not checked. |
@@ -76,3 +77,5 @@ Added later. Their terms have not been checked, so they stay manual only until s
 | ESPN (site, rosters, stats, news, and its public JSON feeds) | Ruled out Nov 4, 2026. ESPN is covered by Disney's terms, which forbid accessing content "using a robot, spider, script, or other automated means" and any use with AI tools. |
 | nba_api / NBA.com stats | Ruled out Nov 4, 2026. NBA.com blocks programs unless they pretend to be a web browser, and its terms bar using the stats in anything that "features a database." |
 | NBA team websites | Ruled out Nov 4, 2026. They live on NBA.com, under the same blocking and terms. |
+| NFL.com and NFL Next Gen Stats site | Ruled out for the app Nov 4, 2026. NFL terms forbid "systematic retrieval of data" without written consent. (Next Gen Stats numbers still come in through nflverse.) |
+| StatMuse | Ruled out Nov 4, 2026. Terms ban bots, scrapers, and machine learning or AI use. |
