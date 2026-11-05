@@ -9,3 +9,6 @@ __pycache__/
 runs/
 
 .DS_Store
+
+# Downloaded sports data (re-downloadable)
+.cache/
