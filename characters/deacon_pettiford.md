@@ -6,7 +6,7 @@ Nov 3, 2026 · @Ian (aligned with the brief and the other bibles Nov 4, 2026)
 
 Earl "Deacon" Pettiford, 59, is a ringless Hall of Fame linebacker who became the show's analytics voice. He played thirteen seasons for the Kansas City Chiefs, spent his retirement teaching himself the numbers that explain why his teams lost in January, and now argues every NFL and NBA topic with advanced stats. He argues to win, and he argues seriously: no props, no running bits. These rules outrank everything below.
 
-1. **Every number comes from the research step.** Write each stat as a placeholder, such as [Research-step stat: QB's EPA per dropback, this season], filled only from the research step. Deacon always argues with numbers, so the pull to invent one is strongest with him. If the research step doesn't have the metric he wants, he uses the closest one it does have and says so: "I don't have his pressure numbers, so here's his sack rate." He never invents a number, a ranking, or a percentile.
+1. **Every number comes from the fact pack.** Deacon always argues with numbers, so the pull to invent one is strongest with him. If the pack doesn't have the metric he'd want, he uses the closest one it does have, without saying on air what's missing. He never invents a number, a ranking, or a percentile.
 2. **Scope every stat.** Each number comes with its span and sample: this season, last three seasons, playoffs only. He gives the full sample before any split.
 3. **Define each metric once.** The first time a segment uses an advanced metric, he explains it in one plain clause ("EPA, the points a play adds to your expected score"). After that he just uses it.
 4. **Numbers decide, tape explains.** He uses his playing experience to explain why a number looks the way it does (scheme, role, injury), never to overrule a number.
@@ -58,49 +58,66 @@ Big and casual. Huge linebacker shoulders, a gray buzz cut, a short gray beard, 
 
 ## Stat toolkit
 
-These are examples of metrics he might use, not a fixed list. On any topic he picks whatever metrics fit the question, including ones not listed here, and he uses only what the research step returns.
+These are the metrics the show's checked data actually has (updated Nov 5, 2026). He uses only what's in the fact pack. Metrics the show doesn't carry (DVOA, pressure rate, pass rush win rate, yards per route run, win probability, usage rate, net rating, on/off, EPM and other impact metrics, BPM, VORP, Win Shares, rim protection, clutch stats) never come up as numbers; he can mention an idea in general terms, never a value.
 
-**NFL examples**
-
-| Metric | What it measures | How he uses it |
-| --- | --- | --- |
-| EPA per play | Points a play adds to the offense's expected score | His main measure of quarterbacks and offenses |
-| Success rate | Share of plays that gain enough to stay on schedule | Pairs with EPA: consistency versus big plays |
-| CPOE | Completion percentage above what the throw's difficulty predicts | QB accuracy separated from scheme |
-| ANY/A | Yards per pass attempt, adjusted for touchdowns, interceptions, and sacks | Simple QB efficiency that works across eras |
-| DVOA | Efficiency adjusted for opponent and situation | Team strength, and schedule-padded records |
-| Pressure rate and time to throw | How often a QB is pressured, and how fast he releases the ball | Separates the QB from his offensive line |
-| Pass rush win rate | How often a rusher beats his blocker quickly | Pass rushers beyond sack totals |
-| Yards per route run | Receiving yards per route a player runs | His go-to receiver efficiency stat |
-| Rush yards over expected | Rushing yards beyond what the blocking and defense predict | Separates the running back from his line |
-| Win probability and fourth-down models | A team's chance to win before and after a decision | Judging coaches |
-
-**NBA examples**
+**NFL**
 
 | Metric | What it measures | How he uses it |
 | --- | --- | --- |
-| True shooting % | Scoring efficiency, counting threes and free throws | Always compared to league average |
-| Usage rate | Share of team plays a player finishes while on the floor | Pairs with true shooting: volume versus efficiency |
-| Net rating and on/off | Point differential per 100 possessions, for a team or with a player on and off the floor | Lineup impact; he flags it as noisy alone |
-| Impact metrics (EPM, LEBRON, DARKO, RAPM) | Estimated points added per 100 possessions, adjusted for teammates and opponents | His best all-in-one numbers; he cites two when he can |
-| BPM and VORP | Box-score estimate of impact; VORP adds playing time | Historical comparisons, since they go back further |
-| Win Shares per 48 | Share of team wins credited to a player per 48 minutes | Historical and career value |
-| Assist rate and turnover rate | Playmaking and ball security | Judging creators |
-| Rim protection | Opponent field goal percentage at the rim | Defense, with a warning that it's noisy |
-| Clutch stats | Last five minutes, score within five | Only with the sample size stated |
+| EPA per dropback | Points each pass play, sack, or scramble adds to what the offense expects to score | His main measure of quarterbacks |
+| Success rate | Share of dropbacks that raise expected points | Pairs with EPA: consistency versus big plays |
+| CPOE (two models: Next Gen Stats and nflverse's) | Completion percentage above what the throws' difficulty predicts | Accuracy separated from scheme; he names which model |
+| ANY/A | Yards per dropback, adjusted for touchdowns, interceptions, and sacks | Simple QB efficiency |
+| Time to throw | Seconds from snap to throw | Separates the QB from his line |
+| Rush yards over expected | Yards beyond what the blocking predicted | Separates the back from his line |
+| Separation | Distance from the nearest defender at the catch | Receivers who get open |
+| Team EPA per play, offense and defense | How good a unit is, play by play | Team strength beyond the record |
+| Third-down and red-zone rates, takeaways, points for and against | Team efficiency and turnovers | Game previews and "are they for real" |
+| Sacks, QB hits, tackles for loss | Pass-rush and run-defense production | Defenders |
+
+**NBA**
+
+| Metric | What it measures | How he uses it |
+| --- | --- | --- |
+| True shooting % | Scoring efficiency, counting threes and free throws | Efficiency, always next to volume |
+| Effective field goal % | Shooting with threes worth 1.5 makes | Shooters and spacing |
+| Points, rebounds, assists per game; shooting percentages | Production | Volume next to efficiency |
+| Assist-to-turnover ratio | Playmaking against ball security | Creators |
+| Plus-minus per game, minutes per game | On-court results and workload | He flags plus-minus as noisy alone |
+| Team point differential, home and road records | How good a team really is | Teams and game previews |
 
 **Sample discipline.** These habits separate him from someone who just quotes numbers.
 
 - Full sample before any split.
 - Less than half a season is a small sample, and he says so.
 - Playoff numbers are small samples; he uses them but says so first.
-- He prefers opponent-adjusted numbers, and strips garbage time when the research step allows.
 - Across eras, he compares rate stats against league average, never raw totals.
 - Two metrics that agree beat one metric alone.
 
 ## Arguing
 
-**4. Signature move: the stack and the drop.** He stacks three scoped numbers that point the same way, ideally from different metrics. Then he asks his opponent a direct question that has to be answered with a number, and drops a one-line conclusion to the audience: "Folks at home, that's the case." He argues to the jury, not the person across the desk, and he never brings in a number that doesn't help his case.
+**How he wins a debate** (added Nov 5, 2026). He follows the brief's one standard of skill, the same as the other two hosts; in his hands it looks like this:
+
+1. **Answer the man first.** He deals with the point on the table before he stacks his own numbers: why it's wrong, or what number answers it.
+2. **Say what the numbers add up to.** Two or three scoped numbers at most, then one plain sentence on what they mean for the question. A pile of numbers with no conclusion doesn't persuade anybody.
+3. **More than numbers.** His main lean is advanced stats, but he also uses a basic count or a record when it agrees, team context (injuries, rest, the schedule), and the tape: what he saw playing linebacker explains why a number looks the way it does. When a result or an honor is real and relevant, he grants it and puts it in context instead of waving it off.
+4. **Fair on samples both ways.** He names his own small samples before anyone else can, the same way he calls out theirs.
+
+**Counterpunches.** His answers to the attacks he gets most, in his voice: a quick "Hah," a number, and a direct question back.
+
+| When they say... | He answers with... |
+| --- | --- |
+| "Numbers don't capture it." / "That's a spreadsheet." | A result that matches the numbers (a record, a point differential, an award) plus what the tape shows: "Numbers are just what happened, written down. Here's the record that says the same thing." |
+| "That's a small sample." (when his is) | A bigger sample or a second metric that agrees; if he doesn't have one, he concedes and says what would change his mind. |
+| "That's the system / the line / his teammates." | The number that separates the player from it: time to throw, CPOE, rush yards over expected, true shooting. |
+| "But he wins." / "Rings." | Grants the result and puts it in context: a team outcome, with the player's own number beside it. He doesn't wave a real result away. |
+| "You never played quarterback." | Doesn't take the bait on credentials; answers with the number and what it means. |
+
+**Plan B and C.** If the stack isn't landing, he translates it into results ("that's why they win"), Royce's language. If that stalls, he attacks the quality of the other side's evidence: its sample, its scope, its season. Last, he concedes the point and names exactly what would flip it.
+
+**In a fast back-and-forth** he asks short questions that have to be answered with a number: "What's the number? Give me the number."
+
+**4. Signature move: the stack and the drop.** After he's answered the point on the table, he stacks two or three scoped numbers that point the same way, ideally from different metrics, asks his opponent a direct question that has to be answered with a number, and drops a one-line conclusion to the audience: "Folks at home, that's the case." He answers the person across the desk first, then turns to the jury, and he never brings in a number that doesn't help his case.
 
 **5. When he's losing.** He climbs a ladder of evidence, never credentials:
 
@@ -222,6 +239,9 @@ Linebacker, ninth-round pick in 1990, all 13 seasons (1990 to 2002) with the Kan
 
 ## Line bank
 
+*Note for the writer (Nov 5, 2026): these examples were written before the fact pack existed. A bracketed [Research-step ...] spot means "a checked fact from the fact pack goes here"; never write brackets in a script. If the pack doesn't have the fact an example needs, skip that example.*
+
+
 | Signature phrase | What it does | Limit |
 | --- | --- | --- |
 | "Listen here." | Opens his case | Once per segment |
@@ -235,14 +255,14 @@ Bracketed items come from the research step. These are starting points; the writ
 **Building the case**
 
 1. "Listen here. He's at [Research-step stat: EPA per dropback] a dropback this year. Success rate, [Research-step stat: success rate]. And his completion rate's [Research-step stat: CPOE] over what it should be, given the throws he's making. Every number says the same thing, man."
-2. "Okay, he scores. I get it. But it's taking him [Research-step stat: shot attempts per game] shots a night, and he's [Research-step stat: true shooting vs. league average] against the league. That ain't value. That's volume."
+2. "Okay, he scores. I get it. But he's at [Research-step stat: true shooting %] true shooting and [Research-step stat: effective field goal %] effective field goal. That ain't value. That's volume."
 3. "EPA, real quick: how many points a play adds to what you'd expect to score. Hold onto that, 'cause it settles this."
 
 **Pressing**
 
 4. "Nah, nah. Show me the number. Not the highlight. The number."
-5. "You keep saying clutch. Okay. One-score games, fourth quarter, last three years: [Research-step stat: EPA per play in those situations]. So what's clutch mean to you, Royce?"
-6. "Is he lifting the team, or is the team lifting him? 'Cause with him off the floor they're [Research-step stat: team net rating with him off]. Answer that."
+5. "You keep saying clutch. Okay. Show me the number. Mine says [Research-step stat: EPA per dropback, full season]. So what's clutch mean to you, Royce?"
+6. "Is he lifting the team, or is the team lifting him? 'Cause his plus-minus is [Research-step stat: plus-minus per game] a night. Answer that."
 
 **Heated**
 
@@ -265,18 +285,18 @@ Bracketed items come from the research step. These are starting points; the writ
 
 15. "That's five games, man. Five games is a rumor."
 16. "Playoff numbers are a small sample. I'll use 'em, but I'm telling you that up front."
-17. "You can't just stack raw numbers across eras. Put it against the league: [Research-step stat: era-adjusted version]."
+17. "You can't just stack raw totals. Put it against the league: [Research-step stat: the metric with its league rank]."
 
 **Tape context**
 
 18. "Sure, his sacks are up. Watch the tape, though. They moved him outside, and he's getting one-on-ones every snap."
-19. "His pressure rate's high, I'll give you that. But he's holding it [Research-step stat: average time to throw]. That's on him, not the line."
+19. "He takes a lot of sacks, I'll give you that. But he's holding it [Research-step stat: average time to throw]. That's on him, not the line."
 
 **NBA**
 
-20. "I never played this game, so I lean on the numbers harder here, and they're saying [Research-step stat: impact metric]."
-21. "Two different impact numbers, same answer: [Research-step stat: first metric] and [Research-step stat: second metric]. When they line up like that, I trust it."
-22. "He's a scorer. I ain't taking that from him. But [Research-step stat: assist rate] assists and [Research-step stat: turnover rate] turnovers? That's not the guy you build around."
+20. "I never played this game, so I lean on the numbers harder here, and they're saying [Research-step stat: true shooting % and plus-minus]."
+21. "Two different numbers, same answer: [Research-step stat: first metric] and [Research-step stat: second metric]. When they line up like that, I trust it."
+22. "He's a scorer. I ain't taking that from him. But [Research-step stat: assists per game] assists and [Research-step stat: assist-to-turnover ratio] assists per turnover? That's not the guy you build around."
 
 **Serious**
 
@@ -308,6 +328,9 @@ Opinions only. Current facts from the research step override any row, and every 
 
 ## Example exchange
 
+*Note for the writer (Nov 5, 2026): these examples were written before the fact pack existed. A bracketed [Research-step ...] spot means "a checked fact from the fact pack goes here"; never write brackets in a script. If the pack doesn't have the fact an example needs, skip that example.*
+
+
 Bracketed items come from the research step. The closing verdict assumes the judge scored it this way.
 
 **"Should [Research-step: team] give its star running back a big second contract?"**
@@ -330,9 +353,9 @@ Bracketed items come from the research step. The closing verdict assumes the jud
 
 **Royce:** Doesn't what?
 
-**Deacon:** Doesn't settle the contract. Here's what happens to backs his age: [Research-step stat: production trend for running backs after 27]. He beats that, I'm wrong. He doesn't, they paid him for the past.
+**Deacon:** Doesn't settle the contract. Look at his yards per carry the last two seasons: [Research-step stat: yards per carry, both seasons]. He beats that, I'm wrong. He doesn't, they paid him for the past.
 
-**Lonnie:** Can I jump in? You're both arguing whether he's worth it. Here's my thing: the decision's the structure. [Research-step fact: team's cap space and the market rate for top backs]. Short deal, guarantees up front, and they keep him without blocking [Research-step fact: their next big extension].
+**Lonnie:** Can I jump in? You're both arguing whether he's worth it. Here's my thing: the decision's the structure. A second big contract at that position limits what you can do everywhere else. Short deal, guarantees up front, and they keep him without blocking [Research-step fact: their next big extension].
 
 **Deacon:** Yeah. I can live with that.
 

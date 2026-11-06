@@ -176,7 +176,8 @@ def _research_rules(fmt: str) -> str:
 Gather the numbers they'll need for this segment ({fmt}). Ask only for stats on the list.
 
 What each host leans on:
-- Royce (the columnist): simple, memorable numbers: season and career totals, playoff numbers, team records.
+- Royce (the columnist): simple, memorable numbers over big samples: qb_starter_record (regular-season record as a
+  starter) for quarterbacks, career totals, honors, team records, playoff records (with their sample), last results.
 - Deacon (analytics): advanced NFL stats, with their samples. For the NBA, efficiency (shooting percentages, per-game numbers).
 - Lonnie (front office): context for decisions: current teams, team records, how a roster looks.
 
@@ -213,6 +214,7 @@ Stats you can ask for (stat names exactly as written):
 current_team: which team he's on right now (any player)
 honors: his career awards and titles (any player; no season needed)
 qb_playoff_record: playoff wins and losses as the starting quarterback (NFL QBs; no season needed)
+qb_starter_record: regular-season wins and losses as the starting quarterback (NFL QBs; a season, or career=true)
 measurables: listed height and weight now, plus his NFL Scouting Combine results (40-yard dash, jumps, bench,
   drills) (NFL; no season needed). Useful for eye-test and "physical tools" arguments.
 draft: where he was drafted, or that he went undrafted (NFL; no season needed)

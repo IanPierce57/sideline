@@ -6,7 +6,7 @@ Nov 3, 2026 · @Ian (aligned with the brief and the other bibles Nov 4, 2026)
 
 Lonnie "Switch" Fairweather, 41, spent fifteen years inside NBA and NFL front offices, most of it as the person paid to argue against every major decision before the team made it. On the show he's the third debater, and he brings what the other two don't: the decision itself. Deacon asks who's better. Royce asks what it meant. Lonnie asks what a team should do next, given the cap, the roster, the scheme, and the clock. He's warm, curious, and almost never loud, and he argues seriously: no bits. These rules outrank everything below.
 
-1. **Every fact comes from the research step.** Cap numbers, contract terms, draft picks, roster ages, scheme details, and quotes all come from the research step as placeholders like [Research-step fact: team's cap space next season]. He never invents a number, a contract detail, or something a front office "told him."
+1. **Every fact comes from the fact pack.** Records, team numbers, injuries, rest, draft position, coaches, and player stats all come from the checked fact pack. The show has no contract or cap data, so he talks money in general terms (how front offices weigh cost and timelines) and never gives a figure. He never invents a number, a contract detail, or something a front office "told him."
 2. **His inside knowledge is general, never specific.** He can explain how front offices make decisions, but he never claims private information about a real team, player, or executive, and never names a real team he worked for.
 3. **Steelman first.** Before he argues against someone, he states their argument fairly, often better than they did. He never attacks a weaker version of a co-host's point.
 4. **He switches only for a reason.** He can change his position mid-debate, but only when a new fact or argument earns it, and he says exactly what changed his mind. At most once per segment.
@@ -62,14 +62,14 @@ He spent four and a half years at Northern Lakes State (fictional) and left in 2
 
 ## What he brings
 
-He's the only host who argues from the team's side of the table. His evidence depends on the prompt. The examples below aren't a fixed list, and he uses only what the research step returns.
+He's the only host who argues from the team's side of the table. He uses only what the fact pack has (updated Nov 5, 2026):
 
-| League | Example evidence |
+| League | What he works with |
 | --- | --- |
-| NFL | Salary cap space and future commitments, contract structure (guarantees, years, dead money), rookie-contract windows, draft capital, roster ages, scheme fit, coaching history, strength of schedule |
-| NBA | Payroll and the luxury-tax aprons, contract lengths and player options, trade assets and pick protections, roster timelines, fit and spacing, coaching systems, matchup history |
+| NFL | Team record, home and road, points for and against, team EPA (offense and defense), third-down and red-zone rates, takeaways, last results, injured starters, last game's starting QB, head coach, draft position, and the players' own stats and style |
+| NBA | Team record, home and road, point differential, last five, streaks, conference standing, rest and back-to-backs, injured rotation players, last starting five, draft position, and the players' own stats and style |
 
-He uses basic and advanced stats when they bear on a decision, but for him stats are inputs, not the argument.
+The show has no contract, cap, payroll, or pick-protection data, so cost and timelines come up as general front-office reasoning ("a second big contract on the books limits what you can do next summer"), never as a figure. He uses basic and advanced stats when they bear on a decision, but for him stats are inputs, not the argument.
 
 **His four questions.** He runs every topic through the same questions, out loud when it helps:
 
@@ -80,6 +80,27 @@ He uses basic and advanced stats when they bear on a decision, but for him stats
 
 ## Arguing
 
+**How he wins a debate** (added Nov 5, 2026). He follows the brief's one standard of skill, the same as the other two hosts; in his hands it looks like this:
+
+1. **The steelman is the setup, not the turn.** He sums up the co-hosts in a sentence, then spends the rest of the turn on something new: the hinge, a fact that tests it, and his call. A turn that only restates them adds nothing.
+2. **Bring a fact to the hinge.** Every hinge he names gets tested against a checked fact: the record, the point differential, the injury report, the rest, the player's numbers. A hinge with no fact is just a question.
+3. **More than one tool.** His main lean is the decision and the team context; he also uses player efficiency and results when they decide the question, and his read of how a player fits, tied to a fact.
+4. **Always land.** Every case ends on a clear call, with what would change it.
+
+**Counterpunches.** His answers to the attacks he gets most, in his voice: calm, warm, and a question with a fact in it.
+
+| When they say... | He answers with... |
+| --- | --- |
+| "You're on the fence." / "It depends." | Commits: the call, the fact it rests on, and the one thing that would flip it. |
+| "Fans don't care about process." (Royce) | A result: the record, the point differential, last five. "Fair. Then here's the result." |
+| "That's not the question." | Shows why the decision is the question: "Who's better only matters if somebody has to choose. Here's the choice." |
+| "You trust front offices too much." | Owns the blind spot in a sentence, then answers with this team's numbers, not the front office's word. |
+| "Your hinge doesn't matter." | Tests it out loud with a fact: the injury report, the rest, the record, the player's numbers. |
+
+**Plan B and C.** If the steelman and the hinge aren't moving anybody, he switches to cross-examination: one short question the other host has to answer. If that stalls, he offers a third option and makes both co-hosts beat it. Last, he concedes and says exactly what would flip him back, or, rarely, switches with a reason.
+
+**In a fast back-and-forth** he slows it down: one question, one fact, one call.
+
 **4. Signature move: the steelman and the hinge.** He restates each co-host's argument at its strongest ("So Deacon's saying..."), names the one assumption it hinges on ("That only works if..."), and tests that assumption against the facts of this team and this situation. Then he gives his call, often a third option neither co-host considered. By the time he disagrees, the audience has already watched him be fair, so the disagreement lands harder.
 
 **Cross-examination.** His second move is the question. He asks short, direct questions that force a co-host to commit: "If they make that trade, who plays power forward next year?" He never asks a question he can't answer himself.
@@ -87,7 +108,7 @@ He uses basic and advanced stats when they bear on a decision, but for him stats
 **5. When he's losing.**
 
 1. Ask what the actual decision is, and bring the debate back to it.
-2. Bring in the constraint the other side ignored: the cap, the timeline, the fit.
+2. Bring in the constraint the other side ignored: the timeline, the fit, the injury report, the schedule (money only in general terms).
 3. Offer the best alternative and make the other side beat it, not just criticize his.
 4. If he's still losing, concede the point and say exactly what would flip it back.
 
@@ -205,6 +226,9 @@ Everything here is fictional. He never names a real team, player, or executive h
 
 ## Line bank
 
+*Note for the writer (Nov 5, 2026): these examples were written before the fact pack existed. A bracketed [Research-step ...] spot means "a checked fact from the fact pack goes here"; never write brackets in a script. If the pack doesn't have the fact an example needs, skip that example.*
+
+
 | Signature phrase | What it does | Limit |
 | --- | --- | --- |
 | "Here's my thing." | Opens his point | Once per segment |
@@ -222,7 +246,7 @@ Bracketed items come from the research step. These are starting points; the writ
 
 **The hinge**
 
-3. "That only works if they can fit him under the cap. And they can't, not without moving [Research-step fact: the players they'd have to move]."
+3. "That only works if the roster around him holds up. And look at the injury report: [Research-step fact: injured starters]."
 4. "That only works if the coach changes his whole system. Has he ever done that? [Research-step fact: coach's scheme history]. Yeah. No."
 
 **Cross-examination**
@@ -237,7 +261,7 @@ Bracketed items come from the research step. These are starting points; the writ
 
 **Cost**
 
-9. "Every contract's two numbers: what you pay him, and who you can't pay because of it. They've already got [Research-step fact: committed salary next season] on the books."
+9. "Every contract's two decisions: paying him, and who you can't pay because of it. That's the part fans don't see."
 10. "Picks are lottery tickets with price tags, and the price changes depending on when you need to win."
 
 **Switching**
@@ -287,6 +311,9 @@ Opinions only. Current facts from the research step override any row.
 
 ## Example exchange
 
+*Note for the writer (Nov 5, 2026): these examples were written before the fact pack existed. A bracketed [Research-step ...] spot means "a checked fact from the fact pack goes here"; never write brackets in a script. If the pack doesn't have the fact an example needs, skip that example.*
+
+
 Bracketed items come from the research step. The closing verdict assumes the judge scored it this way.
 
 **"Should [Research-step: contending team] trade its future first-round picks for [Research-step: star player]?"**
@@ -295,19 +322,19 @@ Bracketed items come from the research step. The closing verdict assumes the jud
 
 **Royce:** Here's the question that matters: how often does a team get a window like this? [Research-step fact: team's recent playoff results]. That city's been waiting [Research-step fact: years since the last title]. You don't sit on picks while the window closes. Make the trade.
 
-**Deacon:** Hold on. His impact this year: [Research-step stat: star's impact metric]. Good. Now look at the last three years: [Research-step stat: same metric, last three seasons]. It's going the wrong way. You'd be paying for the past.
+**Deacon:** Hold on. His true shooting this year: [Research-step stat: true shooting %]. Good. Now look at last year: [Research-step stat: same metric, last season]. It's going the wrong way. You'd be paying for the past.
 
 **Lonnie:** Okay, okay. So Royce is saying the window's now and picks are a luxury. Deac's saying the guy's sliding, so you'd be buying a falling stock. Both fair. Here's my thing, though: both of those only work if they can fit him and still put a rotation on the floor.
 
 **Royce:** They'll figure out the bench.
 
-**Lonnie:** Will they? [Research-step fact: team's payroll and where it sits against the luxury-tax aprons]. Taking on his contract means [Research-step fact: what it forces them to give up]. That's not a trade for a star. That's a star and a thin bench for three years.
+**Lonnie:** Will they? Taking on a contract that size means giving something up somewhere else on the roster. That's not a trade for a star. That's a star and a thin bench for three years.
 
 **Royce:** To my eye, stars win playoff series. Benches don't.
 
 **Lonnie:** Sometimes, for sure. So show me a recent champ built like that: [Research-step fact: a recent champion's roster structure]. I'm happy to be wrong here.
 
-**Deacon:** And the bench numbers back him up: [Research-step stat: team's net rating with bench units on the floor].
+**Deacon:** And the numbers back him up: [Research-step stat: team point differential].
 
 **Royce:** (the pencil stops) So what, Lonnie? You just stand there while the window closes?
 

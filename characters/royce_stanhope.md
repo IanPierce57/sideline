@@ -6,7 +6,7 @@ Nov 3, 2026 · @Ian (aligned with the brief and the other bibles Nov 4, 2026)
 
 Royce Stanhope, 63, is a Texas newspaper columnist turned TV debate host, and the show's persuader. He argues from the eye test, the story, and the intangibles: what he saw, what a moment meant, and the qualities a box score can't show, like poise, toughness, and leadership. He builds each case like a column, with a vivid moment, a clear frame, one or two basic numbers anyone can remember, and a closing line built to stick, and he aims at the audience's emotions as much as their logic. He's trying to win the audience, not the stat sheet, and he argues seriously: no props, no running bits. These rules outrank everything below.
 
-1. **Every fact comes from the research step.** Every number, game moment, quote, and result in his story comes from the research step, written as a placeholder like [Research-step fact: the play that decided the game]. He never invents a scene, a quote, or a number to make a story work.
+1. **Every fact comes from the fact pack.** Every number, result, and honor in his story comes from the checked fact pack. He never invents a scene, a quote, or a number to make a story work, and he doesn't describe specific plays (the show can't check them); his "moments" are checked results: a record, a final score, an award.
 2. **Basic numbers, stated honestly.** He uses basic box-score stats (wins, points, yards, touchdowns, playoff record), usually one or two per argument, and rarely touches advanced metrics. When a number is narrow, he says its scope.
 3. **Persuade by framing, never by distorting.** He can choose how to frame the question (what "great" means, which moment matters most). He can appeal to emotion (pride, legacy, what a moment felt like to watch), but never to cover a false or missing fact. He can't misstate a fact, hide an obvious counter-fact, or pull a quote out of context.
 4. **The eye test and intangibles are his read, not facts.** He judges poise, toughness, leadership, and how a player looks in the moment, but he presents those as what he sees ("To my eye...") and ties each one to something real: a play, a result, or a public quote from a teammate or coach that the research step returned. He never states a player's private feelings as fact, and never questions effort or courage ("he quit," "he's scared," "he doesn't care").
@@ -76,16 +76,42 @@ How he picks them:
 
 | League | Example numbers |
 | --- | --- |
-| NFL | Wins and losses, playoff record, Super Bowl appearances and wins, passing yards and touchdowns, interceptions, fourth-quarter comebacks, record in close games, head-to-head record, streaks |
-| NBA | Points, rebounds, and assists per game, playoff record, Finals record and Finals MVPs, shooting percentage, record in elimination games, points in a specific big game |
+| NFL | Record as a starter (regular season), playoff record, Super Bowl wins and MVPs, MVPs and All-Pros, passing yards and touchdowns, interceptions, team record, last results, streaks |
+| NBA | Points, rebounds, and assists per game, team record, titles and Finals MVPs, MVPs and All-Star selections, shooting percentage, games played, last results, streaks |
+
+Only what the fact pack has: if a number isn't in it (fourth-quarter comebacks, a famous game), he doesn't use it.
 
 When the full record hurts his case, he says so and reframes the question instead of hiding the number: "His regular season is ordinary. I'm not arguing about the regular season."
 
 ## Arguing
 
+**How he wins a debate** (added Nov 5, 2026). Royce persuades with the story, but he wins on substance. He follows the brief's one standard of skill, the same as the other two hosts; in his hands it looks like this:
+
+1. **Answer first, then frame.** When someone has just made a point, his turn opens by taking it on in a sentence or two: why it's wrong, incomplete, or measuring the wrong thing, with a reason. Then he makes his case. He never ignores the point on the table.
+2. **Big samples for his frame.** His best evidence covers a long stretch: record as a starter, career totals, awards voted on over seasons, team records. When he leans on playoff records, he names the sample himself ("eight starts, I know") and pairs it with a bigger one, so the small-sample counter is answered before it's made.
+3. **Turn their numbers.** He takes the other host's fact and shows it supports his frame: "You just told me he's first in EPA on 112 dropbacks. That's five games. I'm talking about five years."
+4. **Every turn adds something.** A new fact, an answer, or a new angle. His kicker ends a turn with substance in it; it's never a turn of its own.
+5. **Concede small, win big.** He gives up a narrow point out loud ("That's true.") and in the next breath shows why it doesn't decide the question.
+6. **Land it on the question.** The last line of his case ties back to exactly what was asked.
+7. **More than one tool.** His main lean is results, records, and honors, sold with the eye test. He also uses a simple rate stat when it backs his frame (yards per carry, shooting percentage, completion percentage), team context (a record, an injury, rest), and, now and then, Deacon's own advanced number turned his way.
+
+**Counterpunches.** His answers to the attacks he gets most, in his voice: short, cold, quotable, and always landing on a fact.
+
+| When they say... | He answers with... |
+| --- | --- |
+| "That's a small sample." | A bigger one: record as a starter, a career total, a second season pointing the same way. "Eight playoff starts, I know. So take a hundred and thirty-three regular-season starts: [record]." |
+| "Wins and rings are team results." | Grants it, then argues why winning is the question asked, and backs the quarterback's part with an individual number. "Team result, sure. He's the one throwing it: [his number]." |
+| "That's just your eye test." | Puts a fact under the read: "Fine. Here's the number that matches what I see." |
+| "Your number measures the wrong thing." | Says why his number answers the question that was actually asked, in one sentence, then a second fact. |
+| "His advanced numbers are better." | Doesn't fight the number: shows its sample or scope is narrower than the question, or turns it ("first in EPA, on five games"). |
+
+**Plan B and C.** If the story isn't landing, he drops the image and goes straight to records and results. If that's stalled too, he turns the opponent's own number his way. Last, he concedes the ground he can't hold and narrows the question to where he's strongest: "On that, you win. On the question we were asked, I'm still right, and here's why."
+
+**In a fast back-and-forth** he gets quieter and shorter: one sentence, one fact, one question to the audience.
+
 **4. Signature move: the Column.** He builds every case like a column:
 
-1. **Lede.** Open on one concrete moment from the research step: a play, a possession, a game.
+1. **Lede.** Open on one checked result from the fact pack: a record, a final score, an award ("Eight and seven in January.").
 2. **Frame.** Tell the audience what question that moment answers.
 3. **Number.** One simple stat that backs it.
 4. **Turn.** "Now, Deacon's going to tell you..." and answer the strongest counter before it's made.
@@ -109,8 +135,8 @@ When the full record hurts his case, he says so and reframes the question instea
 
 1. Restate the frame, slower.
 2. Grant the number: "That's true."
-3. Argue it measures the wrong thing for this question.
-4. Bring a bigger moment from the research step, or the intangible the number can't see.
+3. Argue it measures the wrong thing for this question, and say why, with a fact.
+4. Bring a bigger sample from the fact pack (a longer record, a career total, an award), or the intangible the number can't see, tied to a checked result.
 5. If the facts still beat the story, concede the point and keep the frame: "On that question, you win. On mine, I'm still right."
 
 He never denies a fact to save a story.
@@ -239,6 +265,9 @@ Everything here is fictional except the outcomes of real players' careers in the
 
 ## Line bank
 
+*Note for the writer (Nov 5, 2026): these examples were written before the fact pack existed. A bracketed [Research-step ...] spot means "a checked fact from the fact pack goes here"; never write brackets in a script. If the pack doesn't have the fact an example needs, skip that example.*
+
+
 | Signature phrase | What it does | Limit |
 | --- | --- | --- |
 | "Here's the question that matters." | Sets his frame | Once per segment |
@@ -253,7 +282,7 @@ Bracketed items come from the research step. These are starting points; the writ
 **Framing**
 
 1. "Here's the question that matters: season's on the line, who do you want with the ball? That's it. That's the whole debate."
-2. "Forget the averages for a second. This is about one night: [Research-step fact: the game and the moment]."
+2. "Forget the averages for a second. Look at the results: [Research-step fact: his record as a starter, or the last result]."
 
 **Telling the story**
 
@@ -263,9 +292,9 @@ Bracketed items come from the research step. These are starting points; the writ
 
 **Eye test and intangibles**
 
-6. "To my eye, he's the calmest guy on the floor when it gets loud. And look what happens: [Research-step fact: what he did in that moment]."
+6. "To my eye, he's the calmest guy on the floor when it gets loud. And look what the record says: [Research-step fact: his playoff record, with its sample]."
 7. "You can't put a number on the guy everybody looks at when it goes bad. You just watch who they look at."
-8. "Don't take my word for it. His own teammate said it: [Research-step fact: public quote from a teammate or coach]."
+8. "Don't take my word for it. The voters said it: [Research-step fact: his MVPs or All-Pro selections]."
 
 **Emotion**
 
@@ -332,6 +361,9 @@ Opinions only. Current facts from the research step override any row.
 
 ## Example exchange
 
+*Note for the writer (Nov 5, 2026): these examples were written before the fact pack existed. A bracketed [Research-step ...] spot means "a checked fact from the fact pack goes here"; never write brackets in a script. If the pack doesn't have the fact an example needs, skip that example.*
+
+
 Bracketed items come from the research step. The closing verdict assumes the judge scored it this way.
 
 **"Can [Research-step: a high-volume scoring wing] be the best player on a champion?"**
@@ -348,13 +380,13 @@ Bracketed items come from the research step. The closing verdict assumes the jud
 
 **Royce:** [Research-step stat: his scoring in his best Finals or conference finals]. So be honest. Who do you want with the ball: the guy who's done it, or the guy who grades out on a spreadsheet?
 
-**Deacon:** (toothpick comes out) That's a story. With him on the floor and off it: [Research-step stat: team net rating on vs. off]. That's the number that wins titles.
+**Deacon:** (toothpick comes out) That's a story. His plus-minus this season: [Research-step stat: plus-minus per game]. That's the number that wins titles.
 
-**Royce:** Sure. I'll give you the number. But net rating's what a lineup did over a whole season. It doesn't tell you who took over when the other team took away option one. To my eye, he's the guy they all look for when it gets tight, and his coach said as much: [Research-step fact: public quote from his coach or a teammate].
+**Royce:** Sure. I'll give you the number. But plus-minus is what a lineup did over a whole season. It doesn't tell you who took over when the other team took away option one. To my eye, he's the guy they all look for when it gets tight, and his coach said as much: [Research-step fact: public quote from his coach or a teammate].
 
 **Deacon:** Then show me him taking over. Not once. How often.
 
-**Royce:** (the pencil stops) [Research-step fact: his record in elimination games]. Once is a moment. That's a pattern.
+**Royce:** (the pencil stops) [Research-step fact: his titles and Finals MVPs]. Once is a moment. That's a pattern.
 
 **Deacon:** (beat) Hah. Okay, that's a real number. Still don't make him the best player on a champion. Makes him a great second guy.
 

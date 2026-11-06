@@ -498,6 +498,23 @@ def warm(f: dict) -> None:
     _WARM.submit(_check_one, _copy.deepcopy(f))
 
 
+def _check_qb_starter_record(f: dict) -> dict:
+    """The record comes from official scores; the starts are checked against Sleeper,
+    season by season (this season only through the week nflverse has)."""
+    sid = f["subject_key"].split(":", 1)[1]
+    off = []
+    for season, mine in f["per_season"].items():
+        theirs = int((catalog.sleeper_season(int(season), "regular").get(sid) or {}).get("gs") or 0)
+        if theirs != mine:
+            off.append(f"{season}: {mine} vs {theirs}")
+    f["checked_against"] = "Sleeper (games started, every season)"
+    if off:
+        f.update(status="dropped", note="starts don't match Sleeper (" + "; ".join(off[:3]) + ")")
+    else:
+        f["status"] = "verified"
+    return f
+
+
 def _check_one(f: dict) -> dict:
     """Check one fact. If the check itself fails (a source is down), drop the fact."""
     try:
@@ -539,6 +556,8 @@ def _check(f: dict) -> dict:
         return _check_honor(f)
     if f["stat"] == "qb_playoff_record":
         return _check_qb_playoff_record(f)
+    if f["stat"] == "qb_starter_record":
+        return _check_qb_starter_record(f)
     if f["stat"] == "current_team":
         return _check_current_team(f)
     if f["stat"] == "team_record":

@@ -803,6 +803,39 @@ def qb_playoff_record(card: dict) -> dict:
     return _fact(**base)
 
 
+def qb_starter_record(card: dict, season: int | None = None) -> dict:
+    """Regular-season wins and losses as the starting quarterback (added Nov 5, 2026, so Royce
+    has a big-sample record to argue from). One season, or his whole career. Starts are
+    checked against Sleeper, so every start must be from 2009 on."""
+    g = card.get("gsis_id")
+    games = nflv.schedules().filter((pl.col("game_type") == "REG") & pl.col("result").is_not_null() &
+                                    ((pl.col("home_qb_id") == g) | (pl.col("away_qb_id") == g)))
+    if season:
+        games = games.filter(pl.col("season") == season)
+    wins = losses = ties = 0
+    per_season = {}
+    for row in games.iter_rows(named=True):
+        margin = row["result"] if row["home_qb_id"] == g else -row["result"]
+        wins += margin > 0
+        losses += margin < 0
+        ties += margin == 0
+        per_season[row["season"]] = per_season.get(row["season"], 0) + 1
+    seasons = sorted(per_season)
+    record = f"{wins}-{losses}" + (f"-{ties}" if ties else "")
+    scope = f"{season} regular season" if season else (f"career regular season, {seasons[0]}-{seasons[-1]}" if seasons else "career")
+    base = dict(league="NFL", subject=card["name"], subject_key=card["key"], stat="qb_starter_record",
+                label="record as a starting QB", definition="Regular-season wins and losses in games he started at quarterback.",
+                value={"wins": wins, "losses": losses, "ties": ties}, say=record, seasons=seasons, season=season,
+                per_season=per_season, sample=f"{wins + losses + ties} starts", scope=scope, source="nflverse",
+                as_of=_as_of("NFL", seasons[-1]) if seasons else "final", credit="Data via nflverse",
+                starts=wins + losses + ties, season_type="REG")
+    if not games.height:
+        return _fact(**base, status="dropped", note="no regular-season starts" + (f" in {season}" if season else ""))
+    if seasons[0] < SLEEPER_NFL_FIRST_SEASON:
+        return _fact(**base, status="dropped", note="includes starts before 2009, which can't be double-checked")
+    return _fact(**base)
+
+
 def get(card: dict, stat: str, scope: dict) -> list[dict]:
     """Fetch one stat for one player (candidate facts, not yet checked)."""
     if stat == "current_team":
@@ -813,10 +846,10 @@ def get(card: dict, stat: str, scope: dict) -> list[dict]:
         if card["league"] == "NBA":
             return nba_measurables(card) if stat == "measurables" else [nba_draft(card)]
         return measurables(card) if stat == "measurables" else [draft(card)]
-    if stat == "qb_playoff_record":
+    if stat in ("qb_playoff_record", "qb_starter_record"):
         if card["league"] != "NFL":
             return [_fact(subject=card["name"], stat=stat, status="dropped", note="NFL quarterbacks only")]
-        return [qb_playoff_record(card)]
+        return [qb_playoff_record(card) if stat == "qb_playoff_record" else qb_starter_record(card, scope.get("season"))]
     if card["league"] == "NFL":
         return nfl_player(card, stat, scope)
     return nba_player(card, stat, scope)

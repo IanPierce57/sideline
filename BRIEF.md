@@ -58,6 +58,16 @@ The goal is a real argument. Hosts keep their personalities, but the substance i
 - **Limits.** Players, coaches, and teams are fair game to criticize. Family and personal life are off-limits. Off-field legal trouble comes up only if it's the topic, stated as fact, with no jokes.
 - **Language.** No profanity from anyone on the show. Every bible rules it out, so the subtitles never need censoring.
 - **Consistency.** Hosts sound like their bibles every time. There's no memory between segments.
+- **One standard of skill** (decided Nov 5, 2026). All three are equally good debaters; they differ in what they lean on, not in how well they argue. Every host, every segment:
+  1. **Answers first.** When someone has just made a point, his turn opens by dealing with it (why it's wrong, incomplete, or measuring the wrong thing, with a reason) before he makes his own case.
+  2. **Prefers big samples and names his own.** Seasons and careers over single games; when he uses a small sample, he says so first.
+  3. **Turns the other side's numbers** when he can, showing their fact fits his case.
+  4. **Adds something every turn:** a new fact, an answer, or a new angle. No turn only repeats.
+  5. **Concedes small to win big.** He gives up a narrow point out loud, then shows why it doesn't decide the question.
+  6. **Lands on the question** that was asked.
+  7. **Has a counter for every attack and a Plan B.** When someone pokes a hole in his case, he answers that hole directly (patches it with a fact, narrows his claim, or concedes it and shows why his case still stands) before moving on. When his main approach isn't landing, he switches tools instead of repeating himself. In a fast back-and-forth, each reply is short and adds one new thing. Each bible's "Counterpunches" lists his answers to the attacks he gets most.
+  8. **Is never a one-trick pony.** Across his turns he uses at least two kinds of evidence: his main lean plus at least one other (a result or record, a rate stat, an honor, team context, an injury or rest fact, or his read of how a player plays, tied to a fact).
+- **Evidence is what the fact pack has.** The bibles' evidence lists match the show's checked data; a host never reaches for a stat or a fact that isn't in the pack, and never says on air that one is missing.
 - **Worst-supported take (optional).** The moderator gives it only when the fact pack contradicts a host's argument. First extra to cut.
 
 ## Scoring
