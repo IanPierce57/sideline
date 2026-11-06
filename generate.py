@@ -514,6 +514,15 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
 
     used = {fid for line in lines for fid in line.get("facts", [])}
     sources = sorted({_source_line(by_id[i]) for i in used if i in by_id})
+    # The receipts: every fact the segment used, and what it was checked against.
+    receipts = []
+    for fid in sorted(used, key=lambda x: int(x[1:]) if x[1:].isdigit() else 0):
+        f = by_id.get(fid)
+        if not f:
+            continue
+        receipts.append({"subject": f.get("subject"), "label": f.get("label"), "say": f.get("say"),
+                         "scope": f.get("scope"), "source": f.get("source"),
+                         "checked": f.get("checked_against") or "", "status": f.get("status")})
     words = sum(count_words(line["text"]) for line in lines)
     script = {
         "topic": topic,
@@ -524,6 +533,7 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
         "estimated_minutes": round(words / WORDS_PER_MINUTE, 1),
         "warnings": check_script(lines),
         "sources": sources,
+        "receipts": receipts,
         "scores": {h: v["score"] for h, v in result["hosts"].items()},
         "winner": result["winner"],
         "tie": result["tie"],

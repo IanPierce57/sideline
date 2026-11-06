@@ -52,6 +52,38 @@ def _refresh_news() -> None:
         NEWS_LOCK.release()
 
 
+_UPCOMING = {"at": 0, "data": None}
+
+
+def upcoming_for_page() -> dict:
+    """Real upcoming games for the try-questions and the right-hand monitor, from the same
+    schedules the game finder uses (NFL: the next two weeks; NBA: the next week). Saved for
+    30 minutes."""
+    if _UPCOMING["data"] and time.time() - _UPCOMING["at"] < 1800:
+        return _UPCOMING["data"]
+    from datetime import date
+    out = {"games": [], "questions": []}
+    try:
+        from pipeline import games, nba
+        today = date.today()
+        nfl = games._upcoming(today).sort(["gameday", "gametime"]).head(4)
+        for g in nfl.iter_rows(named=True):
+            home = games.FROM_NFLVERSE.get(g["home_team"], g["home_team"])
+            away = games.FROM_NFLVERSE.get(g["away_team"], g["away_team"])
+            d = date.fromisoformat(g["gameday"])
+            out["games"].append({"league": "NFL", "text": f"{games.nickname(away)} at {games.nickname(home)}",
+                                 "when": f"{d:%a} {d:%b} {d.day}"})
+        for g in nba._upcoming(today)[:4]:
+            d = date.fromisoformat(g["date"])
+            out["games"].append({"league": "NBA", "text": f"{nba.TEAMS[g['away']['team']][1]} at {nba.TEAMS[g['home']['team']][1]}",
+                                 "when": f"{d:%a} {d:%b} {d.day}"})
+        out["questions"] = (games.upcoming_games([], limit=1) + nba.upcoming_games([], limit=1))
+    except Exception as problem:            # a schedule hiccup shouldn't break the page
+        out["note"] = type(problem).__name__
+    _UPCOMING.update(at=time.time(), data=out)
+    return out
+
+
 def news_for_page() -> dict:
     from pipeline import news
     cached = json.loads(news.CACHE_FILE.read_text()) if news.CACHE_FILE.exists() else {}
@@ -111,6 +143,12 @@ class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(STATIC), **kwargs)
 
+    def end_headers(self):
+        # Never let the browser reuse an old copy of the page's files: after an update, a
+        # saved old studio.js next to a new app.js breaks the page.
+        self.send_header("Cache-Control", "no-store")
+        super().end_headers()
+
     def send_json(self, status: int, payload) -> None:
         body = json.dumps(payload, ensure_ascii=False).encode()
         self.send_response(status)
@@ -131,6 +169,8 @@ class Handler(SimpleHTTPRequestHandler):
             return self.send_json(200, runs)
         if self.path == "/api/news":
             return self.send_json(200, news_for_page())
+        if self.path == "/api/upcoming":
+            return self.send_json(200, upcoming_for_page())
         if self.path.startswith("/api/job/"):
             job_id = self.path.removeprefix("/api/job/")
             with JOBS_LOCK:

@@ -412,3 +412,20 @@ body {
   .console-form input { font-size: 18px; }
   .controls { flex-wrap: wrap; }
 }
+
+/* ---------- Live try-questions, receipts (Nov 5, 2026) ---------- */
+.examples-live { display: contents; }
+.chip.live { border-color: var(--gold); }
+.chip.live::before { content: "UP NEXT · "; color: var(--gold); font-family: var(--pixel); font-size: 0.75em; }
+.receipts { border-top: 2px solid rgba(255, 255, 255, 0.08); border-bottom: 2px solid rgba(255, 255, 255, 0.08); padding: 10px 0; margin-bottom: 6px; }
+.receipts-head { font-family: var(--pixel); color: var(--gold); font-size: 13px; letter-spacing: 0.06em; }
+.receipts-head span { color: #9fb0d8; font-family: var(--round); font-size: 12px; letter-spacing: 0; margin-left: 6px; }
+.receipts-summary { font-family: var(--round); color: #cdd7f2; font-size: 12px; margin: 4px 0 8px; }
+.receipts-list { max-height: 260px; overflow-y: auto; padding-right: 4px; }
+.receipt { display: grid; grid-template-columns: 1fr; gap: 1px; padding: 6px 0; border-top: 1px solid rgba(255, 255, 255, 0.06); font-family: var(--round); font-size: 12px; color: #e3eaff; }
+.receipt b { color: #fff; font-size: 12px; }
+.receipt strong { color: var(--gold-soft); }
+.receipt em { color: #9fb0d8; font-style: normal; }
+.receipt i { font-style: normal; font-size: 11px; }
+.receipt i.ok { color: #7fe39a; }
+.receipt i.trusted { color: #9fb0d8; }

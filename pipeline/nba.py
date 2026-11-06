@@ -63,7 +63,8 @@ def label(season_start: int) -> str:
 
 def schedule(season_start: int | None = None) -> list[dict]:
     s = season_start or season()
-    games = get_json(f"https://api.sleeper.app/schedule/nba/regular/{s}", f"sleeper/schedule_nba_regular_{s}", max_age_hours=3)
+    # Refreshed every 15 minutes so a game that has tipped off stops counting as upcoming.
+    games = get_json(f"https://api.sleeper.app/schedule/nba/regular/{s}", f"sleeper/schedule_nba_regular_{s}", max_age_hours=0.25)
     return sorted(games, key=lambda g: g["date"])
 
 
@@ -154,7 +155,8 @@ def standings(conf: str, season_start: int | None = None) -> list[dict]:
 
 def _upcoming(today: date) -> list[dict]:
     end = (today + timedelta(days=LOOK_AHEAD_DAYS)).isoformat()
-    return [g for g in schedule() if g["status"] != "complete" and today.isoformat() <= g["date"] <= end]
+    # Only games that haven't started: Sleeper marks them "pre_game" (a game under way isn't a preview).
+    return [g for g in schedule() if g["status"] == "pre_game" and today.isoformat() <= g["date"] <= end]
 
 
 def _confirm(g: dict):
@@ -179,6 +181,11 @@ def find_game(code_a: str, code_b: str, today: date | None = None):
     for g in _upcoming(today):
         if {g["home"]["team"], g["away"]["team"]} == {code_a, code_b}:
             return _confirm(g)
+    started = [g for g in schedule() if {g["home"]["team"], g["away"]["team"]} == {code_a, code_b}
+               and g["status"] != "pre_game" and g["date"] >= (today - timedelta(days=1)).isoformat()]
+    if started:
+        return None, (f"The {TEAMS[code_a][1]}-{TEAMS[code_b][1]} game has already tipped off or been played, "
+                      "so it can't be previewed.")
     return None, f"The {TEAMS[code_a][1]} and {TEAMS[code_b][1]} don't play each other in the next week."
 
 

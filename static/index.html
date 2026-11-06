@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20261106">
 </head>
 <body>
   <header class="masthead">
@@ -31,7 +31,7 @@
       <div class="monitor center">
         <div class="mon-brand">&middot; SIDELINE &middot;</div>
         <div class="mon-topic" id="center-topic">ASK THE DESK</div>
-        <div class="mon-foot" id="center-foot">NBA &middot; NFL &middot; current or all-time</div>
+        <div class="mon-foot" id="center-foot">NBA &middot; NFL &middot; today's players and teams</div>
       </div>
       <div class="monitor right">
         <div class="mon-layer" id="right-default">
@@ -116,27 +116,31 @@
       </form>
       <div class="examples">
         <span class="examples-label">TRY:</span>
-        <button type="button" class="chip">Is Patrick Mahomes the best quarterback of all time?</button>
-        <button type="button" class="chip">Should the Lakers buy or sell before the trade deadline?</button>
-        <button type="button" class="chip">Who wins the Super Bowl this season?</button>
+        <span id="examples-live" class="examples-live"></span>
+        <button type="button" class="chip">Is Josh Allen the best quarterback in the NFL right now?</button>
+        <button type="button" class="chip">Is Shai Gilgeous-Alexander better than Nikola Jokic right now?</button>
+        <button type="button" class="chip">Should the Bears trade for a pass rusher?</button>
+        <button type="button" class="chip">Are the Thunder still the team to beat in the West?</button>
       </div>
       <p class="console-status" id="status" role="status"></p>
     </section>
 
-    <!-- Sources: fills in once the research step exists -->
+    <!-- Sources: where the numbers come from, and this segment's receipts -->
     <section class="sources">
       <div class="sources-head">
         <h2>SOURCES</h2><span class="aside">(where the numbers come from)</span>
-        <span class="right">Every number is checkable</span>
+        <span class="right">Every number is checked twice</span>
       </div>
-      <div class="source-row">
-        <div class="who">SIDELINE</div>
-        <div class="what">Sources for each segment show up here while it's on air.</div>
+      <div class="receipts" id="receipts" hidden>
+        <div class="receipts-head">THE RECEIPTS <span>this segment</span></div>
+        <div class="receipts-summary" id="receipts-summary"></div>
+        <div class="receipts-list" id="receipts-list"></div>
       </div>
-      <div class="source-row">
-        <div class="who">STEP 1</div>
-        <div class="what">For now the hosts argue from general claims, with no stats, so there's nothing to cite yet.</div>
-      </div>
+      <div class="source-row"><div class="who">NFL STATS</div><div class="what">nflverse, every number checked against Sleeper; advanced and team stats checked against muffed.ai</div></div>
+      <div class="source-row"><div class="who">NBA STATS</div><div class="what">Sleeper, checked against Wikipedia's career tables and team game logs</div></div>
+      <div class="source-row"><div class="who">GAMES</div><div class="what">Two schedules must agree before a game is previewed (NFL: nflverse and Sleeper; NBA: Sleeper and Wikipedia)</div></div>
+      <div class="source-row"><div class="who">HONORS</div><div class="what">Wikipedia, cross-checked with Wikidata and nflverse where they cover the same award</div></div>
+      <div class="source-row"><div class="who">THE RULE</div><div class="what">If a number can't be confirmed, it's crossed off and never reaches the show.</div></div>
     </section>
   </div>
 
@@ -154,12 +158,13 @@
     <h2>CREDITS <span class="aside">(the fine print)</span></h2>
     <p><strong>Everyone on Sideline is fictional.</strong> Hal Brennan, Royce Stanhope, Deacon Pettiford, Lonnie Fairweather, and every caller are made-up characters. Everything they say is AI-generated opinion, written by Claude. Callers are never real people.</p>
     <p><strong>Not affiliated.</strong> Sideline isn't connected to or endorsed by the NBA, the NFL, ESPN, or any team, player, or broadcaster. Team and player names are used only to talk about them.</p>
-    <p><strong>Stats.</strong> Once the research step is on, every number comes from the sources in the Sources panel, with credit given wherever a source's license asks for it.</p>
+    <p><strong>Stats.</strong> Every number on the show is pulled from one source and checked against a second; anything that can't be confirmed is cut. Data via nflverse (CC BY 4.0) · NFL Next Gen Stats via nflverse · FTN Data via nflverse (CC BY-SA 4.0) · Sleeper · muffed.ai · Wikipedia and Wikidata (CC BY-SA 4.0).</p>
+    <p><strong>Scoring.</strong> A panel of three AI judges scores every argument without knowing who made it, on evidence, reasoning, rebuttal, impact, and clarity. Hal announces their result; he doesn't pick the winner.</p>
     <p><strong>Headlines.</strong> The ticker shows real headlines exactly as the outlets wrote them, via GNews (free plan, so they run a few hours behind). A story appears only if at least two outlets report it, and they're named after it.</p>
     <p><strong>Fonts.</strong> Pixelify Sans and Silkscreen, from Google Fonts (SIL Open Font License).</p>
   </footer>
 
-  <script src="studio.js"></script>
-  <script src="app.js"></script>
+  <script src="studio.js?v=20261106"></script>
+  <script src="app.js?v=20261106"></script>
 </body>
 </html>

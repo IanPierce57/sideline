@@ -54,9 +54,15 @@ def _season() -> int:
 
 
 def _upcoming(today: date) -> pl.DataFrame:
+    """Games in the next two weeks that haven't kicked off yet (a game already under way, or
+    over but not yet scored in nflverse, isn't a preview; fixed Nov 5, 2026)."""
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
     end = (today + timedelta(days=LOOK_AHEAD_DAYS)).isoformat()
+    now_et = datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d %H:%M")
     return nflv.schedules().filter((pl.col("season") == _season()) & pl.col("result").is_null() &
-                                   (pl.col("gameday") >= today.isoformat()) & (pl.col("gameday") <= end))
+                                   (pl.col("gameday") >= today.isoformat()) & (pl.col("gameday") <= end) &
+                                   ((pl.col("gameday") + " " + pl.col("gametime").fill_null("23:59")) > now_et))
 
 
 def find_game(code_a: str, code_b: str, today: date | None = None):
@@ -67,6 +73,14 @@ def find_game(code_a: str, code_b: str, today: date | None = None):
     games = _upcoming(today).filter(((pl.col("home_team") == a) & (pl.col("away_team") == b)) |
                                     ((pl.col("home_team") == b) & (pl.col("away_team") == a))).sort("gameday")
     if not games.height:
+        recent = nflv.schedules().filter((pl.col("season") == _season()) &
+                                         (pl.col("gameday") >= (today - timedelta(days=1)).isoformat()) &
+                                         (pl.col("gameday") <= today.isoformat()) &
+                                         (((pl.col("home_team") == a) & (pl.col("away_team") == b)) |
+                                          ((pl.col("home_team") == b) & (pl.col("away_team") == a))))
+        if recent.height:
+            return None, (f"The {nickname(code_a)}-{nickname(code_b)} game has already kicked off or been played, "
+                          "so it can't be previewed.")
         return None, f"The {nickname(code_a)} and {nickname(code_b)} don't play each other in the next two weeks."
     g = games.row(0, named=True)
     home, away = FROM_NFLVERSE.get(g["home_team"], g["home_team"]), FROM_NFLVERSE.get(g["away_team"], g["away_team"])

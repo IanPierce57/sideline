@@ -92,22 +92,62 @@ const Studio = (() => {
   for (const id in CAST) { S.nextBlink[id] = 800 + Math.random() * 3000; S.blinkUntil[id] = 0; S.glance[id] = 0; S.glanceUntil[id] = 0; }
 
   // ---------- Pre-show: what everyone does while the script is being written ----------
+  // The scenes follow what the pipeline is really doing (app.js calls setStep as the server
+  // reports each step), with makeup and small talk mixed in between.
   const SCENE_MS = 6000;
   const PRODUCER_SPOT = 300;   // where the floor producer stands: the right end of the desk
-  const SCENES = [
-    { artist: "royce", acts: { hal: "notes", royce: "makeup", deacon: "laptop", lonnie: "tablet" },
-      who: "artist", name: "Makeup", title: "Pre-show", text: "Hold still, Royce. You're shining under these lights." },
-    { artist: "deacon", acts: { hal: "miccheck", royce: "write", deacon: "makeup", lonnie: "coffee" },
-      who: "hal", name: "Hal Brennan", title: "Mic check", text: "Check, check. Line one, stay with me. We're close." },
-    { artist: "lonnie", producer: true, acts: { hal: "notes", royce: "tie", deacon: "laptop", lonnie: "makeup" },
-      who: "producer", name: "Floor producer", title: "Pre-show", text: "Two minutes, everybody! Phones away, mics on." },
-    { artist: "hal", acts: { hal: "makeup", royce: "notes", deacon: "stretch", lonnie: "tablet" },
-      who: "deacon", name: "Deacon Pettiford", title: "Loosening up", text: "Old linebacker habit. Gotta get the shoulders loose before kickoff." },
-    { artist: null, acts: { hal: "notes", royce: "write", deacon: "laptop", lonnie: "coffee" },
-      who: "royce", name: "Royce Stanhope", title: "Writing his open", text: "One image, not a list of facts. That's how you open a segment." },
-    { artist: null, acts: { hal: "notes", royce: "notes", deacon: "laptop", lonnie: "tablet" },
-      who: "lonnie", name: "Lonnie Fairweather", title: "Doing research", text: "Pulling up the cap sheet. I want to know who's paying who before we start." },
+  const sc = (who, name, title, text, acts, extra = {}) => ({ who, name, title, text, artist: null, acts, ...extra });
+  const STEP_SCENES = {
+    start: [
+      sc("hal", "Hal Brennan", "Screening the call", "Line one, you're with the screener. Today's players, NBA or NFL, and we're good.",
+         { hal: "miccheck", royce: "notes", deacon: "coffee", lonnie: "tablet" }),
+    ],
+    research: [
+      sc("deacon", "Deacon Pettiford", "Pulling stats", "Pulling this season's numbers. Gimme the full sample before anybody splits it.",
+         { hal: "notes", royce: "makeup", deacon: "laptop", lonnie: "tablet" }, { artist: "royce" }),
+      sc("lonnie", "Lonnie Fairweather", "Doing research", "Records, injuries, who's rested. I want the whole picture before we start.",
+         { hal: "notes", royce: "write", deacon: "laptop", lonnie: "tablet" }),
+    ],
+    verify: [
+      sc("deacon", "Deacon Pettiford", "Checking the numbers", "Every number gets checked against a second source. If it don't match, it don't air.",
+         { hal: "notes", royce: "notes", deacon: "laptop", lonnie: "tablet" }),
+      sc("royce", "Royce Stanhope", "Waiting on the numbers", "Bev checks my numbers at home. Here it takes two sources. Same idea.",
+         { hal: "notes", royce: "write", deacon: "laptop", lonnie: "makeup" }, { artist: "lonnie" }),
+    ],
+    write: [
+      sc("royce", "Royce Stanhope", "Writing his open", "Open on a result, not a list. Then the frame. Then the number.",
+         { hal: "notes", royce: "write", deacon: "laptop", lonnie: "coffee" }),
+      sc("producer", "Floor producer", "Pre-show", "Two minutes, everybody! Phones away, mics on.",
+         { hal: "notes", royce: "write", deacon: "makeup", lonnie: "coffee" }, { artist: "deacon", producer: true }),
+    ],
+    check: [
+      sc("hal", "Hal Brennan", "Reading the script", "Every line gets checked against the facts. Anything that doesn't hold up gets fixed or cut.",
+         { hal: "notes", royce: "notes", deacon: "laptop", lonnie: "tablet" }),
+      sc("artist", "Makeup", "Pre-show", "Chin up, Hal. Almost there.",
+         { hal: "makeup", royce: "tie", deacon: "coffee", lonnie: "tablet" }, { artist: "hal" }),
+    ],
+    judge: [
+      sc("lonnie", "Lonnie Fairweather", "Waiting on the judges", "The judges score it blind. No names, just the arguments.",
+         { hal: "notes", royce: "tie", deacon: "stretch", lonnie: "tablet" }),
+      sc("deacon", "Deacon Pettiford", "Loosening up", "Old linebacker habit. Gotta get the shoulders loose before kickoff.",
+         { hal: "notes", royce: "notes", deacon: "stretch", lonnie: "coffee" }),
+    ],
+    close: [
+      sc("producer", "Floor producer", "Places", "Places, everybody! We're coming up on air.",
+         { hal: "miccheck", royce: "tie", deacon: "coffee", lonnie: "tablet" }, { producer: true }),
+    ],
+  };
+  const FILLER = [
+    sc("artist", "Makeup", "Pre-show", "Hold still, Royce. You're shining under these lights.",
+       { hal: "notes", royce: "makeup", deacon: "laptop", lonnie: "tablet" }, { artist: "royce" }),
+    sc("lonnie", "Lonnie Fairweather", "Pre-show", "First coffee of the night. Won't be the last.",
+       { hal: "notes", royce: "write", deacon: "laptop", lonnie: "coffee" }),
+    sc("hal", "Hal Brennan", "Mic check", "Check, check. Line one, stay with me. We're close.",
+       { hal: "miccheck", royce: "tie", deacon: "laptop", lonnie: "tablet" }),
+    sc("artist", "Makeup", "Pre-show", "Deacon, the toothpick goes in after the powder.",
+       { hal: "notes", royce: "notes", deacon: "makeup", lonnie: "tablet" }, { artist: "deacon" }),
   ];
+  const STEP_ALIAS = { topic: "start" };
 
   // ---------- The set (drawn once, then reused every frame) ----------
   const bg = document.createElement("canvas");
@@ -447,11 +487,17 @@ const Studio = (() => {
 
   function updateScene(t) {
     if (S.mode !== "preshow") return;
-    const index = Math.floor((t - S.modeAt) / SCENE_MS) % SCENES.length;
-    if (index === S.scene) return;
-    S.scene = index;
+    if (S.scene >= 0 && t < S.nextSceneAt) return;
+    // Alternate: a scene about the current step, then a filler scene. A new step cuts in
+    // right away (after at least 2.5 seconds on the current scene).
+    S.scene += 1;
     S.sceneAt = t;
-    const scene = SCENES[index];
+    S.nextSceneAt = t + SCENE_MS;
+    const pool = STEP_SCENES[S.step] || STEP_SCENES.start;
+    const fromStep = S.stepFresh || S.scene % 2 === 0;
+    const scene = fromStep ? pool[(S.stepCount++) % pool.length] : FILLER[(S.fillCount++) % FILLER.length];
+    S.stepFresh = false;
+    S.current = scene;
     moveArtist(scene.artist, t);
     if (scene.producer) S.producer = { at: t, x: 344, to: PRODUCER_SPOT };
     if (S.onScene) S.onScene(scene);
@@ -472,7 +518,7 @@ const Studio = (() => {
     const flap = ((t + c.x * 7) / 120 | 0) % 2 === 0;
 
     if (S.mode === "preshow") {
-      const scene = SCENES[Math.max(0, S.scene)];
+      const scene = S.current || FILLER[0];
       o.act = scene.acts[id];
       const sceneTalk = scene.who === id && t - S.sceneAt > 400 && t - S.sceneAt < 4200;
       if (sceneTalk) o.mouth = flap ? "open" : "closed";
@@ -654,6 +700,7 @@ const Studio = (() => {
       S.mode = mode; S.modeAt = t;
       if (mode === "preshow") {
         S.scene = -1; S.props = freshProps(); S.speaker = null;
+        S.step = "start"; S.stepFresh = true; S.stepCount = 0; S.fillCount = 0; S.current = null; S.nextSceneAt = 0;
         S.artist = { x: -24, from: -24, to: -24, at: t, target: null };
         S.producer = { at: -1e9, x: 344, to: 344 };
       }
@@ -662,6 +709,13 @@ const Studio = (() => {
       if (mode !== "live") S.speaker = null;
     },
     setOnAir(on) { S.onAir = on; },
+    // The pipeline moved to a new step (start, research, verify, write, check, judge, close).
+    setStep(step) {
+      const next = STEP_ALIAS[step] || step;
+      if (!STEP_SCENES[next] || next === S.step) return;
+      S.step = next; S.stepFresh = true; S.stepCount = 0;
+      S.nextSceneAt = Math.min(S.nextSceneAt, (S.sceneAt || 0) + 2500);
+    },
     setCountdown(n) { S.countdown = n; },
     setPaused(paused) { S.paused = paused; },
     onScene(callback) { S.onScene = callback; },

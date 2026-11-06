@@ -88,15 +88,17 @@ function showBubble(anchorId, text, revealSeconds = 0) {
   bubble.classList.toggle("tiny", text.length > 165);
   if (anchorId === "caller") {
     // the caller is on the left monitor, so the bubble sits beside it
-    bubble.style.left = "31.5%"; bubble.style.bottom = "auto"; bubble.style.top = "9%";
+    bubble.style.left = "31.5%"; bubble.style.bottom = "auto"; bubble.style.top = "9%"; bubble.style.width = "46%";
     tail.className = "tail side";
     tail.style.left = "";
   } else {
-    const width = 46;
+    // short lines get a narrower bubble, so they cover less of the set
+    const width = text.length <= 45 ? 26 : text.length <= 80 ? 34 : 46;
     // while a stat is up on the right-hand monitor, keep the bubble out of its way
     const rightEdge = $("right-stat").hidden ? 98.5 : 69;
     const left = Math.min(Math.max(xPct - width / 2, 1.5), rightEdge - width);
     bubble.style.left = `${left}%`;
+    bubble.style.width = `${width}%`;
     bubble.style.top = "auto";
     bubble.style.bottom = `${((Studio.size.H - y) / Studio.size.H) * 100 + 2.5}%`;
     tail.className = "tail";
@@ -173,6 +175,8 @@ function hideScores() { scores = {}; $("scorecard").hidden = true; }
 
 function showEndCard() {
   const sample = !!script.sample;
+  // the meter always ends on the judge's final scores
+  if (script.scores && Object.keys(script.scores).length) setScores(script.scores, sample);
   $("end-sample").hidden = !sample;
   $("end-topic").textContent = script.topic;
   const rows = $("end-rows");
@@ -242,20 +246,84 @@ $("sound").addEventListener("click", () => {
 
 // ---------- The screens: idle, pre-show, countdown, live, done ----------
 
+// While the lines are open: short in-character chatter, and real upcoming games on the
+// right-hand monitor. Bubbles are short and brief so they don't sit on the monitors.
+const IDLE_CHATTER = [
+  ["hal", "Lines are open. Ask the desk."],
+  ["deacon", "Somebody call in. I got numbers burnin' a hole in my pocket."],
+  ["royce", "Bring me a question worth a column."],
+  ["lonnie", "Give us a decision to make. That's the fun part."],
+  ["deacon", "Full sample before anybody splits it. House rule."],
+  ["royce", "Every number on this show gets checked twice. Bev would approve."],
+  ["lonnie", "NBA or NFL, today's players. Anything goes."],
+  ["hal", "Type a topic below, and these three will argue it out."],
+];
+let idleTimer = null, upNextTimer = null, upcoming = { games: [], questions: [] };
+function stopIdle() { clearTimeout(idleTimer); clearInterval(upNextTimer); upNextTimer = null; }
+function idleChatter(i = 0) {
+  const [who, text] = IDLE_CHATTER[i % IDLE_CHATTER.length];
+  const person = PEOPLE[who];
+  setNameplate(person.name, person.role.replace("Host · ", ""));
+  showBubble(who, text, 0.6);
+  idleTimer = setTimeout(() => {
+    hideBubble();
+    idleTimer = setTimeout(() => idleChatter(i + 1), 5000);
+  }, 3800);
+}
+function showUpNext() {
+  let k = 0;
+  const step = () => {
+    const g = upcoming.games[k % Math.max(upcoming.games.length, 1)];
+    if (g) setRight("UP NEXT", `${g.league} · ${g.text} · ${g.when}`);
+    k += 1;
+  };
+  step();
+  upNextTimer = setInterval(step, 6000);
+}
+// Hal says something that has to stay readable (a screened call, a dropped line): the
+// idle chatter waits 20 seconds before it starts again.
+function holdChatter() {
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(() => idleChatter(0), 20000);
+}
+
 function showIdle() {
+  stopIdle();
   Studio.setMode("idle");
   setOnAir(false);
   clearGraphics();
-  setCenter("ASK THE DESK", "NBA · NFL · current or all-time");
+  setCenter("ASK THE DESK", "NBA · NFL · today's players and teams");
   setRight("TONIGHT", "NBA · NFL · call-in debate");
   setCamera("hal", "Hal Brennan", "Moderator<br><span class=\"gold\">Lines open</span>");
   $("show-tag").textContent = "Sideline";
   setNameplate("Hal Brennan", "Moderator");
-  showBubble("hal", "Lines are open. Ask the desk anything NBA or NFL, and these three will argue it out.");
+  hideBubble();
+  idleTimer = setTimeout(() => idleChatter(0), 1200);
+  if (upcoming.games.length) showUpNext();
+}
+
+// Real upcoming games (from the same schedules the game finder uses): two try-questions
+// and the right-hand monitor's "up next" list.
+async function loadUpcoming() {
+  try {
+    upcoming = await (await fetch("/api/upcoming")).json();
+  } catch (error) {
+    return;
+  }
+  const box = $("examples-live");
+  box.innerHTML = "";
+  for (const q of upcoming.questions || []) {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "chip live"; b.textContent = q;
+    b.addEventListener("click", () => { $("topic").value = q; $("topic").focus(); });
+    box.append(b);
+  }
+  if (Studio && !script && !upNextTimer) showUpNext();
 }
 
 let preshowTimer = null;
 function showPreshow(topic) {
+  stopIdle();
   stopPlayback();
   clearGraphics();
   setPlayButtons(false);
@@ -268,7 +336,7 @@ function showPreshow(topic) {
   };
   tick();
   preshowTimer = setInterval(tick, 1000);
-  setRight("PRE-SHOW", "On air in about two minutes");
+  setRight("PRE-SHOW", "On air in a minute or two");
   setCamera("caller", "Line 1", "Caller<br><span class=\"gold\">Holding</span>");
   $("show-tag").textContent = "Pre-show";
 }
@@ -301,7 +369,7 @@ function showDone() {
   hideChyron();
   setCenter("THAT'S THE BOARD", "Ask the desk another one");
   setNameplate("Hal Brennan", "That's the board");
-  typeText("That's the board.", 0);
+  hideBubble();
   setLines("", "Lines are open");
   setStatus("That's the board. Ask the desk another one.");
   $("progress").textContent = "Finished";
@@ -326,15 +394,34 @@ function secondsFor(text) {
   return Math.max(MIN_SECONDS, (words / WORDS_PER_MINUTE) * 60);
 }
 
+// Split at real sentence ends: a period, ! or ? followed by a space and a new sentence.
+// "0.37" (no space) and abbreviations like "Jr.", "St.", "vs.", "Nov." don't end a sentence.
+const ABBREVIATIONS = /(?:^|\s)(?:jr|sr|st|vs|mr|mrs|dr|no|mt|ft|jan|feb|mar|apr|jun|jul|aug|sep|sept|oct|nov|dec|a\.m|p\.m|u\.s)\.$/i;
+function sentences(text) {
+  const out = [];
+  let start = 0;
+  const end = /[.!?]+["'’”)\]]*\s+/g;
+  let m;
+  while ((m = end.exec(text))) {
+    const piece = text.slice(start, m.index + m[0].trimEnd().length);
+    const next = text[end.lastIndex] || "";
+    if (ABBREVIATIONS.test(piece) || !/[A-Z0-9"'“(]/.test(next)) continue;
+    out.push(piece.trim());
+    start = end.lastIndex;
+  }
+  if (start < text.length) out.push(text.slice(start).trim());
+  return out.filter(Boolean);
+}
+
 function buildCards(lines) {
   const out = [];
   let hostHasSpoken = false;
   for (const line of lines) {
     const spoken = spokenText(line.text);
-    const sentences = spoken.match(/[^.!?]+[.!?]+["')\]]*|[^.!?]+$/g) || [spoken];
+    const parts = sentences(spoken);
     const chunks = [];
     let current = "";
-    for (const s of sentences.map((x) => x.trim()).filter(Boolean)) {
+    for (const s of parts.length ? parts : [spoken]) {
       if (current && (current + " " + s).length > MAX_BUBBLE_CHARS) { chunks.push(current); current = s; }
       else current = current ? `${current} ${s}` : s;
     }
@@ -385,13 +472,39 @@ function setPlayButtons(enabled) {
   $("replay").disabled = !enabled;
 }
 
+// The Sources panel: this segment's receipts (every fact used and what it was checked against).
+function showReceipts(s) {
+  const box = $("receipts");
+  const rows = s.receipts || [];
+  if (s.sample || !rows.length) { box.hidden = true; return; }
+  const m = s.meta || {};
+  $("receipts-summary").textContent =
+    `${rows.length} facts on air · ${m.stats_verified ?? "?"} of ${m.stats_found ?? "?"} checked facts kept · `
+    + `${m.lines_rewritten ?? 0} lines fixed, ${m.lines_cut ?? 0} cut by the line check`;
+  const list = $("receipts-list");
+  list.innerHTML = "";
+  for (const r of rows) {
+    const ok = String(r.status || "").startsWith("verified");
+    const check = ok ? `✓ ${r.checked}` : (r.checked || "Trusted source");
+    const row = document.createElement("div");
+    row.className = "receipt";
+    row.innerHTML = `<b>${escapeHtml(r.subject || "")}</b><span>${escapeHtml(r.label || "")}: `
+      + `<strong>${escapeHtml(String(r.say || ""))}</strong> <em>(${escapeHtml(r.scope || "")})</em></span>`
+      + `<i class="${ok ? "ok" : "trusted"}">${escapeHtml(check)}</i>`;
+    list.append(row);
+  }
+  box.hidden = false;
+}
+
 async function play(newScript) {
+  stopIdle();
   stopPlayback();
   clearGraphics();
   setPlayButtons(false);
   script = newScript;
   cards = buildCards(script.lines);
   cardIndex = 0;
+  showReceipts(script);
   await countdown();
   Studio.setMode("live");
   setOnAir(true);
@@ -420,6 +533,7 @@ function showControlRoom(job) {
       + (c.lines_rewritten != null ? ` · fixed ${c.lines_rewritten} · cut ${c.lines_cut}` : "");
   }
   setRight(STEP_NAMES[step.step] || "PRE-SHOW", detail);
+  if (step.step && Studio.setStep) Studio.setStep(step.step);
   setStatus(`${step.text || "Working"}... ${detail}`);
 }
 
@@ -454,6 +568,7 @@ async function askDesk(topic) {
   } catch (error) {
     clearInterval(preshowTimer);
     showIdle();
+    holdChatter();
     setCenter("LINE DROPPED", "Try that one again");
     showBubble("hal", "Looks like we lost the line. Give us another call.");
     setLines("", "Lines are open");
@@ -467,6 +582,7 @@ async function askDesk(topic) {
 function screenCall(topic, details) {
   clearInterval(preshowTimer);
   showIdle();
+  holdChatter();
   setLines("", "Lines are open");
   const status = $("status");
   status.className = "console-status";
@@ -619,3 +735,4 @@ loadNews();
 setInterval(loadNews, 5 * 60 * 1000);
 
 showIdle();
+loadUpcoming();
