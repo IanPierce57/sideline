@@ -34,13 +34,15 @@ Run `.venv/bin/python tests/accuracy.py` to recheck the sources (free; no API ca
 
 **Speed (Nov 5):** a full segment takes about 35-60 seconds (was 135-200). muffed.ai is asked once per team or player (not once per stat) and answers are saved for 6 hours; Wikipedia requests are one at a time with a short gap; the server loads the data files in the background when it starts; the writer runs at medium effort (`SIDELINE_WRITER_EFFORT=high` to change), which wrote as well as high in a side-by-side test and about 20 seconds faster.
 
+**Opinions (Nov 5):** opinions about how a player plays don't need proof, but they must be believable (no "dual-threat" Jared Goff). `pipeline/style.py` builds a style profile per player (rushing, depth of throws, separation, carries...), ranked against his position and shown to the writer and claims checker in words only, never numbers. `STYLE_LABELS` maps common labels to the trait they need; the line checker flags clear contradictions. Test: `tests/style_test.py`. After a line is cut, the lines on either side are smoothed (`linecheck.smooth`) so hand-offs still match, then checked again.
+
 **Positions (Nov 5):** `pipeline/positions.py` lists which position labels can stand in for which (RB/HB/FB, OT/OG/OL, DE/EDGE/OLB/LB, DB/CB/S/nickel...). The pairs are not transitive: an edge rusher can be called a linebacker, but a Mike linebacker is never a defensive end. Used to match the right player's Wikipedia page.
 
 **Single NFL games** (Nov 5): `pipeline/games.py` confirms the game on two schedules (nflverse and Sleeper); `catalog.game_pack` pulls records, team stats (checked against muffed.ai), recent scores (checked against Sleeper), last starting QBs, and injured starters. NBA single games are turned away for now.
 
 **Scope:** active players and current teams only (Nov 4); questions that need the past ("greatest ever", GOAT, all-time rankings, comparisons with retired players, past teams) are turned away with present-day suggestions (Nov 5). Honors come from Wikipedia, trusted on its own (Nov 4), still cross-checked where possible (Super Bowl rings vs nflverse rosters; major awards vs Wikidata; Wikipedia wins a disagreement, which is logged); QB playoff records from nflverse scores with starts checked against Sleeper.
 
-**Known gaps:** no contract or cap data (Spotrac and Over The Cap forbid automated use; Lonnie argues money in general terms); Wikipedia rate-limits bursts of requests (they're spaced and cached daily); after a line is cut, the lines around it aren't re-smoothed yet; spelled-out decimals ("twenty point nine") aren't checked; no judge or scoring yet (Hal names no winner).
+**Known gaps:** no contract or cap data (Spotrac and Over The Cap forbid automated use; Lonnie argues money in general terms); Wikipedia rate-limits bursts of requests (they're spaced and cached daily); spelled-out decimals ("twenty point nine") aren't checked; no judge or scoring yet (Hal names no winner).
 
 **Next, in the order under "How it's built" in BRIEF.md:** judge (blind scoring) and the close; the news ticker source; voices last.
 

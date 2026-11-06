@@ -138,7 +138,13 @@ current team, a trade, an injury, an award or title count, a record, a ranking,
 Do NOT flag: opinions, predictions, arguments, how someone "looks" or "feels" to a host,
 the hosts' own fictional careers, general well-known framing ("he's won it more than once"
 is fine only if the fact pack doesn't contradict it), or anything the fact pack supports.
-Be strict about anything the fact pack contradicts. Return an empty list if nothing is wrong."""
+Be strict about anything the fact pack contradicts.
+
+Opinions about how a player plays ("exciting", "fun to watch", "smooth", "a gunslinger")
+don't need proof, but they must be believable: flag one that no knowledgeable fan would
+hold, given the style profiles (for example, calling a quarterback who barely runs a
+"dual threat", or a receiver who rarely goes deep a "deep threat"). Return an empty list
+if nothing is wrong."""
 
 CLAIMS_SCHEMA = {"type": "object", "properties": {"flags": {"type": "array", "items": {"type": "object", "properties": {
     "line": {"type": "integer"}, "claim": {"type": "string"}, "problem": {"type": "string"}},
@@ -181,12 +187,60 @@ def rewrite(lines: list[dict], problems: list[dict], pack: list[dict], client: a
     return {f["line"]: {"text": f["text"], "facts": f["facts"]} for f in fixes}
 
 
+def smooth(out: list[dict], cut_numbers: list[int], original: list[dict], by_id: dict, pack: list[dict],
+           client: anthropic.Anthropic, topic: str = "", profiles: list[dict] | None = None, log: list | None = None) -> list[dict]:
+    """After lines are cut, fix the lines on either side so the conversation still flows
+    (a hand-off to someone whose line is gone, a reply to a point nobody made). Each fixed
+    line is checked again; if it fails, the old line stays."""
+    from . import style
+    if not cut_numbers:
+        return out
+    gone = {l["line"]: l for l in original if l["line"] in cut_numbers}
+    order = [l["line"] for l in out]
+    around = set()
+    for n in cut_numbers:
+        before = [x for x in order if x < n]
+        after = [x for x in order if x > n]
+        if before:
+            around.add(before[-1])
+        if after:
+            around.add(after[0])
+    if not around:
+        return out
+    notes = "; ".join(f"after line {max([x for x in order if x < n] or [0])} the line \"{gone[n]['speaker']}: "
+                      f"{gone[n]['text'][:120]}\" was removed" for n in cut_numbers)
+    problems = [{"line": n, "problem": "a nearby line was removed (" + notes + "). Adjust this line only as much as "
+                 "needed so the conversation flows: fix hand-offs (who Hal calls on must be who speaks next) and "
+                 "don't answer or refer to the removed line. Keep its numbers and facts."} for n in sorted(around)]
+    try:
+        fixes = rewrite(out, problems, pack, client)
+    except Exception:
+        return out
+    smoothed = []
+    for line in out:
+        fix = fixes.get(line["line"])
+        if fix:
+            candidate = dict(line, text=fix["text"], facts=[i for i in fix["facts"] if i in by_id])
+            if not (check_numbers([candidate], by_id, topic) + check_stage_notes([candidate])
+                    + style.check_labels([candidate], profiles or [])):
+                if log is not None and candidate["text"] != line["text"]:
+                    log.append({"line": line["line"], "speaker": line["speaker"], "said": line["text"],
+                                "problem": "smoothed after a nearby cut", "action": "smoothed", "now": candidate["text"]})
+                smoothed.append(candidate)
+                continue
+        smoothed.append(line)
+    return smoothed
+
+
 def run(lines: list[dict], facts: list[dict], pack: list[dict], context: str, client: anthropic.Anthropic,
-        progress=lambda *a: None, topic: str = "") -> tuple[list[dict], list[dict]]:
-    """Check, rewrite once, re-check, cut what still fails. Returns (lines, log)."""
+        progress=lambda *a: None, topic: str = "", profiles: list[dict] | None = None) -> tuple[list[dict], list[dict]]:
+    """Check, rewrite once, re-check, cut what still fails. Returns (lines, log).
+    profiles: style profiles (pipeline/style.py) for checking that opinions are believable."""
+    from . import style
+    profiles = profiles or []
     by_id = {f["id"]: f for f in facts}
     log = []
-    number_problems = check_numbers(lines, by_id, topic) + check_stage_notes(lines)
+    number_problems = check_numbers(lines, by_id, topic) + check_stage_notes(lines) + style.check_labels(lines, profiles)
     claim_problems = check_claims(lines, pack, context, client)
     progress("line_check", {"checked": len(lines), "flagged": len({p['line'] for p in number_problems + claim_problems})})
     problems = number_problems + claim_problems
@@ -206,7 +260,8 @@ def run(lines: list[dict], facts: list[dict], pack: list[dict], context: str, cl
         fix = fixes.get(line["line"])
         if fix:
             candidate = dict(line, text=fix["text"], facts=[i for i in fix["facts"] if i in by_id])
-            still = check_numbers([candidate], by_id, topic) + check_stage_notes([candidate])
+            still = (check_numbers([candidate], by_id, topic) + check_stage_notes([candidate])
+                     + style.check_labels([candidate], profiles))
             if not still:
                 out.append(candidate)
                 log.append({"line": line["line"], "speaker": line["speaker"], "said": original,
@@ -214,6 +269,7 @@ def run(lines: list[dict], facts: list[dict], pack: list[dict], context: str, cl
                 continue
         log.append({"line": line["line"], "speaker": line["speaker"], "said": original,
                     "problem": "; ".join(merged[line["line"]]), "action": "cut"})
+    out = smooth(out, [e["line"] for e in log if e["action"] == "cut"], lines, by_id, pack, client, topic, profiles, log)
     progress("line_fix", {"rewritten": sum(1 for e in log if e["action"] == "rewritten"),
                           "cut": sum(1 for e in log if e["action"] == "cut")})
     for i, line in enumerate(out, start=1):

@@ -81,6 +81,8 @@ FACT RULES. These override the bibles wherever they conflict.
    title, a record) must agree with the fact pack. Use the current_team facts:
    never put a player on a team the fact pack contradicts. If the fact pack
    doesn't cover something, keep it general or make it clearly an opinion.
+   Opinions about how a player plays must fit his style profile: never call a
+   quarterback who barely runs a dual threat, or a short-area receiver a deep threat.
    Never say on air that a number is missing ("I don't have their numbers"):
    argue from what the fact pack has.
 5. No specific real-world scenes or quotes. Don't describe a particular play or
@@ -356,6 +358,22 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
     progress("verified", {"found": len(candidates), "passed": len(facts),
                           "dropped": sum(1 for r in stat_log if not r["reason"].startswith("kept"))})
 
+    # 3c. Style profiles: how each player actually plays, in words only, so opinions stay
+    # believable (no "dual-threat" Jared Goff). Never quoted; numbers still come from the pack.
+    from pipeline import players as player_lookup, style
+    profiles, seen_keys = [], set()
+    for f in facts:
+        key = f.get("subject_key") or ""
+        if key.split(":")[0] in ("nfl", "nba") and key not in seen_keys:
+            seen_keys.add(key)
+            try:
+                p = style.profile(player_lookup.by_key(key))
+            except Exception:
+                p = None
+            if p:
+                profiles.append(p)
+    style_text = "\n".join(style.describe(p) for p in profiles)
+
     # 4. Write, with the fact pack
     progress("step", {"step": "write", "text": "Writing the segment"})
     context = (f"Format (from the topic check): {check['format']}. Today is {datetime.now():%B %-d, %Y}. "
@@ -378,7 +396,9 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
                  # The bibles are the same every run, so cache them (cheaper and faster).
                  "cache_control": {"type": "ephemeral"}}],
         messages=[{"role": "user", "content": f"Topic: {topic}\n\n{context}\n\n"
-                   f"Fact pack (every number you may use):\n{json.dumps(pack, indent=1, ensure_ascii=False)}"}],
+                   f"Fact pack (every number you may use):\n{json.dumps(pack, indent=1, ensure_ascii=False)}"
+                   + (f"\n\nStyle profiles (how each player actually plays, ranked against his position; for choosing "
+                      f"believable descriptions only, never to quote):\n{style_text}" if style_text else "")}],
     ) as stream:
         response = stream.get_final_message()
     timings["write"] = round(time.time() - t, 1)
@@ -398,7 +418,8 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
     # 5. Check every line
     progress("step", {"step": "check", "text": "Checking every line of the script"})
     t = time.time()
-    lines, line_log = linecheck.run(lines, facts, pack, context, client, progress, topic)
+    lines, line_log = linecheck.run(lines, facts, pack, context + ("\n\nStyle profiles:\n" + style_text if style_text else ""),
+                                    client, progress, topic, profiles=profiles)
     timings["line_check"] = round(time.time() - t, 1)
 
     # The stat chyron shows each fact the first time it's cited.
