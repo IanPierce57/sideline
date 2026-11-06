@@ -239,12 +239,13 @@ CLAIMS_SCHEMA = {"type": "object", "properties": {"claims": {"type": "array", "i
     "required": ["claims"], "additionalProperties": False}
 
 
-def check_claims(lines: list[dict], pack: list[dict], context: str, client: anthropic.Anthropic) -> list[dict]:
+def check_claims(lines: list[dict], pack: list[dict], context: str, client: anthropic.Anthropic,
+                 effort: str | None = None) -> list[dict]:
     """Every real-world claim, judged against the fact pack; returns the ones not supported."""
     script = "\n".join(f"{l['line']}. {l['speaker']}: {l['text']}" for l in lines)
     with client.messages.stream(
         model=CLAIMS_MODEL, max_tokens=16000, system=CLAIMS_RULES, thinking={"type": "adaptive"},
-        output_config={"effort": CLAIMS_EFFORT, "format": {"type": "json_schema", "schema": CLAIMS_SCHEMA}},
+        output_config={"effort": effort or CLAIMS_EFFORT, "format": {"type": "json_schema", "schema": CLAIMS_SCHEMA}},
         messages=[{"role": "user", "content": f"{context}\n\nFact pack:\n{json.dumps(pack, ensure_ascii=False)}\n\nScript:\n{script}"}],
     ) as stream:
         reply = stream.get_final_message()

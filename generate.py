@@ -87,7 +87,8 @@ FACT RULES. These override the bibles wherever they conflict.
    like a point guard" is fine for a quarterback who runs and improvises, not for
    one who barely leaves the pocket. Metaphors describe how a player plays in
    general, never a specific real play, and never his looks. Invent fresh images
-   for this player; never reuse a bible's example image word for word.
+   for this player; never reuse a bible's example image word for word. An image
+   never stands alone: the same turn lands on a fact from the pack (Royce's rule 4).
    Style profiles are not checked facts: use them only to keep opinions believable.
    Never state a profile ranking as fact ("he has a very high catch rate"); cite a
    fact-pack stat, or make it the host's read ("to my eye, the ball always finds him").
@@ -113,9 +114,14 @@ FACT RULES. These override the bibles wherever they conflict.
    cap figures in the fact pack, so he keeps money talk general.
 11. Host backstories are allowed. Hosts may use the fictional careers and receipts
    in their own bibles, years included. Those come from the bibles, not the world.
-12. Every host gets his best honest case. Don't decide who should win or tilt the
+12. Every turn adds something new: a fact, an answer, or an angle. A host deals with
+   the point on the table before he pivots, and a host who reframes the question
+   ("that's not the question") says why the other measure falls short and backs his
+   own with a fact. A sign-off line that only repeats his case belongs in the final
+   answer, not in a turn of its own.
+13. Every host gets his best honest case. Don't decide who should win or tilt the
    debate toward anyone; strengths show up naturally in what each host knows.
-13. No winner in your script. A judge scores the debate after you write it, and
+14. No winner in your script. A judge scores the debate after you write it, and
    Hal's close (the winner, the summary, the sign-off) is written then. Hal never
    hints at who argued better before that; end the script with the final answers.
 """
@@ -139,7 +145,7 @@ Segment flow:
    for the reasons in his bible.
 6. When new arguments run out, Hal asks for one-sentence final answers.
 7. The script ENDS with the three final answers. Don't write Hal's wrap-up: the judge
-   scores the debate first, and Hal's close is written afterward (fact rule 13).
+   scores the debate first, and Hal's close is written afterward (fact rule 14).
 
 Format: pick exactly one.
 - "debate": a question with sides (who's better right now, is Y overrated).
@@ -475,7 +481,7 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
                   "argument": None} for i, c in enumerate(drafted, start=1)]
         def close_problems(c):
             return (linecheck.check_numbers(c, by_id_all, topic) + linecheck.check_scope(c, by_id_all)
-                    + linecheck.check_stage_notes(c) + linecheck.check_claims(c, pack, context, client))
+                    + linecheck.check_stage_notes(c) + linecheck.check_claims(c, pack, context, client, effort="medium"))
         problems = close_problems(close)
         if problems:                                   # one rewrite, the same as any other line
             close_log = problems

@@ -16,7 +16,11 @@ How a segment is scored, in plain terms:
      gets +5 (to start; tuned after testing), up to 100.
    - Host score = the average of his arguments (talking more doesn't win).
    - Winner = highest host score. A tie (same score to one decimal) goes to the higher
-     average rebuttal rating; if that's tied too, it's a tie.
+     average rebuttal rating; if that's tied too, it's a tie. A margin under 2 points is a
+     close call, and Hal says so.
+   Three blind judges (PANEL) run at the same time, each with the hosts shuffled
+   differently, and their ratings are averaged (tested Nov 5, 2026: same winner in 8 of 10
+   re-judged scripts, and the 2 that flipped were within 2 points).
 4. Hal's close is written only after scoring, so the verdict always matches it.
 """
 
@@ -33,6 +37,7 @@ NAMES = {"royce": ("Royce Stanhope", "Royce", "Stanhope"), "deacon": ("Deacon Pe
          "lonnie": ("Lonnie Fairweather", "Lonnie", "Fairweather", "Lon")}
 WEIGHTS = {"evidence": 0.30, "reasoning": 0.25, "rebuttal": 0.25, "impact": 0.10, "clarity": 0.10}
 DROPPED_BONUS = 5
+CLOSE_CALL = 2.0   # a margin under this many points is a close call: Hal says so ("by a hair")
 
 RUBRIC = """An argument is one turn: a host taking the floor and making a point (tagged
 [argument N] on its lines). Rate each argument from 1 to 5 on each criterion. Use these descriptions
@@ -48,6 +53,9 @@ REASONING (does the evidence actually prove the claim?)
   1: The claim doesn't follow from what's offered.
 REBUTTAL (does it answer an opponent's strongest point directly?)
   Rate only if the argument answers an earlier argument by another host; otherwise null.
+  Arguing that the opponent is measuring the wrong thing ("that's not the question; the
+  question is...") counts as a direct answer when it explains WHY the opponent's measure
+  falls short; a bare change of subject doesn't.
   5: Takes on the opponent's strongest point head-on and shows why it's wrong or doesn't matter.
   3: Answers the opponent, but a weaker point, or only partly.
   1: Claims to answer but talks past the point.
@@ -61,7 +69,9 @@ CLARITY (is the claim specific and easy to follow?)
   1: Hard to tell what's being claimed.
 
 Volume, insults, and repetition earn nothing: an argument that only repeats an earlier point
-by the same host, gets louder, or insults someone gets 1 on every criterion. Judge the
+by the same host, gets louder, or insults someone gets 1 on every criterion. Summing up the
+other hosts' points before making a new one is NOT repetition: rate the new point. Only a turn
+that adds nothing new (no new fact, angle, or answer) earns nothing. Judge the
 substance, not the personality: a metaphor or a vivid line is neither a plus nor a minus by
 itself. Hosts are anonymous; don't guess who they are."""
 
@@ -151,7 +161,7 @@ def rate(lines: list[dict], pack: list[dict], topic: str, client: anthropic.Anth
 
 
 def _clamp(x):
-    return min(5, max(1, int(x)))
+    return min(5.0, max(1.0, float(x)))
 
 
 def argument_score(r: dict) -> float:
@@ -181,7 +191,7 @@ def tally(lines: list[dict], ratings: dict) -> dict:
                       "base": round(base, 1), "dropped": dropped, "lines": args[n]["lines"],
                       "rebuttal": _clamp(r["rebuttal"]) if r.get("rebuttal") is not None and r.get("answers") else None,
                       "answers": r.get("answers", []), "note": r.get("note", ""),
-                      "ratings": {k: (_clamp(r[k]) if r.get(k) is not None else None) for k in WEIGHTS}}
+                      "ratings": {k: (round(_clamp(r[k]), 2) if r.get(k) is not None else None) for k in WEIGHTS}}
     hosts = {}
     for h in HOSTS:
         mine = [a for a in per_arg.values() if a["host"] == h]
@@ -196,8 +206,10 @@ def tally(lines: list[dict], ratings: dict) -> dict:
             tie, winner = True, None
         else:
             tiebreak = True
+    close_call = (not tie and len(ranked) > 1
+                  and hosts[ranked[0]]["score"] - hosts[ranked[1]]["score"] < CLOSE_CALL)
     return {"arguments": per_arg, "hosts": hosts, "ranked": ranked, "winner": winner, "tie": tie,
-            "tiebreak": tiebreak, "order": [n for n in order if n in per_arg]}
+            "tiebreak": tiebreak, "close_call": close_call, "order": [n for n in order if n in per_arg]}
 
 
 def meter(lines: list[dict], result: dict) -> None:
@@ -213,10 +225,36 @@ def meter(lines: list[dict], result: dict) -> None:
                 line["score"] = {a["host"]: round(sum(seen[a["host"]]) / len(seen[a["host"]]))}
 
 
+PANEL = 3          # blind judges per segment, run side by side; their ratings are averaged
+
+
+def _average(panels: list[dict]) -> dict:
+    """Average several judges' ratings for each argument. An argument counts as answering an
+    earlier one if any judge said so; its rebuttal rating is the average of the judges who
+    rated it."""
+    out = {}
+    for n in set().union(*panels):
+        rows = [p[n] for p in panels if n in p]
+        merged = {"argument": n, "answers": sorted({a for r in rows for a in r.get("answers", [])}),
+                  "note": " / ".join(r.get("note", "") for r in rows)}
+        for k in ("evidence", "reasoning", "impact", "clarity"):
+            merged[k] = sum(_clamp(r[k]) for r in rows) / len(rows)
+        rebuttals = [_clamp(r["rebuttal"]) for r in rows if r.get("rebuttal") is not None and r.get("answers")]
+        merged["rebuttal"] = sum(rebuttals) / len(rebuttals) if rebuttals else None
+        out[n] = merged
+    return out
+
+
 def judge(lines: list[dict], pack: list[dict], topic: str, client: anthropic.Anthropic, seed=None) -> dict:
-    ratings, label = rate(lines, pack, topic, client, seed)
-    result = tally(lines, ratings)
-    result["blind_labels"] = label
+    """Score a finished script. PANEL blind judges run at the same time, each with the hosts
+    shuffled differently, and their ratings are averaged; then code does the math."""
+    from concurrent.futures import ThreadPoolExecutor
+    rng = random.Random(seed)
+    seeds = [rng.random() for _ in range(PANEL)]
+    with ThreadPoolExecutor(PANEL) as pool:
+        panels = list(pool.map(lambda s: rate(lines, pack, topic, client, s), seeds))
+    result = tally(lines, _average([p[0] for p in panels]))
+    result["blind_labels"] = [p[1] for p in panels]
     return result
 
 
@@ -227,7 +265,8 @@ debate. Follow Hal's bible (below). The winner is decided; you only announce it.
 
 Write two or three short lines for Hal, in order:
 1. The winner, by score: "On the scorecard, tonight goes to <name>." (On a tie, say the
-   judge has it even and name both.) Don't say the numeric scores; the meter shows them.
+   judge has it even and name both. If the verdict says it was close, say so in plain words,
+   like "by a hair".) Don't say the numeric scores; the meter shows them.
 2. The winning summary, two or three sentences: the winner's claim, his strongest
    evidence, and the rebuttal that landed. Use only what the winner actually said in the
    script; don't add new facts.
@@ -253,6 +292,8 @@ def write_close(lines: list[dict], result: dict, pack: list[dict], caller: dict,
         verdict = f"A tie between {names[result['ranked'][0]]} and {names[result['ranked'][1]]}."
     else:
         verdict = f"The winner is {names[w]}" + (" (on the rebuttal tiebreaker)" if result["tiebreak"] else "") + "."
+        if result.get("close_call"):
+            verdict += f" It was close: {names[result['ranked'][1]]} was right behind."
     best = sorted((a for a in result["arguments"].values() if a["host"] == w), key=lambda a: -a["score"]) if w else []
     rebut = max((a for a in best if a["rebuttal"]), key=lambda a: a["rebuttal"], default=None)
     hint = ""

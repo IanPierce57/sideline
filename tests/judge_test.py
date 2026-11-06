@@ -23,6 +23,7 @@ from dotenv import load_dotenv         # noqa: E402
 from pipeline import judge, verify     # noqa: E402
 
 PROJECT = Path(__file__).resolve().parent.parent
+BLIND_ONLY = False
 HAL_ONLY = """You are Hal Brennan, the moderator of Sideline (your bible is below). The debate is
 over. Decide, fairly and objectively, which host made the most persuasive case. Return only
 the winner: royce, deacon, or lonnie."""
@@ -59,12 +60,16 @@ def one(run: Path, client) -> dict:
     pack = verify.pack_for_writer(json.loads((run / "fact_pack.json").read_text()))
     lines = host_lines(script)
     blind = [judge.judge(lines, pack, script["topic"], client, seed=s) for s in (1, 2, 3)]
-    original = judge.blind
-    judge.blind = named
+    if BLIND_ONLY:
+        return {"topic": script["topic"], "blind": [r["winner"] for r in blind],
+                "blind_scores": [{h: v["score"] for h, v in r["hosts"].items()} for r in blind],
+                "named": None, "named_scores": {}, "hal": [None, None]}
+    original, saved_panel = judge.blind, judge.PANEL
+    judge.blind, judge.PANEL = named, 1                # one judge with names, to see if names sway it
     try:
         with_names = judge.judge(lines, pack, script["topic"], client)
     finally:
-        judge.blind = original
+        judge.blind, judge.PANEL = original, saved_panel
     hal = [hal_decides(lines, pack, script["topic"], client) for _ in range(2)]
     return {"topic": script["topic"], "blind": [r["winner"] for r in blind],
             "blind_scores": [{h: v["score"] for h, v in r["hosts"].items()} for r in blind],
@@ -75,7 +80,10 @@ def one(run: Path, client) -> dict:
 def main():
     load_dotenv(PROJECT / ".env")
     client = anthropic.Anthropic()
-    n = int(sys.argv[1]) if len(sys.argv) > 1 else 10
+    global BLIND_ONLY
+    BLIND_ONLY = "--blind-only" in sys.argv
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    n = int(args[0]) if args else 10
     runs = sorted(d for d in (PROJECT / "runs").iterdir() if (d / "script.json").exists())[-n:]
     with ThreadPoolExecutor(4) as pool:
         results = list(pool.map(lambda r: one(r, client), runs))

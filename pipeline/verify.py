@@ -35,14 +35,21 @@ def _check_nfl_count(f: dict) -> dict:
         return f
     kind = "post" if f["season_type"] == "POST" else "regular"
     sid = f["subject_key"].split(":", 1)[1]
-    total = 0.0
+    total, games = 0.0, 0
     for season in seasons:
         row = catalog.sleeper_season(season, kind).get(sid)
         if row is None:
             f.update(status="dropped", note=f"Sleeper has no {season} {kind}-season record for him to check against")
             return f
         total += row.get(f["sleeper_key"]) or 0
+        games += int(row.get("gp") or 0)
     total = int(total) if float(total).is_integer() else total
+    # Games played: the sources count them differently (Sleeper counts a game he played in
+    # without recording a stat). Sleeper wins, so every fact about him says the same number
+    # (added Nov 5, 2026, after an audit caught "7 games" and "8 games" for the same season).
+    if games and f.get("sample", "").endswith(" games") and f["sample"] != f"{games} games":
+        f["note"] = (f.get("note") or "") + f" Games played: nflverse {f['sample'].split()[0]}, Sleeper {games}; using Sleeper's."
+        f["sample"] = f"{games} games"
     f["checked_against"], f["check_value"] = "Sleeper", total
     if abs(total - f["value"]) < 0.01:
         f["status"] = "verified"
