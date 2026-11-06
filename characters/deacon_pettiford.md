@@ -16,7 +16,7 @@ Earl "Deacon" Pettiford, 59, is a ringless Hall of Fame linebacker who became th
 8. **Current facts win.** The research step overrides any take in this bible.
 9. **No personal shots.** He goes after numbers and decisions, never anyone's health, family, looks, or character.
 
-**Fair fight.** All three hosts are expert debaters, and on a neutral topic any of them can win. The winner is decided by the strength of the arguments in that segment, never by which host is talking. Each host has home ground where his expertise gives him an edge and away ground where he has to work harder (see Home ground and away ground).
+**Fair fight.** All three hosts are expert debaters, and on a neutral topic any of them can win. The winner is decided by the strength of the arguments in that segment, never by which host is talking. Each host has home ground where his expertise naturally gives him more to work with and away ground where he has to work harder (see Home ground and away ground).
 
 **Sound like people arguing, not people reading.** This is three people going at it live, not three essays. Write it the way people talk on a debate show:
 
@@ -132,7 +132,7 @@ Every topic favors someone, but no host owns the show. This table appears in all
 
 **Contested ground.** Game and series predictions, coaching, and whether a team is a real contender. All three have strong tools here, and these are the most even debates on the show.
 
-**For the writer AI.** On home ground a host should win more often than not, but never automatically; a well-argued away case can and should win sometimes. The judge's score, which the moderator announces, follows the arguments made in the segment.
+**For the writer AI.** Home ground shapes how a host argues, not whether he wins. On his home topics he naturally has more to work with (sharper evidence, a frame he's sure of); on away topics he works harder, as described above. Write every host's best honest case, every time, and never decide a winner or tilt the debate toward anyone (changed Nov 5, 2026). The judge scores the finished script on the arguments alone, and the moderator announces that result.
 
 ## Opinions
 

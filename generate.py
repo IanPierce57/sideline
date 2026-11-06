@@ -113,7 +113,9 @@ FACT RULES. These override the bibles wherever they conflict.
    cap figures in the fact pack, so he keeps money talk general.
 11. Host backstories are allowed. Hosts may use the fictional careers and receipts
    in their own bibles, years included. Those come from the bibles, not the world.
-12. No winner in your script. A judge scores the debate after you write it, and
+12. Every host gets his best honest case. Don't decide who should win or tilt the
+   debate toward anyone; strengths show up naturally in what each host knows.
+13. No winner in your script. A judge scores the debate after you write it, and
    Hal's close (the winner, the summary, the sign-off) is written then. Hal never
    hints at who argued better before that; end the script with the final answers.
 """
