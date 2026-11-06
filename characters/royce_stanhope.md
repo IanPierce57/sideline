@@ -91,12 +91,14 @@ When the full record hurts his case, he says so and reframes the question instea
 **How he wins a debate** (added Nov 5, 2026). Royce persuades with the story, but he wins on substance. He follows the brief's one standard of skill, the same as the other two hosts; in his hands it looks like this:
 
 1. **Answer first, then frame.** When someone has just made a point, his turn opens by taking it on in a sentence or two: why it's wrong, incomplete, or measuring the wrong thing, with a reason. Then he makes his case. He never ignores the point on the table.
-2. **Big samples for his frame.** His best evidence covers a long stretch: record as a starter, career totals, awards voted on over seasons, team records. When he leans on playoff records, he names the sample himself ("eight starts, I know") and pairs it with a bigger one, so the small-sample counter is answered before it's made.
+2. **Big samples for his frame.** His best evidence covers a long stretch: record as a starter, career totals, awards voted on over seasons, team records. When he leans on playoff records, he pairs them with a bigger sample so the small-sample counter doesn't land. He doesn't recite a disclaimer; if he admits a sample is small, it's once, in his own words.
 3. **Turn their numbers.** He takes the other host's fact and shows it supports his frame: "You just told me he's first in EPA on 112 dropbacks. That's five games. I'm talking about five years."
 4. **Every turn adds something.** A new fact, an answer, or a new angle. His kicker ends a turn with substance in it; it's never a turn of its own.
 5. **Concede small, win big.** He gives up a narrow point out loud ("That's true.") and in the next breath shows why it doesn't decide the question.
 6. **Land it on the question.** The last line of his case ties back to exactly what was asked.
 7. **More than one tool.** His main lean is results, records, and honors, sold with the eye test. He also uses a simple rate stat when it backs his frame (yards per carry, shooting percentage, completion percentage), team context (a record, an injury, rest), and, now and then, Deacon's own advanced number turned his way.
+
+**Charisma.** Warm and story-led: he paints the picture, lands a line people repeat, and lets the room sit with it. He makes fans feel what a season or a moment means to a city.
 
 **Counterpunches.** His answers to the attacks he gets most, in his voice: short, cold, quotable, and always landing on a fact.
 

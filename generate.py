@@ -76,8 +76,10 @@ FACT RULES. These override the bibles wherever they conflict.
 2. Say the scope when it matters: "in 2022", "for his career", "in the playoffs",
    "this season, through Week 8". A single season is never a career number.
    Compare like with like (career to career, season to season).
-3. The first time an advanced stat comes up, someone explains it in one plain
-   sentence, using the fact's definition.
+3. The first time an advanced stat comes up, someone explains it in a few casual
+   words, the way you'd explain it to a friend ("EPA, basically how many points each
+   play is worth"), not a textbook definition; the stat card on screen shows the full
+   definition. Keep it true to the fact's definition.
 4. Real-world claims without numbers (a player's current team, an injury, a
    title, a record) must agree with the fact pack. Use the current_team facts:
    never put a player on a team the fact pack contradicts. If the fact pack
@@ -280,6 +282,40 @@ argue for a living, talking, not reading.
   "on one hand... on the other"; formal transitions ("Moreover," "Additionally,"
   "Ultimately," "That said"); restating the question back; announcing what you're about
   to do ("Let me tell you why...").
+
+Think out loud (added Nov 6, 2026). These are people working an idea out live, not a
+machine arranging finished sentences. They reach for the point and sharpen it as they go,
+lean on a word to hit it ("Per snap. Per snap."), ask themselves a question and answer
+it, grab a comparison from everyday life, start one way and correct course ("He's the
+best passer in the... okay, not the best. The scariest."), and sometimes trail off into
+a question. Same point, two ways:
+  Machine: "That is a small sample, so it can't support a conclusion."
+  Person:  "That's five games, Royce. Five. I've had colds last longer than that."
+  Machine: "While the playoff record is impressive, it reflects team performance."
+  Person:  "Sure, he's won in January. You know who else was out there for those? Fifty
+            other guys."
+  Machine: "Let me explain why this trade doesn't make sense for the franchise."
+  Person:  "I keep coming back to one thing and I can't get past it. Who plays left
+            tackle if they make that deal?"
+  Machine: "In conclusion, he is the best quarterback in the league right now."
+  Person:  "So yeah. Right now? It's him. And I'm not sure it's close."
+  Machine: "His efficiency metrics are superior, which demonstrates greater value."
+  Person:  "Look at what he does per snap this year. Then tell me who you'd rather have.
+            Go ahead. I'll wait."
+These show the kind of sound, not lines to reuse.
+
+Charisma and persuasion (added Nov 6, 2026). They're the best on TV because people want
+to keep listening:
+- Conviction you can hear. They believe it, and they make the audience feel the
+  stakes: what it means for a fan, a city, a season. Not just a number, why it matters.
+- Lead with the strongest point, make the comparison vivid, and end on something that
+  sticks, but not every turn; some turns end on a question, some just stop.
+- Humor and warmth: a light jab, a self-deprecating line, a laugh at a good comeback.
+  Never mean.
+- Each in his own way: Royce is warm, story-led, and quotable; he paints it and lets it
+  sit. Deacon is blunt and funny, with farm-country comparisons, and he'll laugh at
+  himself. Lonnie disarms: a curious question that makes the other two stop and think,
+  delivered calm, like he already knows the answer.
 
 Write it so a reader could tell who's talking with the names hidden: each
 host's voice, evidence lean, signature move, and temperature come from his

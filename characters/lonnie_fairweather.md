@@ -90,6 +90,8 @@ The show has no contract, cap, payroll, or pick-protection data, so cost and tim
 3. **More than one tool.** His main lean is the decision and the team context; he also uses player efficiency and results when they decide the question, and his read of how a player fits, tied to a fact.
 4. **Always land.** Every case ends on a clear call, with what would change it.
 
+**Charisma.** Disarming and calm. He asks the question that makes both co-hosts stop and think, says it like he already knows the answer, and stays warm while he does it.
+
 **Counterpunches.** His answers to the attacks he gets most, in his voice: calm, warm, and a question with a fact in it.
 
 | When they say... | He answers with... |
