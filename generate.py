@@ -113,11 +113,9 @@ FACT RULES. These override the bibles wherever they conflict.
    cap figures in the fact pack, so he keeps money talk general.
 11. Host backstories are allowed. Hosts may use the fictional careers and receipts
    in their own bibles, years included. Those come from the bibles, not the world.
-12. No winner. The judge and scoring don't exist yet, so Hal does NOT announce a
-   winner, say "on the scorecard", or hint at who argued better. After the final
-   answers, Hal restates where each host landed in one plain sentence (using
-   "Where we are:" or similar), thanks the caller by name, and signs off with
-   "That's the board."
+12. No winner in your script. A judge scores the debate after you write it, and
+   Hal's close (the winner, the summary, the sign-off) is written then. Hal never
+   hints at who argued better before that; end the script with the final answers.
 """
 
 SCRIPT_INSTRUCTIONS = """\
@@ -138,7 +136,8 @@ Segment flow:
    while new arguments keep coming, and cuts in (headphones off one ear) only
    for the reasons in his bible.
 6. When new arguments run out, Hal asks for one-sentence final answers.
-7. Hal wraps up with no winner (fact rule 8).
+7. The script ENDS with the three final answers. Don't write Hal's wrap-up: the judge
+   scores the debate first, and Hal's close is written afterward (fact rule 12).
 
 Format: pick exactly one.
 - "debate": a question with sides (who's better right now, is Y overrated).
@@ -274,9 +273,11 @@ def check_script(lines: list[dict]) -> list[str]:
             if owner != line["speaker"]:
                 warnings.append(f"line {line['line']}: argument {line['argument']} belongs to "
                                 f"{SPEAKERS[owner]} but {line['speaker_name']} used it")
+    from pipeline.judge import _arguments
+    turns = _arguments(lines)
     for host in ("royce", "deacon", "lonnie"):
-        if len(hosts_args.get(host, ())) < 2:
-            warnings.append(f"{SPEAKERS[host]} has fewer than two numbered arguments")
+        if sum(1 for a in turns.values() if a["host"] == host) < 2:
+            warnings.append(f"{SPEAKERS[host]} has fewer than two scored arguments")
     return warnings
 
 
@@ -449,6 +450,49 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
                                     client, progress, topic, profiles=profiles)
     timings["line_check"] = round(time.time() - t, 1)
 
+    # 6. Judge: score every argument blind (pipeline/judge.py). The math is done in code.
+    from pipeline import judge as judging
+    progress("step", {"step": "judge", "text": "The judge is scoring every argument"})
+    t = time.time()
+    result = judging.judge(lines, pack, topic, client)
+    judging.meter(lines, result)
+    timings["judge"] = round(time.time() - t, 1)
+
+    # 7. Close: Hal announces the result, written only now that the score is known.
+    # It goes through the same checks as every other line; if it can't pass, a close
+    # with no facts in it is used instead.
+    progress("step", {"step": "close", "text": "Hal is getting the verdict"})
+    t = time.time()
+    hal_bible = (CHARACTERS / "moderator.md").read_text()
+    by_id_all = {f["id"]: f for f in facts}
+    close_log = []
+    try:
+        drafted = judging.write_close(lines, result, pack, caller, hal_bible, client)
+        close = [{"line": len(lines) + i, "speaker": "hal", "speaker_name": names["hal"], "text": c["text"].strip(),
+                  "delivery": "calm" if i < len(drafted) else "warm", "facts": [x for x in c["facts"] if x in by_id_all],
+                  "argument": None} for i, c in enumerate(drafted, start=1)]
+        def close_problems(c):
+            return (linecheck.check_numbers(c, by_id_all, topic) + linecheck.check_scope(c, by_id_all)
+                    + linecheck.check_stage_notes(c) + linecheck.check_claims(c, pack, context, client))
+        problems = close_problems(close)
+        if problems:                                   # one rewrite, the same as any other line
+            close_log = problems
+            fixes = linecheck.rewrite(close, problems, pack, client)
+            close = [dict(c, text=fixes[c["line"]]["text"], facts=[x for x in fixes[c["line"]]["facts"] if x in by_id_all])
+                     if c["line"] in fixes else c for c in close]
+            if close_problems(close):
+                close = None
+    except Exception as problem:                       # the close must never sink the segment
+        close_log = [{"line": 0, "problem": f"{type(problem).__name__}: {problem}"}]
+        close = None
+    if not close:
+        close = [{"line": len(lines) + i, "speaker": "hal", "speaker_name": names["hal"], "text": c["text"],
+                  "delivery": "calm", "facts": [], "argument": None}
+                 for i, c in enumerate(judging.safe_close(result, caller), start=1)]
+    close[0]["score"] = {h: round(v["score"]) for h, v in result["hosts"].items() if v["score"] is not None}
+    lines += close
+    timings["close"] = round(time.time() - t, 1)
+
     # The stat chyron shows each fact the first time it's cited.
     by_id = {f["id"]: f for f in facts}
     shown = set()
@@ -472,6 +516,9 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
         "estimated_minutes": round(words / WORDS_PER_MINUTE, 1),
         "warnings": check_script(lines),
         "sources": sources,
+        "scores": {h: v["score"] for h, v in result["hosts"].items()},
+        "winner": result["winner"],
+        "tie": result["tie"],
         "lines": lines,
         "meta": {
             "step": 2,
@@ -504,7 +551,9 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
             time.sleep(1)
     (run_dir / "script.json").write_text(json.dumps(script, indent=2, ensure_ascii=False))
     (run_dir / "fact_pack.json").write_text(json.dumps(facts, indent=2, ensure_ascii=False, default=str))
-    (run_dir / "rejection_log.json").write_text(json.dumps({"stats": stat_log, "lines": line_log}, indent=2, ensure_ascii=False))
+    (run_dir / "rejection_log.json").write_text(json.dumps({"stats": stat_log, "lines": line_log, "close": close_log},
+                                                           indent=2, ensure_ascii=False))
+    (run_dir / "judge.json").write_text(json.dumps(result, indent=2, ensure_ascii=False, default=str))
     progress("done", {"run": run_dir.name})
     return run_dir, script
 
@@ -544,6 +593,8 @@ def main() -> None:
           f"(~{script['estimated_minutes']} min)   Took: {m['generation_seconds']}s {m['timings']}")
     print(f"Stats: {m['stats_found']} found, {m['stats_verified']} verified, {m['stats_dropped']} dropped, "
           f"{m['facts_used']} used | Lines: {m['lines_checked']} checked, {m['lines_rewritten']} rewritten, {m['lines_cut']} cut")
+    board = ", ".join(f"{SPEAKERS[h]} {s:.1f}" for h, s in sorted(script["scores"].items(), key=lambda x: -(x[1] or 0)) if s is not None)
+    print(f"Scores: {board}   Winner: {'tie' if script['tie'] else SPEAKERS.get(script['winner'], script['winner'])}")
     for warning in script["warnings"]:
         print(f"WARNING: {warning}")
     print(f"Saved to {run_dir.relative_to(PROJECT)}/script.json")

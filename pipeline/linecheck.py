@@ -70,8 +70,10 @@ HEDGES = ("about", "nearly", "almost", "roughly", "around", "close to", "just un
 
 def _noun_after(clean: str, end: int):
     """The stat noun right after a number (within two words), if any: '7 sacks', '12 QB hits'."""
-    m = re.match(r"\W+(?:[\w-]+\W+){0,2}?" + STAT_NOUNS + r"\b", clean[end:].lower())
-    return m.group(1) if m else None
+    m = re.match(r"\W+((?:[a-z'-]+\W+){0,2}?)" + STAT_NOUNS + r"\b", clean[end:].lower())
+    if not m or any(w.strip(" ,.-") in WORDS for w in m.group(1).split()):
+        return None                        # another number sits in between: the noun is its, not this one's
+    return m.group(2)
 
 
 def _numbers_in(text: str):
@@ -90,7 +92,7 @@ def _numbers_in(text: str):
     # two-digit years said as '17
     for m in re.finditer(r"'(\d\d)\b", clean):
         found.append((2000 + int(m.group(1)), m.group(0), False, None))
-    words = re.finditer(r"\b(" + "|".join(sorted(WORDS, key=len, reverse=True)) + r")(?:[- ](one|two|three|four|five|six|seven|eight|nine))?\b(?=\W+(?:\w+\W+){0,2}?" + STAT_NOUNS + r"\b)",
+    words = re.finditer(r"\b(" + "|".join(sorted(WORDS, key=len, reverse=True)) + r")(?:[- ](one|two|three|four|five|six|seven|eight|nine))?\b(?![- ]team)(?=\W+(?:\w+\W+){0,2}?" + STAT_NOUNS + r"\b)",
                         clean.lower())
     for m in words:
         value = WORDS[m.group(1)] + (WORDS[m.group(2)] if m.group(2) else 0)

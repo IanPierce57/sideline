@@ -401,7 +401,8 @@ async function play(newScript) {
 
 // The pre-show's control room shows what the pipeline is really doing.
 const STEP_NAMES = { start: "ON THE LINE", topic: "SCREENING", research: "PULLING STATS",
-                     verify: "CHECKING STATS", write: "WRITING", check: "LINE CHECK" };
+                     verify: "CHECKING STATS", write: "WRITING", check: "LINE CHECK",
+                     judge: "JUDGE SCORING", close: "THE VERDICT" };
 function showControlRoom(job) {
   const c = job.counts || {};
   const step = job.step || {};
