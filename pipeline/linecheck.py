@@ -155,7 +155,7 @@ STOCK_PHRASES = ["here's my thing", "listen here", "hang on. hang on", "here's t
                  # ritual disclaimers (Nov 6, 2026): fine once, in fresh words; not a formula
                  "i'll say it first", "i'll say it before you do", "say that before you do", "before anybody else does",
                  "before anyone else does", "i'll say that up front", "i'll admit it up front", "small sample, i know",
-                 "i know it's a small sample", "i'll give you the sample"]
+                 "i know it's a small sample", "i'll give you the sample", "building a statue", "not building a statue"]
 
 
 STOCK_LIMIT = 2          # stock phrases allowed in a whole segment, all hosts together

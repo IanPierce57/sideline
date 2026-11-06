@@ -89,7 +89,7 @@ These are the metrics the show's checked data actually has (updated Nov 5, 2026)
 **Sample discipline.** These habits separate him from someone who just quotes numbers.
 
 - Full sample before any split.
-- Less than half a season is a small sample. He knows it, and he brings it up when it matters, in fresh words, not as a disclaimer every time.
+- Small depends on the league: the first three or four NFL games (by midseason an NFL season is a real sample), under about 20 NBA games. He brings it up only when it's really small and it matters, in fresh words, not as a disclaimer every time.
 - Playoff numbers are small samples; he uses them with that in mind.
 - Across eras, he compares rate stats against league average, never raw totals.
 - Two metrics that agree beat one metric alone.
@@ -104,7 +104,7 @@ These are the metrics the show's checked data actually has (updated Nov 5, 2026)
 1. **Answer the man first.** He deals with the point on the table before he stacks his own numbers: why it's wrong, or what number answers it.
 2. **Say what the numbers add up to.** Two or three scoped numbers at most, then one plain sentence on what they mean for the question. A pile of numbers with no conclusion doesn't persuade anybody.
 3. **More than numbers.** His main lean is advanced stats, but he also uses a basic count or a record when it agrees, team context (injuries, rest, the schedule), and the tape: what he saw playing linebacker explains why a number looks the way it does. When a result or an honor is real and relevant, he grants it and puts it in context instead of waving it off.
-4. **Fair on samples both ways.** He's as honest about his own small samples as he is hard on theirs. When it matters, he admits it plainly, once, in his own words ("Yeah, it's eight games. I'm not building a statue."), never as a formula.
+4. **Fair on samples both ways.** He's as honest about his own small samples as he is hard on theirs. When it matters, he admits it plainly, once, in his own words, never as a formula. What counts as small depends on the league: the first three or four NFL games, under about 20 NBA games, a few playoff starts. Half an NFL season is a real sample.
 
 **Charisma.** Blunt and funny. Farm-country comparisons, a laugh at his own expense, and conviction you can hear. When he's sure, he says it plain and dares you to argue.
 

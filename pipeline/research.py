@@ -31,8 +31,9 @@ TOPIC_SCHEMA = {
         "suggestions": {"type": "array", "items": {"type": "string"}, "description": "Three valid NBA or NFL topics, if turned away."},
         "teams": {"type": "array", "items": {"type": "string"}, "description": "Teams named or clearly meant, by full name."},
         "single_game": {"type": "boolean", "description": "True if the topic asks about one specific upcoming game (who wins tonight, this Sunday, next week)."},
+        "is_question": {"type": "boolean", "description": "False if it's only a name, a team, or a phrase with nothing to argue about (\"jayson tatum\", \"lakers\", \"mahomes stats\")."},
     },
-    "required": ["is_nba_or_nfl", "appropriate", "reason", "league", "format", "players", "suggestions", "teams", "single_game"],
+    "required": ["is_nba_or_nfl", "appropriate", "reason", "league", "format", "players", "suggestions", "teams", "single_game", "is_question"],
     "additionalProperties": False,
 }
 
@@ -65,8 +66,16 @@ One specific upcoming game ("Who wins Packers at Patriots this Sunday?", "Can th
 win tonight?", "Who wins Heat at Warriors tonight?"): set single_game to true and list
 the teams. NFL and NBA games are both fine (code confirms the game is real).
 
+A topic has to be something to argue about. Just a name, a team, or a phrase ("jayson
+tatum", "lakers", "mahomes stats") isn't: set is_question to false and give three real
+questions about it as suggestions ("Is Jayson Tatum a top-5 player right now?", "Jayson
+Tatum or Anthony Edwards: who would you rather have?", "Is Tatum all the way back?"). A
+short question is fine ("Tatum or Brown?", "Is Maye for real?").
+
 Pick the format that fits the question best:
-- "debate": who's better, or is he the best right now (a head-to-head).
+- "debate": who's better between two or more named players or teams, or is one the best
+  right now (a head-to-head). One player with no comparison and no "best" question isn't
+  a "debate"; pick the format that fits ("real_or_not", "overrated").
 - "prediction": who wins a game, or how a season turns out.
 - "buy_or_sell": a team or front-office move only (a trade, signing, extension, buying or
   selling at the deadline).
@@ -88,6 +97,9 @@ def check_topic(topic: str, client: anthropic.Anthropic, chosen: set | None = No
     if not data["is_nba_or_nfl"] or not data["appropriate"]:
         return {"ok": False, "reason": data["reason"] or "That one's not an NBA or NFL topic.",
                 "suggestions": data["suggestions"][:3]}
+    if not data["is_question"]:
+        return {"ok": False, "reason": "That's a topic, not a question yet. What do you want the desk to argue? "
+                                       "Try one of these, or type your own.", "suggestions": data["suggestions"][:3]}
 
     sports = ["nfl", "nba"] if data["league"] == "BOTH" else [data["league"].lower()]
     resolved, confirm, unknown = [], [], []

@@ -60,7 +60,7 @@ The goal is a real argument. Hosts keep their personalities, but the substance i
 - **Consistency.** Hosts sound like their bibles every time. There's no memory between segments.
 - **One standard of skill** (decided Nov 5, 2026). All three are equally good debaters; they differ in what they lean on, not in how well they argue. Every host, every segment:
   1. **Answers first.** When someone has just made a point, his turn opens by dealing with it (why it's wrong, incomplete, or measuring the wrong thing, with a reason) before he makes his own case.
-  2. **Prefers big samples and is honest about small ones.** Seasons and careers over single games. When a sample is small and it matters to the point, he says so in his own words, the way a person would, not as a ritual disclaimer every time (changed Nov 6, 2026).
+  2. **Prefers big samples and is honest about small ones.** Seasons and careers over single games. When a sample is small and it matters to the point, he says so in his own words, the way a person would, not as a ritual disclaimer every time (changed Nov 6, 2026). Small depends on the league's calendar: the first three or four NFL games (half an NFL season is a real sample), under about 20 NBA games, a few playoff starts (decided Nov 6, 2026). The writer is told how far into each season we are.
   3. **Turns the other side's numbers** when he can, showing their fact fits his case.
   4. **Adds something every turn:** a new fact, an answer, or a new angle. No turn only repeats.
   5. **Concedes small to win big.** He gives up a narrow point out loud, then shows why it doesn't decide the question.

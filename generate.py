@@ -64,6 +64,31 @@ WRITER_EFFORT = os.environ.get("SIDELINE_WRITER_EFFORT", "medium")
 
 # Rules about facts. They sit on top of the bibles, which show [Research-step ...]
 # placeholders where real numbers go; the fact pack supplies the real numbers.
+def season_progress() -> str:
+    """How far into each season we are, so sample-size talk fits the league (Nov 6, 2026:
+    eight NFL games is half a season; eight NBA games is a week and a half)."""
+    from pipeline import sleeper
+    out = []
+    try:
+        season = int(sleeper.state("nfl")["season"])
+        done = sum(1 for g in sleeper.nfl_schedule(season) if g.get("status") == "complete")
+        per = round(2 * done / 32)
+        size = ("a small sample" if per <= 4 else "a real sample, not a small one" if per >= 7
+                else "a fair sample, getting bigger every week")
+        out.append(f"NFL: teams have played about {per} of 17 games, {size}.")
+    except Exception:
+        pass
+    try:
+        from pipeline import nba
+        done = sum(1 for g in nba.schedule() if g["status"] == "complete")
+        per = round(2 * done / 30)
+        size = "a small sample" if per < 20 else "a fair sample" if per < 41 else "a real sample"
+        out.append(f"NBA: teams have played about {per} of 82 games, {size}.")
+    except Exception:
+        pass
+    return ("How far into the season: " + " ".join(out)) if out else ""
+
+
 FACT_RULES = """\
 FACT RULES. These override the bibles wherever they conflict.
 
@@ -103,6 +128,15 @@ FACT RULES. These override the bibles wherever they conflict.
    is last season's: say "last season" (or the year) every time, and never use it
    with "this season", "this year", "right now", or the present tense ("he's scoring
    28.8 a night"). Present-tense numbers must be this season's facts.
+6b. Sample size depends on the league's calendar (see "How far into the season").
+   NFL: the first three or four games are a small sample; by midseason (seven or eight
+   games, half the schedule) a season's numbers are a real sample, so nobody calls them
+   small. A slow start that turned around is fair to point out (a quarterback who
+   struggled his first three games and has been strong since). NBA: under about 20
+   games is small (eight games is a week and a half). Small counts are small in any
+   league: a few playoff starts, under about 150 dropbacks, a handful of games back from
+   an injury. Bring a sample up only when it's really small AND it changes the point,
+   and at most once or twice in a whole segment; most segments shouldn't need it.
 7. Injuries, read like someone who follows the sport.
    - Today's report: "questionable" usually means he plays (teams list nearly
      everything now), so it's never a storyline or an argument on its own. Day-to-day
@@ -590,7 +624,7 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
     # 4. Write, with the fact pack
     progress("step", {"step": "write", "text": "Writing the segment"})
     context = (f"Format (from the topic check): {check['format']}. Today is {datetime.now():%B %-d, %Y}. "
-               "Current teams and anything else about the real world: see the fact pack.")
+               "Current teams and anything else about the real world: see the fact pack.\n" + season_progress())
     if game:
         context += ("\n\nGame preview: " + game_note + " Every host picks a winner and argues it from the fact pack "
                     "(matchups, form, injuries, home field). Hal makes sure each pick is stated plainly. No one predicts a "
