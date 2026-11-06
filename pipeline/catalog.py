@@ -532,7 +532,7 @@ def injuries(team: str) -> dict:
     name = nflgames.TEAMS[team][0]
     return _fact(league="NFL", subject=name, subject_key=f"nflteam:{team}", stat="injuries", label="injured starters",
                  definition="Starters (first on the depth chart) with an injury designation today. IR means injured reserve.",
-                 value=None, say="; ".join(sorted(hurt)) or "no starters on the injury report", scope="today",
+                 value=None, say="; ".join(sorted(hurt)) or "none of their starters are on the injury report; backups aren't covered", scope="today",
                  source="Sleeper", credit="Data via Sleeper", as_of="today", sample=f"{len(hurt)} starters",
                  status="trusted", checked_against="Sleeper (trusted on its own)")
 
@@ -739,11 +739,21 @@ def nba_player(card: dict, stat: str, scope: dict) -> list[dict]:
 
 def current_status(card: dict) -> dict:
     """Which team he's on right now, and whether he's hurt."""
-    team = card["team"] or "no team (free agent or retired)"
-    injury = f", listed as {card['injury_status']}" if card.get("injury_status") else ""
+    from . import nba
+    teams = nba.TEAMS if card["league"] == "NBA" else nflgames.TEAMS
+    team = teams.get(card["team"], (card["team"],))[0] if card["team"] else "no team (free agent or retired)"
+    pos = positions.TITLE_WORD.get(positions.label(card.get("position")) or "", "") if card["league"] == "NFL" else \
+        {"PG": "point guard", "SG": "shooting guard", "SF": "small forward", "PF": "power forward", "C": "center",
+         "G": "guard", "F": "forward"}.get(card.get("position") or "", "")
+    raw = sleeper.players(card["league"].lower()).get(card.get("sleeper_id"), {})
+    starter = card["league"] == "NFL" and raw.get("depth_chart_order") == 1
+    role = ", ".join(x for x in (pos, "starter" if starter else "") if x)
+    team = f"{team}{f' ({role})' if role else ''}"
+    injury = (f", listed as {card['injury_status']}" if card.get("injury_status")
+              else (", no injury designation today" if card["team"] else ""))
     fact = _fact(league=card["league"], subject=card["name"], subject_key=card["key"], stat="current_team",
                  label="current team", value=card["team"], say=f"{team}{injury}",
-                 definition="The team he's on right now, per the current roster.", scope="today",
+                 definition="The team he's on right now and his listed position, per the current roster.", scope="today",
                  source="Sleeper", as_of="today", credit="Data via Sleeper", position=card["position"],
                  gsis_id=card.get("gsis_id"))
     return fact
@@ -783,7 +793,9 @@ def qb_playoff_record(card: dict) -> dict:
         seasons.append(row["season"])
     base = dict(league="NFL", subject=card["name"], subject_key=card["key"], stat="qb_playoff_record",
                 label="playoff record as a starting QB", definition="Playoff wins and losses in games he started at quarterback.",
-                value={"wins": wins, "losses": losses}, say=f"{wins}-{losses}", seasons=sorted(set(seasons)),
+                value={"wins": wins, "losses": losses}, seasons=sorted(set(seasons)),
+                say=f"{wins}-{losses}" + (f" (playoffs after the {', '.join(str(s) for s in sorted(set(seasons)))} season"
+                                          f"{'s' if len(set(seasons)) > 1 else ''})" if seasons else ""),
                 sample=f"{wins + losses} playoff starts", scope="career playoffs", source="nflverse",
                 as_of="final", credit="Data via nflverse", starts=wins + losses)
     if not games.height:

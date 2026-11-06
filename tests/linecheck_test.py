@@ -12,7 +12,13 @@ ANYA = {"id": "F1", "stat": "any_a", "value": 5.383, "say": "5.38", "scope": "20
         "interceptions costing 45, and sack yardage taken off."}
 RECORD = {"id": "F2", "stat": "team_record", "value": {"wins": 6, "losses": 2, "ties": 0}, "say": "6-2",
           "scope": "2026 regular season", "sample": "8 games"}
-FACTS = {f["id"]: f for f in (ANYA, RECORD)}
+HITS = {"id": "F3", "label": "QB hits", "stat": "qb_hits", "value": 12, "say": "12", "scope": "2026 regular season",
+        "sample": "8 games"}
+SACKS_2025 = {"id": "F4", "label": "sacks", "stat": "sacks", "value": 7, "say": "7", "scope": "2025 regular season",
+              "sample": "17 games"}
+ASSISTS = {"id": "F5", "label": "assists per game", "stat": "assists_per_game", "value": 7.9, "say": "7.9",
+           "scope": "2025-26 regular season", "sample": "70 games"}
+FACTS = {f["id"]: f for f in (ANYA, RECORD, HITS, SACKS_2025, ASSISTS)}
 TOPIC = "Is Aaron Rodgers still a top-10 quarterback?"
 
 CASES = [  # (speaker, text, cited facts, should it pass?)
@@ -26,6 +32,12 @@ CASES = [  # (speaker, text, cited facts, should it pass?)
     ("royce", "Pittsburgh is 7-1.", ["F2"], False),
     ("royce", "Thirteen touchdowns says enough.", [], False),
     ("lonnie", "He's at 5.38 ANY/A.", [], False),   # right number, but no fact cited
+    # Numbers said with a noun must match a fact about that noun (audit, Nov 5, 2026)
+    ("deacon", "Twelve hits in eight games this year.", ["F3", "F4"], True),
+    ("deacon", "Twelve hits in seven games this year.", ["F3", "F4"], False),   # 7 is sacks, not games
+    ("royce", "Seven sacks last season.", ["F4"], True),
+    ("lonnie", "He's averaging 7.9 assists a game.", ["F5"], True),
+    ("lonnie", "He's averaging seven assists a game.", ["F5"], False),          # 7.9 isn't seven
 ]
 
 failures = 0

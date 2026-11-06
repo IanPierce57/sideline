@@ -592,10 +592,44 @@ def check_all(candidates: list[dict], progress=lambda *a: None) -> tuple[list[di
     return passed, rejected
 
 
+def fact_season(f: dict):
+    """The single season a fact covers (None for careers, today, and multi-season facts)."""
+    if isinstance(f.get("season"), int):
+        return f["season"]
+    seasons = f.get("seasons")
+    if isinstance(seasons, list) and len(seasons) == 1:
+        return seasons[0]
+    return None
+
+
+def current_season(league: str) -> int:
+    return int(sleeper.state("nba" if league == "NBA" else "nfl")["season"])
+
+
+def season_tag(f: dict) -> str:
+    """'' for this season, or a plain label like 'last season, not this one' (added Nov 5, 2026,
+    after an audit caught last season's numbers said as this season's)."""
+    s = fact_season(f)
+    if s is None or not f.get("league"):
+        return ""
+    gap = current_season(f["league"]) - s
+    if gap <= 0:
+        return "this season"
+    return "last season, not this one" if gap == 1 else f"{gap} seasons ago, not this one"
+
+
 def pack_for_writer(facts: list[dict]) -> list[dict]:
-    """The fields the script writer needs, nothing else."""
+    """The fields the script writer needs, nothing else. Past seasons are labeled so they
+    can't be said as this season's."""
     keep = ("id", "league", "subject", "label", "say", "scope", "sample", "definition", "rank", "as_of", "source")
-    return [{k: f[k] for k in keep if f.get(k) not in (None, "")} for f in facts]
+    out = []
+    for f in facts:
+        row = {k: f[k] for k in keep if f.get(k) not in (None, "")}
+        tag = season_tag(f)
+        if tag and row.get("scope"):
+            row["scope"] = f"{row['scope']} ({tag})"
+        out.append(row)
+    return out
 
 
 def merge(facts: list[dict], more: list[dict]) -> list[dict]:

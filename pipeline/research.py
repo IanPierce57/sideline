@@ -182,6 +182,9 @@ What each host leans on:
 
 Rules:
 - Always get current_team for every player who'll come up.
+- "Right now" and "this season" questions need THIS season's numbers (NFL {sleeper.state('nfl')['season']}, NBA
+  {sleeper.state('nba')['season']}). Pull this season's stats for every player first; add last season only as
+  extra context, never instead.
 - Sideline covers current players only. Never look up or pull numbers for retired players, even for
   "best ever" topics; compare the current player with other current players instead.
 - Cover both sides of the argument fairly, with comparable numbers for the main current rivals.

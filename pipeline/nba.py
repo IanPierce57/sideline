@@ -381,7 +381,7 @@ def injuries(code: str) -> dict:
             hurt.append(f"{_name(pid)} ({p.get('position')}{part}): {p['injury_status']}")
     return dict(_base(code, "injuries", "injured rotation players",
                       "Players averaging 15+ minutes with an injury designation today.", None),
-                value=None, say="; ".join(sorted(hurt)) or "no rotation players on the injury report", scope="today",
+                value=None, say="; ".join(sorted(hurt)) or "none of their rotation players (15+ minutes a game) are on the injury report; bench players aren't covered", scope="today",
                 as_of="today", source="Sleeper", credit="Data via Sleeper", status="trusted",
                 checked_against="Sleeper (trusted on its own)", sample=f"{len(hurt)} players")
 

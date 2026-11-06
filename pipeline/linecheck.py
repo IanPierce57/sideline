@@ -8,12 +8,14 @@ decimal; "about" (or nearly, almost, roughly, around) is allowed only when
 rounding a real number."""
 
 import json
+import os
 import re
 
 import anthropic
 
 REWRITE_MODEL = "claude-sonnet-5-5"
-CLAIMS_MODEL = "claude-sonnet-5-5"
+CLAIMS_MODEL = os.environ.get("SIDELINE_CLAIMS_MODEL", "claude-sonnet-5-5")
+CLAIMS_EFFORT = os.environ.get("SIDELINE_CLAIMS_EFFORT", "high")
 
 # Numbers from each character's own bible (fictional careers and receipts). A host
 # may say his own; nobody else's, so a made-up "13 touchdowns" can't sneak through.
@@ -34,12 +36,46 @@ WORDS = {"zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six":
 # ("three rings", "forty touchdowns"); "one series" or "game seven" is just talk.
 STAT_NOUNS = r"(yards?|touchdowns?|tds?|interceptions?|picks?|sacks?|rings?|titles?|championships?|super bowls?|mvps?|" \
              r"wins?|losses|points|rebounds|assists|steals|blocks|catches|receptions|carries|games|seasons|percent|" \
-             r"pro bowls?|all-pros?|attempts|completions|dropbacks|turnovers|threes|three-pointers|trips)"
+             r"pro bowls?|all-pros?|attempts|completions|dropbacks|turnovers|threes|three-pointers|trips|" \
+             r"hits|takeaways|starts|minutes|reps|inches|seconds|pounds|days)"
+# A number said with a noun must come from a fact about that same thing (added Nov 5, 2026,
+# after an audit caught "seven games" passing because the line also cited 7 sacks).
+# noun -> words, any of which must appear in the fact the number comes from.
+NOUN_KEYS = {
+    "yard": ("yard",), "touchdown": ("touchdown", "td"), "td": ("touchdown", "td"), "interception": ("interception",),
+    "pick": ("interception", "pick"), "sack": ("sack",), "ring": ("champion", "super bowl", "title"),
+    "title": ("champion", "title"), "championship": ("champion",), "super bowl": ("super bowl", "champion"),
+    "mvp": ("mvp", "most valuable"), "win": ("record", "win", "result", "meeting", "streak"),
+    "loss": ("record", "loss", "result", "meeting", "streak"), "point": ("point", "scor"), "rebound": ("rebound",),
+    "assist": ("assist",), "steal": ("steal",), "block": ("block",), "catch": ("reception", "catch"),
+    "reception": ("reception", "catch"), "carr": ("carr",), "game": ("game",), "season": ("season",),
+    "percent": ("percent", "%", "rate", "pct", "shooting"), "pro bowl": ("pro bowl",), "all-pro": ("all-pro",),
+    "attempt": ("attempt",), "completion": ("completion",), "dropback": ("dropback",), "turnover": ("turnover",),
+    "three": ("three",), "trip": ("trip",), "hit": ("hit",), "takeaway": ("takeaway",), "start": ("start",),
+    "minute": ("minute",), "rep": ("rep",), "inch": ("inch", "height", "jump"), "second": ("second", "dash", "drill", "shuttle"),
+    "pound": ("pound", "weight"), "day": ("day", "rest", "back-to-back"),
+}
+
+
+def _noun_key(noun: str | None):
+    if not noun:
+        return None
+    n = noun.lower()
+    for key in sorted(NOUN_KEYS, key=len, reverse=True):
+        if n.startswith(key) or (key == "loss" and n == "losses") or (key == "catch" and n == "catches"):
+            return key
+    return None
 HEDGES = ("about", "nearly", "almost", "roughly", "around", "close to", "just under", "just over", "over", "under")
 
 
+def _noun_after(clean: str, end: int):
+    """The stat noun right after a number (within two words), if any: '7 sacks', '12 QB hits'."""
+    m = re.match(r"\W+(?:[\w-]+\W+){0,2}?" + STAT_NOUNS + r"\b", clean[end:].lower())
+    return m.group(1) if m else None
+
+
 def _numbers_in(text: str):
-    """Every number said in a line: (value, the words around it, hedged?)."""
+    """Every number said in a line: (value, the words around it, hedged?, stat noun after it)."""
     found = []
     clean = text.replace("’", "'")
     for m in re.finditer(r"(?<![\w.])([+-]?\d[\d,]*(?:\.\d+)?|[+-]?\.\d+)(%|st|nd|rd|th)?", clean):
@@ -49,23 +85,25 @@ def _numbers_in(text: str):
         except ValueError:
             continue
         before = clean[max(0, m.start() - 14):m.start()].lower()
-        found.append((value, m.group(0), any(h in before for h in HEDGES)))
+        noun = None if m.group(2) == "%" else _noun_after(clean, m.end())
+        found.append((value, m.group(0), any(h in before for h in HEDGES), noun))
     # two-digit years said as '17
     for m in re.finditer(r"'(\d\d)\b", clean):
-        found.append((2000 + int(m.group(1)), m.group(0), False))
+        found.append((2000 + int(m.group(1)), m.group(0), False, None))
     words = re.finditer(r"\b(" + "|".join(sorted(WORDS, key=len, reverse=True)) + r")(?:[- ](one|two|three|four|five|six|seven|eight|nine))?\b(?=\W+(?:\w+\W+){0,2}?" + STAT_NOUNS + r"\b)",
                         clean.lower())
     for m in words:
         value = WORDS[m.group(1)] + (WORDS[m.group(2)] if m.group(2) else 0)
         before = clean[max(0, m.start() - 14):m.start()].lower()
-        found.append((float(value), m.group(0), any(h in before for h in HEDGES)))
+        found.append((float(value), m.group(0), any(h in before for h in HEDGES), _noun_after(clean, m.end())))
     return found
 
 
-def _allowed_for(facts: list[dict]) -> list[tuple[float, float, bool]]:
-    """(value, tolerance, needs_hedge) for everything the cited facts let a host say."""
+def _allowed_for(facts: list[dict]) -> list[tuple]:
+    """(value, tolerance, needs_hedge, what it's about) for everything the cited facts let a host say."""
     allowed = []
     for f in facts:
+        about = " ".join(str(f.get(k) or "") for k in ("label", "stat", "say")).lower()
         v = f.get("value")
         nums = []
         if isinstance(v, dict):                                   # team record: wins, losses, ties
@@ -73,21 +111,23 @@ def _allowed_for(facts: list[dict]) -> list[tuple[float, float, bool]]:
         elif isinstance(v, (int, float)):
             nums.append(float(v))
         for n in nums:
-            allowed.append((n, 1e-6, False))                      # exact
-            allowed.append((abs(n), 1e-6, False))                 # said without the sign
+            allowed.append((n, 1e-6, False, about))                      # exact
+            allowed.append((abs(n), 1e-6, False, about))                 # said without the sign
             if not float(n).is_integer():
-                allowed.append((round(n, 1), 1e-6, False))        # rates may round to one decimal
-                allowed.append((abs(round(n, 2)), 1e-6, False))   # EPA said as .17
-                allowed.append((round(n), 1e-6, True))            # whole number only with "about"
+                allowed.append((round(n, 1), 1e-6, False, about))        # rates may round to one decimal
+                allowed.append((abs(round(n, 2)), 1e-6, False, about))   # EPA said as .17
+                allowed.append((round(n), 1e-6, True, about))            # whole number only with "about"
             elif abs(n) >= 1000:
-                allowed.append((round(n, -2), 1e-6, True))        # "about 37,700"
-                allowed.append((round(n, -3), 1e-6, True))
+                allowed.append((round(n, -2), 1e-6, True, about))        # "about 37,700"
+                allowed.append((round(n, -3), 1e-6, True, about))
         # numbers inside the fact's own description: sample, season, rank, as-of week
         for text in (f.get("sample"), f.get("scope"), f.get("rank"), f.get("as_of"), f.get("say"), f.get("definition")):
-            for m in re.findall(r"\d[\d,]*(?:\.\d+)?", str(text or "")):
-                allowed.append((float(m.replace(",", "")), 1e-6, False))
-                if len(m) == 4 and m.isdigit():
-                    allowed.append((float(m[2:]), 1e-6, False))   # '18 for 2018
+            text = str(text or "")
+            for m in re.finditer(r"\d[\d,]*(?:\.\d+)?", text):
+                near = (text + " " + about).lower()      # what the description is about
+                allowed.append((float(m.group(0).replace(",", "")), 1e-6, False, near))
+                if len(m.group(0)) == 4 and m.group(0).isdigit():
+                    allowed.append((float(m.group(0)[2:]), 1e-6, False, near))   # '18 for 2018
     return allowed
 
 
@@ -116,20 +156,43 @@ def check_stage_notes(lines: list[dict]) -> list[dict]:
     return problems
 
 
+THIS_SEASON = re.compile(r"\bthis (?:season|year)\b|\bso far\b|\bright now\b|\bthrough week \d+|\bthrough (?:nov|dec|jan|feb|mar|apr|oct)", re.I)
+
+
+def check_scope(lines: list[dict], facts_by_id: dict) -> list[dict]:
+    """Lines that say "this season" (or "right now", "so far") while every season-specific
+    fact they cite is from an earlier season."""
+    from .verify import season_tag
+    problems = []
+    for line in lines:
+        if not THIS_SEASON.search(line["text"]):
+            continue
+        tags = [season_tag(facts_by_id[i]) for i in line.get("facts", []) if i in facts_by_id]
+        tagged = [t for t in tags if t]
+        if tagged and all(t != "this season" for t in tagged):
+            problems.append({"line": line["line"], "problem": "says this season (or right now) but every season "
+                             "number it cites is from an earlier season; say which season, or use this season's facts"})
+    return problems
+
+
 def check_numbers(lines: list[dict], facts_by_id: dict, topic: str = "") -> list[dict]:
     """Lines with a number that doesn't match a cited fact. Numbers in the caller's
     own question (the topic) are allowed anywhere: "top-10" isn't a stat claim."""
     problems = []
-    topic_numbers = [(v, 1e-6, False) for v, _, _ in _numbers_in(topic)]
+    topic_numbers = [(v, 1e-6, False, "") for v, _, _, _ in _numbers_in(topic)]
     for line in lines:
         cited = [facts_by_id[i] for i in line.get("facts", []) if i in facts_by_id]
         allowed = _allowed_for(cited) + topic_numbers
         bad = []
-        for value, said, hedged in _numbers_in(line["text"]):
+        for value, said, hedged, noun in _numbers_in(line["text"]):
             if value in BIBLE_NUMBERS.get(line["speaker"], set()):
                 continue
-            ok = any(abs(value - a) <= tol and (hedged or not needs_hedge) for a, tol, needs_hedge in allowed)
-            if not ok:
+            key = _noun_key(noun)
+            fits = [a for a in allowed if abs(value - a[0]) <= a[1] and (hedged or not a[2])]
+            if key and fits and not any(any(w in a[3] for w in NOUN_KEYS[key]) for a in fits if a[3]) \
+                    and not any(a[3] == "" for a in fits):
+                bad.append(f"{said} {noun} (no cited fact has {int(value) if value.is_integer() else value} {noun})")
+            elif not fits:
                 bad.append(said)
         if bad:
             problems.append({"line": line["line"], "problem": f"says {', '.join(bad)}, which doesn't match any fact this line cites"
@@ -137,46 +200,55 @@ def check_numbers(lines: list[dict], facts_by_id: dict, topic: str = "") -> list
     return problems
 
 
-CLAIMS_RULES = """You fact-check a sports debate script before it airs. You get the script and the
-fact pack (the only verified facts). List every line that states something about the
-real world that is not supported by the fact pack and could be false: a player's
-current team, a trade, an injury, an award or title count, a record, a ranking,
-"led the league", a specific game result, or a quote.
+# The claims check lists EVERY real-world claim with a verdict, rather than "list what's
+# wrong" (changed Nov 5, 2026: on eight audited scripts, listing every claim caught 5x more
+# unsupported claims than the old way). The model can be set with SIDELINE_CLAIMS_MODEL.
+CLAIMS_RULES = """You fact-check a sports debate script before it airs. You get the script, the
+fact pack (the ONLY verified facts), and style profiles (NOT verified; for judging whether
+opinions are believable only).
 
-Do NOT flag: opinions, predictions, arguments, how someone "looks" or "feels" to a host,
-the hosts' own fictional careers, general well-known framing ("he's won it more than once"
-is fine only if the fact pack doesn't contradict it), or anything the fact pack supports.
-Be strict about anything the fact pack contradicts.
+List EVERY real-world claim in every line (callers and the moderator too): numbers; a
+player's team, position, or role (starter, second option); injuries and health; awards,
+titles, and which team they came with; records and standings; rankings and superlatives
+("leads the league", "best scorer on the floor"); comparisons ("more than", "nearly
+double"); trends ("he's improved", "a dip"); game results, dates, opponents; who coaches
+whom; draft position; trades; streaks; and scope ("this season" vs "last season").
 
-Opinions about how a player plays ("exciting", "fun to watch", "smooth", "a gunslinger")
-don't need proof, but they must be believable: flag one that no knowledgeable fan would
-hold, given the style profiles (for example, calling a quarterback who barely runs a
-"dual threat", or a receiver who rarely goes deep a "deep threat"). Images and metaphors
-count too: "runs like a freight train" for a small, shifty back, or "slings it like a
-gunslinger" for a quarterback who rarely throws deep, should be flagged. Vivid images
-that fit how he plays are fine.
+For each claim give a verdict:
+- SUPPORTED: a fact states it, or it follows by simple, correct arithmetic or comparison
+  from facts (cite them). Scope must match: a fact marked "last season, not this one"
+  said as this season's, or in the present tense, is NOT supported.
+- UNSUPPORTED: no fact backs it, and it could be false. This includes how a player plays
+  stated as fact from the style profiles ("he throws deep more than most"), injury
+  history ("they won without him"), and roles or superlatives no fact ranks.
+- CONTRADICTED: the fact pack says something different.
+Do NOT list: opinions and the host's read ("to my eye..."), predictions, metaphors,
+arguments, believable opinions about how a player plays, or the hosts' own fictional
+careers. Timeless general knowledge (what a stat means) is SUPPORTED.
+Opinions must still be believable: list as UNSUPPORTED an opinion no knowledgeable fan
+would hold given the style profiles (a quarterback who barely runs called a dual threat).
+Be strict and literal. When unsure, say UNSUPPORTED."""
 
-The style profiles are NOT verified facts. A line that states a profile ranking as fact
-("he has a very high catch rate", "he throws into tight windows more than anyone") is
-unsupported unless the fact pack has that stat; flag it. The same idea framed as the
-host's read ("to my eye...") is fine. Return an empty list
-if nothing is wrong."""
-
-CLAIMS_SCHEMA = {"type": "object", "properties": {"flags": {"type": "array", "items": {"type": "object", "properties": {
-    "line": {"type": "integer"}, "claim": {"type": "string"}, "problem": {"type": "string"}},
-    "required": ["line", "claim", "problem"], "additionalProperties": False}}},
-    "required": ["flags"], "additionalProperties": False}
+CLAIMS_SCHEMA = {"type": "object", "properties": {"claims": {"type": "array", "items": {"type": "object", "properties": {
+    "line": {"type": "integer"}, "claim": {"type": "string"},
+    "verdict": {"type": "string", "enum": ["SUPPORTED", "UNSUPPORTED", "CONTRADICTED"]},
+    "facts": {"type": "array", "items": {"type": "string"}}, "why": {"type": "string"}},
+    "required": ["line", "claim", "verdict", "facts", "why"], "additionalProperties": False}}},
+    "required": ["claims"], "additionalProperties": False}
 
 
 def check_claims(lines: list[dict], pack: list[dict], context: str, client: anthropic.Anthropic) -> list[dict]:
+    """Every real-world claim, judged against the fact pack; returns the ones not supported."""
     script = "\n".join(f"{l['line']}. {l['speaker']}: {l['text']}" for l in lines)
-    reply = client.messages.create(
-        model=CLAIMS_MODEL, max_tokens=4000, system=CLAIMS_RULES, output_config={"effort": "low",
-            "format": {"type": "json_schema", "schema": CLAIMS_SCHEMA}},
+    with client.messages.stream(
+        model=CLAIMS_MODEL, max_tokens=16000, system=CLAIMS_RULES, thinking={"type": "adaptive"},
+        output_config={"effort": CLAIMS_EFFORT, "format": {"type": "json_schema", "schema": CLAIMS_SCHEMA}},
         messages=[{"role": "user", "content": f"{context}\n\nFact pack:\n{json.dumps(pack, ensure_ascii=False)}\n\nScript:\n{script}"}],
-    )
-    flags = json.loads(next(b.text for b in reply.content if b.type == "text"))["flags"]
-    return [{"line": f["line"], "problem": f"{f['claim']}: {f['problem']}"} for f in flags]
+    ) as stream:
+        reply = stream.get_final_message()
+    claims = json.loads(next(b.text for b in reply.content if b.type == "text"))["claims"]
+    return [{"line": c["line"], "problem": f"{c['claim']}: {c['why']} ({c['verdict'].lower()})"}
+            for c in claims if c["verdict"] != "SUPPORTED"]
 
 
 REWRITE_SCHEMA = {"type": "object", "properties": {"fixes": {"type": "array", "items": {"type": "object", "properties": {
@@ -238,7 +310,7 @@ def smooth(out: list[dict], cut_numbers: list[int], original: list[dict], by_id:
         if fix:
             candidate = dict(line, text=fix["text"], facts=[i for i in fix["facts"] if i in by_id])
             if not (check_numbers([candidate], by_id, topic) + check_stage_notes([candidate])
-                    + style.check_labels([candidate], profiles or [])):
+                    + style.check_labels([candidate], profiles or []) + check_scope([candidate], by_id)):
                 if log is not None and candidate["text"] != line["text"]:
                     log.append({"line": line["line"], "speaker": line["speaker"], "said": line["text"],
                                 "problem": "smoothed after a nearby cut", "action": "smoothed", "now": candidate["text"]})
@@ -256,7 +328,8 @@ def run(lines: list[dict], facts: list[dict], pack: list[dict], context: str, cl
     profiles = profiles or []
     by_id = {f["id"]: f for f in facts}
     log = []
-    number_problems = check_numbers(lines, by_id, topic) + check_stage_notes(lines) + style.check_labels(lines, profiles)
+    number_problems = (check_numbers(lines, by_id, topic) + check_stage_notes(lines) + style.check_labels(lines, profiles)
+                       + check_scope(lines, by_id))
     claim_problems = check_claims(lines, pack, context, client)
     progress("line_check", {"checked": len(lines), "flagged": len({p['line'] for p in number_problems + claim_problems})})
     problems = number_problems + claim_problems
@@ -277,7 +350,7 @@ def run(lines: list[dict], facts: list[dict], pack: list[dict], context: str, cl
         if fix:
             candidate = dict(line, text=fix["text"], facts=[i for i in fix["facts"] if i in by_id])
             still = (check_numbers([candidate], by_id, topic) + check_stage_notes([candidate])
-                     + style.check_labels([candidate], profiles))
+                     + style.check_labels([candidate], profiles) + check_scope([candidate], by_id))
             if not still:
                 out.append(candidate)
                 log.append({"line": line["line"], "speaker": line["speaker"], "said": original,

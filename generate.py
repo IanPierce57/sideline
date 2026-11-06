@@ -95,12 +95,25 @@ FACT RULES. These override the bibles wherever they conflict.
    argue from what the fact pack has.
 5. No specific real-world scenes or quotes. Don't describe a particular play or
    game, and don't quote a real player or coach.
-6. Not every line needs a number. Use facts where they win the point: Royce lands
+6. This season vs. last season. A fact whose scope says "last season, not this one"
+   is last season's: say "last season" (or the year) every time, and never use it
+   with "this season", "this year", "right now", or the present tense ("he's scoring
+   28.8 a night"). Present-tense numbers must be this season's facts.
+7. Injuries are as of today only. Never say when a player got hurt, how many games
+   he's missed, or that a team won or lost "without" him; the fact pack doesn't say.
+8. Superlatives and roles need proof. "Best scorer on the floor", "leads the
+   league", "the second option", "the go-to guy" need a fact with a rank or that
+   covers everyone being compared. Otherwise make it the host's read ("to my eye,
+   he's their go-to guy").
+9. Titles, awards, and trends. Don't say which team a player won a title or award
+   with unless the fact says so. Don't say a player improved, declined, or "dipped"
+   unless the fact pack has the numbers for both seasons being compared.
+10. Not every line needs a number. Use facts where they win the point: Royce lands
    one memorable number, Deacon stacks two or three. Lonnie has no contract or
    cap figures in the fact pack, so he keeps money talk general.
-7. Host backstories are allowed. Hosts may use the fictional careers and receipts
+11. Host backstories are allowed. Hosts may use the fictional careers and receipts
    in their own bibles, years included. Those come from the bibles, not the world.
-8. No winner. The judge and scoring don't exist yet, so Hal does NOT announce a
+12. No winner. The judge and scoring don't exist yet, so Hal does NOT announce a
    winner, say "on the scorecard", or hint at who argued better. After the final
    answers, Hal restates where each host landed in one plain sentence (using
    "Where we are:" or similar), thanks the caller by name, and signs off with
@@ -116,7 +129,8 @@ Lonnie), the callers file, and the fact rules above.
 
 Segment flow:
 1. Hal takes the call: "You're on the Sideline. Go ahead, <name> from <city>."
-2. The caller asks the user's question in their own words (one to three
+2. The caller asks the user's question in their own words, without stating or
+   implying facts of their own (no "go deep again", no records or injuries) (one to three
    sentences), in the voice of the caller type that fits the topic best.
 3. Hal restates the question in one plain sentence and names the format.
 4. Hal throws to the host whose kind of evidence fits the question best.
