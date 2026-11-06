@@ -65,12 +65,13 @@ def _noun_key(noun: str | None):
         if n.startswith(key) or (key == "loss" and n == "losses") or (key == "catch" and n == "catches"):
             return key
     return None
+GAP = r"[^\w,.;:!?()\u2014\u2013]+"     # between a number and its noun: spaces, not punctuation that ends the phrase
 HEDGES = ("about", "nearly", "almost", "roughly", "around", "close to", "just under", "just over", "over", "under")
 
 
 def _noun_after(clean: str, end: int):
     """The stat noun right after a number (within two words), if any: '7 sacks', '12 QB hits'."""
-    m = re.match(r"\W+((?:[a-z'-]+\W+){0,2}?)" + STAT_NOUNS + r"\b", clean[end:].lower())
+    m = re.match(GAP + r"((?:[a-z'-]+" + GAP + r"){0,2}?)" + STAT_NOUNS + r"\b", clean[end:].lower())
     if not m or any(w.strip(" ,.-") in WORDS for w in m.group(1).split()):
         return None                        # another number sits in between: the noun is its, not this one's
     return m.group(2)
@@ -92,7 +93,7 @@ def _numbers_in(text: str):
     # two-digit years said as '17
     for m in re.finditer(r"'(\d\d)\b", clean):
         found.append((2000 + int(m.group(1)), m.group(0), False, None))
-    words = re.finditer(r"\b(" + "|".join(sorted(WORDS, key=len, reverse=True)) + r")(?:[- ](one|two|three|four|five|six|seven|eight|nine))?\b(?![- ]team)(?=\W+(?:\w+\W+){0,2}?" + STAT_NOUNS + r"\b)",
+    words = re.finditer(r"\b(" + "|".join(sorted(WORDS, key=len, reverse=True)) + r")(?:[- ](one|two|three|four|five|six|seven|eight|nine))?\b(?![- ]team)(?=" + GAP + r"(?:\w+" + GAP + r"){0,2}?" + STAT_NOUNS + r"\b)",
                         clean.lower())
     for m in words:
         value = WORDS[m.group(1)] + (WORDS[m.group(2)] if m.group(2) else 0)
@@ -135,6 +136,7 @@ def _allowed_for(facts: list[dict]) -> list[tuple]:
 
 # Notes about what a character does, written into the spoken text by mistake.
 STAGE_NOTE = re.compile(r"\b(rhetorical question|to the folks at home:|stage direction|asks? (?:the )?(?:audience|viewers)|"
+                        r"(?:fact|research) pack|the pack (?:says|names|has|shows|lists|covers)|fact id|style profile|"
                         r"(?:turns|leans|pauses|gestures|points) (?:to|toward|at)\b[^.!?]*$)|\[[^\]]*\]", re.I)
 
 

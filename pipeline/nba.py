@@ -390,7 +390,8 @@ def injuries(code: str) -> dict:
     return dict(_base(code, "injuries", "injured rotation players",
                       "Players averaging 15+ minutes on today's injury report. Day-to-day is minor and often "
                       "plays; out means out.", None),
-                value=sum(1 for s, _ in hurt if s in inj.LIKELY_OUT), say=inj.report_line(hurt) or "none of their rotation players (15+ minutes a game) are on the injury report; bench players aren't covered", scope="today",
+                value=sum(1 for s, _ in hurt if s in inj.LIKELY_OUT), say=(f"rotation players only (15+ minutes a game; bench players aren't covered): {inj.report_line(hurt)}"
+                     if hurt else None) or "none of their rotation players (15+ minutes a game) are on the injury report; bench players aren't covered", scope="today",
                 as_of="today", source="Sleeper", credit="Data via Sleeper", status="trusted",
                 checked_against="Sleeper (trusted on its own)", sample=f"{len(hurt)} players")
 

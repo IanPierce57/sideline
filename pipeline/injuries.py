@@ -80,13 +80,9 @@ def season_games(card: dict, season: int, current: int, first: int | None) -> di
                                                      (pl.col("season") == season) & (pl.col("season_type") == "REG"))
         theirs = int(other["games"][0]) if other.height else None
         code = other["recent_team"][0] if other.height else games.TO_NFLVERSE.get(card.get("team") or "", card.get("team"))
+        # This season, Sleeper's totals stop at the last week nflverse has (catalog.sleeper_season),
+        # and so does this count, so both sides cover the same games as the team's record.
         of = _nfl_team_games(season, code)
-        if season == current and card.get("team"):
-            # this season: Sleeper's schedule too, since its games played can include a game
-            # nflverse hasn't posted yet (a Thursday night game, say)
-            done = [g for g in sleeper.nfl_schedule(season) if g.get("status") == "complete"
-                    and card["team"] in (g.get("home"), g.get("away"))]
-            of = max(of, len(done))
         if season < current and of < 16:
             of = 17 if season >= 2021 else 16          # traded or missing: the full schedule
         if gp > of and theirs is not None and theirs <= of:
@@ -105,7 +101,8 @@ def season_games(card: dict, season: int, current: int, first: int | None) -> di
     if not of:
         return None
     label = _label(league, season)
-    out = {"season": season, "label": label, "gp": gp, "of": max(of, gp), "current": season == current,
+    through = f", through Week {nflv.latest_week(season)}" if league == "NFL" and season == current else ""
+    out = {"season": season, "label": label, "gp": gp, "of": max(of, gp), "current": season == current, "through": through,
            "compared": theirs is not None}
     if theirs is not None and theirs != gp:
         out.update(differs=True, note=f"{label}: Sleeper {gp}, {'nflverse' if league == 'NFL' else 'Wikipedia'} {theirs}")
@@ -132,21 +129,22 @@ def availability(card: dict) -> dict:
             notes.append(one.pop("note"))
         seasons.append(one)
         if season >= current - YEARS_BACK:
-            rows.append(f"{one['label']}: {one['gp']} of {one['of']}{' so far' if one['current'] else ''}")
+            rows.append(f"{one['label']}: {one['gp']} of {one['of']}{' so far' + one['through'] if one['current'] else ''}")
     shown = [s for s in seasons if s["season"] >= current - YEARS_BACK]
     if not shown:
         return {**base, "status": "dropped", "note": "no games found", "say": None}
     full = [s for s in shown if not s["current"]]
     big = [s for s in full if s["gp"] < MISSED * s["of"]]
-    tally = (f"; he missed a quarter or more of his team's games in {len(big)} of his last {len(full)} full seasons"
-             if full else "")
+    every = [s for s in full if s["gp"] >= s["of"]]
+    tally = (f". In his last {len(full)} full seasons he played every game in {len(every)} and missed a quarter or "
+             f"more of his team's games in {len(big)}" if full else "")
     status = "verified_sleeper_used" if notes else ("verified" if compared else "trusted")
     return {**base, "value": len(big), "say": "; ".join(rows) + tally, "season_rows": seasons, "big_misses": len(big),
             "full_seasons": len(full), "status": status,
             "checked_against": ("nflverse games" if league == "NFL" else "Wikipedia (career statistics table)")
                                if compared else "Sleeper (trusted on its own)",
             "note": ("games played differ: " + "; ".join(notes) + "; using Sleeper's") if notes else "",
-            "sample": f"{len(seasons)} seasons"}
+            "sample": f"{len(full)} full seasons and this one" if any(s["current"] for s in shown) else f"{len(full)} full seasons"}
 
 
 # ---------- Injury history ----------
@@ -304,10 +302,12 @@ def injury_history(card: dict, avail: dict | None = None) -> dict:
         items = [f for f in items if f["body"] not in specific]
         confirmed = []
         for f in items:
-            if f["playoffs"] and not ((f["body"] in LONG and f["major"]) or f["over"]):
+            long = f["body"] in LONG and f["major"]
+            if f["playoffs"] and not long:
                 continue                                    # a playoff knock can't be checked by regular-season games
-            check = ([] if f["playoffs"] else [season]) + \
-                    ([season + 1] if (f["body"] in LONG and f["major"]) or f["over"] or f["playoffs"] else [])
+            # Only a long recovery (a torn Achilles or ACL) is confirmed by the NEXT season's
+            # games: otherwise a playoff concussion could be "confirmed" by an ankle the next year.
+            check = ([] if f["playoffs"] else [season]) + ([season + 1] if long else [])
             seen = [by_season[s] for s in check if s in by_season]
             if any(s["gp"] < MISSED * s["of"] for s in seen):
                 confirmed.append(f)
@@ -323,11 +323,12 @@ def injury_history(card: dict, avail: dict | None = None) -> dict:
         games = []
         if season in by_season and not all(f["playoffs"] for f in items):
             s = by_season[season]
-            games.append(f"he played {s['gp']} of {s['of']} games that season")
+            games.append(f"he's played {s['gp']} of {s['of']} games so far this season{s.get('through', '')}" if s["current"]
+                         else f"he played {s['gp']} of {s['of']} games that season")
         after = [by_season[y] for y in sorted(by_season) if y > season]
-        if after and any((f["body"] in LONG and f["major"]) or f["over"] or f["playoffs"] for f in items):
+        if after and any(f["body"] in LONG and f["major"] for f in items):
             # spelled out so "seven games back from the Achilles" can't be said when it's 23
-            listed = [f"{s['gp']} of {s['of']} {'so far this season' if s['current'] else 'in ' + s['label']}" for s in after]
+            listed = [f"{s['gp']} of {s['of']} {'so far this season' + s.get('through', '') if s['current'] else 'in ' + s['label']}" for s in after]
             total = sum(s["gp"] for s in after)
             if len(after) <= 3:
                 games.append("in the seasons since: " + ", ".join(listed) +

@@ -536,7 +536,8 @@ def injuries(team: str) -> dict:
     return _fact(league="NFL", subject=name, subject_key=f"nflteam:{team}", stat="injuries", label="injured starters",
                  definition="Starters (first on the depth chart) on today's injury report. Questionable usually plays: "
                             "teams list nearly everything. Doubtful means probably out; out, IR, and PUP mean out.",
-                 value=out, say=inj.report_line(hurt) or "none of their starters are on the injury report; backups aren't covered", scope="today",
+                 value=out, say=(f"starters only (backups aren't covered): {inj.report_line(hurt)}" if hurt else
+                                "none of their starters are on the injury report; backups aren't covered"), scope="today",
                  source="Sleeper", credit="Data via Sleeper", as_of="today", sample=f"{len(hurt)} starters",
                  status="trusted", checked_against="Sleeper (trusted on its own)")
 

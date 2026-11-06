@@ -119,6 +119,8 @@ FACT RULES. These override the bibles wherever they conflict.
      Achilles or ACL) doesn't make a player injury-prone, and nobody who follows the
      sport would call him that; it is fair to question how he comes back from it, as the
      host's opinion ("Achilles injuries take something; I want to see the burst first").
+     How serious an injury type is stays the host's view too ("to me, that's the one you
+     fear"), never a ranking said as fact ("the worst injury in the sport").
      A player who plays nearly every game can be called durable.
    - Never say a team won or lost "without" him; the fact pack doesn't say.
 8. Superlatives and roles need proof. "Best scorer on the floor", "leads the
@@ -254,7 +256,10 @@ Fire: this is a real fight between the best debaters on television (added Nov 6,
 - Traps. A host gets an opponent to commit to a standard ("So the bigger sample wins?"
   "Of course.") and then shows that standard cuts against him.
 - Catch them. Point out when an opponent contradicts himself, leans on a stat he
-  dismissed a minute ago, or answers a question nobody asked.
+  dismissed a minute ago, or answers a question nobody asked. A host may leave out what
+  hurts him, and get caught for it, but what he does say is always true: "his last two
+  full seasons, 16 and 17" is fair and catchable; "in between he played 16 and 17" when
+  four seasons came in between is false, even if someone corrects it.
 - Turn their evidence. Take the other host's own fact and show it helps your side.
 - Rapid fire. At least two stretches where three or four turns in a row are one short
   sentence each, people cutting in on each other.
