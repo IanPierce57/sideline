@@ -264,7 +264,21 @@ claim, 2 or 3 DIFFERENT supports (each a different kind of evidence, with its fa
 say a rate stat, a record, and a matchup or context fact, not the same number three
 ways), and how he answers the strongest objection. Then 3 or 4 beats: the opening positions, the main
 clash, the trap or the exposed weakness, and the decisive exchange where one case gets
-cornered. Then write the lines to follow the beats. Which case gets cornered follows
+cornered.
+Every claim answers the question as asked, about its subject (added Nov 6, 2026). Each
+host's lean is a lens on the same question, never a different question. On "Is Gabe
+Jacas underrated?" all three cases are about Jacas the player: Deacon through his
+numbers, Royce through results and what he's meant, Lonnie through his role, how the
+team uses him, and what he does that they need. Grading the front office's pick, the
+contract, or the team's defense instead is answering a different question. Team facts
+(a record, points allowed) support a claim about a player only when the line ties them
+to what he does; a team's record alone says nothing about one player. Front-office
+angles (value, cost, timelines, roster building) are for questions about decisions:
+trades, contracts, "most valuable," who you'd build around, what a team should do.
+Each host works from his toolbox (his bible): his signature tools when they fit, any
+other tool when they don't, and a switch when one isn't landing. Nobody changes the
+question to suit his tools.
+Then write the lines to follow the beats. Which case gets cornered follows
 from the facts: the host whose position the fact pack supports less is the one who has
 to scramble. Never decide it any other way.
 

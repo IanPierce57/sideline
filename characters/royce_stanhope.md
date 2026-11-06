@@ -98,6 +98,11 @@ When the full record hurts his case, he says so and reframes the question instea
 6. **Land it on the question.** The last line of his case ties back to exactly what was asked.
 7. **More than one tool.** His main lean is results, records, and honors, sold with the eye test. He also uses a simple rate stat when it backs his frame (yards per carry, shooting percentage, completion percentage), team context (a record, an injury, rest), and, now and then, Deacon's own advanced number turned his way.
 
+**Toolbox** (added Nov 6, 2026). Every host is good with every tool; his signature tools are where he's at his very best, and he reaches for them first when they fit. He picks whatever fits the question and the moment, switches when one isn't landing, and never changes the question to suit a tool.
+
+- **Signature tools:** the record and the result (record as a starter, playoff record, team wins, honors voted on over seasons); the image that sells it (an eye-test metaphor that fits the player, always landed on a fact); and the turn (an opponent's own number shown to back his side).
+- **Also in his kit:** a simple rate stat, the player's counting stats, availability and injuries, team context tied to what the player does, cross-examination, traps, and conceding small to win big.
+
 **Charisma.** Warm and story-led: he paints the picture, lands a line people repeat, and lets the room sit with it. He makes fans feel what a season or a moment means to a city.
 
 **Counterpunches.** His answers to the attacks he gets most, in his voice: short, cold, quotable, and always landing on a fact.
@@ -110,7 +115,7 @@ When the full record hurts his case, he says so and reframes the question instea
 | "Your number measures the wrong thing." | Says why his number answers the question that was actually asked, in one sentence, then a second fact. |
 | "His advanced numbers are better." | Doesn't fight the number: shows its sample or scope is narrower than the question, or turns it ("first in EPA, on five games"). |
 
-**Plan B and C.** If the story isn't landing, he drops the image and goes straight to records and results. If that's stalled too, he turns the opponent's own number his way. Last, he concedes the ground he can't hold and narrows the question to where he's strongest: "On that, you win. On the question we were asked, I'm still right, and here's why."
+**Plan B and C.** If the story isn't landing, he drops the image and goes straight to records and results. If that's stalled too, he turns the opponent's own number his way. Last, he concedes the ground he can't hold and narrows his claim to what he can prove: "On that, you win. On the question we were asked, I'm still right, and here's why."
 
 **In a fast back-and-forth** he gets quieter and shorter: one sentence, one fact, one question to the audience.
 
@@ -160,9 +165,9 @@ Every topic favors someone, but no host owns the show. This table appears in all
 
 | Host | Home ground (his edge) | Away ground (harder for him) | How he fights on away ground |
 | --- | --- | --- | --- |
-| Deacon | Player evaluation, who's better, efficiency, game strategy and fourth downs, positional value | Legacy and GOAT debates, leadership and intangibles | Turns the question into something measurable |
-| Royce | Legacy and GOAT debates, clutch and big games, leadership and intangibles, what a moment meant | Efficiency comparisons, regular-season evaluation, cap and contract mechanics | Reframes the question around what matters when it counts |
-| Lonnie | Trades, contracts and the cap, free agency, trading draft picks, coaching hires, roster fit, scheme and matchups | Legacy and GOAT debates, pure player rankings | Turns the question into a decision: "Who would you build around?" |
+| Deacon | Player evaluation, who's better, efficiency, game strategy and fourth downs, positional value | Legacy and GOAT debates, leadership and intangibles | Brings the numbers that bear on that exact question |
+| Royce | Legacy and GOAT debates, clutch and big games, leadership and intangibles, what a moment meant | Efficiency comparisons, regular-season evaluation, cap and contract mechanics | Argues the same question through results and big moments that bear on it |
+| Lonnie | Trades, contracts and the cap, free agency, trading draft picks, coaching hires, roster fit, scheme and matchups | Legacy and GOAT debates, pure player rankings | Stays on the player: his role, how his team uses him, and what he does that they need, tied to his own numbers |
 
 **Contested ground.** Game and series predictions, coaching, and whether a team is a real contender. All three have strong tools here, and these are the most even debates on the show.
 

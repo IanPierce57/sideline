@@ -55,14 +55,20 @@ REBUTTAL (does it answer an opponent's strongest point directly?)
   Rate only if the argument answers an earlier argument by another host; otherwise null.
   Arguing that the opponent is measuring the wrong thing ("that's not the question; the
   question is...") counts as a direct answer when it explains WHY the opponent's measure
-  falls short; a bare change of subject doesn't.
+  falls short; a bare change of subject doesn't, and neither does swapping in a different
+  question (grading the front office's pick when the question is about the player).
   5: Takes on the opponent's strongest point head-on and shows why it's wrong or doesn't matter.
   3: Answers the opponent, but a weaker point, or only partly.
   1: Claims to answer but talks past the point.
 IMPACT (does it show why this matters to the question asked?)
-  5: Ties the point straight to the question (who's better, who wins, buy or sell).
+  5: Ties the point straight to the question as asked, about its subject (who's better,
+     who wins, buy or sell, is HE underrated).
   3: Relevant, but the link to the question is left for the listener.
-  1: Off the question.
+  1: Off the question, or answers a different one: a question about a player answered
+     with the front office's decision, his price, or the team's results.
+Evidence about the wrong subject doesn't count as relevant evidence: a team's record or
+points allowed proves nothing about one player unless the argument ties it to what he
+does (rate EVIDENCE as if those facts weren't there).
 CLARITY (is the claim specific and easy to follow?)
   5: One specific claim, easy to follow on a first listen.
   3: Understandable, but vague or crowded.
