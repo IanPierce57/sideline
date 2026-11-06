@@ -773,7 +773,12 @@ def honors(card: dict) -> list[dict]:
         # against misreading the infobox); otherwise just the count.
         years = f" ({', '.join(item['years'])})" if item["years"] and len(item["years"]) == item["count"] else ""
         # "3-time Super Bowl champion" reads (and is said) naturally; "3× Super Bowl champion" wasn't
-        shown = f"{item['count']}-time {item['label']}" if item["count"] > 1 else item["label"]
+        if item["count"] > 1:
+            # "8 NBA All-Star selections", "3-time NBA MVP": the way people say it
+            shown = (f"{item['count']} {item['label']}s" if item["label"].endswith("selection")
+                     else f"{item['count']}-time {item['label']}")
+        else:
+            shown = item["label"]
         facts.append(_fact(**base, stat=f"honor_{key}", honor=key, label=item["label"], value=item["count"],
                            years=item["years"], say=f"{shown}{years}", wikidata=item["wikidata"], list_page=item["list_page"],
                            definition=f"From his Wikipedia page: {item['line']}", sample=f"{item['count']} time(s)"))

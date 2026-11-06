@@ -163,9 +163,15 @@ def check_stock_phrases(lines: list[dict]) -> list[dict]:
     segment's limit, and a number said for the third time or more."""
     used, problems = 0, []
     said = {}
+    # Final answers may restate the key number (they sum up the case), so they're not counted.
+    last_hal = max((l["line"] for l in lines if l["speaker"] == "hal"), default=0)
     for line in lines:
         low = line["text"].lower().replace("’", "'")
         issues = []
+        own = {"royce": ("royce",), "deacon": ("deacon", "deac"), "lonnie": ("lonnie",), "hal": ("hal",)}.get(line["speaker"], ())
+        if any(re.search(r"(?:,\s*|^)" + n + r"\b[.,?!]", low) for n in own):
+            issues.append("the speaker addresses himself by his own name; this line is probably meant for someone "
+                          "else, so fix the name (or who's speaking)")
         if MOVE_NAMES.search(low):
             issues.append(f"says the name of a move out loud ({MOVE_NAMES.search(low).group(0)!r}); just do the move")
         found = [p for p in STOCK_PHRASES if p in low]
@@ -179,17 +185,18 @@ def check_stock_phrases(lines: list[dict]) -> list[dict]:
         # ("241"); small counts ("two MVPs", "three rings") are different facts, not repeats.
         clean = line["text"].replace(",", "")
         tokens = re.findall(r"\b\d+-\d+(?:-\d+)?\b|[+-]?\d*\.\d+|\b\d{2,}\b", clean)
-        for token in tokens:
+        final_answer = line["line"] > last_hal and line["speaker"] in ("royce", "deacon", "lonnie")
+        for token in ([] if final_answer else tokens):
             if re.fullmatch(r"(19|20)\d\d", token):
                 continue                          # years
-            key = token.lstrip("+-")
+            key = (line["speaker"], token.lstrip("+-"))     # the same host saying the same stat again
             said[key] = said.get(key, 0) + 1
             if said[key] == 3:
                 repeats.append(token)
         if repeats:
-            issues.append(f"says {', '.join(repeats)} for the third time in the segment. REMOVE that number from "
-                          "this line: refer to it in words ('that number', 'his record', 'the EPA gap') or make a "
-                          "different point")
+            issues.append(f"this host says {', '.join(repeats)} for the third time. REMOVE that number from this "
+                          "line: refer to it in words ('that number', 'his record') and use the turn to add a "
+                          "different support for his case")
         if issues:
             problems.append({"line": line["line"], "style": True, "problem": "; ".join(issues)})
     return problems

@@ -198,8 +198,10 @@ Each line:
     number of another host's argument; answering it starts a new number.
   * Every host should have at least two numbered arguments.
 
-Plan first (the "plan" field, before any line). Write each host's position in one
-sentence and the facts it rests on, then 3 or 4 beats: the opening positions, the main
+Plan first (the "plan" field, before any line). For each host, a complete case: his
+claim, 2 or 3 DIFFERENT supports (each a different kind of evidence, with its fact IDs:
+say a rate stat, a record, and a matchup or context fact, not the same number three
+ways), and how he answers the strongest objection. Then 3 or 4 beats: the opening positions, the main
 clash, the trap or the exposed weakness, and the decisive exchange where one case gets
 cornered. Then write the lines to follow the beats. Which case gets cornered follows
 from the facts: the host whose position the fact pack supports less is the one who has
@@ -208,9 +210,15 @@ to scramble. Never decide it any other way.
 The argument has to BUILD, not circle (added Nov 6, 2026):
 - Each beat moves somewhere new. Once a point has been made and answered, nobody makes
   it again; the next exchange goes deeper or somewhere else.
-- Each host builds one case across his turns: his first turn states it, later turns add
-  a new piece of evidence or beat the best answer to it. He doesn't hop between
-  unrelated ideas (one candidate, then another, then another) without finishing one.
+- Each host builds his COMPLETE case across his turns (added Nov 6, 2026): his first
+  turn states the claim with one support; later turns bring his other supports and his
+  answer to the strongest objection. By his final answer, the audience has heard the
+  whole case: claim, two or three different reasons, and why the other side's best point
+  doesn't change it. He doesn't hop between unrelated ideas without finishing one.
+- Coming back to a point is fine when it presses an opponent ("You still haven't answered
+  the 6-1") or ties the case together, but it's never a whole turn by itself: a turn
+  that returns to an old point also adds something. The segment is short, so balance it:
+  every support gets said clearly once, and only the strongest one gets hammered.
 - Hal moves it forward when it stalls: he names what's settled and points at the open
   question ("We've done the sack numbers. What does Chicago give up?").
 
@@ -325,13 +333,20 @@ OUTPUT_SCHEMA = {
             "type": "object",
             "description": "Written BEFORE the lines: how this argument builds.",
             "properties": {
-                "positions": {"type": "object", "properties": {h: {"type": "string"} for h in ("royce", "deacon", "lonnie")},
-                              "required": ["royce", "deacon", "lonnie"], "additionalProperties": False,
-                              "description": "Each host's position in one sentence, with the facts it rests on."},
+                "cases": {"type": "object", "properties": {h: {"type": "object", "properties": {
+                              "claim": {"type": "string", "description": "His position in one sentence."},
+                              "supports": {"type": "array", "items": {"type": "string"},
+                                           "description": "2 or 3 DIFFERENT supports, each a different kind of evidence "
+                                                          "with its fact IDs (not the same stat restated)."},
+                              "answer": {"type": "string", "description": "How he answers the strongest objection to his case."}},
+                              "required": ["claim", "supports", "answer"], "additionalProperties": False}
+                              for h in ("royce", "deacon", "lonnie")},
+                          "required": ["royce", "deacon", "lonnie"], "additionalProperties": False,
+                          "description": "Each host's complete case."},
                 "beats": {"type": "array", "items": {"type": "string"},
                           "description": "3 or 4 beats, in order. Each one moves the argument somewhere new."},
             },
-            "required": ["positions", "beats"],
+            "required": ["cases", "beats"],
             "additionalProperties": False,
         },
         "lines": {
@@ -644,6 +659,7 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
         "warnings": check_script(lines),
         "sources": sources,
         "receipts": receipts,
+        "plan": data.get("plan"),
         "scores": {h: v["score"] for h, v in result["hosts"].items()},
         "winner": result["winner"],
         "tie": result["tie"],
