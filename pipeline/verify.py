@@ -536,6 +536,8 @@ def _check(f: dict) -> dict:
         return f
     if f["stat"] == "tenure":
         return _check_tenure(f)
+    if f["stat"] in ("availability", "injury_history"):
+        return f                       # checked as they're built (pipeline/injuries.py)
     if f.get("league") == "NBA" and not f.get("honor"):
         if f["stat"] == "current_team":
             return _check_nba_team(f)

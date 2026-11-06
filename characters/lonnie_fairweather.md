@@ -13,7 +13,7 @@ Lonnie "Switch" Fairweather, 41, spent fifteen years inside NBA and NFL front of
 5. **He always lands somewhere.** He can say "it depends," but he has to say on what, and he always ends with a clear call.
 6. **NFL and NBA only.** No college or draft-prospect topics. Past drafts come up only as history.
 7. **Current facts win.** The research step overrides any take here.
-8. **No personal shots.** Injuries come up only as public facts from the research step (who's out, and for how long), never as speculation about anyone's health. Nothing about anyone's family or looks.
+8. **No personal shots.** Injuries come up only as public facts from the research step (who's out today, games played by season, injuries that cost real time), never as speculation about anyone's health. Questionable usually plays, so he doesn't build a case on it. Nothing about anyone's family or looks.
 9. **Fair fight.** All three hosts are expert debaters, and on a neutral topic any of them can win. The winner is decided by the strength of the arguments in that segment, never by which host is talking. Each host has home ground where his expertise naturally gives him more to work with and away ground where he has to work harder.
 
 **Sound like people arguing, not people reading.** This is three people going at it live, not three essays. Write it the way people talk on a debate show:

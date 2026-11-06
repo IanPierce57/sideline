@@ -10,6 +10,8 @@ The "Facts and data" section of BRIEF.md is the authority on sources. This file 
 | [Sleeper API](https://docs.sleeper.com/) | Approved Nov 4, 2026, including its undocumented stats feed. Current NFL and NBA players (team, position, injury status, depth chart), the current season and week, weekly and season stats for both leagues (including each NFL team defense's points allowed per week, used to confirm final scores), the NFL schedule (`api.sleeper.app/schedule/nfl/...`, used to confirm games), and trending adds and drops. Free for non-commercial use; credit Sleeper wherever its trending data is shown. Ask for the full player list at most once a day, and stay well under 1,000 calls a minute. |
 | Web search | News context and pre-1999 NFL numbers, with links saved |
 
+Injury history (Nov 6, 2026) comes from each player's Wikipedia article and is kept only when his games played (Sleeper, checked against nflverse or his Wikipedia career table) show the missed time.
+
 For the NBA (Nov 5, 2026), Sleeper is the first source (stats, schedule, scores, starters, injuries, playoffs for the most recent postseason only) and Wikipedia is the second: each player's career-stats table, each team's season page (game log with every score and date, coach), the conference standings templates, and each year's draft page. balldontlie isn't needed.
 
 | [Wikipedia](https://en.wikipedia.org/w/api.php) | Career titles and awards from player infoboxes, trusted on its own for honors (decided Nov 4, 2026). CC BY-SA 4.0; official API; credit "Honors: Wikipedia". |

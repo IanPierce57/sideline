@@ -103,8 +103,24 @@ FACT RULES. These override the bibles wherever they conflict.
    is last season's: say "last season" (or the year) every time, and never use it
    with "this season", "this year", "right now", or the present tense ("he's scoring
    28.8 a night"). Present-tense numbers must be this season's facts.
-7. Injuries are as of today only. Never say when a player got hurt, how many games
-   he's missed, or that a team won or lost "without" him; the fact pack doesn't say.
+7. Injuries, read like someone who follows the sport.
+   - Today's report: "questionable" usually means he plays (teams list nearly
+     everything now), so it's never a storyline or an argument on its own. Day-to-day
+     is minor. "Doubtful" means probably out. Out, injured reserve, and PUP mean out.
+   - History comes only from the availability and injury_history facts. Never name an
+     injury, a body part, a date, or a reason for missed games that they don't give.
+     Games played are for the whole season, so never say an injury "cost him" a number
+     of games; say what the fact says ("he played 16 of 82 the next season"). Games
+     since a major injury come from the injury_history fact's "in the seasons since"
+     numbers, never from this season's games alone.
+   - Injury-prone is a pattern, not one injury. "Injury-prone", "can't stay healthy",
+     "always hurt", or "durability concerns" need an availability fact showing a quarter
+     or more missed in at least two of its full seasons. One major injury (a torn
+     Achilles or ACL) doesn't make a player injury-prone, and nobody who follows the
+     sport would call him that; it is fair to question how he comes back from it, as the
+     host's opinion ("Achilles injuries take something; I want to see the burst first").
+     A player who plays nearly every game can be called durable.
+   - Never say a team won or lost "without" him; the fact pack doesn't say.
 8. Superlatives and roles need proof. "Best scorer on the floor", "leads the
    league", "the second option", "the go-to guy" need a fact with a rank or that
    covers everyone being compared. Otherwise make it the host's read ("to my eye,
@@ -695,7 +711,7 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
         for i, l in enumerate(mine):
             for fid in l.get("facts", []):
                 f = by_id.get(fid)
-                if f and f["stat"] not in ("current_team", "tenure", "injuries", "game") and f.get("say"):
+                if f and f["stat"] not in ("current_team", "tenure", "injuries", "game", "availability", "injury_history") and f.get("say"):
                     counts[fid] = counts.get(fid, 0) + 1
                     first.setdefault(fid, i)
         top = sorted(counts, key=lambda x: (-counts[x], first[x]))[:4]

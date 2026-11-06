@@ -189,7 +189,8 @@ What each host leans on:
 
 Rules:
 - Always get current_team for every player who'll come up (it also returns how long he's been with that team,
-  which keeps trade talk realistic). For buy-or-sell and trade topics, also get the records of the teams
+  which keeps trade talk realistic, his injury status today, games played the last five seasons, and
+  injuries that cost him real time; there's no separate injury stat for players). For buy-or-sell and trade topics, also get the records of the teams
   involved, and current_team for any player a host might suggest acquiring.
 - "Right now" and "this season" questions need THIS season's numbers (NFL {sleeper.state('nfl')['season']}, NBA
   {sleeper.state('nba')['season']}). Pull this season's stats for every player first; add last season only as
@@ -219,7 +220,7 @@ Rules:
 
 Stats you can ask for (stat names exactly as written):
 {catalog.stat_menu()}
-current_team: which team he's on right now (any player)
+current_team: which team he's on right now, since when, injury status, games played by season, injury history (any player)
 honors: his career awards and titles (any player; no season needed)
 qb_playoff_record: playoff wins and losses as the starting quarterback (NFL QBs; no season needed)
 qb_starter_record: regular-season wins and losses as the starting quarterback (NFL QBs; a season, or career=true)

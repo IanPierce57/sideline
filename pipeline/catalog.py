@@ -523,16 +523,20 @@ INJURY_LIST = ("Out", "Doubtful", "Questionable", "IR", "PUP", "Sus")
 
 
 def injuries(team: str) -> dict:
-    """Starters (first on Sleeper's depth chart) with an injury designation today. Sleeper is trusted."""
+    """Starters (first on Sleeper's depth chart) with an injury designation today. Sleeper is
+    trusted. Grouped by what the label really means: questionable usually plays (Nov 6, 2026)."""
+    from . import injuries as inj
     hurt = []
     for p in sleeper.players("nfl").values():
         if p.get("team") == team and p.get("depth_chart_order") == 1 and p.get("injury_status") in INJURY_LIST:
             part = f", {p['injury_body_part'].lower()}" if p.get("injury_body_part") else ""
-            hurt.append(f"{p['full_name']} ({p.get('position')}{part}): {p['injury_status']}")
+            hurt.append((p["injury_status"], f"{p['full_name']} ({p.get('position')}{part})"))
     name = nflgames.TEAMS[team][0]
+    out = sum(1 for s, _ in hurt if s in inj.LIKELY_OUT)
     return _fact(league="NFL", subject=name, subject_key=f"nflteam:{team}", stat="injuries", label="injured starters",
-                 definition="Starters (first on the depth chart) with an injury designation today. IR means injured reserve.",
-                 value=None, say="; ".join(sorted(hurt)) or "none of their starters are on the injury report; backups aren't covered", scope="today",
+                 definition="Starters (first on the depth chart) on today's injury report. Questionable usually plays: "
+                            "teams list nearly everything. Doubtful means probably out; out, IR, and PUP mean out.",
+                 value=out, say=inj.report_line(hurt) or "none of their starters are on the injury report; backups aren't covered", scope="today",
                  source="Sleeper", credit="Data via Sleeper", as_of="today", sample=f"{len(hurt)} starters",
                  status="trusted", checked_against="Sleeper (trusted on its own)")
 
@@ -749,8 +753,10 @@ def current_status(card: dict) -> dict:
     starter = card["league"] == "NFL" and raw.get("depth_chart_order") == 1
     role = ", ".join(x for x in (pos, "starter" if starter else "") if x)
     team = f"{team}{f' ({role})' if role else ''}"
-    injury = (f", listed as {card['injury_status']}" if card.get("injury_status")
-              else (", no injury designation today" if card["team"] else ""))
+    from . import injuries as inj
+    words = inj.status_words(card.get("injury_status"))
+    injury = (f", {words} today" if words else
+              (", no injury designation today" if card["team"] and not card.get("injury_status") else ""))
     fact = _fact(league=card["league"], subject=card["name"], subject_key=card["key"], stat="current_team",
                  label="current team", value=card["team"], say=f"{team}{injury}",
                  definition="The team he's on right now and his listed position, per the current roster.", scope="today",
@@ -908,7 +914,12 @@ def tenure(card: dict) -> dict:
 def get(card: dict, stat: str, scope: dict) -> list[dict]:
     """Fetch one stat for one player (candidate facts, not yet checked)."""
     if stat == "current_team":
-        return [current_status(card), tenure(card)]     # where he plays, and since when
+        # where he plays, since when, and how often he's been on the field (Nov 6, 2026)
+        from . import injuries as inj
+        avail = inj.availability(card)
+        history = inj.injury_history(card, avail) if avail["status"] != "dropped" else None
+        extra = [avail] + ([history] if history and history["status"] != "dropped" else [])
+        return [current_status(card), tenure(card)] + [_fact(**f) for f in extra]
     if stat == "honors":
         return honors(card)
     if stat in ("measurables", "draft"):

@@ -224,9 +224,34 @@ def check_stage_notes(lines: list[dict]) -> list[dict]:
 THIS_SEASON = re.compile(r"\bthis (?:season|year)\b|\bso far\b|\bright now\b|\bthrough week \d+|\bthrough (?:nov|dec|jan|feb|mar|apr|oct)", re.I)
 
 
+INJURY_PRONE = re.compile(r"\binjury[- ]prone\b|\bcan'?t stay (?:healthy|on the (?:field|floor|court))|"
+                          r"\b(?:always|constantly) (?:hurt|injured|banged up)|\bmade of glass\b|\bnever healthy\b|"
+                          r"\bdurability (?:concerns?|issues?|problems?|questions?)", re.I)
+NEGATED = re.compile(r"\b(?:not|isn'?t|never|nobody|no one|wasn'?t|ain'?t|doesn'?t)\b[^.?!]{0,25}$", re.I)
+
+
+def check_injury_labels(lines: list[dict], facts_by_id: dict) -> list[dict]:
+    """'Injury-prone' and the like need a pattern: a cited availability fact with a quarter or
+    more of the season missed in two or more full seasons (added Nov 6, 2026). One big injury
+    isn't a pattern. 'He's not injury-prone' is fine."""
+    problems = []
+    for line in lines:
+        hits = [m for m in INJURY_PRONE.finditer(line["text"]) if not NEGATED.search(line["text"][:m.start()])]
+        if not hits:
+            continue
+        cited = [facts_by_id[i] for i in line.get("facts", []) if i in facts_by_id]
+        if not any(f["stat"] == "availability" and (f.get("big_misses") or 0) >= 2 for f in cited):
+            problems.append({"line": line["line"], "problem": f"says \"{hits[0].group(0)}\" without citing an "
+                             "availability fact that shows a pattern (a quarter or more of the season missed in two or "
+                             "more full seasons); one big injury isn't a pattern, so make it a question about how he "
+                             "comes back, or drop it"})
+    return problems
+
+
 def check_scope(lines: list[dict], facts_by_id: dict) -> list[dict]:
     """Lines that say "this season" (or "right now", "so far") while every season-specific
-    fact they cite is from an earlier season."""
+    fact they cite is from an earlier season. Also runs check_injury_labels, so every place
+    that checks scope checks injury words too."""
     from .verify import season_tag
     problems = []
     for line in lines:
@@ -237,7 +262,7 @@ def check_scope(lines: list[dict], facts_by_id: dict) -> list[dict]:
         if tagged and all(t != "this season" for t in tagged):
             problems.append({"line": line["line"], "problem": "says this season (or right now) but every season "
                              "number it cites is from an earlier season; say which season, or use this season's facts"})
-    return problems
+    return problems + check_injury_labels(lines, facts_by_id)
 
 
 def check_numbers(lines: list[dict], facts_by_id: dict, topic: str = "") -> list[dict]:
@@ -285,7 +310,17 @@ For each claim give a verdict:
   said as this season's, or in the present tense, is NOT supported.
 - UNSUPPORTED: no fact backs it, and it could be false. This includes how a player plays
   stated as fact from the style profiles ("he throws deep more than most"), injury
-  history ("they won without him"), and roles or superlatives no fact ranks.
+  history no fact gives ("they won without him", an injury, a body part, or a reason for
+  missed games not in the availability or injury_history facts, "it cost him 40 games"),
+  and roles or superlatives no fact ranks.
+- Injury words: "injury-prone", "can't stay healthy", "always hurt", "durability concerns"
+  are UNSUPPORTED unless an availability fact shows a quarter or more of the season missed
+  in at least two of its full seasons; one major injury is not a pattern. Games since an
+  injury ("back from the Achilles") must match the injury_history fact's "in the seasons
+  since" numbers. Questionable usually plays: saying he should play is SUPPORTED, calling
+  him likely out is CONTRADICTED, calling him fully healthy is UNSUPPORTED.
+- Who said what: a line that credits someone with something nobody said earlier in the
+  script ("Royce just asked about the record" when he didn't) is CONTRADICTED.
 - CONTRADICTED: the fact pack says something different.
 Do NOT list: opinions and the host's read ("to my eye..."), predictions, metaphors,
 arguments, believable opinions about how a player plays, or the hosts' own fictional
