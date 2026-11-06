@@ -267,9 +267,9 @@ Write two or three short lines for Hal, in order:
 1. The winner, by score: "On the scorecard, tonight goes to <name>." (On a tie, say the
    judge has it even and name both. If the verdict says it was close, say so in plain words,
    like "by a hair".) Don't say the numeric scores; the meter shows them.
-2. The winning summary, two or three sentences: the winner's claim, his strongest
-   evidence, and the rebuttal that landed. Use only what the winner actually said in the
-   script; don't add new facts.
+2. The winning summary, one or two plain sentences: the winner's claim and what carried
+   it. At most one number. Don't recap rebuttals and don't recite the stats again; the
+   audience just heard them. Use only what the winner actually said; don't add new facts.
 3. Where the others still disagree: one sentence each for the other two hosts, from their
    final answers. Then sign off: "That's the board. Thanks for the call, <caller first name>."
 Every number, and every claim about the real world (who runs more, who's injured, who has
@@ -295,12 +295,7 @@ def write_close(lines: list[dict], result: dict, pack: list[dict], caller: dict,
         if result.get("close_call"):
             verdict += f" It was close: {names[result['ranked'][1]]} was right behind."
     best = sorted((a for a in result["arguments"].values() if a["host"] == w), key=lambda a: -a["score"]) if w else []
-    rebut = max((a for a in best if a["rebuttal"]), key=lambda a: a["rebuttal"], default=None)
-    hint = ""
-    if best:
-        hint = f"\nThe winner's strongest argument is lines {best[0]['lines']}."
-        if rebut:
-            hint += f" His best rebuttal is lines {rebut['lines']}."
+    hint = f"\nThe winner's strongest argument is lines {best[0]['lines']}." if best else ""
     reply = client.messages.create(
         model=CLOSE_MODEL, max_tokens=3000, system=CLOSE_RULES + "\n\n" + hal_bible,
         output_config={"effort": "medium", "format": {"type": "json_schema", "schema": CLOSE_SCHEMA}},

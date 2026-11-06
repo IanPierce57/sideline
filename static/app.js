@@ -252,15 +252,14 @@ $("sound").addEventListener("click", () => {
 // While the lines are open: short in-character chatter, and real upcoming games on the
 // right-hand monitor. Bubbles are short and brief so they don't sit on the monitors.
 const IDLE_CHATTER = [
-  ["hal", "Lines are open. Ask the desk."],
-  ["deacon", "Somebody call in. I got numbers burnin' a hole in my pocket."],
-  ["royce", "Bring me a question worth a column."],
-  ["lonnie", "Give us a decision to make. That's the fun part."],
-  ["deacon", "Full sample before anybody splits it. House rule."],
-  ["royce", "Every number on this show gets checked twice. Bev would approve."],
-  ["lonnie", "NBA or NFL, today's players. Anything goes."],
-  ["hal", "Type a topic below, and these three will argue it out."],
-];
+  ["hal", "Lines are open."],
+  ["deacon", "Somebody call in already."],
+  ["royce", "Give me something worth arguing about."],
+  ["lonnie", "Anybody got a trade idea?"],
+  ["deacon", "Quiet night."],
+  ["royce", "Bev says I talk too much. She's not wrong."],
+  ["lonnie", "NBA, NFL. I'll take anything."],
+]
 let idleTimer = null, upNextTimer = null, upcoming = { games: [], questions: [] };
 function stopIdle() { clearTimeout(idleTimer); clearInterval(upNextTimer); upNextTimer = null; }
 function idleChatter(i = 0) {
@@ -270,7 +269,7 @@ function idleChatter(i = 0) {
   showBubble(who, text, 0.6);
   idleTimer = setTimeout(() => {
     hideBubble();
-    idleTimer = setTimeout(() => idleChatter(i + 1), 5000);
+    idleTimer = setTimeout(() => idleChatter(i + 1), 9000);   // mostly quiet; a line every ~12 seconds
   }, 3800);
 }
 function showUpNext() {
@@ -345,7 +344,8 @@ function showPreshow(topic) {
 }
 Studio.onScene((scene) => {
   setNameplate(scene.name, scene.title);
-  showBubble(scene.who, scene.text, 1.2);
+  if (scene.text) showBubble(scene.who, scene.text, 0.6);   // most pre-show scenes are silent
+  else hideBubble();
 });
 
 function countdown() {

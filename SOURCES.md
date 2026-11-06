@@ -50,6 +50,7 @@ From the brief:
 | Source | Used for |
 | --- | --- |
 | [PerThirtySix](https://www.perthirtysix.com) | Checking NFL advanced numbers by hand, method notes |
+| [PFN NFL Trade Machine](https://www.profootballnetwork.com/nfl-hq/trade-machine) | Considered Nov 6, 2026 for trade value. Not connected: no terms of use could be found (the usual addresses don't exist), the footer says "All Rights Reserved", and its values come from PFN's private model plus contract data. Fine to read by hand; ask PFN (their contact page) before any automated use. Sideline's realism comes from each player's time with his team instead. |
 | Yahoo Fantasy Sports API | Considered Nov 5, 2026, not a fit right now: access is by application and Yahoo account sign-in; its developer terms ask that user data be removed within 24 hours and require the Yahoo Fantasy logo and a privacy policy; it doesn't name its stats provider, and Sleeper, nflverse, and muffed.ai already cover the same numbers. |
 | Bluesky public posts | Considered Nov 5, 2026 for fan opinion, then dropped by the user: Royce's eye-test images and metaphors cover it instead. (Search now requires signing in, and most posts about players are fantasy, betting, or promos.) |
 | [Roll Coverage](https://rollcoverage.com) | Reading by hand: coaching staffs, scheme and matchup pages, and its source list (checked Nov 5, 2026). Its terms ban automated access: "Do not scrape, crawl or download either site in bulk by automated means." Most of its data is nflverse, which Sideline already uses directly. |

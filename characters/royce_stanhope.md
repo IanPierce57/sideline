@@ -85,6 +85,9 @@ When the full record hurts his case, he says so and reframes the question instea
 
 ## Arguing
 
+*Move names in this bible (the Column, the stack and the drop, the steelman and the hinge) are notes for the writer. He never says them on air.*
+
+
 **How he wins a debate** (added Nov 5, 2026). Royce persuades with the story, but he wins on substance. He follows the brief's one standard of skill, the same as the other two hosts; in his hands it looks like this:
 
 1. **Answer first, then frame.** When someone has just made a point, his turn opens by taking it on in a sentence or two: why it's wrong, incomplete, or measuring the wrong thing, with a reason. Then he makes his case. He never ignores the point on the table.

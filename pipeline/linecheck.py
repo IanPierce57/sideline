@@ -148,23 +148,50 @@ MISSING_DATA = re.compile(r"\b(?:i|we) (?:don't|do not|didn't) have (?:the |any 
 STOCK_PHRASES = ["here's my thing", "listen here", "hang on. hang on", "here's the question that matters",
                  "to my eye", "that's the sample", "that's the column", "remember this", "folks at home",
                  "both fair", "okay, okay", "i'll give you that", "can i jump in", "let's be clear",
-                 "at the end of the day", "make no mistake", "you're making my case"]
+                 "at the end of the day", "make no mistake", "you're making my case", "sure. fine",
+                 "hah", "that's the case", "show me the number", "here's what i'd do"]
+
+
+STOCK_LIMIT = 2          # stock phrases allowed in a whole segment, all hosts together
+# Names of moves from the bibles: notes for the writer, never said on air ("That's the stack").
+MOVE_NAMES = re.compile(r"\b(?:that's |this is |call it |here's )?(?:the|my) (?:stack|drop|column|lede|kicker|hinge|steelman)\b"
+                        r"|\bsteelman\w*\b", re.I)
 
 
 def check_stock_phrases(lines: list[dict]) -> list[dict]:
-    """Lines that repeat a stock phrase already used earlier in the segment."""
-    seen, problems = set(), []
+    """Style problems (rewritten, never cut): a move name said on air, stock phrases past the
+    segment's limit, and a number said for the third time or more."""
+    used, problems = 0, []
+    said = {}
     for line in lines:
         low = line["text"].lower().replace("’", "'")
+        issues = []
+        if MOVE_NAMES.search(low):
+            issues.append(f"says the name of a move out loud ({MOVE_NAMES.search(low).group(0)!r}); just do the move")
+        found = [p for p in STOCK_PHRASES if p in low]
+        if found:
+            used += len(found)
+            if used > STOCK_LIMIT:
+                issues.append(f"uses the stock phrase {', '.join(found)!r} after the segment's limit of {STOCK_LIMIT}; "
+                              "say it fresh, in other words, or drop it")
         repeats = []
-        for phrase in STOCK_PHRASES:
-            if phrase in low:
-                if phrase in seen:
-                    repeats.append(phrase)
-                seen.add(phrase)
+        # Stat-like numbers only: records ("6-1"), decimals ("0.29"), and numbers of 10 or more
+        # ("241"); small counts ("two MVPs", "three rings") are different facts, not repeats.
+        clean = line["text"].replace(",", "")
+        tokens = re.findall(r"\b\d+-\d+(?:-\d+)?\b|[+-]?\d*\.\d+|\b\d{2,}\b", clean)
+        for token in tokens:
+            if re.fullmatch(r"(19|20)\d\d", token):
+                continue                          # years
+            key = token.lstrip("+-")
+            said[key] = said.get(key, 0) + 1
+            if said[key] == 3:
+                repeats.append(token)
         if repeats:
-            problems.append({"line": line["line"], "style": True,
-                             "problem": f"repeats the stock phrase {', '.join(repeats)!r}; say it fresh, in other words"})
+            issues.append(f"says {', '.join(repeats)} for the third time in the segment. REMOVE that number from "
+                          "this line: refer to it in words ('that number', 'his record', 'the EPA gap') or make a "
+                          "different point")
+        if issues:
+            problems.append({"line": line["line"], "style": True, "problem": "; ".join(issues)})
     return problems
 
 

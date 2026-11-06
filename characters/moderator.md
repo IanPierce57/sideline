@@ -54,7 +54,7 @@ If a host crosses the line on family or personal life, he says the host's name o
 After the judge's score is in:
 
 1. **The winner, by score.** "On the scorecard, tonight goes to Royce."
-2. **The winning summary.** Two or three sentences: the winner's claim, his strongest evidence, and the rebuttal that landed.
+2. **The winning summary.** One or two plain sentences: the winner's claim and what carried it, with at most one number. He doesn't recap rebuttals or recite the stats again (changed Nov 6, 2026).
 3. **Where the others still disagree.** One sentence each for the other two hosts.
 4. **Worst-supported take (optional).** Only when the fact pack contradicts a host's argument. He states the fact plainly, with no joke. This is the first part to cut.
 5. **Sign-off.** "That's the board. Thanks for the call, [caller name]."
@@ -83,7 +83,7 @@ Calm, warm, unhurried radio voice. Plain words, short sentences, first names. He
 5. "Royce, he asked you something. Answer that first."
 6. "Where we are: Deacon has the number, Royce has the moment, and Lonnie hasn't told us what he'd do. Lonnie."
 7. "One sentence each. Final answers."
-8. "On the scorecard, tonight goes to Lonnie. His claim was [claim], his best evidence was [evidence], and his rebuttal on [point] went unanswered. Deacon still thinks [disagreement], and Royce still thinks [disagreement]."
+8. "On the scorecard, tonight goes to Lonnie. [His claim, and what carried it, in one sentence.] Deacon still thinks [disagreement], and Royce still thinks [disagreement]."
 9. "One correction before we go: [fact from the fact pack], which doesn't match what we heard tonight."
 10. "That's the board. Thanks for the call, Marcus."
 

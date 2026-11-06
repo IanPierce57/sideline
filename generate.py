@@ -200,8 +200,10 @@ Each line:
 
 Plan first (the "plan" field, before any line). Write each host's position in one
 sentence and the facts it rests on, then 3 or 4 beats: the opening positions, the main
-clash, a new angle that shifts the argument (a new fact, a better comparison, a weakness
-exposed), and the decisive exchange. Then write the lines to follow the beats.
+clash, the trap or the exposed weakness, and the decisive exchange where one case gets
+cornered. Then write the lines to follow the beats. Which case gets cornered follows
+from the facts: the host whose position the fact pack supports less is the one who has
+to scramble. Never decide it any other way.
 
 The argument has to BUILD, not circle (added Nov 6, 2026):
 - Each beat moves somewhere new. Once a point has been made and answered, nobody makes
@@ -212,17 +214,57 @@ The argument has to BUILD, not circle (added Nov 6, 2026):
 - Hal moves it forward when it stalls: he names what's settled and points at the open
   question ("We've done the sack numbers. What does Chicago give up?").
 
+Fire: this is a real fight between the best debaters on television (added Nov 6, 2026).
+- Cross-examination. Hosts ask each other pointed questions that demand an answer, and
+  the next line answers it directly or gets called out for dodging ("You didn't answer
+  the question, Royce. Who's better this year?").
+- Traps. A host gets an opponent to commit to a standard ("So the bigger sample wins?"
+  "Of course.") and then shows that standard cuts against him.
+- Catch them. Point out when an opponent contradicts himself, leans on a stat he
+  dismissed a minute ago, or answers a question nobody asked.
+- Turn their evidence. Take the other host's own fact and show it helps your side.
+- Rapid fire. At least two stretches where three or four turns in a row are one short
+  sentence each, people cutting in on each other.
+- No free concessions. A host concedes only when a fact corners him, and a concession
+  costs him: the others press on it right away. Nobody says "you're right" just to be
+  agreeable.
+- Every host takes at least one direct shot at another host's argument, and every shot
+  gets an answer.
+
 Sound like three people arguing live, not like AI (added Nov 6, 2026):
 - Signature phrases ("Here's my thing", "Listen here", "Hang on. Hang on.", "Here's the
   question that matters", "To my eye", "That's the sample", "That's the column",
-  "Remember this", "Folks at home", "Hah") at most ONCE per segment each, and most turns
-  use none. Never: "Both fair", "Okay, okay", "I'll give you that" more than once, "Let's
-  be clear", "At the end of the day", "make no mistake".
+  "Remember this", "Folks at home", "Hah", "Can I jump in", "Sure. Fine.") at most TWO
+  in the whole segment, all hosts together; most turns use none. Never: "Both fair",
+  "Okay, okay", "Let's be clear", "At the end of the day", "make no mistake".
+- Never say the names of moves from the bibles out loud: no "the stack", "the drop",
+  "the Column", "the lede", "the kicker", "steelman", "my hinge", "the hinge". Those are
+  notes for you, not words anyone says on air.
+- Numbers: a number gets said at most twice in the whole segment (once to make the
+  point, once if someone turns it). After that, refer to it in words ("that EPA number",
+  "his record"). Final answers are one sentence of conclusion with at most one number.
 - No formula openings. Don't start a turn by summing up both other hosts ("Royce is right
   about X, and Deacon's right about Y"). Answer the last thing said, in its own words.
 - Vary the length: some turns are one short sentence ("That's a team stat, Royce."), some
   are a few sentences; nobody gives a speech every turn.
 - No two turns open the same way. Contractions, plain words, the odd interruption.
+
+How real people talk (added Nov 6, 2026). Colloquial but professional: three pros who
+argue for a living, talking, not reading.
+- Mix the shapes. Questions. Fragments. A one-word reaction ("Please."). Now and then a
+  longer sentence that winds a little, with an aside in the middle, before it lands.
+  Never the same structure two turns in a row.
+- Let people be human: they react (laugh, get annoyed, sound surprised), correct
+  themselves mid-thought ("He's second. Well, second on half the dropbacks, which is my
+  point."), cut each other off (end a line with an em dash and let the next speaker jump
+  in), call back to something said earlier, and needle each other a little.
+- Natural fillers, sparingly: "look," "I mean," "come on," "honestly." Plain words,
+  contractions, no slang overload, no profanity.
+- Avoid the AI tells: tidy lists of three; "It's not X, it's Y" more than once a
+  segment; every turn ending on a neat summary or a punchline; perfectly balanced
+  "on one hand... on the other"; formal transitions ("Moreover," "Additionally,"
+  "Ultimately," "That said"); restating the question back; announcing what you're about
+  to do ("Let me tell you why...").
 
 Write it so a reader could tell who's talking with the names hidden: each
 host's voice, evidence lean, signature move, and temperature come from his
@@ -535,9 +577,18 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
         close = [{"line": len(lines) + i, "speaker": "hal", "speaker_name": names["hal"], "text": c["text"].strip(),
                   "delivery": "calm" if i < len(drafted) else "warm", "facts": [x for x in c["facts"] if x in by_id_all],
                   "argument": None} for i, c in enumerate(drafted, start=1)]
+        finals = "\n".join(f"{l['speaker_name']}: {l['text']}" for l in lines if l["speaker"] in judging.HOSTS)
+        verdict = ("a tie" if result["tie"] else f"{judging.NAMES[result['winner']][1]} won"
+                   + (" (a close call)" if result.get("close_call") else ""))
+        close_context = (context + f"\n\nThese are Hal's closing lines. The judge's result is: {verdict}. Announcing "
+                         "that result is SUPPORTED. When Hal reports what a host argued or still thinks ('Royce still "
+                         "thinks...'), that's the host's opinion being reported, and it's SUPPORTED if the host said it "
+                         f"in the script below. Only Hal's own statements of fact need the fact pack.\n\nWhat the hosts "
+                         f"said:\n{finals}")
+
         def close_problems(c):
             return (linecheck.check_numbers(c, by_id_all, topic) + linecheck.check_scope(c, by_id_all)
-                    + linecheck.check_stage_notes(c) + linecheck.check_claims(c, pack, context, client, effort="medium"))
+                    + linecheck.check_stage_notes(c) + linecheck.check_claims(c, pack, close_context, client, effort="medium"))
         problems = close_problems(close)
         if problems:                                   # one rewrite, the same as any other line
             close_log = problems
@@ -553,6 +604,9 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
         close = [{"line": len(lines) + i, "speaker": "hal", "speaker_name": names["hal"], "text": c["text"],
                   "delivery": "calm", "facts": [], "argument": None}
                  for i, c in enumerate(judging.safe_close(result, caller), start=1)]
+    # Hal always signs off the same way, whatever the close writer did.
+    if "that's the board" not in close[-1]["text"].lower().replace("’", "'"):
+        close[-1]["text"] = close[-1]["text"].rstrip() + f" That's the board. Thanks for the call, {caller['name']}."
     close[0]["score"] = {h: round(v["score"]) for h, v in result["hosts"].items() if v["score"] is not None}
     lines += close
     timings["close"] = round(time.time() - t, 1)

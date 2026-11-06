@@ -97,54 +97,56 @@ const Studio = (() => {
   const SCENE_MS = 6000;
   const PRODUCER_SPOT = 300;   // where the floor producer stands: the right end of the desk
   const sc = (who, name, title, text, acts, extra = {}) => ({ who, name, title, text, artist: null, acts, ...extra });
+  // Most scenes are silent: the set just gets ready. A few have a short, natural line
+  // (changed Nov 6, 2026: the old lines read like scripted narration).
   const STEP_SCENES = {
     start: [
-      sc("hal", "Hal Brennan", "Screening the call", "Line one, you're with the screener. Today's players, NBA or NFL, and we're good.",
+      sc("hal", "Hal Brennan", "On the phone", "Yeah, you're next. Hang tight.",
          { hal: "miccheck", royce: "notes", deacon: "coffee", lonnie: "tablet" }),
     ],
     research: [
-      sc("deacon", "Deacon Pettiford", "Pulling stats", "Pulling this season's numbers. Gimme the full sample before anybody splits it.",
+      sc("deacon", "Deacon Pettiford", "Pulling stats", "",
          { hal: "notes", royce: "makeup", deacon: "laptop", lonnie: "tablet" }, { artist: "royce" }),
-      sc("lonnie", "Lonnie Fairweather", "Doing research", "Records, injuries, who's rested. I want the whole picture before we start.",
+      sc("lonnie", "Lonnie Fairweather", "Doing research", "",
          { hal: "notes", royce: "write", deacon: "laptop", lonnie: "tablet" }),
     ],
     verify: [
-      sc("deacon", "Deacon Pettiford", "Checking the numbers", "Every number gets checked against a second source. If it don't match, it don't air.",
+      sc("deacon", "Deacon Pettiford", "Checking the numbers", "That one doesn't match. Toss it.",
          { hal: "notes", royce: "notes", deacon: "laptop", lonnie: "tablet" }),
-      sc("royce", "Royce Stanhope", "Waiting on the numbers", "Bev checks my numbers at home. Here it takes two sources. Same idea.",
+      sc("royce", "Royce Stanhope", "Pre-show", "",
          { hal: "notes", royce: "write", deacon: "laptop", lonnie: "makeup" }, { artist: "lonnie" }),
     ],
     write: [
-      sc("royce", "Royce Stanhope", "Writing his open", "Open on a result, not a list. Then the frame. Then the number.",
+      sc("royce", "Royce Stanhope", "Writing his open", "",
          { hal: "notes", royce: "write", deacon: "laptop", lonnie: "coffee" }),
-      sc("producer", "Floor producer", "Pre-show", "Two minutes, everybody! Phones away, mics on.",
+      sc("producer", "Floor producer", "Pre-show", "Two minutes!",
          { hal: "notes", royce: "write", deacon: "makeup", lonnie: "coffee" }, { artist: "deacon", producer: true }),
     ],
     check: [
-      sc("hal", "Hal Brennan", "Reading the script", "Every line gets checked against the facts. Anything that doesn't hold up gets fixed or cut.",
+      sc("hal", "Hal Brennan", "Reading the script", "",
          { hal: "notes", royce: "notes", deacon: "laptop", lonnie: "tablet" }),
-      sc("artist", "Makeup", "Pre-show", "Chin up, Hal. Almost there.",
+      sc("artist", "Makeup", "Pre-show", "Chin up for me.",
          { hal: "makeup", royce: "tie", deacon: "coffee", lonnie: "tablet" }, { artist: "hal" }),
     ],
     judge: [
-      sc("lonnie", "Lonnie Fairweather", "Waiting on the judges", "The judges score it blind. No names, just the arguments.",
+      sc("lonnie", "Lonnie Fairweather", "Pre-show", "",
          { hal: "notes", royce: "tie", deacon: "stretch", lonnie: "tablet" }),
-      sc("deacon", "Deacon Pettiford", "Loosening up", "Old linebacker habit. Gotta get the shoulders loose before kickoff.",
+      sc("deacon", "Deacon Pettiford", "Loosening up", "",
          { hal: "notes", royce: "notes", deacon: "stretch", lonnie: "coffee" }),
     ],
     close: [
-      sc("producer", "Floor producer", "Places", "Places, everybody! We're coming up on air.",
+      sc("producer", "Floor producer", "Places", "Places, everybody.",
          { hal: "miccheck", royce: "tie", deacon: "coffee", lonnie: "tablet" }, { producer: true }),
     ],
   };
   const FILLER = [
-    sc("artist", "Makeup", "Pre-show", "Hold still, Royce. You're shining under these lights.",
+    sc("artist", "Makeup", "Pre-show", "Hold still.",
        { hal: "notes", royce: "makeup", deacon: "laptop", lonnie: "tablet" }, { artist: "royce" }),
-    sc("lonnie", "Lonnie Fairweather", "Pre-show", "First coffee of the night. Won't be the last.",
+    sc("lonnie", "Lonnie Fairweather", "Pre-show", "",
        { hal: "notes", royce: "write", deacon: "laptop", lonnie: "coffee" }),
-    sc("hal", "Hal Brennan", "Mic check", "Check, check. Line one, stay with me. We're close.",
+    sc("hal", "Hal Brennan", "Mic check", "Check, one, two.",
        { hal: "miccheck", royce: "tie", deacon: "laptop", lonnie: "tablet" }),
-    sc("artist", "Makeup", "Pre-show", "Deacon, the toothpick goes in after the powder.",
+    sc("deacon", "Deacon Pettiford", "Pre-show", "",
        { hal: "notes", royce: "notes", deacon: "makeup", lonnie: "tablet" }, { artist: "deacon" }),
   ];
   const STEP_ALIAS = { topic: "start" };

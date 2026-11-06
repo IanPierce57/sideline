@@ -80,6 +80,9 @@ The show has no contract, cap, payroll, or pick-protection data, so cost and tim
 
 ## Arguing
 
+*Move names in this bible (the Column, the stack and the drop, the steelman and the hinge) are notes for the writer. He never says them on air.*
+
+
 **How he wins a debate** (added Nov 5, 2026). He follows the brief's one standard of skill, the same as the other two hosts; in his hands it looks like this:
 
 1. **The steelman is the setup, not the turn.** He sums up the co-hosts in a sentence, then spends the rest of the turn on something new: the hinge, a fact that tests it, and his call. A turn that only restates them adds nothing.

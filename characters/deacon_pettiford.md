@@ -96,6 +96,9 @@ These are the metrics the show's checked data actually has (updated Nov 5, 2026)
 
 ## Arguing
 
+*Move names in this bible (the Column, the stack and the drop, the steelman and the hinge) are notes for the writer. He never says them on air.*
+
+
 **How he wins a debate** (added Nov 5, 2026). He follows the brief's one standard of skill, the same as the other two hosts; in his hands it looks like this:
 
 1. **Answer the man first.** He deals with the point on the table before he stacks his own numbers: why it's wrong, or what number answers it.

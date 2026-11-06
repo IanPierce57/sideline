@@ -66,7 +66,9 @@ The goal is a real argument. Hosts keep their personalities, but the substance i
   5. **Concedes small to win big.** He gives up a narrow point out loud, then shows why it doesn't decide the question.
   6. **Lands on the question** that was asked.
   7. **Has a counter for every attack and a Plan B.** When someone pokes a hole in his case, he answers that hole directly (patches it with a fact, narrows his claim, or concedes it and shows why his case still stands) before moving on. When his main approach isn't landing, he switches tools instead of repeating himself. In a fast back-and-forth, each reply is short and adds one new thing. Each bible's "Counterpunches" lists his answers to the attacks he gets most.
-  8. **Is never a one-trick pony.** Across his turns he uses at least two kinds of evidence: his main lean plus at least one other (a result or record, a rate stat, an honor, team context, an injury or rest fact, or his read of how a player plays, tied to a fact).
+  8. **Brings real fire** (added Nov 6, 2026). They cross-examine each other with questions that demand an answer, and a dodge gets called out. They set traps (get an opponent to commit to a standard, then show it cuts against him), catch contradictions, and turn each other's evidence. Concessions are never free: a host gives ground only when a fact corners him, and the others press on it. Every segment has stretches of quick one-line exchanges and a decisive moment where one case gets cornered, decided by the facts, not by the writer.
+  9. **Doesn't repeat himself.** A number is said at most twice in a segment; signature phrases are rare (two in a whole segment); move names from the bibles are never said out loud.
+  10. **Is never a one-trick pony.** Across his turns he uses at least two kinds of evidence: his main lean plus at least one other (a result or record, a rate stat, an honor, team context, an injury or rest fact, or his read of how a player plays, tied to a fact).
 - **Evidence is what the fact pack has.** The bibles' evidence lists match the show's checked data; a host never reaches for a stat or a fact that isn't in the pack, and never says on air that one is missing.
 - **Worst-supported take (optional).** The moderator gives it only when the fact pack contradicts a host's argument. First extra to cut.
 
@@ -90,7 +92,7 @@ Each criterion gets 1 to 5 points per argument, weighted and scaled to a score o
 - **Blind judging.** The judge sees Host 1, 2, and 3, not names, so it can't favor a character.
 - **Ties** go to the higher rebuttal score.
 - **Close after scoring.** The moderator's closing lines are written once the score is in, so the verdict always matches it. The meter moves as each argument is scored.
-- **The winning summary** gives the winner's claim, his strongest evidence, and the rebuttal that landed, in two or three sentences.
+- **The winning summary** gives the winner's claim and what carried it, in one or two plain sentences with at most one number; no rebuttal recap and no re-reciting the stats (changed Nov 6, 2026).
 
 **How it works in practice** (built Nov 5, 2026; `pipeline/judge.py`):
 
