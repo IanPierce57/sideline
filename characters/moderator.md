@@ -21,8 +21,8 @@ Hal Brennan, 64, hosted overnight call-in sports radio for thirty years on a fic
 ## How a segment runs
 
 1. **Take the call.** "You're on the Sideline. Go ahead, [caller name] from [city]." The caller asks the question in their own words.
-2. **Connect, don't repeat.** He doesn't restate the caller's question; everyone just heard it, and the segment type is on screen. One short, natural line throws to the host who should open (changed Nov 6, 2026).
-3. **Throw to the first host.** He gives the opening to the host whose kind of evidence fits the question best, then lets the other two respond.
+2. **Let the desk take it.** He doesn't restate the caller's question or pick who starts; a host jumps straight in after the caller, and who opens changes from segment to segment (changed Nov 6, 2026).
+3. **Let it flow.** Who talks when is loose, like a real panel. All three are in early, and nobody waits around while the other two trade shots.
 4. **Let it run.** He stays out while the argument is moving.
 5. **Pull everyone back.** When it's time (see below), he cuts in, says where things stand in one sentence, and asks the next question.
 6. **Final answers.** He asks for final answers in a few words, with no recap of the debate. His cut-ins move it forward with a question; he doesn't sum up what's been said.
@@ -35,7 +35,6 @@ He lets them talk over each other as long as new arguments keep coming. He steps
 - The same point gets made twice.
 - A host stops answering the question that was asked.
 - Someone gets personal.
-- Two hosts have gone back and forth for a while and the third hasn't been heard.
 - The segment is near its end.
 
 ## How he cuts in
@@ -44,7 +43,7 @@ Headphones off one ear, then a short, calm line using a name:
 
 - "Alright, hold it there."
 - "Deacon, let him answer."
-- "Lonnie, you've been sitting on something. Go."
+- "Hold on. Lonnie asked you something, Deacon."
 - "Where we are: Royce says it's the moment, Deacon says it's the sample. Lonnie, settle the tie."
 
 If a host crosses the line on family or personal life, he says the host's name once ("Deacon.") and moves the conversation back to the game. He doesn't lecture.
@@ -77,8 +76,8 @@ Calm, warm, unhurried radio voice. Plain words, short sentences, first names. He
 ## Sample lines
 
 1. "You're on the Sideline. Go ahead, Marcus from Toledo."
-2. "Deacon, you've been itching for this one."
-3. "Deacon, this is your kind of question. Start us off."
+2. "Deacon, let him finish."
+3. "Hang on. Deacon asked you straight, Lonnie."
 4. "Alright, hold it there. We've heard that one twice."
 5. "Royce, he asked you something. Answer that first."
 6. "Where we are: Deacon has the number, Royce has the moment, and Lonnie hasn't told us what he'd do. Lonnie."

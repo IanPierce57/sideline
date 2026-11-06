@@ -130,9 +130,15 @@ def _arguments(lines: list[dict]) -> dict:
         else:
             current = {"host": line["speaker"], "lines": [line]}
             turns.append(current)
+    tagged = any(l.get("argument") is not None for t in turns for l in t["lines"])
+    if not tagged:
+        # The writer forgot the tags (seen Nov 6, 2026): every host turn before the final
+        # answers counts, so the debate still gets judged instead of having no winner.
+        last_hal = max((l["line"] for l in lines if l["speaker"] == "hal"), default=0)
+        turns = [t for t in turns if t["lines"][0]["line"] < last_hal]
     args = {}
     for t in turns:
-        if any(l.get("argument") is not None for l in t["lines"]):
+        if not tagged or any(l.get("argument") is not None for l in t["lines"]):
             args[len(args) + 1] = {"host": t["host"], "lines": [l["line"] for l in t["lines"]]}
     return args
 
@@ -316,8 +322,10 @@ def write_close(lines: list[dict], result: dict, pack: list[dict], caller: dict,
 def safe_close(result: dict, caller: dict) -> list[dict]:
     """A close with no facts in it, used only if the written close fails its checks."""
     names = {"royce": "Royce", "deacon": "Deacon", "lonnie": "Lonnie"}
-    if result["tie"]:
+    if result["tie"] and len(result.get("ranked") or []) > 1:
         first = f"On the scorecard, the judge has it even between {names[result['ranked'][0]]} and {names[result['ranked'][1]]}."
+    elif not result.get("winner"):
+        first = "No call from the scorecard tonight. You at home get the final word."
     else:
         first = f"On the scorecard, tonight goes to {names[result['winner']]}."
     return [{"text": first, "facts": []},

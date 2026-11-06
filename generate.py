@@ -64,6 +64,34 @@ WRITER_EFFORT = os.environ.get("SIDELINE_WRITER_EFFORT", "medium")
 
 # Rules about facts. They sit on top of the bibles, which show [Research-step ...]
 # placeholders where real numbers go; the fact pack supplies the real numbers.
+def turn_order(n: int = 20) -> list[str]:
+    """The order of host turns, dealt at random each segment so talk moves around the table
+    like a real three-way conversation (user, Nov 6, 2026): the writer kept making one host the
+    hub, and two hosts rallied while the third waited. Turns stay roughly even, nobody goes
+    twice in a row, and no two hosts trade more than three turns before the third comes in."""
+    import random
+    hosts = ["royce", "deacon", "lonnie"]
+    order = [random.choice(hosts)]
+    while len(order) < n:
+        options = [h for h in hosts if h != order[-1]]
+        last3 = order[-3:]
+        if len(last3) == 3 and last3[0] == last3[2] != last3[1]:
+            options = [h for h in hosts if h not in last3]          # A, B, A: the third host comes in
+        counts = {h: order.count(h) for h in hosts}
+        low = min(counts[h] for h in options)
+        order.append(random.choices(options, [3 if counts[h] == low else 1 for h in options])[0])
+    return order
+
+
+def entry_order() -> str:
+    names = [h.capitalize() for h in turn_order()]
+    return (f"Who talks when (dealt at random by code so the talk moves around the table): {names[0]} opens, "
+            f"right after the caller (no hand-off from Hal). Then host turns go in this order: "
+            f"{', '.join(names[1:])}. A turn can be one word or a few sentences, and each is a natural reply, "
+            "to whoever just spoke or to something said earlier. Hal's cut-ins can go anywhere and don't count. "
+            "When the new arguments run out, stop wherever you are in the list and go to final answers.")
+
+
 def season_progress() -> str:
     """How far into each season we are, so sample-size talk fits the league (Nov 6, 2026:
     eight NFL games is half a season; eight NBA games is a week and a half)."""
@@ -199,12 +227,19 @@ Segment flow:
 2. The caller asks the user's question in their own words, without stating or
    implying facts of their own (no "go deep again", no records or injuries) (one to three
    sentences), in the voice of the caller type that fits the topic best.
-3. Hal does NOT repeat the caller's question; everyone just heard it, and the segment
-   type is on screen. He connects: one short, natural line that names ONE host, and
-   that host speaks next ("Deacon, you've been itching for this one." / "Royce, you take
-   it."). Nobody answers a host who hasn't spoken yet.
-4. Hal throws to the host whose kind of evidence fits the question best.
-5. The hosts argue. Every reply deals with the previous point. Hal stays out
+3. Right after the caller, the opening host (named in "Who talks when", below) jumps in
+   with his answer. Hal doesn't pick who starts and doesn't repeat the question; he
+   has no line between the caller and the first host (he still takes the call in step
+   1). Nobody answers a host who hasn't spoken yet.
+4. It's one conversation among three people, not two people arguing with a third
+   dropping in (changed Nov 6, 2026). Follow "Who talks when" for the turn order;
+   all three are in within the first four or five host turns. After that anyone can
+   talk: either of the other two can answer a point; a host can pick up a co-host's
+   point and push it further, agree with one host on one thing and take him on over the
+   next, or go back to something said a few turns ago and answer it. They let each other
+   finish. Follow the order of host turns in "Who talks when": code dealt it so nobody is
+   the hub and no two hosts rally while the third waits.
+5. The hosts argue. Every reply deals with a point on the table, usually the last one. Hal stays out
    while new arguments keep coming, and cuts in (headphones off one ear) only
    for the reasons in his bible.
 6. When new arguments run out, Hal asks for final answers in a few words, without
@@ -638,7 +673,8 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
     # 4. Write, with the fact pack
     progress("step", {"step": "write", "text": "Writing the segment"})
     context = (f"Format (from the topic check): {check['format']}. Today is {datetime.now():%B %-d, %Y}. "
-               "Current teams and anything else about the real world: see the fact pack.\n" + season_progress())
+               "Current teams and anything else about the real world: see the fact pack.\n" + season_progress()
+               + "\n" + entry_order())
     if game:
         context += ("\n\nGame preview: " + game_note + " Every host picks a winner and argues it from the fact pack "
                     "(matchups, form, injuries, home field). Hal makes sure each pick is stated plainly. No one predicts a "
@@ -672,6 +708,10 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
 
     caller = data["caller"]
     names = dict(SPEAKERS, caller=f"{caller['name']} from {caller['city']}")
+    if not data["lines"] or data["lines"][0]["speaker"] != "hal":
+        # Hal always takes the call (the writer sometimes skips it now that he doesn't hand off)
+        data["lines"].insert(0, {"speaker": "hal", "text": f"You're on the Sideline. Go ahead, {caller['name']} from "
+                                 f"{caller['city']}.", "delivery": "warm", "facts": [], "argument": None})
     lines = [{"line": n, "speaker": l["speaker"], "speaker_name": names[l["speaker"]], "text": l["text"].strip(),
               "delivery": l["delivery"], "facts": l["facts"], "argument": l["argument"]}
              for n, l in enumerate(data["lines"], start=1)]
