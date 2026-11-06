@@ -18,7 +18,7 @@ Draft, Nov 4, 2026. Built from the Cast section of BRIEF.md: a pool of six calle
 | The diehard | Lifelong fan of the team in the question | Emotional and personal, a little worried | Buy or sell, team topics |
 | The stats nerd | Reads every number, wants it settled properly | Precise, names a metric, asks for a real answer | Player comparisons |
 | The rival fan | Roots against the team in the question | Needling and confident, wants to hear it torn down | Team and player debates |
-| The old-timer | Has watched since long before most players were born | Compares to past eras, a little skeptical of today | All-time and GOAT topics |
+| The old-timer | Has watched since long before most players were born | Seen it all, a little skeptical of today's hype; asks about today's players without citing past ones | Veteran players, long careers, "is he the real deal?" |
 | The skeptic | Doesn't believe the hype | "Convince me," short and blunt | Predictions, breakout players |
 | The settler | Arguing with a friend or relative all week | Wants a ruling so they can win the argument | Any debate |
 
@@ -29,6 +29,6 @@ Each uses the user's topic in the caller's own voice.
 1. **The diehard:** "Hal, I've been a Bears fan my whole life and I can't take another rebuild. Do they buy or sell at the deadline?"
 2. **The stats nerd:** "Everybody keeps throwing EPA around. I want a real answer: is he actually the best quarterback in the league right now?"
 3. **The rival fan:** "Long-time Celtics hater, first-time caller. Tell me why the Celtics are overrated this year."
-4. **The old-timer:** "I watched the 80s Lakers in person. Is anybody playing today really in that class?"
+4. **The old-timer:** "I've watched this league since before most of these guys were born. Is this kid really the best in the game right now, or is it just a hot year?"
 5. **The skeptic:** "Everyone's crowning this kid already. I don't buy it. Convince me he's for real."
 6. **The settler:** "Me and my brother have argued about this since Thanksgiving. Who wins the Super Bowl this season? Loser buys dinner."

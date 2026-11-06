@@ -32,7 +32,7 @@ loosen this rule without asking.
 
 Run `.venv/bin/python tests/accuracy.py` to recheck the sources (free; no API calls).
 
-**Scope:** current players only (Nov 4). Honors come from Wikipedia, trusted on its own (Nov 4), still cross-checked where possible (Super Bowl rings vs nflverse rosters; major awards vs Wikidata; Wikipedia wins a disagreement, which is logged); QB playoff records from nflverse scores with starts checked against Sleeper.
+**Scope:** active players and current teams only (Nov 4); questions that need the past ("greatest ever", GOAT, all-time rankings, comparisons with retired players, past teams) are turned away with present-day suggestions (Nov 5). Honors come from Wikipedia, trusted on its own (Nov 4), still cross-checked where possible (Super Bowl rings vs nflverse rosters; major awards vs Wikidata; Wikipedia wins a disagreement, which is logged); QB playoff records from nflverse scores with starts checked against Sleeper.
 
 **Known gaps:** no contract or cap data (Spotrac and Over The Cap forbid automated use; Lonnie argues money in general terms); Wikipedia rate-limits bursts of requests (they're spaced and cached daily); after a line is cut, the lines around it aren't re-smoothed yet; spelled-out decimals ("twenty point nine") aren't checked; no judge or scoring yet (Hal names no winner).
 

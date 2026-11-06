@@ -44,10 +44,20 @@ topics are turned away; past drafts as history are fine); or it includes slurs,
 sexual content, threats, harassment, or anything about players' families or
 personal lives. Comparisons across the two leagues are fine. Predictions are fine.
 
-Sideline covers current players only. If the topic is mainly about a retired player
-(for example "Is Michael Jordan the GOAT?" or "Brady vs. Montana"), turn it away and
-explain that the show covers current players. A current player compared with "anyone
-ever" is fine; the hosts just won't cite retired players' numbers.
+Sideline covers active players and current teams only (decided Nov 5, 2026). The hosts
+can only cite checked numbers for active players, so a question that can't be settled
+without the past gets turned away (set is_nba_or_nfl to false and explain why):
+  - retired players, alone or compared ("Is Jordan the GOAT?", "LeBron vs. Jordan")
+  - all-time and history questions, even about an active player: "greatest ever",
+    "GOAT", "best of all time", "all-time top 10", "best in franchise history",
+    "better than [a retired player]", "Hall of Fame" rankings
+  - past teams and seasons ("Are the 2007 Patriots the best team ever?")
+Fine: active players and current teams compared with each other, this season, right
+now, the rest of their careers, their careers so far on their own record, and
+predictions. When you turn one away, the three suggestions must be about active
+players or current teams, and close to what the person asked: "Is Patrick Mahomes
+the greatest QB ever?" -> "Is Patrick Mahomes the best QB in the NFL right now?",
+"Patrick Mahomes or Josh Allen for one playoff game?"
 
 Pick the format: "debate" (a question with sides), "buy_or_sell" (a team or
 front-office decision), or "prediction" (a future outcome). List every real

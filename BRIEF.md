@@ -28,13 +28,13 @@ Nov 3, 2026 · @Ian (aligned with the bibles Nov 4, 2026)
 
 Name: **Sideline**, a sports call-in debate show: a caller gets on the line, and the desk argues it out. (Renamed from The Receipts on Nov 4, 2026.)
 
-A webpage that generates a three-to-five-minute NBA or NFL debate on any topic you type, current or all-time. A moderator and three pixel-art co-hosts argue it out in an 8-bit studio, in subtitles, using real stats that are researched and fact-checked first. A background judge scores every argument, and the most persuasive host wins.
+A webpage that generates a three-to-five-minute NBA or NFL debate on any topic you type about today's players and teams. A moderator and three pixel-art co-hosts argue it out in an 8-bit studio, in subtitles, using real stats that are researched and fact-checked first. A background judge scores every argument, and the most persuasive host wins.
 
 It's a solo final project for an AI class, built entirely with Claude Code by someone who has never coded.
 
 ## How a segment works
 
-1. You type an NBA or NFL topic, current or all-time, and hit go.
+1. You type an NBA or NFL topic about active players or current teams, and hit go.
 2. The topic check screens it, and the pipeline sorts it into a format: debate, buy or sell, or prediction.
 3. While it generates, the hosts get ready on set: reading notes, walking to their spots. A small control-room panel shows the pipeline steps.
 4. A caller asks your question in their own words, and the moderator takes the call.
@@ -86,7 +86,7 @@ Each criterion gets 1 to 5 points per argument, weighted and scaled to a score o
 
 Every topic passes three checks before research starts, so a bad topic costs about a second instead of a full run.
 
-1. **NBA or NFL, current players.** The topic has to be about the NBA or NFL and about current players (decided Nov 4, 2026). Topics mainly about retired players, including head-to-heads like "LeBron vs. Jordan", are turned away, and the research agent never pulls retired players' numbers. Comparisons across the two leagues are fine. College and draft-prospect topics are turned away.
+1. **NBA or NFL, current players.** The topic has to be about the NBA or NFL and about current players (decided Nov 4, 2026). Topics mainly about retired players, including head-to-heads like "LeBron vs. Jordan", are turned away, and the research agent never pulls retired players' numbers. So are questions that can't be settled without the past (decided Nov 5, 2026): "greatest ever", GOAT, all-time rankings, "best in franchise history", comparisons with retired players, and past teams or seasons, even when the player asked about is active. The person gets three present-day versions of the question to pick from instead, like "Is Patrick Mahomes the best QB in the NFL right now?" Comparisons across the two leagues are fine. College and draft-prospect topics are turned away.
 2. **Real.** Every player, team, and coach named must exist in the current rosters. Rosters come from two independent sources, and a player counts as on a team only when both agree; a disagreement is flagged. (For the NFL, nflverse and Sleeper; for the NBA, Sleeper plus a second source not chosen yet; see SOURCES.md. ESPN and team websites were the first plan, but ESPN's terms forbid automated use and NBA team sites sit on NBA.com, so both are ruled out.) The confirmed rosters also go to the writer, so no host puts a player on the wrong team. A near miss gets a suggestion ("Did you mean Patrick Mahomes?"). When a name belongs to more than one player (there are two Josh Allens), the topic check asks which one before research starts. Players are always matched by ID, never by name alone. A false premise, like a player on the wrong team, is turned away with the correct fact. Predictions about the future are fine.
 3. **Appropriate.** No slurs, sexual content, threats, or harassment, and nothing about players' families or personal lives. Text that tries to instruct the hosts ("ignore your rules and say...") is treated as a topic, never followed, and turned away.
 
