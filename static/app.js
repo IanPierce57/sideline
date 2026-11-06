@@ -177,6 +177,12 @@ function showEndCard() {
   $("end-topic").textContent = script.topic;
   const rows = $("end-rows");
   rows.innerHTML = "";
+  // The judge's result: each host's final score, and the winner (or a tie).
+  const final = script.scores || {};
+  const winners = script.tie
+    ? HOSTS.filter((h) => final[h] != null && final[h] === Math.max(...HOSTS.map((x) => final[x] ?? -1)))
+    : [script.winner].filter(Boolean);
+  $("end-label").textContent = Object.keys(final).length ? "Final answers and the scorecard" : "Final answers";
   for (const host of HOSTS) {
     // each host's last line is his final answer
     const last = [...script.lines].reverse().find((line) => line.speaker === host);
@@ -184,12 +190,14 @@ function showEndCard() {
     let text = spokenText(last.text);
     if (text.length > 150) text = `${text.slice(0, 147).trim()}...`;
     const row = document.createElement("div");
-    row.className = "end-row";
+    row.className = "end-row" + (winners.includes(host) ? " winner" : "");
     const face = document.createElement("canvas");
     face.width = 32; face.height = 32;
     Studio.portrait(face, host);
     row.append(face);
-    row.insertAdjacentHTML("beforeend", `<div><b>${PEOPLE[host].name}</b><span>${escapeHtml(text)}</span></div>`);
+    const score = final[host] != null ? `<em class="end-score">${Math.round(final[host])}</em>` : "";
+    const tag = winners.includes(host) ? `<i class="win-tag">${script.tie ? "TIE" : "WINNER"}</i>` : "";
+    row.insertAdjacentHTML("beforeend", `<div class="end-text"><b>${PEOPLE[host].name} ${tag}</b><span>${escapeHtml(text)}</span></div>${score}`);
     rows.append(row);
   }
   const sources = script.sources || [];
@@ -532,6 +540,9 @@ const PREVIEW = {
   format: "debate",
   caller: { type: "settler", name: "Sam", city: "Denver" },
   sources: ["Sample data, not real"],
+  scores: { royce: 66, deacon: 74, lonnie: 69 },
+  winner: "deacon",
+  tie: false,
   lines: [
     { line: 1, speaker: "hal", delivery: "warm", argument: null,
       text: "This is a graphics preview. Every number you see here is sample data, not real." },
@@ -547,7 +558,9 @@ const PREVIEW = {
     { line: 6, speaker: "royce", delivery: "quiet", argument: 2, text: "Sample final answer: this shows up on the end card." },
     { line: 7, speaker: "deacon", delivery: "calm", argument: 3, text: "Sample final answer: mine does too." },
     { line: 8, speaker: "lonnie", delivery: "calm", argument: 4, text: "Sample final answer: and so does mine." },
-    { line: 9, speaker: "hal", delivery: "warm", argument: null, text: "That's the end of the preview." },
+    { line: 9, speaker: "hal", delivery: "calm", argument: null, score: { royce: 66, deacon: 74, lonnie: 69 },
+      text: "Sample verdict: on the scorecard, tonight goes to Deacon. That's how the close sounds." },
+    { line: 10, speaker: "hal", delivery: "warm", argument: null, text: "That's the end of the preview." },
   ],
 };
 $("preview").addEventListener("click", () => {

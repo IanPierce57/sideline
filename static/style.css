@@ -360,6 +360,11 @@ body {
 .end-row canvas { position: static; width: 4.4cqw; height: 4.4cqw; flex: none; image-rendering: pixelated; border: 0.2cqw solid #0a1433; }
 .end-row b { display: block; font-family: var(--round); font-weight: 700; color: #fff; font-size: 1.45cqw; }
 .end-row span { font-family: var(--round); color: #e3eaff; font-size: 1.35cqw; line-height: 1.3; }
+.end-text { flex: 1; min-width: 0; }
+.end-score { font-style: normal; font-family: var(--pixel); font-weight: 700; color: #fff; font-size: 2.2cqw; min-width: 4cqw; text-align: right; }
+.end-row.winner { background: rgba(255, 196, 46, 0.18); outline: 0.25cqw solid var(--gold); }
+.end-row.winner .end-score { color: var(--gold); }
+.win-tag { font-style: normal; font-family: var(--pixel); font-size: 1cqw; color: #0a1433; background: var(--gold); padding: 0.1cqw 0.5cqw; margin-left: 0.4cqw; vertical-align: middle; }
 .end-sources { font-family: var(--round); color: var(--gold-soft); font-size: 1.2cqw; padding: 0.6cqw 1.6cqw; }
 .end-actions { display: flex; gap: 1cqw; padding: 0.4cqw 1.6cqw 1.4cqw; }
 

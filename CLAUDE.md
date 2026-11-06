@@ -48,9 +48,11 @@ Run `.venv/bin/python tests/accuracy.py` to recheck the sources (free; no API ca
 
 **Scope:** active players and current teams only (Nov 4); questions that need the past ("greatest ever", GOAT, all-time rankings, comparisons with retired players, past teams) are turned away with present-day suggestions (Nov 5). Honors come from Wikipedia, trusted on its own (Nov 4), still cross-checked where possible (Super Bowl rings vs nflverse rosters; major awards vs Wikidata; Wikipedia wins a disagreement, which is logged); QB playoff records from nflverse scores with starts checked against Sleeper.
 
-**Known gaps:** no contract or cap data (Spotrac and Over The Cap forbid automated use; Lonnie argues money in general terms); Wikipedia rate-limits bursts of requests (they're spaced and cached daily); spelled-out decimals ("twenty point nine") aren't checked; claims without numbers are judged by an AI checker, so a small error rate remains (about 1% of claims in the last audit); no judge or scoring yet (Hal names no winner).
+**Known gaps:** no contract or cap data (Spotrac and Over The Cap forbid automated use; Lonnie argues money in general terms); Wikipedia rate-limits bursts of requests (they're spaced and cached daily); spelled-out decimals ("twenty point nine") aren't checked; claims without numbers are judged by an AI checker, so a small error rate remains (about 1% of claims in the last audit); the judge's fairness across many segments is still being tested (`tests/judge_test.py`; it compares the blind judge, the judge with names showing, and Hal deciding).
 
-**Next, in the order under "How it's built" in BRIEF.md:** judge (blind scoring) and the close; voices last. (The fact pipeline and the news ticker are done as of Nov 5, 2026.)
+**Next, in the order under "How it's built" in BRIEF.md:** finish testing the judge (fairness and consistency), then voices last. (The fact pipeline, the news ticker, the judge, and Hal's close are built as of Nov 5, 2026.)
+
+**Judge (Nov 5):** `pipeline/judge.py` (see BRIEF.md "How it works in practice" under Scoring). The writer ends the script at the final answers; generate.py runs the judge, puts running scores on lines for the meter, then writes and checks Hal's close. Each run also saves `judge.json`. No host is favored on home topics (user, Nov 5).
 
 Every character's look is in their bible ("## Look"). The pixel studio follows those; don't change a look without asking.
 
@@ -63,7 +65,8 @@ Sources (Nov 4): ESPN, nba_api (NBA.com stats), and NBA team websites are ruled 
 ## Hooks for later steps (already built into the page)
 
 - A line can carry `"stat": {"value", "label", "definition", "source", "asOf"}`; the page shows it on the stat chyron while that line plays.
-- A line can carry `"score": {"royce": 66, ...}`; the score bug at the top updates when that line plays.
+- A line can carry `"score": {"royce": 66, ...}`; the score bug at the top updates when that line plays (the judge sets these).
+- A script carries `"scores"`, `"winner"`, and `"tie"`; the end card shows each host's final score and marks the winner.
 - A script can carry `"sources": [...]`; the end card lists them.
 - The writer may use three big-reaction deliveries: `fired_up` (stands), `slam` (desk slam, with a shake and an optional sound), `exasperated` (turns away).
 - **Preview graphics (sample data)** under the TV demos all of this with data stamped SAMPLE. Never show sample numbers anywhere else.

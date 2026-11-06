@@ -82,6 +82,18 @@ Each criterion gets 1 to 5 points per argument, weighted and scaled to a score o
 - **Close after scoring.** The moderator's closing lines are written once the score is in, so the verdict always matches it. The meter moves as each argument is scored.
 - **The winning summary** gives the winner's claim, his strongest evidence, and the rebuttal that landed, in two or three sentences.
 
+**How it works in practice** (built Nov 5, 2026; `pipeline/judge.py`):
+
+- **One argument = one turn:** each time a host takes the floor and makes a point. Short reactions ("Hah.") and final answers aren't scored.
+- **The judge only rates.** For each argument it gives 1 to 5 on each criterion, using written descriptions of what a 1, a 3, and a 5 look like, and says which earlier argument it answers. Code does all the math, the same way every time.
+- **Score per argument** = the weighted ratings times 20 (1 = 20, 5 = 100). An opening point answers no one, so it has no rebuttal rating and the rebuttal weight is shared across the other four; going first isn't punished.
+- **Dropped:** +5 when no opponent answers a point even though one spoke afterward.
+- **Ties** (same score to one decimal) go to the better average rebuttal; if that's even too, it's a tie and Hal says so.
+- **Blind:** names and nicknames become Host 1, 2, 3 in a random order, and bible stage directions are removed.
+- **The writer never sees these rules,** and no host is favored on any topic (decided Nov 5, 2026): each host's strengths show up naturally in what he knows.
+- **Hal's close** is written after scoring and goes through the same line checks as everything else; if it can't pass, a short close with no facts in it announces the result.
+- **On screen:** the meter moves after each argument; the end card shows each host's final score and marks the winner.
+
 ## Topic check
 
 Every topic passes three checks before research starts, so a bad topic costs about a second instead of a full run.
