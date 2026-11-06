@@ -11,6 +11,12 @@ Rules (BRIEF.md "Facts and data", decided Nov 4, 2026):
   NFL team records   must match muffed.ai exactly. Otherwise dropped.
   NBA stats, tackles Sleeper alone (trusted).
   Current team       NFL: nflverse roster and Sleeper; Sleeper wins a disagreement.
+  NFL team stats     must match muffed.ai's published value, through the same week, or dropped.
+                     The league rank is shown only if ours (all 32 teams) matches muffed's.
+  Game results       each final score must match Sleeper's weekly team numbers, or dropped.
+  Starting QB        nflverse's starter must be listed as a starter that week by Sleeper, or dropped.
+  The game itself    confirmed on both schedules before the segment starts (games.py).
+  Injuries           Sleeper (trusted on its own).
 """
 
 from concurrent.futures import ThreadPoolExecutor
@@ -151,6 +157,61 @@ def _check_qb_playoff_record(f: dict) -> dict:
     return f
 
 
+def _check_team_stat(f: dict) -> dict:
+    published = muffed.metric(f["team_code"], f["muffed_metric"], f["season"], kind="team")
+    f["checked_against"] = "muffed.ai"
+    if not published or published.get("value") is None:
+        f.update(status="dropped", note="muffed.ai doesn't publish this for that team and season")
+        return f
+    if published.get("through_week") and f["season"] == int(sleeper.state("nfl")["season"]) \
+            and published["through_week"] != f["week"]:
+        f.update(status="dropped", note=f"muffed.ai is through Week {published['through_week']} and nflverse through "
+                                        f"Week {f['week']}, so they can't be compared yet")
+        return f
+    raw = repr(float(published["value"]))
+    theirs = float(published["value"]) * (100 if f["pct"] else 1)
+    published_decimals = max(0, len(raw.split(".")[1].rstrip("0") or "") - (2 if f["pct"] else 0))
+    f["check_value"] = theirs
+    tolerance = 0.5 * 10 ** -max(published_decimals, f["decimals"]) + 1e-9
+    if abs(float(f["value"]) - theirs) > tolerance:
+        f.update(status="dropped", note=f"ours {f['value']:.4f} vs muffed.ai {theirs:.4f}: the numbers don't match, so it's left out")
+        return f
+    f.update(status="verified", credit=muffed.CREDIT)
+    if published.get("rank") == f.get("our_rank"):
+        f["rank"] = f"{catalog._ordinal(f['our_rank'])} of {f['teams']} teams (1st is best)"
+    return f
+
+
+def _check_results(f: dict) -> dict:
+    """Every final score must match Sleeper: each team's points allowed is the other's score."""
+    f["checked_against"] = "Sleeper (weekly team scoring)"
+    for g in f["games"]:
+        week = sleeper.week_stats("nfl", f["season"], g["week"])
+        allowed_by_opp = (week.get(g["opp"]) or {}).get("pts_allow")
+        allowed_by_us = (week.get(g["team"]) or {}).get("pts_allow")
+        if allowed_by_opp != g["ours"] or allowed_by_us != g["theirs"]:
+            f.update(status="dropped", note=f"Week {g['week']} score: nflverse {g['ours']}-{g['theirs']}, Sleeper "
+                                            f"{allowed_by_opp}-{allowed_by_us}; they don't match")
+            return f
+    f["status"] = "verified"
+    return f
+
+
+def _check_qb_start(f: dict) -> dict:
+    gsis_to_sleeper = {g: s for s, g in nflv.sleeper_to_gsis().items()}
+    for pid, p in sleeper.players("nfl").items():
+        if p.get("gsis_id"):
+            gsis_to_sleeper[p["gsis_id"].strip()] = pid
+    sid = gsis_to_sleeper.get(f.get("qb_gsis"))
+    started = (sleeper.week_stats("nfl", f["season"], f["week"]).get(sid) or {}).get("gs") if sid else None
+    f.update(checked_against="Sleeper (games started)", check_value=started)
+    if started == 1:
+        f["status"] = "verified"
+    else:
+        f.update(status="dropped", note=f"Sleeper doesn't list {f.get('qb_name')} as the Week {f.get('week')} starter")
+    return f
+
+
 def _check_one(f: dict) -> dict:
     """Check one fact. If the check itself fails (a source is down), drop the fact."""
     try:
@@ -161,8 +222,14 @@ def _check_one(f: dict) -> dict:
 
 
 def _check(f: dict) -> dict:
-    if f["status"] in ("dropped", "trusted"):
+    if f["status"] in ("dropped", "trusted", "verified"):
         return f
+    if f["stat"] in catalog.NFL_TEAM_STATS:
+        return _check_team_stat(f)
+    if f["stat"] in ("recent_results", "head_to_head"):
+        return _check_results(f)
+    if f["stat"] == "qb_last_start":
+        return _check_qb_start(f)
     if f.get("honor"):
         return _check_honor(f)
     if f["stat"] == "qb_playoff_record":

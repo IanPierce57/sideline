@@ -35,3 +35,16 @@ def trending(sport: str, kind: str = "add", limit: int = 10) -> list:
     """Most added (or dropped) players across Sleeper leagues in the last day. Credit Sleeper."""
     return get_json(f"{BASE}/players/{sport}/trending/{kind}?lookback_hours=24&limit={limit}",
                     f"sleeper/trending_{sport}_{kind}", max_age_hours=1)
+
+
+def week_stats(sport: str, season: int, week: int, season_type: str = "regular") -> dict:
+    """One week's stats for every player, keyed by Sleeper player ID. NFL team
+    defenses are keyed by team code ("NE") and carry pts_allow: the other team's score."""
+    return get_json(f"{BASE}/stats/{sport}/{season_type}/{season}/{week}",
+                    f"sleeper/stats_{sport}_{season_type}_{season}_w{week}", max_age_hours=3)
+
+
+def nfl_schedule(season: int, season_type: str = "regular") -> list:
+    """Every NFL game of a season: date, week, home, away, status (undocumented; approved Nov 4, 2026)."""
+    return get_json(f"https://api.sleeper.app/schedule/nfl/{season_type}/{season}",
+                    f"sleeper/schedule_nfl_{season_type}_{season}", max_age_hours=6)

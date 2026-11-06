@@ -90,11 +90,26 @@ def spot_checks() -> None:
     report("Spot checks (Mahomes 2018 = 5,097 passes; Brady career before 2009 is rejected)", int(ok), 1, 100.0)
 
 
+def team_stats_match(season: int) -> None:
+    """Team stats calculated from nflverse vs muffed.ai's published numbers, six teams
+    (kept small: muffed asks for no bulk requests). One red-zone miss is expected."""
+    ok = total = 0
+    for team in ("NE", "GB", "KC", "DET", "BUF", "PHI"):
+        for stat in catalog.NFL_TEAM_STATS:
+            f = verify._check_one(catalog.nfl_team_stat(team, stat, season))
+            if "can't be compared yet" in (f.get("note") or ""):
+                continue                      # the two sources are a week apart; not a disagreement
+            total += 1
+            ok += f["status"] == "verified"
+    report(f"NFL team stats match muffed.ai, {season} (6 teams)", ok, total, 95.0)
+
+
 if __name__ == "__main__":
     current = int(sleeper.state("nfl")["season"])
     stats_agree(current - 1)
     stats_agree(current)
     advanced_match(current - 1)
+    team_stats_match(current)
     rosters_agree()
     spot_checks()
     print("\nAll good." if not FAILS else f"\n{len(FAILS)} check(s) failed: {FAILS}. Look before going on air.")

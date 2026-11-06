@@ -7,7 +7,7 @@ The "Facts and data" section of BRIEF.md is the authority on sources. This file 
 | Source | Used for |
 | --- | --- |
 | [nflverse via nflreadpy](https://github.com/nflverse/nflreadpy) | NFL play-by-play, player stats, Next Gen Stats, FTN charting, injuries, schedules, depth charts, rosters, trades. Tested Nov 4, 2026: works, current through Week 8. |
-| [Sleeper API](https://docs.sleeper.com/) | Approved Nov 4, 2026, including its undocumented stats feed. Current NFL and NBA players (team, position, injury status, depth chart), the current season and week, weekly and season stats for both leagues, and trending adds and drops. Free for non-commercial use; credit Sleeper wherever its trending data is shown. Ask for the full player list at most once a day, and stay well under 1,000 calls a minute. |
+| [Sleeper API](https://docs.sleeper.com/) | Approved Nov 4, 2026, including its undocumented stats feed. Current NFL and NBA players (team, position, injury status, depth chart), the current season and week, weekly and season stats for both leagues (including each NFL team defense's points allowed per week, used to confirm final scores), the NFL schedule (`api.sleeper.app/schedule/nfl/...`, used to confirm games), and trending adds and drops. Free for non-commercial use; credit Sleeper wherever its trending data is shown. Ask for the full player list at most once a day, and stay well under 1,000 calls a minute. |
 | Web search | News context and pre-1999 NFL numbers, with links saved |
 
 For the NBA, Sleeper is the only source so far, so NBA stats can't pass the two-source check until a second NBA source is added (balldontlie is the candidate).
@@ -31,7 +31,7 @@ The NBA has no second source yet.
 
 | Source | What it offers | Status |
 | --- | --- | --- |
-| [muffed.ai](https://muffed.ai/mcp) | NFL advanced stats (EPA per dropback, success rate, Next Gen Stats CPOE, and more) through a free, read-only MCP server built for AI assistants (`https://muffed.ai/api/mcp`, no key). Built on nflverse, so it confirms our calculations and definitions match a published source; it doesn't independently confirm the raw data. Tested Nov 4, 2026: 2025 EPA per dropback matched for all 25 QBs it ranks, to four decimals. Terms: free for individuals; "email first" before building it into a product (hello@muffed.ai); no bulk scraping; carry the credit line "Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse" everywhere its numbers appear. | Approved by the user Nov 4, 2026 to cross-reference NFL advanced stats and team records. Per its terms, the user should email hello@muffed.ai before relying on it in the live demo (not sent yet). |
+| [muffed.ai](https://muffed.ai/mcp) | NFL advanced stats (EPA per dropback, success rate, Next Gen Stats CPOE, and more) through a free, read-only MCP server built for AI assistants (`https://muffed.ai/api/mcp`, no key). Built on nflverse, so it confirms our calculations and definitions match a published source; it doesn't independently confirm the raw data. Tested Nov 4, 2026: 2025 EPA per dropback matched for all 25 QBs it ranks, to four decimals. Terms: free for individuals; "email first" before building it into a product (hello@muffed.ai); no bulk scraping; carry the credit line "Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse" everywhere its numbers appear. | Approved by the user Nov 4, 2026 to cross-reference NFL advanced stats and team records; also team scoring, EPA, takeaways, third-down and red-zone rates (Nov 5, 2026: 41 of 42 matched for six teams). Answers are saved for 6 hours and requests are spaced out. Per its terms, the user should email hello@muffed.ai before relying on it in the live demo (not sent yet). |
 | [balldontlie](https://www.balldontlie.io/) | NBA developer API. Free tier has no stats; $9.99/month adds every game's player stats; $39.99/month adds season averages and standings. | Possible NBA source. Terms not checked yet. |
 | [MyFantasyLeague API](https://api.myfantasyleague.com/2026/api_info) | Free "in almost any way"; NFL players and injuries. Says it will never provide raw player stats. | Possible extra NFL roster and injury check only. |
 | [MySportsFeeds](https://www.mysportsfeeds.com/feed-pricing/) | NFL and NBA feeds; personal plans from about $5/month per league, stats extra. | Paid fallback. Terms not checked. |
@@ -50,6 +50,7 @@ From the brief:
 | Source | Used for |
 | --- | --- |
 | [PerThirtySix](https://www.perthirtysix.com) | Checking NFL advanced numbers by hand, method notes |
+| [Roll Coverage](https://rollcoverage.com) | Reading by hand: coaching staffs, scheme and matchup pages, and its source list (checked Nov 5, 2026). Its terms ban automated access: "Do not scrape, crawl or download either site in bulk by automated means." Most of its data is nflverse, which Sideline already uses directly. |
 | RayCarp | Checking numbers by hand, method notes |
 | [NFL Next Gen Stats site](https://nextgenstats.nfl.com) | Checking tracking stats by hand (the app gets Next Gen Stats through nflverse) |
 

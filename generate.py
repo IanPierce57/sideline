@@ -78,6 +78,8 @@ FACT RULES. These override the bibles wherever they conflict.
    title, a record) must agree with the fact pack. Use the current_team facts:
    never put a player on a team the fact pack contradicts. If the fact pack
    doesn't cover something, keep it general or make it clearly an opinion.
+   Never say on air that a number is missing ("I don't have their numbers"):
+   argue from what the fact pack has.
 5. No specific real-world scenes or quotes. Don't describe a particular play or
    game, and don't quote a real player or coach.
 6. Not every line needs a number. Use facts where they win the point: Royce lands
@@ -307,7 +309,17 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
     # 2. Research
     progress("step", {"step": "research", "text": "Pulling stats"})
     t = time.time()
-    candidates = research.research(topic, check["format"], named, client, progress)
+    game = check.get("game")
+    candidates, game_note = [], ""
+    if game:
+        from pipeline import catalog, games
+        candidates = catalog.game_pack(game)
+        for fact in candidates:
+            progress("pulled", fact)
+        game_note = (f"This segment previews one game: {games.TEAMS[game['away']][0]} at {games.TEAMS[game['home']][0]}, "
+                     f"{game['weekday']} {game['date']} (Week {game['week']}). Team stats, records, recent results, "
+                     "last game's starting QBs, and injured starters are already pulled.")
+    candidates += research.research(topic, check["format"], named, client, progress, follow_up=game_note)
     timings["research"] = round(time.time() - t, 1)
 
     # 3. Verify
@@ -322,7 +334,7 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
         progress("step", {"step": "research", "text": f"Replacing {len(crossed_off)} crossed-off stats"})
         listing = "\n".join(f"- {r['subject']}: {r['stat']} ({r.get('scope') or 'n/a'}): {r['reason']}" for r in crossed_off)
         kept = "\n".join(f"- {f['subject']}: {f['label']} ({f.get('scope')})" for f in facts)
-        more = research.research(topic, check["format"], named, client, progress, rounds=2, follow_up=(
+        more = research.research(topic, check["format"], named, client, progress, rounds=2, follow_up=(game_note + "\n\n" +
             "These stats couldn't be confirmed, so they were crossed off:\n" + listing +
             "\n\nAlready confirmed (don't ask for these again):\n" + kept +
             "\n\nFind replacements that can be confirmed and still serve the argument: other seasons or stats "
@@ -342,6 +354,11 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
     progress("step", {"step": "write", "text": "Writing the segment"})
     context = (f"Format (from the topic check): {check['format']}. Today is {datetime.now():%B %-d, %Y}. "
                "Current teams and anything else about the real world: see the fact pack.")
+    if game:
+        context += ("\n\nGame preview: " + game_note + " Every host picks a winner and argues it from the fact pack "
+                    "(matchups, form, injuries, home field). Hal makes sure each pick is stated plainly. No one predicts a "
+                    "final score or a point spread, and no betting talk: a score is a number, and every number must come "
+                    "from the fact pack. Injury designations can change before kickoff; say they're as of today.")
     t = time.time()
     with client.beta.messages.stream(
         model=MODEL,

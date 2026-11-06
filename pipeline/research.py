@@ -12,7 +12,7 @@ import json
 
 import anthropic
 
-from . import catalog, nflv, players, sleeper
+from . import catalog, games, nflv, players, sleeper
 
 TOPIC_MODEL = "claude-haiku-5-5"
 RESEARCH_MODEL = "claude-sonnet-5-5"
@@ -29,8 +29,10 @@ TOPIC_SCHEMA = {
         "format": {"type": "string", "enum": ["debate", "buy_or_sell", "prediction"]},
         "players": {"type": "array", "items": {"type": "string"}, "description": "Full names of real players named or clearly meant."},
         "suggestions": {"type": "array", "items": {"type": "string"}, "description": "Three valid NBA or NFL topics, if turned away."},
+        "teams": {"type": "array", "items": {"type": "string"}, "description": "Teams named or clearly meant, by full name."},
+        "single_game": {"type": "boolean", "description": "True if the topic asks about one specific upcoming game (who wins tonight, this Sunday, next week)."},
     },
-    "required": ["is_nba_or_nfl", "appropriate", "reason", "league", "format", "players", "suggestions"],
+    "required": ["is_nba_or_nfl", "appropriate", "reason", "league", "format", "players", "suggestions", "teams", "single_game"],
     "additionalProperties": False,
 }
 
@@ -58,6 +60,12 @@ predictions. When you turn one away, the three suggestions must be about active
 players or current teams, and close to what the person asked: "Is Patrick Mahomes
 the greatest QB ever?" -> "Is Patrick Mahomes the best QB in the NFL right now?",
 "Patrick Mahomes or Josh Allen for one playoff game?"
+
+One specific upcoming game ("Who wins Packers at Patriots this Sunday?", "Can the Bears
+win tonight?"): set single_game to true and list the teams. NFL games are fine (code
+confirms the game is real). NBA single games aren't covered yet (decided Nov 5, 2026):
+turn them away and suggest season-long questions about the same teams instead, like
+"Are the Warriors a playoff team this season?"
 
 Pick the format: "debate" (a question with sides), "buy_or_sell" (a team or
 front-office decision), or "prediction" (a future outcome). List every real
@@ -110,7 +118,19 @@ def check_topic(topic: str, client: anthropic.Anthropic, chosen: set | None = No
         return {"ok": False, "reason": f"We couldn't find a player named {name}.{hint}", "suggestions": data["suggestions"][:3]}
     if confirm:
         return {"ok": False, "confirm": confirm}
-    return {"ok": True, "league": data["league"], "format": data["format"], "players": resolved}
+    game = None
+    if data["single_game"]:
+        if data["league"] != "NFL":
+            return {"ok": False, "reason": "Sideline can only preview single NFL games for now, not NBA games.",
+                    "suggestions": data["suggestions"][:3]}
+        codes = [c for c in (games.team_code(t) for t in data["teams"]) if c]
+        if not codes:
+            return {"ok": False, "reason": "We couldn't tell which NFL teams that game is between.",
+                    "suggestions": games.upcoming_games([])}
+        game, problem = games.find_game(*codes[:2]) if len(codes) > 1 else games.next_game(codes[0])
+        if not game:
+            return {"ok": False, "reason": problem, "suggestions": games.upcoming_games(codes)}
+    return {"ok": True, "league": data["league"], "format": data["format"], "players": resolved, "game": game}
 
 
 # ---------- Research agent ----------
@@ -132,6 +152,12 @@ TOOLS = [
              "season": {"type": "integer"}, "career": {"type": "boolean"}, "playoffs": {"type": "boolean"}},
          "required": ["player_key", "stat"], "additionalProperties": False}}},
          "required": ["requests"], "additionalProperties": False}},
+    {"name": "get_team_stats",
+     "description": "NFL team stats for one regular season (2016 or later), checked against a second source. team is the "
+                    "abbreviation, e.g. KC. stats: any of " + ", ".join(catalog.NFL_TEAM_STATS) + ".",
+     "input_schema": {"type": "object", "properties": {"team": {"type": "string"}, "season": {"type": "integer"},
+                      "stats": {"type": "array", "items": {"type": "string", "enum": list(catalog.NFL_TEAM_STATS)}}},
+                      "required": ["team", "season", "stats"], "additionalProperties": False}},
     {"name": "get_team_record",
      "description": "An NFL team's regular-season record for one season (2016 or later). team is the abbreviation, e.g. KC.",
      "input_schema": {"type": "object", "properties": {"team": {"type": "string"}, "season": {"type": "integer"}},
@@ -161,6 +187,9 @@ Rules:
 - Advanced NFL stats only exist for single regular seasons from 2016 on.
 - The current NFL season is {sleeper.state('nfl')['season']}, with stats through Week {nfl_week}. The current NBA season
   is {int(sleeper.state('nba')['season'])}-{str(int(sleeper.state('nba')['season']) + 1)[-2:]}, in progress.
+- Single-game previews: the game itself, both teams' records, team stats, last three results, last game's
+  starting quarterbacks, and injured starters are already pulled for you. Add player stats for the players who
+  decide the game (both starting quarterbacks, top receivers and runners, pass rushers), this season mainly.
 - Be efficient: two or three rounds of tool calls, about 12 to 24 stats in total. Then stop and reply "done".
 
 Stats you can ask for (stat names exactly as written):
@@ -191,6 +220,14 @@ def research(topic: str, fmt: str, named: list[dict], client: anthropic.Anthropi
                 rows = [{"no_match": True, "close": [players.describe(s) for s in got["suggestions"]]}]
             progress("lookup", {"name": args["name"]})
             return json.dumps(rows)
+        if name == "get_team_stats":
+            out = []
+            for stat in args["stats"]:
+                fact = catalog.nfl_team_stat(args["team"].upper(), stat, args["season"])
+                candidates.append(fact)
+                progress("pulled", fact)
+                out.append({"team": fact["subject"], "stat": fact["label"], "value": fact.get("say"), "note": fact.get("note") or ""})
+            return json.dumps(out)
         if name == "get_team_record":
             fact = catalog.nfl_team_record(args["team"].upper(), args["season"])
             candidates.append(fact)

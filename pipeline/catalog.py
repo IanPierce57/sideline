@@ -14,7 +14,9 @@ Sources and checks (decided Nov 4, 2026; see SOURCES.md):
 
 import polars as pl
 
-from . import nflv, players, sleeper, wiki
+from functools import lru_cache
+
+from . import games as nflgames, nflv, players, sleeper, wiki
 
 # ---------- What can be asked for ----------
 
@@ -105,7 +107,8 @@ def stat_menu() -> str:
     lines += [f"  {k}: {v[4]}" for k, v in NFL_RATES.items()]
     lines.append("NFL advanced stats (one regular season, 2016 or later):")
     lines += [f"  {k}: {v[2]}" for k, v in NFL_ADVANCED.items()]
-    lines.append("NFL team stats: team_record (one regular season, 2016 or later)")
+    lines.append("NFL team stats (one regular season, 2016 or later): team_record, "
+                 + ", ".join(f"{k} ({v[3]})" for k, v in NFL_TEAM_STATS.items()))
     lines.append("NBA player stats (one regular season, 2017-18 or later; season 2025 means 2025-26):")
     lines += [f"  {k}: {v[1]}" for k, v in NBA_TOTALS.items()]
     lines += [f"  {k}: {k.replace('_', ' ')}" for k in NBA_PER_GAME]
@@ -282,7 +285,8 @@ def nfl_team_record(team: str, season: int) -> dict:
         losses += margin < 0
         ties += margin == 0
     record = f"{wins}-{losses}" + (f"-{ties}" if ties else "")
-    base = dict(league="NFL", subject=team, subject_key=f"nflteam:{code}", stat="team_record", label="regular-season record",
+    name = nflgames.TEAMS.get(team, (team,))[0]
+    base = dict(league="NFL", subject=name, subject_key=f"nflteam:{team}", stat="team_record", label="regular-season record",
                 definition="Wins and losses in regular-season games.", value={"wins": wins, "losses": losses, "ties": ties},
                 say=record, scope=f"{season} regular season", season=season, team_code=code, sample=f"{wins + losses + ties} games",
                 source="nflverse", as_of=_as_of("NFL", season), credit="Data via nflverse")
@@ -291,6 +295,201 @@ def nfl_team_record(team: str, season: int) -> dict:
     if season < MUFFED_FIRST_SEASON:
         return _fact(**base, status="dropped", note=f"team records can only be checked from {MUFFED_FIRST_SEASON} on")
     return _fact(**base)
+
+
+# ---------- NFL team stats (nflverse, checked against muffed.ai) ----------
+
+# name -> (muffed metric, decimals shown, percent?, label, definition, higher is better?)
+# Definitions matched to muffed.ai's published numbers on Nov 5, 2026 (all 32 teams calculated).
+NFL_TEAM_STATS = {
+    "points_per_game": ("team_scoring.points_for_per_game", 1, False, "points scored per game",
+                        "Points the team scored per regular-season game.", True),
+    "points_allowed_per_game": ("team_scoring.points_against_per_game", 1, False, "points allowed per game",
+                                "Points opponents scored per regular-season game.", False),
+    "offense_epa_per_play": ("team_offense_epa.epa_per_play", 3, False, "offensive EPA per play",
+                             "Expected points added per pass or run play on offense: how much each play raised or lowered "
+                             "the points the team should expect on that drive. Above zero is better than average.", True),
+    "defense_epa_per_play": ("team_defense_epa.epa_allowed_per_play", 3, False, "defensive EPA allowed per play",
+                             "Expected points added per opponent pass or run play. For a defense, lower (below zero) is better.", False),
+    "takeaways": ("team_takeaways.takeaways", 0, False, "takeaways",
+                  "Interceptions plus fumbles recovered from the other team.", True),
+    "third_down_pct": ("team_third_down.conversion_rate", 1, True, "third-down conversion rate",
+                       "Share of third-down passes and runs that picked up a first down, in percent.", True),
+    "red_zone_td_pct": ("team_red_zone.rz_td_rate", 1, True, "red-zone touchdown rate",
+                        "Share of drives that reached the other team's 20-yard line and ended in a touchdown, in percent.", True),
+}
+
+
+def _ordinal(n: int) -> str:
+    return f"{n}{'th' if 11 <= n % 100 <= 13 else {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')}"
+
+
+@lru_cache(maxsize=32)
+def _team_values(stat: str, season: int) -> dict:
+    """{nflverse team code: (value, sample)} for every team, so ranks can be worked out too."""
+    out = {}
+    if stat in ("points_per_game", "points_allowed_per_game"):
+        sched = nflv.schedules().filter((pl.col("season") == season) & (pl.col("game_type") == "REG") &
+                                        pl.col("result").is_not_null())
+        totals = {}
+        for g in sched.iter_rows(named=True):
+            for team, scored, allowed in ((g["home_team"], g["home_score"], g["away_score"]),
+                                          (g["away_team"], g["away_score"], g["home_score"])):
+                t = totals.setdefault(team, [0, 0, 0])
+                t[0] += scored; t[1] += allowed; t[2] += 1
+        for team, (scored, allowed, n) in totals.items():
+            out[team] = ((scored if stat == "points_per_game" else allowed) / n, f"{n} games")
+        return out
+    p = nflv.pbp(season).filter(pl.col("season_type") == "REG")
+    plays = p.filter(pl.col("play_type").is_in(["pass", "run"]))
+    for team in plays["posteam"].drop_nulls().unique().to_list():
+        if stat == "offense_epa_per_play":
+            d = plays.filter((pl.col("posteam") == team) & pl.col("epa").is_not_null())
+            out[team] = (d["epa"].mean(), f"{d.height} plays")
+        elif stat == "defense_epa_per_play":
+            d = plays.filter((pl.col("defteam") == team) & pl.col("epa").is_not_null())
+            out[team] = (d["epa"].mean(), f"{d.height} plays")
+        elif stat == "takeaways":
+            n = p.filter((pl.col("defteam") == team) & ((pl.col("interception") == 1) | (pl.col("fumble_lost") == 1))).height
+            out[team] = (n, f"{nflv.latest_week(season)} weeks")
+        elif stat == "third_down_pct":
+            d = plays.filter((pl.col("posteam") == team) & (pl.col("down") == 3))
+            out[team] = (100 * d.filter(pl.col("first_down") == 1).height / d.height, f"{d.height} third downs")
+        elif stat == "red_zone_td_pct":
+            d = p.filter((pl.col("posteam") == team) & pl.col("fixed_drive").is_not_null() & (pl.col("yardline_100") <= 20))
+            trips = d.select(["game_id", "fixed_drive", "fixed_drive_result"]).unique()
+            tds = trips.filter(pl.col("fixed_drive_result") == "Touchdown").height
+            out[team] = (100 * tds / trips.height, f"{trips.height} red-zone trips")
+    return out
+
+
+def nfl_team_stat(team: str, stat: str, season: int) -> dict:
+    """One team stat for one regular season, with its rank among all 32 teams."""
+    code = NFLVERSE_TEAM.get(team, team)
+    metric, dec, pct, label, definition, higher_better = NFL_TEAM_STATS[stat]
+    base = dict(league="NFL", subject=nflgames.TEAMS.get(team, (team,))[0], subject_key=f"nflteam:{team}", stat=stat,
+                label=label, definition=definition, scope=f"{season} regular season", season=season, team_code=code,
+                muffed_metric=metric, decimals=dec, pct=pct, source="nflverse", credit="Data via nflverse")
+    if season < MUFFED_FIRST_SEASON:
+        return _fact(**base, status="dropped", note=f"team stats can only be checked from {MUFFED_FIRST_SEASON} on")
+    allteams = _team_values(stat, season)
+    if code not in allteams:
+        return _fact(**base, status="dropped", note="no games found")
+    value, sample = allteams[code]
+    better = sum(1 for v, _ in allteams.values() if (v > value if higher_better else v < value))
+    shown = say(value, dec, pct=pct)
+    if "epa" in stat and value > 0:
+        shown = "+" + shown
+    week = nflv.latest_week(season)
+    return _fact(**base, value=value, say=shown, sample=sample, our_rank=better + 1, teams=len(allteams),
+                 as_of=_as_of("NFL", season), week=week)
+
+
+# ---------- One game (NFL): see games.py ----------
+
+def _team_games(team: str, season: int) -> pl.DataFrame:
+    code = NFLVERSE_TEAM.get(team, team)
+    return nflv.schedules().filter((pl.col("season") == season) & (pl.col("game_type") == "REG") &
+                                   pl.col("result").is_not_null() &
+                                   ((pl.col("home_team") == code) | (pl.col("away_team") == code))).sort("gameday")
+
+
+def _result_line(team: str, g: dict):
+    code = NFLVERSE_TEAM.get(team, team)
+    home = g["home_team"] == code
+    ours, theirs = (g["home_score"], g["away_score"]) if home else (g["away_score"], g["home_score"])
+    opp = nflgames.FROM_NFLVERSE.get(g["away_team" if home else "home_team"], g["away_team" if home else "home_team"])
+    wl = "W" if ours > theirs else "L" if ours < theirs else "T"
+    text = f"{wl} {ours}-{theirs} {'vs' if home else 'at'} {nflgames.nickname(opp)} (Week {g['week']})"
+    return text, {"week": g["week"], "team": team, "opp": opp, "ours": ours, "theirs": theirs}, wl
+
+
+def recent_results(team: str, season: int, n: int = 3, opponent: str | None = None) -> dict:
+    """The team's last n results (or this season's meetings with one opponent), newest first."""
+    df = _team_games(team, season)
+    if opponent:
+        o = NFLVERSE_TEAM.get(opponent, opponent)
+        df = df.filter((pl.col("home_team") == o) | (pl.col("away_team") == o))
+    rows = list(reversed(df.rows(named=True)))[: (None if opponent else n)]
+    lines, checks, wl = [], [], []
+    for g in rows:
+        text, check, r = _result_line(team, g)
+        lines.append(text); checks.append(check); wl.append(r)
+    name = nflgames.TEAMS[team][0]
+    if opponent:
+        stat, label = "head_to_head", f"this season's games against the {nflgames.nickname(opponent)}"
+        definition = "Final scores of their regular-season meetings this season."
+    else:
+        stat, label = "recent_results", f"last {len(rows)} results"
+        definition = "Final scores of the team's most recent regular-season games, newest first."
+    base = dict(league="NFL", subject=name, subject_key=f"nflteam:{team}", stat=stat, label=label, definition=definition,
+                value={"wins": wl.count("W"), "losses": wl.count("L")}, say="; ".join(lines), scope=f"{season} regular season",
+                season=season, games=checks, source="nflverse", credit="Data via nflverse", as_of=_as_of("NFL", season),
+                sample=f"{len(rows)} games")
+    if not rows:
+        return _fact(**base, status="dropped", note="no games yet")
+    return _fact(**base)
+
+
+def qb_last_start(team: str, season: int) -> dict:
+    """Who started at quarterback in the team's most recent game."""
+    df = _team_games(team, season)
+    name = nflgames.TEAMS[team][0]
+    base = dict(league="NFL", subject=name, subject_key=f"nflteam:{team}", stat="qb_last_start", label="starting QB in the last game",
+                definition="The quarterback who started the team's most recent game.", scope=f"{season} regular season",
+                season=season, source="nflverse", credit="Data via nflverse", as_of=_as_of("NFL", season))
+    if not df.height:
+        return _fact(**base, status="dropped", note="no games yet")
+    g = df.row(-1, named=True)
+    home = g["home_team"] == NFLVERSE_TEAM.get(team, team)
+    qb_id, qb_name = (g["home_qb_id"], g["home_qb_name"]) if home else (g["away_qb_id"], g["away_qb_name"])
+    return _fact(**base, value=None, say=f"{qb_name} started at quarterback in Week {g['week']}, their most recent game",
+                 qb_gsis=qb_id, qb_name=qb_name, week=g["week"])
+
+
+INJURY_LIST = ("Out", "Doubtful", "Questionable", "IR", "PUP", "Sus")
+
+
+def injuries(team: str) -> dict:
+    """Starters (first on Sleeper's depth chart) with an injury designation today. Sleeper is trusted."""
+    hurt = []
+    for p in sleeper.players("nfl").values():
+        if p.get("team") == team and p.get("depth_chart_order") == 1 and p.get("injury_status") in INJURY_LIST:
+            part = f", {p['injury_body_part'].lower()}" if p.get("injury_body_part") else ""
+            hurt.append(f"{p['full_name']} ({p.get('position')}{part}): {p['injury_status']}")
+    name = nflgames.TEAMS[team][0]
+    return _fact(league="NFL", subject=name, subject_key=f"nflteam:{team}", stat="injuries", label="injured starters",
+                 definition="Starters (first on the depth chart) with an injury designation today. IR means injured reserve.",
+                 value=None, say="; ".join(sorted(hurt)) or "no starters on the injury report", scope="today",
+                 source="Sleeper", credit="Data via Sleeper", as_of="today", sample=f"{len(hurt)} starters",
+                 status="trusted", checked_against="Sleeper (trusted on its own)")
+
+
+def game_pack(game: dict) -> list[dict]:
+    """Everything the show needs for one game, unchecked (verify.py checks each one)."""
+    season, home, away = game["season"], game["home"], game["away"]
+    from datetime import datetime
+    day = datetime.strptime(game["date"], "%Y-%m-%d")
+    when = f"{game['weekday']}, {day:%B} {day.day}, {day.year}"
+    if game.get("time_et"):
+        t = datetime.strptime(game["time_et"], "%H:%M")
+        when += f", {t.hour % 12 or 12}:{t:%M} {'a.m.' if t.hour < 12 else 'p.m.'} ET"
+    where = "a neutral site" if game["neutral"] else f"the {nflgames.nickname(home)}' home field"
+    facts = [_fact(league="NFL", subject=f"{nflgames.TEAMS[away][0]} at {nflgames.TEAMS[home][0]}", subject_key=f"nflgame:{away}@{home}",
+                   stat="game", label="the game", value=None,
+                   say=f"{nflgames.TEAMS[away][0]} at {nflgames.TEAMS[home][0]}, Week {game['week']}, {when}, at {game['stadium']} ({where})"
+                       + (", a division game" if game["div_game"] else ""),
+                   definition="Date, place, and home team, confirmed on two schedules (nflverse and Sleeper).",
+                   scope=f"{season} Week {game['week']}", source="nflverse and Sleeper schedules", credit="Data via nflverse",
+                   as_of="today", status="verified", checked_against="Sleeper schedule")]
+    for team in (away, home):
+        facts.append(nfl_team_record(team, season))
+        facts += [nfl_team_stat(team, stat, season) for stat in NFL_TEAM_STATS]
+        facts += [recent_results(team, season), qb_last_start(team, season), injuries(team)]
+    h2h = recent_results(home, season, opponent=away)
+    if h2h["status"] != "dropped":
+        facts.append(h2h)
+    return facts
 
 
 # ---------- NBA player stats (Sleeper, trusted) ----------

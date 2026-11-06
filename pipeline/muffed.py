@@ -6,10 +6,13 @@ It is built on nflverse, so it confirms our definitions and calculations match a
 published source (it is not an independent source of the raw play data)."""
 
 import json
+import re
 import threading
+import time
+import urllib.error
 import urllib.request
 
-from .net import SSL, USER_AGENT
+from .net import CACHE, SSL, USER_AGENT
 
 URL = "https://muffed.ai/api/mcp"
 CREDIT = "Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse"
@@ -58,10 +61,27 @@ def metric(entity: str, metric_key: str, season: int, kind: str = "player", gsis
     key = (entity, metric_key, season, kind)
     if key in _memo:
         return _memo[key]
-    with _lock:
-        _connect()
-        result = _rpc("tools/call", {"name": "get_entity_metrics", "arguments": {
-            "entity": entity, "entity_kind": kind, "metric": metric_key, "season": season, "scope": "all"}})
+    # Saved answers are reused for 6 hours, so a second run doesn't ask again (muffed asks
+    # for no bulk scraping). Requests go one at a time, spaced out, and wait and retry
+    # if muffed says to slow down.
+    path = CACHE / "muffed" / (re.sub(r"\W+", "_", f"{kind}_{entity}_{metric_key}_{season}") + ".json")
+    if path.exists() and time.time() - path.stat().st_mtime < 6 * 3600:
+        result = json.loads(path.read_text())
+    else:
+        with _lock:
+            _connect()
+            for attempt in range(4):
+                try:
+                    result = _rpc("tools/call", {"name": "get_entity_metrics", "arguments": {
+                        "entity": entity, "entity_kind": kind, "metric": metric_key, "season": season, "scope": "all"}})
+                    break
+                except urllib.error.HTTPError as e:
+                    if e.code != 429 or attempt == 3:
+                        raise
+                    time.sleep(5 * (attempt + 1))
+            time.sleep(0.4)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(result))
     found = None
     for block in result.get("content", []):
         try:
