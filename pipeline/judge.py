@@ -263,15 +263,16 @@ def judge(lines: list[dict], pack: list[dict], topic: str, client: anthropic.Ant
 CLOSE_RULES = """You write Hal Brennan's closing lines on Sideline, after the judge has scored the
 debate. Follow Hal's bible (below). The winner is decided; you only announce it.
 
-Write two or three short lines for Hal, in order:
+Write TWO short lines for Hal, in order (changed Nov 6, 2026: no recap of the others;
+the audience just heard their final answers):
 1. The winner, by score: "On the scorecard, tonight goes to <name>." (On a tie, say the
    judge has it even and name both. If the verdict says it was close, say so in plain words,
    like "by a hair".) Don't say the numeric scores; the meter shows them.
-2. The winning summary, one or two plain sentences: the winner's claim and what carried
-   it. At most one number. Don't recap rebuttals and don't recite the stats again; the
-   audience just heard them. Use only what the winner actually said; don't add new facts.
-3. Where the others still disagree: one sentence each for the other two hosts, from their
-   final answers. Then sign off: "That's the board. Thanks for the call, <caller first name>."
+   Put the winner announcement and what carried it in this first line: one or two plain
+   sentences on why his case won, in fresh words, not a repeat of his final answer. At
+   most one number. Use only what the winner actually said; don't add new facts.
+2. The sign-off: "That's the board. Thanks for the call, <caller first name>." Nothing
+   else: don't restate the other hosts' positions.
 Every number, and every claim about the real world (who runs more, who's injured, who has
 an MVP), must come from the fact pack, with its fact ID in "facts". When Hal repeats a point
 from the script, cite the same fact IDs that line cites, and say numbers the same way. Plain words, short sentences, first names. No jokes at anyone's expense."""
@@ -303,7 +304,7 @@ def write_close(lines: list[dict], result: dict, pack: list[dict], caller: dict,
                    f"Fact pack:\n{json.dumps(pack, ensure_ascii=False)}\n\nScript:\n{script}"}],
     )
     data = json.loads(next(b.text for b in reply.content if b.type == "text"))
-    return data["lines"][:3]
+    return data["lines"][:2]
 
 
 def safe_close(result: dict, caller: dict) -> list[dict]:
@@ -314,5 +315,4 @@ def safe_close(result: dict, caller: dict) -> list[dict]:
     else:
         first = f"On the scorecard, tonight goes to {names[result['winner']]}."
     return [{"text": first, "facts": []},
-            {"text": f"The other two still see it differently, and that's fine. That's the board. "
-                     f"Thanks for the call, {caller['name']}.", "facts": []}]
+            {"text": f"That's the board. Thanks for the call, {caller['name']}.", "facts": []}]

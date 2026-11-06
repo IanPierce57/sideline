@@ -145,12 +145,19 @@ Segment flow:
 2. The caller asks the user's question in their own words, without stating or
    implying facts of their own (no "go deep again", no records or injuries) (one to three
    sentences), in the voice of the caller type that fits the topic best.
-3. Hal restates the question in one plain sentence and names the format.
+3. Hal does NOT repeat the caller's question; everyone just heard it, and the segment
+   type is on screen. He connects: one short, natural line that names ONE host, and
+   that host speaks next ("Deacon, you've been itching for this one." / "Royce, you take
+   it."). Nobody answers a host who hasn't spoken yet.
 4. Hal throws to the host whose kind of evidence fits the question best.
 5. The hosts argue. Every reply deals with the previous point. Hal stays out
    while new arguments keep coming, and cuts in (headphones off one ear) only
    for the reasons in his bible.
-6. When new arguments run out, Hal asks for one-sentence final answers.
+6. When new arguments run out, Hal asks for final answers in a few words, without
+   recapping the debate. Each final answer is ONE fresh sentence: the pick and the one
+   reason that decided it for him, said a new way. No reciting stats already said, no
+   summary of the whole case. Hal's cut-ins move the debate forward with a question;
+   they don't recap what's been said.
 7. The script ENDS with the three final answers. Don't write Hal's wrap-up: the judge
    scores the debate first, and Hal's close is written afterward (fact rule 14).
 
@@ -250,7 +257,7 @@ Sound like three people arguing live, not like AI (added Nov 6, 2026):
   notes for you, not words anyone says on air.
 - Numbers: a number gets said at most twice in the whole segment (once to make the
   point, once if someone turns it). After that, refer to it in words ("that EPA number",
-  "his record"). Final answers are one sentence of conclusion with at most one number.
+  "his record"). Final answers are one fresh sentence of conclusion, usually with no number.
 - No formula openings. Don't start a turn by summing up both other hosts ("Royce is right
   about X, and Deacon's right about Y"). Answer the last thing said, in its own words.
 - Vary the length: some turns are one short sentence ("That's a team stat, Royce."), some
@@ -620,8 +627,11 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
                   "delivery": "calm", "facts": [], "argument": None}
                  for i, c in enumerate(judging.safe_close(result, caller), start=1)]
     # Hal always signs off the same way, whatever the close writer did.
-    if "that's the board" not in close[-1]["text"].lower().replace("’", "'"):
-        close[-1]["text"] = close[-1]["text"].rstrip() + f" That's the board. Thanks for the call, {caller['name']}."
+    signoff = f"That's the board. Thanks for the call, {caller['name']}."
+    if len(close) > 1:
+        close[-1]["text"], close[-1]["facts"] = signoff, []
+    elif "that's the board" not in close[-1]["text"].lower().replace("’", "'"):
+        close[-1]["text"] = close[-1]["text"].rstrip() + " " + signoff
     close[0]["score"] = {h: round(v["score"]) for h, v in result["hosts"].items() if v["score"] is not None}
     lines += close
     timings["close"] = round(time.time() - t, 1)
@@ -639,6 +649,24 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
 
     used = {fid for line in lines for fid in line.get("facts", [])}
     sources = sorted({_source_line(by_id[i]) for i in used if i in by_id})
+    # The end card ("That's the board") shows only the winner: his argument (his own final
+    # answer, which passed every check) and the key stats he leaned on, from the fact pack.
+    winning_case = None
+    if result["winner"]:
+        w = result["winner"]
+        mine = [l for l in lines if l["speaker"] == w]
+        counts, first = {}, {}
+        for i, l in enumerate(mine):
+            for fid in l.get("facts", []):
+                f = by_id.get(fid)
+                if f and f["stat"] not in ("current_team", "tenure", "injuries", "game") and f.get("say"):
+                    counts[fid] = counts.get(fid, 0) + 1
+                    first.setdefault(fid, i)
+        top = sorted(counts, key=lambda x: (-counts[x], first[x]))[:4]
+        winning_case = {"host": w, "score": result["hosts"][w]["score"], "argument": mine[-1]["text"] if mine else "",
+                        "stats": [{"subject": by_id[f]["subject"], "label": by_id[f]["label"], "say": by_id[f]["say"],
+                                   "scope": by_id[f].get("scope", "")} for f in top]}
+
     # The receipts: every fact the segment used, and what it was checked against.
     receipts = []
     for fid in sorted(used, key=lambda x: int(x[1:]) if x[1:].isdigit() else 0):
@@ -659,6 +687,7 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
         "warnings": check_script(lines),
         "sources": sources,
         "receipts": receipts,
+        "winning_case": winning_case,
         "plan": data.get("plan"),
         "scores": {h: v["score"] for h, v in result["hosts"].items()},
         "winner": result["winner"],

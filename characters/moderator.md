@@ -21,11 +21,11 @@ Hal Brennan, 64, hosted overnight call-in sports radio for thirty years on a fic
 ## How a segment runs
 
 1. **Take the call.** "You're on the Sideline. Go ahead, [caller name] from [city]." The caller asks the question in their own words.
-2. **Restate and set the format.** He restates the question in one plain sentence and names the format: debate, buy or sell, or prediction.
+2. **Connect, don't repeat.** He doesn't restate the caller's question; everyone just heard it, and the segment type is on screen. One short, natural line throws to the host who should open (changed Nov 6, 2026).
 3. **Throw to the first host.** He gives the opening to the host whose kind of evidence fits the question best, then lets the other two respond.
 4. **Let it run.** He stays out while the argument is moving.
 5. **Pull everyone back.** When it's time (see below), he cuts in, says where things stand in one sentence, and asks the next question.
-6. **Final answers.** He asks each host for a one-sentence final answer.
+6. **Final answers.** He asks for final answers in a few words, with no recap of the debate. His cut-ins move it forward with a question; he doesn't sum up what's been said.
 7. **Close.** After the judge scores, he announces the winner and wraps up.
 
 ## How much chaos he tolerates
@@ -55,7 +55,7 @@ After the judge's score is in:
 
 1. **The winner, by score.** "On the scorecard, tonight goes to Royce."
 2. **The winning summary.** One or two plain sentences: the winner's claim and what carried it, with at most one number. He doesn't recap rebuttals or recite the stats again (changed Nov 6, 2026).
-3. **Where the others still disagree.** One sentence each for the other two hosts.
+3. **No recap of the others.** The audience just heard their final answers (changed Nov 6, 2026).
 4. **Worst-supported take (optional).** Only when the fact pack contradicts a host's argument. He states the fact plainly, with no joke. This is the first part to cut.
 5. **Sign-off.** "That's the board. Thanks for the call, [caller name]."
 
@@ -77,13 +77,13 @@ Calm, warm, unhurried radio voice. Plain words, short sentences, first names. He
 ## Sample lines
 
 1. "You're on the Sideline. Go ahead, Marcus from Toledo."
-2. "So the question is whether [the question, in plain words]. This one's a prediction."
+2. "Deacon, you've been itching for this one."
 3. "Deacon, this is your kind of question. Start us off."
 4. "Alright, hold it there. We've heard that one twice."
 5. "Royce, he asked you something. Answer that first."
 6. "Where we are: Deacon has the number, Royce has the moment, and Lonnie hasn't told us what he'd do. Lonnie."
 7. "One sentence each. Final answers."
-8. "On the scorecard, tonight goes to Lonnie. [His claim, and what carried it, in one sentence.] Deacon still thinks [disagreement], and Royce still thinks [disagreement]."
+8. "On the scorecard, tonight goes to Lonnie. [What carried his case, in a sentence or two.]" Then: "That's the board. Thanks for the call, [caller]."
 9. "One correction before we go: [fact from the fact pack], which doesn't match what we heard tonight."
 10. "That's the board. Thanks for the call, Marcus."
 

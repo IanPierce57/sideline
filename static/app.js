@@ -188,28 +188,44 @@ function showEndCard() {
   $("end-topic").textContent = script.topic;
   const rows = $("end-rows");
   rows.innerHTML = "";
-  // The judge's result: each host's final score, and the winner (or a tie).
-  const final = script.scores || {};
-  const winners = script.tie
-    ? HOSTS.filter((h) => final[h] != null && final[h] === Math.max(...HOSTS.map((x) => final[x] ?? -1)))
-    : [script.winner].filter(Boolean);
-  $("end-label").textContent = Object.keys(final).length ? "Final answers and the scorecard" : "Final answers";
-  for (const host of HOSTS) {
-    // each host's last line is his final answer
-    const last = [...script.lines].reverse().find((line) => line.speaker === host);
-    if (!last) continue;
-    let text = spokenText(last.text);
-    if (text.length > 150) text = `${text.slice(0, 147).trim()}...`;
-    const row = document.createElement("div");
-    row.className = "end-row" + (winners.includes(host) ? " winner" : "");
-    const face = document.createElement("canvas");
-    face.width = 32; face.height = 32;
-    Studio.portrait(face, host);
-    row.append(face);
-    const score = final[host] != null ? `<em class="end-score">${Math.round(final[host])}</em>` : "";
-    const tag = winners.includes(host) ? `<i class="win-tag">${script.tie ? "TIE" : "WINNER"}</i>` : "";
-    row.insertAdjacentHTML("beforeend", `<div class="end-text"><b>${PEOPLE[host].name} ${tag}</b><span>${escapeHtml(text)}</span></div>${score}`);
-    rows.append(row);
+  // Only the winner (changed Nov 6, 2026): his argument and the key stats he used.
+  const wc = script.winning_case;
+  const winner = (wc && wc.host) || script.winner;
+  if (!winner) {
+    $("end-label").textContent = script.tie ? "Split decision" : "Final answers";
+    $("endcard").hidden = false;
+    return;
+  }
+  $("end-label").textContent = "The winning argument";
+  const row = document.createElement("div");
+  row.className = "end-row winner";
+  const face = document.createElement("canvas");
+  face.width = 32; face.height = 32;
+  Studio.portrait(face, winner);
+  row.append(face);
+  const score = wc && wc.score != null ? `<em class="end-score">${Math.round(wc.score)}</em>`
+    : (script.scores && script.scores[winner] != null ? `<em class="end-score">${Math.round(script.scores[winner])}</em>` : "");
+  let argument = wc ? spokenText(wc.argument) : "";
+  if (!argument) {
+    const last = [...script.lines].reverse().find((line) => line.speaker === winner);
+    argument = last ? spokenText(last.text) : "";
+  }
+  row.insertAdjacentHTML("beforeend", `<div class="end-text"><b>${PEOPLE[winner].name} <i class="win-tag">WINNER</i></b>`
+    + `<span>${escapeHtml(argument)}</span></div>${score}`);
+  rows.append(row);
+  const stats = (wc && wc.stats) || [];
+  if (stats.length) {
+    const box = document.createElement("div");
+    box.className = "end-stats";
+    for (const st of stats) {
+      const chip = document.createElement("div");
+      chip.className = "end-stat";
+      const value = String(st.say).replace(/\s*\(.*\)\s*$/, "");   // "8-7 (playoffs after...)" -> "8-7"
+      chip.innerHTML = `<strong>${escapeHtml(value)}</strong><span>${escapeHtml(st.subject)} · ${escapeHtml(st.label)}`
+        + (st.scope ? ` <em>(${escapeHtml(st.scope)})</em>` : "") + `</span>`;
+      box.append(chip);
+    }
+    rows.append(box);
   }
   $("endcard").hidden = false;
 }
@@ -664,6 +680,9 @@ const PREVIEW = {
   scores: { royce: 66, deacon: 74, lonnie: 69 },
   winner: "deacon",
   tie: false,
+  winning_case: { host: "deacon", score: 74, argument: "Sample argument: this is where the winner's case goes.",
+                  stats: [{ subject: "Sample Player", label: "EPA per dropback", say: "+0.21", scope: "sample data" },
+                          { subject: "Sample Player", label: "record as a starting QB", say: "6-1", scope: "sample data" }] },
   lines: [
     { line: 1, speaker: "hal", delivery: "warm", argument: null,
       text: "This is a graphics preview. Every number you see here is sample data, not real." },

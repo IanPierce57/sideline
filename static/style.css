@@ -437,3 +437,10 @@ body {
   text-transform: uppercase; margin-bottom: 0.3cqw; }
 .bubble-name.hal { color: #5b6478; } .bubble-name.royce { color: #1f2b58; } .bubble-name.deacon { color: #b91f2d; }
 .bubble-name.lonnie { color: #2f6b4f; } .bubble-name.caller { color: #8a5a00; } .bubble-name.crew { color: #6b6b6b; }
+
+/* ---------- End card: the winner's argument and key stats (Nov 6, 2026) ---------- */
+.end-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6cqw; margin: 0.6cqw 0; }
+.end-stat { background: rgba(10, 20, 51, 0.55); border-left: 0.4cqw solid var(--gold); padding: 0.5cqw 0.8cqw; }
+.end-stat strong { display: block; font-family: var(--pixel); color: var(--gold); font-size: 2cqw; }
+.end-stat span { font-family: var(--round); color: #e3eaff; font-size: 1.2cqw; line-height: 1.25; }
+.end-stat em { color: #9fb0d8; font-style: normal; }

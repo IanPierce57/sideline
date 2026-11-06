@@ -38,10 +38,10 @@ It's a solo final project for an AI class, built entirely with Claude Code by so
 2. The topic check screens it, and the pipeline sorts it into a format: debate, buy or sell, or prediction.
 3. While it generates, the hosts get ready on set: reading notes, walking to their spots. A small control-room panel shows the pipeline steps.
 4. A caller asks your question in their own words, and the moderator takes the call.
-5. The moderator restates the question and names the format.
+5. The moderator connects without repeating the question (the segment type is on screen) and throws to the first host.
 6. The hosts argue in subtitles, each leaning on his kind of evidence. A judge scores every argument in the background.
-7. The moderator lets the argument run, then pulls everyone back and asks each host for a one-sentence final answer.
-8. The moderator announces the winner by score, summarizes the winning argument, and notes where the others still disagree.
+7. The moderator lets the argument run, then asks for final answers: one fresh sentence each, the pick and the reason that decided it.
+8. The moderator announces the winner by score and says what carried his case, then signs off. The end card ("That's the board") shows only the winner: his argument and the key stats he used (changed Nov 6, 2026).
 9. You can download the finished segment as a video.
 
 ## Debate rules
