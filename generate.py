@@ -73,8 +73,8 @@ def season_progress() -> str:
         season = int(sleeper.state("nfl")["season"])
         done = sum(1 for g in sleeper.nfl_schedule(season) if g.get("status") == "complete")
         per = round(2 * done / 32)
-        size = ("a small sample" if per <= 4 else "a real sample, not a small one" if per >= 7
-                else "a fair sample, getting bigger every week")
+        size = ("early: season numbers are still small" if per <= 4 else
+                "season numbers are just 'this season' now; nobody comments on sample size")
         out.append(f"NFL: teams have played about {per} of 17 games, {size}.")
     except Exception:
         pass
@@ -82,7 +82,8 @@ def season_progress() -> str:
         from pipeline import nba
         done = sum(1 for g in nba.schedule() if g["status"] == "complete")
         per = round(2 * done / 30)
-        size = "a small sample" if per < 20 else "a fair sample" if per < 41 else "a real sample"
+        size = ("early: season numbers are still small" if per < 20 else
+                "season numbers are just 'this season' now; nobody comments on sample size")
         out.append(f"NBA: teams have played about {per} of 82 games, {size}.")
     except Exception:
         pass
@@ -128,15 +129,14 @@ FACT RULES. These override the bibles wherever they conflict.
    is last season's: say "last season" (or the year) every time, and never use it
    with "this season", "this year", "right now", or the present tense ("he's scoring
    28.8 a night"). Present-tense numbers must be this season's facts.
-6b. Sample size depends on the league's calendar (see "How far into the season").
-   NFL: the first three or four games are a small sample; by midseason (seven or eight
-   games, half the schedule) a season's numbers are a real sample, so nobody calls them
-   small. A slow start that turned around is fair to point out (a quarterback who
-   struggled his first three games and has been strong since). NBA: under about 20
-   games is small (eight games is a week and a half). Small counts are small in any
-   league: a few playoff starts, under about 150 dropbacks, a handful of games back from
-   an injury. Bring a sample up only when it's really small AND it changes the point,
-   and at most once or twice in a whole segment; most segments shouldn't need it.
+6b. Sample size, the way real people talk about it. Most of the time nobody mentions
+   it: a season's numbers are just "this season." Never say a sample is big, real, or
+   big enough ("eight games is a real sample"); people don't talk like that. Talk about
+   the season the way fans do ("he started slow, but he's been back to himself for a
+   month"). Call something small only when it really is AND it changes the point, once
+   or twice a segment at most: the first three or four NFL games, under about 20 NBA
+   games (see "How far into the season"), a few playoff games ("it's four playoff
+   games"), a handful of games back from an injury.
 7. Injuries, read like someone who follows the sport.
    - Today's report: "questionable" usually means he plays (teams list nearly
      everything now), so it's never a storyline or an argument on its own. Day-to-day

@@ -164,6 +164,12 @@ MOVE_NAMES = re.compile(r"\b(?:that's |this is |call it |here's )?(?:the|my) (?:
                         r"|\bsteelman\w*\b", re.I)
 
 
+# Saying a sample is big enough: nobody talks like that (user, Nov 6, 2026).
+SAMPLE_TALK = re.compile(r"\b(?:a |is a |that's a )?(?:real|big|large|decent|fair|solid|meaningful) (?:enough )?sample"
+                         r"|\bsample(?: size)? (?:is|'s) (?:big|large|real) enough|\bbig enough sample"
+                         r"|\bbuild(?:ing)? (?:a |him a )?statue", re.I)        # the old bible tic
+
+
 def check_stock_phrases(lines: list[dict]) -> list[dict]:
     """Style problems (rewritten, never cut): a move name said on air, stock phrases past the
     segment's limit, and a number said for the third time or more."""
@@ -178,6 +184,9 @@ def check_stock_phrases(lines: list[dict]) -> list[dict]:
         if any(re.search(r"(?:,\s*|^)" + n + r"\b[.,?!]", low) for n in own):
             issues.append("the speaker addresses himself by his own name; this line is probably meant for someone "
                           "else, so fix the name (or who's speaking)")
+        if SAMPLE_TALK.search(low):
+            issues.append(f"comments that a sample is big enough ({SAMPLE_TALK.search(low).group(0)!r}); real people "
+                          "don't say that, so just talk about the season")
         if MOVE_NAMES.search(low):
             issues.append(f"says the name of a move out loud ({MOVE_NAMES.search(low).group(0)!r}); just do the move")
         found = [p for p in STOCK_PHRASES if p in low]
