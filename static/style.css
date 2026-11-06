@@ -21,7 +21,9 @@
   --muted: #9aa8d6;
   --dim: #6b78a8;
   --pixel: "Silkscreen", "Courier New", monospace;
-  --round: "Pixelify Sans", system-ui, sans-serif;
+  /* Readable text (subtitles, body, captions): Atkinson Hyperlegible, made for legibility.
+     Pixel fonts stay for titles and labels only (changed Nov 6, 2026: the pixel body font was hard to read). */
+  --round: "Atkinson Hyperlegible", system-ui, sans-serif;
   --body: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
@@ -125,11 +127,11 @@ body {
 
 /* Speech bubble that floats above whoever is talking */
 .bubble {
-  position: absolute; z-index: 6; width: 46%; bottom: 56%;
+  position: absolute; z-index: 8; width: 46%; bottom: 56%;
   background: repeating-linear-gradient(to bottom, var(--cream) 0 2px, #f2e5c3 2px 4px);
   color: var(--ink); border: 0.45cqw solid #121420;
   box-shadow: 0.6cqw 0.6cqw 0 rgba(0, 0, 0, 0.45);
-  padding: 1.2cqw 1.6cqw; font-family: var(--round); font-weight: 500; font-size: 2.15cqw; line-height: 1.32;
+  padding: 1.1cqw 1.6cqw 1.2cqw; font-family: var(--round); font-weight: 700; font-size: 2.3cqw; line-height: 1.3;
   transition: left 0.25s ease;
 }
 .bubble p { margin: 0; min-height: 1.3em; }
@@ -429,3 +431,9 @@ body {
 .receipt i { font-style: normal; font-size: 11px; }
 .receipt i.ok { color: #7fe39a; }
 .receipt i.trusted { color: #9fb0d8; }
+
+/* ---------- Subtitles: who's talking (Nov 6, 2026) ---------- */
+.bubble-name { display: block; font-family: var(--pixel); font-weight: 700; font-size: 1.25cqw; letter-spacing: 0.06em;
+  text-transform: uppercase; margin-bottom: 0.3cqw; }
+.bubble-name.hal { color: #5b6478; } .bubble-name.royce { color: #1f2b58; } .bubble-name.deacon { color: #b91f2d; }
+.bubble-name.lonnie { color: #2f6b4f; } .bubble-name.caller { color: #8a5a00; } .bubble-name.crew { color: #6b6b6b; }

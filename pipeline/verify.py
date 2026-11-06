@@ -515,6 +515,13 @@ def _check_qb_starter_record(f: dict) -> dict:
     return f
 
 
+def _check_tenure(f: dict) -> dict:
+    """The team history (nflverse or Wikipedia) must end at Sleeper's current team, which
+    tenure() already required; that agreement is the check."""
+    f.update(status="verified", checked_against="Sleeper (current team)")
+    return f
+
+
 def _check_one(f: dict) -> dict:
     """Check one fact. If the check itself fails (a source is down), drop the fact."""
     try:
@@ -527,6 +534,8 @@ def _check_one(f: dict) -> dict:
 def _check(f: dict) -> dict:
     if f["status"] in ("dropped", "trusted", "verified"):
         return f
+    if f["stat"] == "tenure":
+        return _check_tenure(f)
     if f.get("league") == "NBA" and not f.get("honor"):
         if f["stat"] == "current_team":
             return _check_nba_team(f)

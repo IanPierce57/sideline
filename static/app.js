@@ -35,7 +35,8 @@ const CALLER_TYPES = {
   diehard: "The diehard", stats_nerd: "The stats nerd", rival_fan: "The rival fan",
   old_timer: "The old-timer", skeptic: "The skeptic", settler: "The settler",
 };
-const FORMATS = { debate: "DEBATE", buy_or_sell: "BUY OR SELL?", prediction: "PREDICTION" };
+const FORMATS = { debate: "WHO'S BETTER?", prediction: "WHO WINS?", buy_or_sell: "BUY OR SELL?",
+                  real_or_not: "REAL OR NOT?", rank_em: "RANK 'EM", overrated: "OVERRATED OR UNDERRATED?" };
 
 // ---------- Small helpers for the on-screen graphics ----------
 
@@ -79,8 +80,14 @@ function escapeHtml(text) {
 
 // The speech bubble floats above whoever is talking, with its tail pointing at them.
 let typing = null;
+const BUBBLE_NAMES = { hal: "Hal", royce: "Royce", deacon: "Deacon", lonnie: "Lonnie",
+                       artist: "Makeup", producer: "Floor producer" };
 function showBubble(anchorId, text, revealSeconds = 0) {
   const bubble = $("bubble"), tail = $("tail");
+  const tag = $("bubble-name");
+  const callerName = anchorId === "caller" && script && script.caller ? `${script.caller.name} from ${script.caller.city}` : "Caller";
+  tag.textContent = anchorId === "caller" ? callerName : (BUBBLE_NAMES[anchorId] || "");
+  tag.className = "bubble-name " + (["artist", "producer"].includes(anchorId) ? "crew" : anchorId);
   const { x, y } = Studio.anchor(anchorId);
   const xPct = (x / Studio.size.W) * 100;
   bubble.hidden = false;
@@ -94,8 +101,8 @@ function showBubble(anchorId, text, revealSeconds = 0) {
   } else {
     // short lines get a narrower bubble, so they cover less of the set
     const width = text.length <= 45 ? 26 : text.length <= 80 ? 34 : 46;
-    // while a stat is up on the right-hand monitor, keep the bubble out of its way
-    const rightEdge = $("right-stat").hidden ? 98.5 : 69;
+    // always over the speaker (it may cover part of the stat monitor; the speaker matters more)
+    const rightEdge = 98.5;
     const left = Math.min(Math.max(xPct - width / 2, 1.5), rightEdge - width);
     bubble.style.left = `${left}%`;
     bubble.style.width = `${width}%`;
@@ -204,10 +211,6 @@ function showEndCard() {
     row.insertAdjacentHTML("beforeend", `<div class="end-text"><b>${PEOPLE[host].name} ${tag}</b><span>${escapeHtml(text)}</span></div>${score}`);
     rows.append(row);
   }
-  const sources = script.sources || [];
-  $("end-sources").textContent = sources.length
-    ? `Sources: ${sources.join(" · ")}`
-    : "Sources: none this segment. No stats yet, so nothing to cite.";
   $("endcard").hidden = false;
 }
 function hideEndCard() { $("endcard").hidden = true; }
@@ -512,7 +515,9 @@ async function play(newScript) {
   const format = FORMATS[script.format] || "DEBATE";
   setCenter(script.topic.toUpperCase(), `Line 1 · ${script.caller.name} from ${script.caller.city}`);
   setRight(format, `Caller: ${script.caller.name}, ${script.caller.city}`);
-  $("show-tag").textContent = format.replace("?", "");
+  const TAGS = { debate: "Who's better", prediction: "Who wins", buy_or_sell: "Buy or sell", real_or_not: "Real or not",
+                 rank_em: "Rank 'em", overrated: "Over/under" };
+  $("show-tag").textContent = TAGS[script.format] || "Sideline";
   if (script.sample) setScores({}, true);   // the preview shows the meter from the start
   setPlayButtons(true);
   playCard();
@@ -532,9 +537,9 @@ function showControlRoom(job) {
     detail = `Lines checked ${c.lines_checked} · flagged ${c.lines_flagged || 0}`
       + (c.lines_rewritten != null ? ` · fixed ${c.lines_rewritten} · cut ${c.lines_cut}` : "");
   }
-  setRight(STEP_NAMES[step.step] || "PRE-SHOW", detail);
+  setRight(STEP_NAMES[step.step] || "PRE-SHOW", step.text || "Getting ready");
   if (step.step && Studio.setStep) Studio.setStep(step.step);
-  setStatus(`${step.text || "Working"}... ${detail}`);
+  setStatus(`${step.text || "Working"}...`);
 }
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -563,7 +568,7 @@ async function askDesk(topic) {
     if (job.state === "error") throw new Error(job.error);
     chosenPlayers = [];
     const m = job.script.meta;
-    setStatus(`On air. ${m.stats_verified} of ${m.stats_found} stats verified, ${m.lines_rewritten} lines fixed, ${m.lines_cut} cut. Saved to runs/${job.script.run}/`);
+    setStatus("On air.");
     await play(job.script);
   } catch (error) {
     clearInterval(preshowTimer);

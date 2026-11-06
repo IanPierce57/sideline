@@ -56,7 +56,8 @@ DELIVERIES = [
     "fired_up", "slam", "exasperated",
 ]
 
-FORMATS = ["debate", "buy_or_sell", "prediction"]
+# Segment types (more added Nov 6, 2026, so topics don't get squeezed into three shapes).
+FORMATS = ["debate", "prediction", "buy_or_sell", "real_or_not", "rank_em", "overrated"]
 # How hard the writer thinks. Tested Nov 5, 2026 (tests/pipeline_test.py and two full runs).
 # Medium wrote as well as high and about 20 seconds faster on the same topic.
 WRITER_EFFORT = os.environ.get("SIDELINE_WRITER_EFFORT", "medium")
@@ -109,7 +110,13 @@ FACT RULES. These override the bibles wherever they conflict.
 9. Titles, awards, and trends. Don't say which team a player won a title or award
    with unless the fact says so. Don't say a player improved, declined, or "dipped"
    unless the fact pack has the numbers for both seasons being compared.
-10. Not every line needs a number. Use facts where they win the point: Royce lands
+10. Realism. Trade, signing, and roster ideas must be ones a real front office could
+   make: never propose trading away a player his team just acquired ("new to the team
+   this season" in his time-with-team fact), and treat a team's established stars and
+   recent big additions as off the table unless the topic is about them. When a host
+   floats a move, he says why that team would do it (its record, its injuries, its
+   needs). No contract figures exist in the pack, so money stays general.
+10b. Not every line needs a number. Use facts where they win the point: Royce lands
    one memorable number, Deacon stacks two or three. Lonnie has no contract or
    cap figures in the fact pack, so he keeps money talk general.
 11. Host backstories are allowed. Hosts may use the fictional careers and receipts
@@ -147,10 +154,20 @@ Segment flow:
 7. The script ENDS with the three final answers. Don't write Hal's wrap-up: the judge
    scores the debate first, and Hal's close is written afterward (fact rule 14).
 
-Format: pick exactly one.
-- "debate": a question with sides (who's better right now, is Y overrated).
-- "buy_or_sell": a team or front-office decision (trade, sign, extend, buy or sell).
-- "prediction": a future outcome (who wins, will X happen this season).
+Format: use the one the topic check picked. Each has its own shape:
+- "debate" (WHO'S BETTER?): a head-to-head or "is he the best right now". Each host
+  takes a side and they clash on the comparison.
+- "prediction" (WHO WINS?): a game or a season outcome. Each host picks a winner and
+  argues why it happens; no score predictions.
+- "buy_or_sell" (BUY OR SELL?): a team or front-office move only (trade for, sign,
+  extend, buy or sell at the deadline). The question is whether the move is smart and
+  realistic for that team now; not for player comparisons.
+- "real_or_not" (REAL OR NOT?): is a hot or cold start, a breakout, or a slump real?
+  Each host says real or not, and what would prove him wrong.
+- "rank_em" (RANK 'EM): rank three or more players or teams. Each host gives his
+  ranking early; the debate is over where they differ. Final answers are rankings.
+- "overrated" (OVERRATED OR UNDERRATED?): a player's or team's reputation against the
+  numbers. Each host says overrated, underrated, or about right, and why.
 
 Length: aim for 600 to 720 spoken words in total (about 4 to 5 minutes at 150 words
 per minute; it must land between 450 and 750 after the fact check, which cuts any
@@ -181,9 +198,35 @@ Each line:
     number of another host's argument; answering it starts a new number.
   * Every host should have at least two numbered arguments.
 
+Plan first (the "plan" field, before any line). Write each host's position in one
+sentence and the facts it rests on, then 3 or 4 beats: the opening positions, the main
+clash, a new angle that shifts the argument (a new fact, a better comparison, a weakness
+exposed), and the decisive exchange. Then write the lines to follow the beats.
+
+The argument has to BUILD, not circle (added Nov 6, 2026):
+- Each beat moves somewhere new. Once a point has been made and answered, nobody makes
+  it again; the next exchange goes deeper or somewhere else.
+- Each host builds one case across his turns: his first turn states it, later turns add
+  a new piece of evidence or beat the best answer to it. He doesn't hop between
+  unrelated ideas (one candidate, then another, then another) without finishing one.
+- Hal moves it forward when it stalls: he names what's settled and points at the open
+  question ("We've done the sack numbers. What does Chicago give up?").
+
+Sound like three people arguing live, not like AI (added Nov 6, 2026):
+- Signature phrases ("Here's my thing", "Listen here", "Hang on. Hang on.", "Here's the
+  question that matters", "To my eye", "That's the sample", "That's the column",
+  "Remember this", "Folks at home", "Hah") at most ONCE per segment each, and most turns
+  use none. Never: "Both fair", "Okay, okay", "I'll give you that" more than once, "Let's
+  be clear", "At the end of the day", "make no mistake".
+- No formula openings. Don't start a turn by summing up both other hosts ("Royce is right
+  about X, and Deacon's right about Y"). Answer the last thing said, in its own words.
+- Vary the length: some turns are one short sentence ("That's a team stat, Royce."), some
+  are a few sentences; nobody gives a speech every turn.
+- No two turns open the same way. Contractions, plain words, the odd interruption.
+
 Write it so a reader could tell who's talking with the names hidden: each
 host's voice, evidence lean, signature move, and temperature come from his
-bible. Catchphrases at most once per segment each.
+bible.
 
 Keep it fresh. The line banks, sample lines, and example exchanges show how
 each character sounds; they are not lines to reuse. Write new lines in that
@@ -236,6 +279,19 @@ OUTPUT_SCHEMA = {
             "required": ["type", "name", "city"],
             "additionalProperties": False,
         },
+        "plan": {
+            "type": "object",
+            "description": "Written BEFORE the lines: how this argument builds.",
+            "properties": {
+                "positions": {"type": "object", "properties": {h: {"type": "string"} for h in ("royce", "deacon", "lonnie")},
+                              "required": ["royce", "deacon", "lonnie"], "additionalProperties": False,
+                              "description": "Each host's position in one sentence, with the facts it rests on."},
+                "beats": {"type": "array", "items": {"type": "string"},
+                          "description": "3 or 4 beats, in order. Each one moves the argument somewhere new."},
+            },
+            "required": ["positions", "beats"],
+            "additionalProperties": False,
+        },
         "lines": {
             "type": "array",
             "items": {
@@ -252,7 +308,7 @@ OUTPUT_SCHEMA = {
             },
         },
     },
-    "required": ["format", "caller", "lines"],
+    "required": ["format", "caller", "plan", "lines"],
     "additionalProperties": False,
 }
 

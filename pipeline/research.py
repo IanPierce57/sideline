@@ -26,7 +26,7 @@ TOPIC_SCHEMA = {
         "appropriate": {"type": "boolean"},
         "reason": {"type": "string", "description": "One plain sentence if the topic is turned away; empty otherwise."},
         "league": {"type": "string", "enum": ["NFL", "NBA", "BOTH"]},
-        "format": {"type": "string", "enum": ["debate", "buy_or_sell", "prediction"]},
+        "format": {"type": "string", "enum": ["debate", "prediction", "buy_or_sell", "real_or_not", "rank_em", "overrated"]},
         "players": {"type": "array", "items": {"type": "string"}, "description": "Full names of real players named or clearly meant."},
         "suggestions": {"type": "array", "items": {"type": "string"}, "description": "Three valid NBA or NFL topics, if turned away."},
         "teams": {"type": "array", "items": {"type": "string"}, "description": "Teams named or clearly meant, by full name."},
@@ -65,9 +65,15 @@ One specific upcoming game ("Who wins Packers at Patriots this Sunday?", "Can th
 win tonight?", "Who wins Heat at Warriors tonight?"): set single_game to true and list
 the teams. NFL and NBA games are both fine (code confirms the game is real).
 
-Pick the format: "debate" (a question with sides), "buy_or_sell" (a team or
-front-office decision), or "prediction" (a future outcome). List every real
-player named or clearly meant, by full name."""
+Pick the format that fits the question best:
+- "debate": who's better, or is he the best right now (a head-to-head).
+- "prediction": who wins a game, or how a season turns out.
+- "buy_or_sell": a team or front-office move only (a trade, signing, extension, buying or
+  selling at the deadline).
+- "real_or_not": is a hot or cold start, breakout, or slump for real.
+- "rank_em": rank three or more players or teams.
+- "overrated": is a player or team overrated or underrated.
+List every real player named or clearly meant, by full name."""
 
 
 def check_topic(topic: str, client: anthropic.Anthropic, chosen: set | None = None) -> dict:
@@ -182,7 +188,9 @@ What each host leans on:
 - Lonnie (front office): context for decisions: current teams, team records, how a roster looks.
 
 Rules:
-- Always get current_team for every player who'll come up.
+- Always get current_team for every player who'll come up (it also returns how long he's been with that team,
+  which keeps trade talk realistic). For buy-or-sell and trade topics, also get the records of the teams
+  involved, and current_team for any player a host might suggest acquiring.
 - "Right now" and "this season" questions need THIS season's numbers (NFL {sleeper.state('nfl')['season']}, NBA
   {sleeper.state('nba')['season']}). Pull this season's stats for every player first; add last season only as
   extra context, never instead.

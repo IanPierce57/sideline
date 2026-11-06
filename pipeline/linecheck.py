@@ -143,6 +143,31 @@ MISSING_DATA = re.compile(r"\b(?:i|we) (?:don't|do not|didn't) have (?:the |any 
                           r"(?:[\w-]+ ){0,3}(?:numbers?|stats?|data|figures?)\b", re.I)
 
 
+# Stock phrases that make the show sound scripted. Each may appear once per segment; more
+# than that sends the line back for a rewrite (style only: it's never cut for this).
+STOCK_PHRASES = ["here's my thing", "listen here", "hang on. hang on", "here's the question that matters",
+                 "to my eye", "that's the sample", "that's the column", "remember this", "folks at home",
+                 "both fair", "okay, okay", "i'll give you that", "can i jump in", "let's be clear",
+                 "at the end of the day", "make no mistake", "you're making my case"]
+
+
+def check_stock_phrases(lines: list[dict]) -> list[dict]:
+    """Lines that repeat a stock phrase already used earlier in the segment."""
+    seen, problems = set(), []
+    for line in lines:
+        low = line["text"].lower().replace("’", "'")
+        repeats = []
+        for phrase in STOCK_PHRASES:
+            if phrase in low:
+                if phrase in seen:
+                    repeats.append(phrase)
+                seen.add(phrase)
+        if repeats:
+            problems.append({"line": line["line"], "style": True,
+                             "problem": f"repeats the stock phrase {', '.join(repeats)!r}; say it fresh, in other words"})
+    return problems
+
+
 def check_stage_notes(lines: list[dict]) -> list[dict]:
     """Lines that contain a description of an action instead of spoken words.
     Bible stage directions in parentheses at the start of a line are fine."""
@@ -335,7 +360,9 @@ def run(lines: list[dict], facts: list[dict], pack: list[dict], context: str, cl
                        + check_scope(lines, by_id))
     claim_problems = check_claims(lines, pack, context, client)
     progress("line_check", {"checked": len(lines), "flagged": len({p['line'] for p in number_problems + claim_problems})})
-    problems = number_problems + claim_problems
+    style_problems = check_stock_phrases(lines)
+    problems = number_problems + claim_problems + style_problems
+    style_only = {p["line"] for p in style_problems} - {p["line"] for p in number_problems + claim_problems}
     if not problems:
         return lines, log
 
@@ -359,6 +386,9 @@ def run(lines: list[dict], facts: list[dict], pack: list[dict], context: str, cl
                 log.append({"line": line["line"], "speaker": line["speaker"], "said": original,
                             "problem": "; ".join(merged[line["line"]]), "action": "rewritten", "now": fix["text"]})
                 continue
+        if line["line"] in style_only:                 # a style problem never costs a line
+            out.append(line)
+            continue
         log.append({"line": line["line"], "speaker": line["speaker"], "said": original,
                     "problem": "; ".join(merged[line["line"]]), "action": "cut"})
     out = smooth(out, [e["line"] for e in log if e["action"] == "cut"], lines, by_id, pack, client, topic, profiles, log)

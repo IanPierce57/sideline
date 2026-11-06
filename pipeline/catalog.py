@@ -837,10 +837,73 @@ def qb_starter_record(card: dict, season: int | None = None) -> dict:
     return _fact(**base)
 
 
+def tenure(card: dict) -> dict:
+    """How long he's been with his current team, and where he was before (added Nov 6, 2026,
+    so the show knows a player was just acquired: no trading for Myles Garrett the year the
+    Rams got him). NFL: nflverse season rosters; NBA: the team history in his Wikipedia
+    infobox. Either way it must agree with Sleeper's current team (checked in verify.py)."""
+    from . import nba as nbamod
+    base = dict(league=card["league"], subject=card["name"], subject_key=card["key"], stat="tenure",
+                label="time with his current team", scope="career", as_of="today", position=card.get("position"),
+                definition="The season he joined his current team, and his previous team.")
+    if not card.get("team"):
+        return _fact(**base, status="dropped", note="no current team")
+    if card["league"] == "NFL":
+        code = NFLVERSE_TEAM.get(card["team"], card["team"])
+        rows = nflv.rosters_all().filter(pl.col("gsis_id") == card.get("gsis_id")).select(["season", "team"]).unique()
+        by_season = {}
+        for r in rows.iter_rows(named=True):
+            by_season.setdefault(r["season"], set()).add(r["team"])
+        seasons = sorted(by_season)
+        if not seasons or code not in by_season[seasons[-1]]:
+            return _fact(**base, status="dropped", note="nflverse's latest roster has him elsewhere")
+        start = seasons[-1]
+        for s in reversed(seasons[:-1]):
+            if code in by_season[s] and by_season[s] == {code}:
+                start = s
+            else:
+                break
+        before = [s for s in seasons if s < start]
+        prev = sorted(by_season[before[-1]] - {code}) if before else []
+        prev_names = [nflgames.TEAMS.get(nflgames.FROM_NFLVERSE.get(t, t), (t, t))[1] for t in prev]
+        name = nflgames.TEAMS[card["team"]][1]
+        source, credit = "nflverse rosters", "Data via nflverse"
+    else:
+        page = wiki.find_page(card["name"], "NBA", card.get("position"))
+        if not page:
+            return _fact(**base, status="dropped", note="no Wikipedia page found")
+        stints = {}
+        for kind, n, v in re.findall(r"\|\s*(years|team)(\d+)\s*=([^\n]*)", page["text"]):
+            stints.setdefault(int(n), {})[kind] = wiki._clean(v)
+        ordered = [stints[k] for k in sorted(stints) if "team" in stints[k] and "years" in stints[k]]
+        nba_only = [x for x in ordered if any(t[0] == x["team"].lstrip("→ ").strip() for t in nbamod.TEAMS.values())]
+        if not nba_only:
+            return _fact(**base, status="dropped", note="no NBA team history in his infobox")
+        last = nba_only[-1]
+        years = re.findall(r"(\d{4})", last["years"])
+        team_name = last["team"].lstrip("→ ").strip()
+        if team_name != nbamod.TEAMS.get(card["team"], ("",))[0] or not years:
+            return _fact(**base, status="dropped", note=f"his Wikipedia infobox lists {team_name} last, not his Sleeper team")
+        start = int(years[0])
+        prev_names = [nba_only[-2]["team"].lstrip("→ ").strip().split()[-1]] if len(nba_only) > 1 else []
+        name = nbamod.TEAMS[card["team"]][1]
+        source, credit = "Wikipedia", "Wikipedia (CC BY-SA)"
+    current = int(sleeper.state(card["league"].lower())["season"])
+    # NFL: the season he joined. NBA: the calendar year his stint began, as his infobox has it
+    # (a February trade starts mid-season, so a season label would be off by one).
+    when = str(start)
+    new = start >= current
+    say = (f"with the {name} since the {when} season" if card["league"] == "NFL" else f"with the {name} since {when}") + \
+          (" (new to the team this season)" if new else "") + \
+          (f"; before that, the {', '.join(prev_names)}" if prev_names else "")
+    return _fact(**base, say=say, value=start, start=start, new_this_season=new, source=source, credit=credit,
+                 sleeper_team=card["team"], sample=f"since {when}")
+
+
 def get(card: dict, stat: str, scope: dict) -> list[dict]:
     """Fetch one stat for one player (candidate facts, not yet checked)."""
     if stat == "current_team":
-        return [current_status(card)]
+        return [current_status(card), tenure(card)]     # where he plays, and since when
     if stat == "honors":
         return honors(card)
     if stat in ("measurables", "draft"):
