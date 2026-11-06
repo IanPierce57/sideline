@@ -77,7 +77,9 @@ def upcoming_for_page() -> dict:
             d = date.fromisoformat(g["date"])
             out["games"].append({"league": "NBA", "text": f"{nba.TEAMS[g['away']['team']][1]} at {nba.TEAMS[g['home']['team']][1]}",
                                  "when": f"{d:%a} {d:%b} {d.day}"})
-        out["questions"] = (games.upcoming_games([], limit=1) + nba.upcoming_games([], limit=1))
+        # Up to four of each league, mixed NFL / NBA, so the try-questions can rotate
+        nfl_q, nba_q = games.upcoming_games([], limit=4), nba.upcoming_games([], limit=4)
+        out["questions"] = [q for pair in zip(nfl_q + [None] * 4, nba_q + [None] * 4) for q in pair if q]
     except Exception as problem:            # a schedule hiccup shouldn't break the page
         out["note"] = type(problem).__name__
     _UPCOMING.update(at=time.time(), data=out)

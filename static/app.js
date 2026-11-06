@@ -320,23 +320,70 @@ function showIdle() {
   if (upcoming.games.length) showUpNext();
 }
 
-// Real upcoming games (from the same schedules the game finder uses): two try-questions
-// and the right-hand monitor's "up next" list.
+// Try-questions: two from real upcoming games plus three evergreen ones, redrawn every time
+// someone asks the desk (changed Nov 6, 2026). The evergreen ones avoid records or streaks
+// that would go stale, and cover all six segment types.
+const EVERGREEN = [
+  "Is Josh Allen the best quarterback in the NFL right now?",
+  "Is Shai Gilgeous-Alexander better than Nikola Jokic right now?",
+  "Rank the top three quarterbacks in the NFL right now",
+  "Rank the top three players in the NBA right now",
+  "Is Jalen Hurts overrated?",
+  "Is Victor Wembanyama the best defender in basketball?",
+  "Are the Thunder still the team to beat in the West?",
+  "Should the Bears trade for a pass rusher?",
+  "Is Caleb Williams a franchise quarterback?",
+  "Who's better right now, Lamar Jackson or Joe Burrow?",
+  "Is Puka Nacua the best receiver in football?",
+  "Who wins the Super Bowl this season?",
+  "Who wins the NBA title this season?",
+  "Is Bijan Robinson the best running back in the NFL?",
+  "Is Anthony Edwards a better player than Jayson Tatum?",
+  "Rank the top three pass rushers in the NFL right now",
+  "Is Luka Doncic overrated or underrated?",
+  "Are the Lions real Super Bowl contenders?",
+  "Who's the best young quarterback in the NFL?",
+  "Should the Lakers make a trade before the deadline?",
+];
+let lastShown = new Set();
+let liveTurn = 0;
+function chip(text, live) {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = live ? "chip live" : "chip"; b.textContent = text;
+  b.addEventListener("click", () => { $("topic").value = text; $("topic").focus(); });
+  return b;
+}
+function refreshChips() {
+  const box = $("examples-live");
+  box.innerHTML = "";
+  const live = upcoming.questions || [];
+  const shown = new Set();
+  for (let k = 0; k < Math.min(2, live.length); k += 1) {
+    const q = live[(liveTurn + k) % live.length];
+    if (shown.has(q)) continue;
+    box.append(chip(q, true));
+    shown.add(q);
+  }
+  liveTurn += 2;
+  const fresh = EVERGREEN.filter((q) => !lastShown.has(q));
+  for (let k = 0; k < 3 && fresh.length; k += 1) {
+    const q = fresh.splice(Math.floor(Math.random() * fresh.length), 1)[0];
+    box.append(chip(q, false));
+    shown.add(q);
+  }
+  lastShown = shown;
+}
+
+// Real upcoming games (from the same schedules the game finder uses): the right-hand
+// monitor's "up next" list and the live try-questions.
 async function loadUpcoming() {
   try {
     upcoming = await (await fetch("/api/upcoming")).json();
   } catch (error) {
-    return;
+    upcoming = { games: [], questions: [] };
   }
-  const box = $("examples-live");
-  box.innerHTML = "";
-  for (const q of upcoming.questions || []) {
-    const b = document.createElement("button");
-    b.type = "button"; b.className = "chip live"; b.textContent = q;
-    b.addEventListener("click", () => { $("topic").value = q; $("topic").focus(); });
-    box.append(b);
-  }
-  if (Studio && !script && !upNextTimer) showUpNext();
+  refreshChips();
+  if (Studio && !script && !upNextTimer && upcoming.games.length) showUpNext();
 }
 
 let preshowTimer = null;
@@ -640,11 +687,9 @@ $("form").addEventListener("submit", (event) => {
   chosenPlayers = [];
   setStatus("You're on hold. The desk is getting ready (usually about two minutes).");
   askDesk(topic);
+  refreshChips();          // new suggestions every time someone asks
 });
 
-for (const chip of document.querySelectorAll(".chip")) {
-  chip.addEventListener("click", () => { $("topic").value = chip.textContent; $("topic").focus(); });
-}
 
 $("pause").addEventListener("click", () => {
   if (!script || cardIndex >= cards.length) return;
