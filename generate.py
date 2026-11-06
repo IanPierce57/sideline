@@ -139,7 +139,7 @@ Segment flow:
    for the reasons in his bible.
 6. When new arguments run out, Hal asks for one-sentence final answers.
 7. The script ENDS with the three final answers. Don't write Hal's wrap-up: the judge
-   scores the debate first, and Hal's close is written afterward (fact rule 12).
+   scores the debate first, and Hal's close is written afterward (fact rule 13).
 
 Format: pick exactly one.
 - "debate": a question with sides (who's better right now, is Y overrated).
