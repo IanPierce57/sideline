@@ -57,6 +57,9 @@ DELIVERIES = [
 ]
 
 FORMATS = ["debate", "buy_or_sell", "prediction"]
+# How hard the writer thinks. Tested Nov 5, 2026 (tests/pipeline_test.py and two full runs).
+# Medium wrote as well as high and about 20 seconds faster on the same topic.
+WRITER_EFFORT = os.environ.get("SIDELINE_WRITER_EFFORT", "medium")
 
 # Rules about facts. They sit on top of the bibles, which show [Research-step ...]
 # placeholders where real numbers go; the fact pack supplies the real numbers.
@@ -114,16 +117,19 @@ Segment flow:
 7. Hal wraps up with no winner (fact rule 8).
 
 Format: pick exactly one.
-- "debate": a question with sides (who's better, is X the greatest, is Y overrated).
+- "debate": a question with sides (who's better right now, is Y overrated).
 - "buy_or_sell": a team or front-office decision (trade, sign, extend, buy or sell).
 - "prediction": a future outcome (who wins, will X happen this season).
 
-Length: aim for 450 to 750 spoken words in total (3 to 5 minutes at 150 words
-per minute). End when the new arguments run out. Never pad, never repeat a point.
+Length: aim for 550 to 700 spoken words in total (about 4 minutes at 150 words
+per minute; it must land between 450 and 750 after the fact check, which cuts any
+line it can't confirm). End when the new arguments run out. Never pad, never repeat a point.
 
 Each line:
 - speaker: one of caller, hal, royce, deacon, lonnie.
-- text: exactly what is said out loud. Stage directions from the bibles, like
+- text: exactly what is said out loud. Never write a note about what a character
+  does instead of the words themselves ("Ask a rhetorical question to the folks at
+  home:" or "He turns to Hal"): ask the question, say the words. Stage directions from the bibles, like
   "(the pencil stops)", may open a line in parentheses; keep them rare.
 - delivery: one tag for how it's said, from the allowed list. Three tags are
   big physical reactions the studio animates: "fired_up" (he stands up),
@@ -364,7 +370,7 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
         model=MODEL,
         max_tokens=32000,
         thinking={"type": "adaptive"},
-        output_config={"effort": "high", "format": {"type": "json_schema", "schema": OUTPUT_SCHEMA}},
+        output_config={"effort": WRITER_EFFORT, "format": {"type": "json_schema", "schema": OUTPUT_SCHEMA}},
         # If a safety check declines the request, the API retries it on another model.
         betas=["server-side-fallback-2026-07-01"],
         fallbacks="default",

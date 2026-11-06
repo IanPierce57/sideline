@@ -91,6 +91,23 @@ def _allowed_for(facts: list[dict]) -> list[tuple[float, float, bool]]:
     return allowed
 
 
+# Notes about what a character does, written into the spoken text by mistake.
+STAGE_NOTE = re.compile(r"\b(rhetorical question|to the folks at home:|stage direction|asks? (?:the )?(?:audience|viewers)|"
+                        r"(?:turns|leans|pauses|gestures|points) (?:to|toward|at)\b[^.!?]*$)|\[[^\]]*\]", re.I)
+
+
+def check_stage_notes(lines: list[dict]) -> list[dict]:
+    """Lines that contain a description of an action instead of spoken words.
+    Bible stage directions in parentheses at the start of a line are fine."""
+    problems = []
+    for line in lines:
+        spoken = re.sub(r"^\s*\([^)]*\)\s*", "", line["text"])
+        if STAGE_NOTE.search(spoken):
+            problems.append({"line": line["line"], "problem": "contains a note about what someone does instead of "
+                             "the words they say; rewrite it as spoken words only"})
+    return problems
+
+
 def check_numbers(lines: list[dict], facts_by_id: dict, topic: str = "") -> list[dict]:
     """Lines with a number that doesn't match a cited fact. Numbers in the caller's
     own question (the topic) are allowed anywhere: "top-10" isn't a stat claim."""
@@ -169,7 +186,7 @@ def run(lines: list[dict], facts: list[dict], pack: list[dict], context: str, cl
     """Check, rewrite once, re-check, cut what still fails. Returns (lines, log)."""
     by_id = {f["id"]: f for f in facts}
     log = []
-    number_problems = check_numbers(lines, by_id, topic)
+    number_problems = check_numbers(lines, by_id, topic) + check_stage_notes(lines)
     claim_problems = check_claims(lines, pack, context, client)
     progress("line_check", {"checked": len(lines), "flagged": len({p['line'] for p in number_problems + claim_problems})})
     problems = number_problems + claim_problems
@@ -189,7 +206,7 @@ def run(lines: list[dict], facts: list[dict], pack: list[dict], context: str, cl
         fix = fixes.get(line["line"])
         if fix:
             candidate = dict(line, text=fix["text"], facts=[i for i in fix["facts"] if i in by_id])
-            still = check_numbers([candidate], by_id, topic)
+            still = check_numbers([candidate], by_id, topic) + check_stage_notes([candidate])
             if not still:
                 out.append(candidate)
                 log.append({"line": line["line"], "speaker": line["speaker"], "said": original,

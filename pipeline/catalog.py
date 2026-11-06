@@ -183,7 +183,7 @@ def nfl_player(card: dict, stat: str, scope: dict) -> list[dict]:
     seasons = _nfl_seasons(card, scope)
     if not seasons:
         return [_fact(subject=card["name"], stat=stat, status="dropped",
-                      note="no games found for that season" if scope.get("season") else "no games found")]
+                      note=f"he hasn't played a regular-season game in {scope['season']}" if scope.get("season") else "no games found")]
     stype = "POST" if scope.get("playoffs") else "REG"
     df = nflv.player_stats_by_season().filter((pl.col("player_id") == card["gsis_id"]) &
                                               (pl.col("season_type") == stype) & pl.col("season").is_in(seasons))

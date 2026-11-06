@@ -55,45 +55,52 @@ def _connect():
         pass
 
 
-def metric(entity: str, metric_key: str, season: int, kind: str = "player", gsis_id: str | None = None):
-    """muffed's published value for one metric, or None if it doesn't publish one.
-    Returns {'value', 'rank', 'population', 'as_of', 'through_week'}."""
-    key = (entity, metric_key, season, kind)
-    if key in _memo:
-        return _memo[key]
-    # Saved answers are reused for 6 hours, so a second run doesn't ask again (muffed asks
-    # for no bulk scraping). Requests go one at a time, spaced out, and wait and retry
-    # if muffed says to slow down.
-    path = CACHE / "muffed" / (re.sub(r"\W+", "_", f"{kind}_{entity}_{metric_key}_{season}") + ".json")
-    if path.exists() and time.time() - path.stat().st_mtime < 6 * 3600:
-        result = json.loads(path.read_text())
-    else:
-        with _lock:
+def _all_metrics(entity: str, kind: str, season: int) -> list:
+    """Every metric muffed publishes for one team or player in one season: one request
+    (not one per stat), saved for 6 hours. muffed asks for no bulk scraping, so requests
+    go one at a time and wait and retry if it says to slow down."""
+    key = (entity, kind, season)
+    with _lock:
+        if key in _memo:
+            return _memo[key]
+        path = CACHE / "muffed" / (re.sub(r"\W+", "_", f"{kind}_{entity}_{season}") + ".json")
+        if path.exists() and time.time() - path.stat().st_mtime < 6 * 3600:
+            rows = json.loads(path.read_text())
+        else:
             _connect()
             for attempt in range(4):
                 try:
                     result = _rpc("tools/call", {"name": "get_entity_metrics", "arguments": {
-                        "entity": entity, "entity_kind": kind, "metric": metric_key, "season": season, "scope": "all"}})
+                        "entity": entity, "entity_kind": kind, "season": season, "scope": "all"}})
                     break
                 except urllib.error.HTTPError as e:
                     if e.code != 429 or attempt == 3:
                         raise
                     time.sleep(5 * (attempt + 1))
-            time.sleep(0.4)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(result))
-    found = None
-    for block in result.get("content", []):
-        try:
-            data = json.loads(block.get("text", ""))
-        except (ValueError, TypeError):
+            rows = (result.get("structuredContent") or {}).get("rows")
+            if rows is None:                       # older replies carry the table as text
+                rows = []
+                for block in result.get("content", []):
+                    try:
+                        data = json.loads(block.get("text", ""))
+                    except (ValueError, TypeError):
+                        continue
+                    if isinstance(data, dict):
+                        rows += data.get("rows", [])
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(rows))
+            time.sleep(0.3)
+        _memo[key] = rows
+        return rows
+
+
+def metric(entity: str, metric_key: str, season: int, kind: str = "player", gsis_id: str | None = None):
+    """muffed's published value for one metric, or None if it doesn't publish one.
+    Returns {'value', 'rank', 'population', 'as_of', 'through_week'}."""
+    for row in _all_metrics(entity, kind, season):
+        if row.get("metric_key") != metric_key or row.get("season") != season:
             continue
-        for row in data.get("rows", []) if isinstance(data, dict) else []:
-            if row.get("metric_key") != metric_key or row.get("season") != season:
-                continue
-            if gsis_id and row.get("gsis_id") and row["gsis_id"] != gsis_id:
-                continue   # same name, different player
-            found = {k: row.get(k) for k in ("value", "rank", "population", "as_of", "through_week")}
-            break
-    _memo[key] = found
-    return found
+        if gsis_id and row.get("gsis_id") and row["gsis_id"] != gsis_id:
+            continue   # same name, different player
+        return {k: row.get(k) for k in ("value", "rank", "population", "as_of", "through_week")}
+    return None

@@ -190,6 +190,9 @@ Rules:
 - Single-game previews: the game itself, both teams' records, team stats, last three results, last game's
   starting quarterbacks, and injured starters are already pulled for you. Add player stats for the players who
   decide the game (both starting quarterbacks, top receivers and runners, pass rushers), this season mainly.
+- Positions overlap (pipeline/positions.py): edge rushers may be listed as DE, DL, EDGE, OLB, or LB; the
+  secondary as CB, S, DB, or nickel; running backs as RB, HB, or FB. For "best pass rusher" or "best corner",
+  consider every player who plays that role, whatever his label. Off-ball linebackers aren't pass rushers.
 - Be efficient: two or three rounds of tool calls, about 12 to 24 stats in total. Then stop and reply "done".
 
 Stats you can ask for (stat names exactly as written):

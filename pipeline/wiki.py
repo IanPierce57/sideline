@@ -13,6 +13,7 @@ import urllib.parse
 import urllib.request
 from functools import lru_cache
 
+from . import positions
 from .net import CACHE, SSL
 
 UA = "SidelineClassProject/0.1 (non-commercial student project; data cached daily)"
@@ -59,7 +60,7 @@ def _get(url: str, cache_name: str):
                 if e.code != 429 or attempt == 3:
                     raise
                 time.sleep(3 * (attempt + 1))     # asked to slow down: wait and retry
-        time.sleep(1.0)
+        time.sleep(0.2)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data))
     return data
@@ -76,25 +77,20 @@ def _page(title: str):
     return {"title": page["title"], "text": text, "qid": page.get("pageprops", {}).get("wikibase_item")}
 
 
-POSITIONS = {"QB": "quarterback", "RB": "running back", "WR": "wide receiver", "TE": "tight end", "K": "kicker",
-             "P": "punter", "LB": "linebacker", "DE": "defensive end", "DT": "defensive tackle", "DL": "defensive",
-             "CB": "cornerback", "S": "safety", "DB": "back", "OL": "", "OT": "tackle", "G": "guard", "C": "center",
-             "PG": "guard", "SG": "guard", "SF": "forward", "PF": "forward", "F": "forward"}
-
-
 def find_page(name: str, league: str, position: str | None = None):
     """The player's Wikipedia page. It must have the right sport's infobox and, when we
     know his position, list that position, so a same-name page can't slip in."""
     boxes = ("infobox gridiron football biography", "infobox nfl biography") if league == "NFL" else ("infobox basketball biography",)
-    word = POSITIONS.get(position or "", "")
+    word = positions.TITLE_WORD.get(positions.label(position) or "", "") if league == "NFL" else ""
     suffixes = ["", f" ({word})" if word else None, " (American football)" if league == "NFL" else " (basketball)"]
     for suffix in [x for x in suffixes if x is not None]:
         page = _page(name + suffix)
         if not page or not any(box in page["text"].lower() for box in boxes):
             continue
-        infobox_position = re.search(r"\|\s*position\s*=([^\n]*)", page["text"])
-        if word and infobox_position and word not in infobox_position.group(1).lower():
-            continue                      # same name, different position: a different player
+        # Every position field on the page counts (two-way players have position_2).
+        listed = " / ".join(_clean(x) for x in re.findall(r"\|\s*\w*position\w*\s*=([^\n]*)", page["text"]))
+        if listed and not positions.matches_text(position, listed):
+            continue                      # same name, different kind of player (see positions.py)
         return page
     return None
 

@@ -30,7 +30,11 @@ loosen this rule without asking.
 5. **Line checker** (`pipeline/linecheck.py`): code checks every number in every line against the facts it cites; an AI reader flags unsupported claims; failed lines are rewritten once, then cut.
 6. Each run saves `script.json`, `fact_pack.json`, and `rejection_log.json` in `runs/<date>_<time>/`.
 
-Run `.venv/bin/python tests/accuracy.py` to recheck the sources (free; no API calls).
+Run `.venv/bin/python tests/accuracy.py` to recheck the sources (free; no API calls). Other tests: `tests/linecheck_test.py`, `tests/news_test.py`, `tests/positions_test.py` (all free), and `tests/pipeline_test.py` (a few cents a topic: times research and checking on six varied topics; targets 12+ confirmed facts and under 60 seconds before writing).
+
+**Speed (Nov 5):** a full segment takes about 35-60 seconds (was 135-200). muffed.ai is asked once per team or player (not once per stat) and answers are saved for 6 hours; Wikipedia requests are one at a time with a short gap; the server loads the data files in the background when it starts; the writer runs at medium effort (`SIDELINE_WRITER_EFFORT=high` to change), which wrote as well as high in a side-by-side test and about 20 seconds faster.
+
+**Positions (Nov 5):** `pipeline/positions.py` lists which position labels can stand in for which (RB/HB/FB, OT/OG/OL, DE/EDGE/OLB/LB, DB/CB/S/nickel...). The pairs are not transitive: an edge rusher can be called a linebacker, but a Mike linebacker is never a defensive end. Used to match the right player's Wikipedia page.
 
 **Single NFL games** (Nov 5): `pipeline/games.py` confirms the game on two schedules (nflverse and Sleeper); `catalog.game_pack` pulls records, team stats (checked against muffed.ai), recent scores (checked against Sleeper), last starting QBs, and injured starters. NBA single games are turned away for now.
 
