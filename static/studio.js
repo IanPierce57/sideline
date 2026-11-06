@@ -13,6 +13,7 @@ const Studio = (() => {
   const canvas = document.getElementById("studio");
   canvas.width = W; canvas.height = H;
   const screen = canvas.getContext("2d");
+  const reducedMotion = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
   let g = screen;             // where R() draws (the studio, or a small portrait)
 
   // Draw one solid rectangle of pixels.
@@ -66,6 +67,8 @@ const Studio = (() => {
               hair: "#16110f", hairShade: "#30241d", outfit: "#eef1f6", outfitShade: "#c8cfdb" },
   };
   const HEAD_TOP = 79;
+  // Each person's accent color (the score bug uses the same ones).
+  const ACCENT = { hal: "#c9d2e3", royce: "#f2c14e", deacon: "#e0414e", lonnie: "#5ccfe6" };
 
   // How each delivery tag moves the body.
   const POSE = {
@@ -84,6 +87,10 @@ const Studio = (() => {
     artist: { x: -24, from: -24, to: -24, at: 0, target: null },
     producer: { at: -1e9, x: 344, to: 344 },
     nextBlink: {}, blinkUntil: {}, glance: {}, glanceUntil: {},
+    // added Nov 6, 2026: listener reactions, extra talking poses, idle fidgets, crowd,
+    // flashes, the winner's celebration, and the camera operator
+    react: {}, altPose: null, fidget: { id: null, act: null, until: 0, next: 5000 },
+    waveAt: 9000, slamAt: -1e9, flashAt: -1e9, winner: null, doneAt: 0, confetti: [], camOp: -1e9,
   };
   function freshProps() {
     return { pencil: "hand", toothpick: true, sleeves: false, phonesOff: false, heated: 0 };
@@ -148,6 +155,16 @@ const Studio = (() => {
        { hal: "miccheck", royce: "tie", deacon: "laptop", lonnie: "tablet" }),
     sc("deacon", "Deacon Pettiford", "Pre-show", "",
        { hal: "notes", royce: "notes", deacon: "makeup", lonnie: "tablet" }, { artist: "deacon" }),
+    sc("crew", "Camera two", "Pre-show", "",
+       { hal: "notes", royce: "tie", deacon: "coffee", lonnie: "tablet" }, { camera: true }),
+    sc("lonnie", "Lonnie Fairweather", "On the phone", "",
+       { hal: "notes", royce: "write", deacon: "laptop", lonnie: "phone" }),
+    sc("crew", "Lighting", "Light check", "",
+       { hal: "notes", royce: "notes", deacon: "coffee", lonnie: "tablet" }, { lights: true }),
+    sc("deacon", "Deacon Pettiford", "Pre-show", "",
+       { hal: "notes", royce: "laugh", deacon: "laugh", lonnie: "coffee" }),
+    sc("royce", "Royce Stanhope", "On the phone", "",
+       { hal: "miccheck", royce: "phone", deacon: "laptop", lonnie: "tablet" }),
   ];
   const STEP_ALIAS = { topic: "start" };
 
@@ -236,7 +253,7 @@ const Studio = (() => {
     pixelText("ON AIR", x + 3, y + 3, 1, S.onAir ? "#ff5a64" : "#5a2026");
   }
 
-  function drawDesk() {
+  function drawDesk(t) {
     R(32, DESK, 256, 1, "#ffffff");
     R(32, DESK + 1, 256, 4, "#e6ecf5");
     R(32, DESK + 5, 256, 1, "#8f9bb6");
@@ -256,6 +273,145 @@ const Studio = (() => {
     // stripes at the base
     R(36, DESK + 34, 248, 2, "#d8323a"); R(36, DESK + 36, 248, 1, "#f4b740"); R(36, DESK + 37, 248, 3, "#0c1a4a");
     g.fillStyle = "rgba(0,0,0,0.35)"; g.fillRect(30, DESK + 40, 260, 2);
+    if (t == null) return;
+    // LED chase lights along the red stripe, in the speaker's color when we're live
+    const accent = S.mode === "live" && ACCENT[S.speaker] && !S.paused ? ACCENT[S.speaker] : "#f4b740";
+    for (let k = 0; k < 4; k++) {
+      const pos = (t / 11 + k * 62) % 248;
+      g.globalAlpha = 0.35; R(36 + pos - 6, DESK + 34, 6, 2, accent);
+      g.globalAlpha = 1; R(36 + pos, DESK + 34, Math.min(8, 248 - pos), 2, accent);
+    }
+    g.globalAlpha = 1;
+    if (t - S.slamAt < 200) R(36, DESK + 34, 248, 3, "#ffffff");
+    // a shine sweeps across the logo panel every few seconds
+    const k = (t % 7000) / 800;
+    if (k < 1) {
+      const sx = 104 + k * 118;
+      g.save();
+      g.beginPath(); g.rect(111, DESK + 10, 98, 21); g.clip();
+      g.fillStyle = "rgba(255,255,255,0.22)";
+      g.beginPath(); g.moveTo(sx, DESK + 10); g.lineTo(sx + 7, DESK + 10); g.lineTo(sx - 3, DESK + 31); g.lineTo(sx - 10, DESK + 31); g.fill();
+      g.restore();
+    }
+  }
+
+  // ---------- Life around the set (added Nov 6, 2026) ----------
+  // Tiny players running drills behind the desk: a pass play on the field, a jumper on the court.
+  function tinyPlayer(x, feet, jersey, helmet, step) {
+    R(x, feet - 6, 2, 2, helmet);
+    R(x, feet - 4, 2, 2, jersey);
+    R(x, feet - 2, 1, 2, "#e9eefc"); R(x + 1, feet - 2 + step, 1, 2 - step, "#e9eefc");
+  }
+  function drawFieldLife(t) {
+    // football: the receiver runs a go route, the quarterback hits him in stride
+    const p = t % 6400;
+    const run = (p / 140) | 0;
+    const wr = 26 + Math.min(p, 4600) / 4600 * 124;
+    tinyPlayer(24, 99, "#d8323a", "#f4b740", 0);                       // quarterback
+    tinyPlayer(wr, 99, "#d8323a", "#f4b740", run % 2);                 // receiver
+    tinyPlayer(wr - 7, 99, "#e9eefc", "#11224f", (run + 1) % 2);       // the corner, a step behind
+    if (p > 1300 && p < 2900) {
+      const k = (p - 1300) / 1600;
+      const tx = 26 + 2900 / 4600 * 124;
+      R(24 + (tx - 24) * k, 92 - Math.sin(Math.PI * k) * 10, 2, 1, "#7a3f1c");
+    }
+    // basketball: dribble in, pull up, swish
+    const q = t % 5200;
+    const hoopX = 311;
+    R(316, 85, 1, 8, "#f2efe6"); R(311, 92, 5, 1, "#e07a2c");                 // backboard and rim
+    const swish = q > 2500 && q < 2800;
+    R(312, 93 + (swish ? 1 : 0), 1, 3, "#d8dde8"); R(314, 93 + (swish ? 1 : 0), 1, 3, "#d8dde8");
+    let px, bx, by;
+    if (q < 1800) {
+      px = 272 + (q / 1800) * 24;
+      bx = px + 2; by = ((q / 180) | 0) % 2 ? 99 : 96;
+    } else if (q < 2600) {
+      px = 296;
+      const k = (q - 1800) / 800;
+      bx = 298 + (hoopX + 2 - 298) * k; by = 93 - Math.sin(Math.PI * k) * 12 + k * -1;
+    } else {
+      px = 296 - ((q - 2600) / 2600) * 24;
+      const k = Math.min(1, (q - 2600) / 500);
+      bx = hoopX + 2; by = 92 + k * 7;
+    }
+    tinyPlayer(px, 100, "#1f44a8", "#6e4429", ((q / 150) | 0) % 2);
+    R(bx, by, 2, 2, "#e07a2c");
+  }
+
+  // The crowd: camera flashes, a wave now and then, and a roar of flashes on a desk slam.
+  function drawCrowdLife(t) {
+    if (Math.random() < 0.35) R(Math.random() * W, 49 + Math.random() * 38, 1, 1, "#ffffff");
+    if (t - S.slamAt < 450) for (let i = 0; i < 14; i++) R(Math.random() * W, 74 + Math.random() * 15, 1, 1, "#ffffff");
+    if (S.mode === "preshow" || S.mode === "countdown" || reducedMotion) return;
+    if (t > S.waveAt + 4200) S.waveAt = t + 22000 + Math.random() * 18000;
+    if (t > S.waveAt) {
+      const wx = -12 + ((t - S.waveAt) / 4200) * (W + 24);
+      g.fillStyle = "rgba(255,248,220,0.12)"; g.fillRect(wx - 6, 74, 12, 15);
+      for (let x = Math.round(wx) - 5; x < wx + 5; x += 2) R(x, 74 + ((x * 7) & 1), 1, 1, "#fff6d0");
+    }
+  }
+
+  // Light beams from the towers between the monitors, swaying slowly.
+  function drawBeams(t) {
+    const flicker = S.mode === "preshow" && S.current && S.current.lights;
+    const base = S.mode === "live" ? 0.05 : 0.035;
+    [100, 218, 2, 315].forEach((x, i) => {
+      const on = flicker ? ((t / 90 + i * 3) | 0) % 3 !== 0 : true;
+      if (!on) { R(x - 4, 14, 10, 5, "#232c58"); return; }
+      const sway = Math.sin(t / 2700 + i * 1.7) * 16 + (x < 20 ? 30 : x > 300 ? -30 : 0);
+      g.fillStyle = `rgba(255,236,190,${flicker ? base * 2 : base})`;
+      g.beginPath(); g.moveTo(x - 3, 18); g.lineTo(x + 5, 18); g.lineTo(x + 1 + sway + 20, 104); g.lineTo(x + 1 + sway - 20, 104); g.fill();
+    });
+  }
+
+  // A warm spotlight cone on whoever's talking.
+  function drawCone(t) {
+    if (S.mode !== "live" || !CAST[S.speaker] || S.paused) return;
+    const c = CAST[S.speaker];
+    const k = Math.min(1, (t - S.lineAt) / 220);
+    g.fillStyle = `rgba(255,230,160,${(0.09 * k).toFixed(3)})`;
+    g.beginPath(); g.moveTo(c.x - 4, 9); g.lineTo(c.x + 4, 9); g.lineTo(c.x + 30, DESK); g.lineTo(c.x - 30, DESK); g.fill();
+    g.fillStyle = `rgba(255,226,150,${(0.06 * k).toFixed(3)})`;
+    for (let i = 0; i < 3; i++) g.fillRect(c.x - 18 - i * 4, HEAD_TOP - 8 - i * 3, 36 + i * 8, 48 + i * 3);
+  }
+
+  // Confetti for the winner.
+  function spawnConfetti(colors, n) {
+    for (let i = 0; i < n; i++) {
+      S.confetti.push({ x: Math.random() * W, y: -Math.random() * 60, vx: (Math.random() - 0.5) * 0.4,
+                        vy: 0.4 + Math.random() * 0.6, w: Math.random() < 0.5 ? 2 : 1,
+                        c: colors[(Math.random() * colors.length) | 0], ph: Math.random() * 6 });
+    }
+  }
+  function drawConfetti(t, dt) {
+    if (!S.confetti.length) return;
+    const k = Math.min(3, dt / 16.7);
+    for (const p of S.confetti) {
+      p.y += p.vy * k; p.x += (p.vx + Math.sin(t / 300 + p.ph) * 0.25) * k;
+      R(p.x, p.y, p.w, ((t / 120 + p.ph) | 0) % 2 ? 1 : 2, p.c);
+    }
+    S.confetti = S.confetti.filter((p) => p.y < H);
+  }
+
+  // A camera operator rolls camera two across the floor.
+  function drawCameraOp(t) {
+    const since = t - S.camOp;
+    if (since < 0 || since > SCENE_MS) return;
+    const x = Math.round(-36 + (since / SCENE_MS) * 390);
+    const skin = "#b9825a";
+    crewLegs(x, true, t);
+    R(x - 7, 99, 14, 42, "#3b3f4f"); R(x - 7, 99, 14, 1, "#565b70");
+    R(x - 2, 96, 4, 3, "#9a6a48"); R(x - 6, 83, 12, 13, skin);
+    R(x - 1, 88, 1, 2, "#16161f"); R(x + 3, 88, 1, 2, "#16161f");
+    R(x - 7, 80, 14, 4, "#1d1a18"); R(x - 8, 79, 16, 1, "#22242d"); R(x - 9, 84, 2, 5, "#22242d");
+    R(x + 6, 108, 8, 3, "#3b3f4f"); R(x + 13, 108, 3, 3, skin);                       // arm on the handle
+    // the camera on its pedestal
+    R(x + 22, 126, 2, 32, "#3a3f50"); R(x + 15, 157, 16, 2, "#22242d");
+    R(x + 15, 159, 2, 2, "#111"); R(x + 29, 159, 2, 2, "#111");
+    R(x + 14, 112, 18, 12, "#2b2f3d"); R(x + 14, 112, 18, 1, "#4a5268");
+    R(x + 32, 114, 5, 8, "#11131a"); R(x + 36, 115, 1, 6, "#5ccfe6");
+    R(x + 10, 114, 4, 6, "#22242d");
+    if (((t / 400) | 0) % 2) R(x + 15, 110, 3, 2, "#ff3b3b");                          // tally light
   }
 
   // ---------- People ----------
@@ -502,6 +658,7 @@ const Studio = (() => {
     S.current = scene;
     moveArtist(scene.artist, t);
     if (scene.producer) S.producer = { at: t, x: 344, to: PRODUCER_SPOT };
+    if (scene.camera) S.camOp = t;
     if (S.onScene) S.onScene(scene);
   }
   function moveArtist(target, t) {
@@ -529,13 +686,17 @@ const Studio = (() => {
         case "laptop": case "notes": case "write": case "tablet": o.ly = 1; break;
         case "stretch": o.bob = ((t / 600) | 0) % 2; break;
         case "tie": o.ly = 1; break;
+        case "laugh": o.mouth = "wide"; o.squint = true; o.bob = ((t / 140) | 0) % 2; break;
+        case "phone": o.lx = -1; o.mouth = flap && ((t / 900) | 0) % 2 ? "open" : "closed"; break;
       }
       return o;
     }
 
     if (S.mode === "live" && S.speaker && !S.paused) {
       if (S.speaker === id) {
-        o.pose = POSE[S.delivery] || "rest";
+        o.pose = S.altPose || POSE[S.delivery] || "rest";
+        if (o.pose === "think") { o.ly = -1; o.brow = "raise"; }
+        if (o.pose === "count" || o.pose === "tap") o.brow = o.pose === "tap" ? "angry" : "flat";
         o.mouth = flap ? "open" : "closed";
         if (o.pose === "laugh") { o.mouth = "wide"; o.squint = true; o.bob = ((t / 110) | 0) % 2; }
         if (o.pose === "lean") o.bob = 1;
@@ -551,13 +712,24 @@ const Studio = (() => {
           o.brow = "angry";
           if (since < 320) { o.pose = "handsup"; o.bob = -2; o.mouth = "closed"; }
           else {
-            if (!S.slammed) { S.slammed = true; if (S.onSlam) S.onSlam(); }
+            if (!S.slammed) { S.slammed = true; S.slamAt = t; if (S.onSlam) S.onSlam(); }
             o.pose = "rest"; o.bob = since < 470 ? 1 : 0;
           }
         }
       } else {
         const target = S.speaker === "caller" ? 52 : (CAST[S.speaker] ? CAST[S.speaker].x : c.x);
         o.lx = target < c.x - 4 ? -1 : target > c.x + 4 ? 1 : 0;
+        // listeners react: a nod, a smirk, a raised eyebrow, a head shake
+        const rx = S.react[id];
+        if (rx && t > rx.at && t < rx.at + rx.dur) {
+          const e = t - rx.at;
+          if (rx.kind === "nod") o.ly = ((e / 230) | 0) % 2;
+          else if (rx.kind === "smile") o.mouth = "smile";
+          else if (rx.kind === "raise") o.brow = "raise";
+          else if (rx.kind === "low") { o.brow = "low"; o.squint = true; }
+          else if (rx.kind === "lean") { o.bob = -1; o.brow = "raise"; }
+          else if (rx.kind === "shake") o.lx = ((e / 170) | 0) % 2 ? -1 : 1;
+        }
       }
       return o;
     }
@@ -568,12 +740,36 @@ const Studio = (() => {
       S.glanceUntil[id] = t + 1800 + Math.random() * 3000;
     }
     o.lx = S.glance[id];
-    if (S.mode === "done") { o.lx = 0; o.mouth = "smile"; }
+    // between calls, somebody always has something to do
+    if (S.mode === "idle" && S.fidget.id === id && t < S.fidget.until) {
+      o.act = S.fidget.act;
+      if (o.act === "laugh") { o.mouth = "wide"; o.squint = true; o.bob = ((t / 140) | 0) % 2; }
+      if (["notes", "write", "tablet", "laptop"].includes(o.act)) o.ly = 1;
+    }
+    if (S.mode === "done") {
+      o.lx = 0; o.mouth = "smile";
+      const since = t - S.doneAt;
+      if (S.winner === id && since < 5200) { o.pose = "pump"; o.bob = ((t / 260) | 0) % 2 ? -1 : 0; o.squint = true; o.mouth = "wide"; }
+      else if (S.winner && id !== "hal" && since < 3600) { o.pose = "clap"; o.lx = CAST[S.winner].x < c.x ? -1 : 1; }
+      else if (S.winner && id === "hal" && since < 3600) o.ly = ((since / 300) | 0) % 2;
+    }
     return o;
   }
+  const FIDGETS = { hal: ["miccheck", "notes"], royce: ["write", "tie", "notes"], deacon: ["coffee", "stretch"],
+                    lonnie: ["tablet", "coffee", "phone"] };
 
+  let lastT = 0;
   function frame(t, once) {
+    const dt = lastT ? t - lastT : 16.7;
+    lastT = t;
     updateScene(t);
+    if (S.mode === "idle" && t > S.fidget.next) {
+      const ids = Object.keys(CAST);
+      const id = ids[(Math.random() * ids.length) | 0];
+      const acts = FIDGETS[id];
+      S.fidget = { id, act: acts[(Math.random() * acts.length) | 0], until: t + 3400, next: t + 6500 + Math.random() * 6000 };
+      if (id === "deacon" && S.fidget.act === "coffee") S.sceneAt = t;      // start the sip from the top
+    }
     // lights: dimmer before the show, full when live
     const targetDim = S.mode === "preshow" || S.mode === "countdown" ? 0.24 : 0;
     S.dim += (targetDim - S.dim) * 0.06;
@@ -589,19 +785,16 @@ const Studio = (() => {
 
     g = screen;
     g.drawImage(bg, 0, 0);
-    // camera flashes in the crowd
-    if (Math.random() < 0.35) R(Math.random() * W, 49 + Math.random() * 38, 1, 1, "#ffffff");
+    drawCrowdLife(t);
+    drawBeams(t);
+    drawFieldLife(t);
     drawOnAirSign();
 
     const states = {};
     for (const id in CAST) states[id] = personState(id, t);
 
-    // spotlight behind whoever is talking
-    if (S.mode === "live" && CAST[S.speaker] && !S.paused) {
-      const c = CAST[S.speaker];
-      g.fillStyle = "rgba(255,226,150,0.07)";
-      for (let i = 0; i < 4; i++) g.fillRect(c.x - 18 - i * 4, HEAD_TOP - 8 - i * 3, 36 + i * 8, 48 + i * 3);
-    }
+    // spotlight on whoever is talking
+    drawCone(t);
 
     // chairs, then people, then the desk in front of them
     for (const id in CAST) {
@@ -622,17 +815,41 @@ const Studio = (() => {
       if (o.pose === "pump") o.hand = raisedArm(id, c.x, hy, 1, ((t / 220) | 0) % 2 ? 3 : 0, true);
       if (o.pose === "handsup" || (o.act === "stretch" && o.bob)) { raisedArm(id, c.x, hy, -1, 0, false); o.hand = raisedArm(id, c.x, hy, 1, 0, false); }
       if (o.act === "miccheck") raisedArm(id, c.x, hy - 6, -1, 0, false);
+      // counting points off on his fingers
+      if (o.pose === "count") {
+        o.hand = raisedArm(id, c.x, hy, 1, 2, false);
+        const n = 1 + (((t - S.lineAt) / 650) | 0) % 3;
+        for (let i = 0; i < n; i++) R(o.hand.x + i, o.hand.y - 3, 1, 3, i % 2 ? c.shade : c.skin);
+      }
+      // hand to the chin, thinking it over
+      if (o.pose === "think") {
+        R(c.x + 5, hy + 19, 4, DESK - (hy + 19), sleeveOf(id));
+        R(c.x + 3, hy + 15, 5, 4, c.skin);
+      }
+      // applause for the winner
+      if (o.pose === "clap") {
+        const sep = ((t / 170) | 0) % 2 ? 0 : 3;
+        const sl = sleeveOf(id);
+        R(c.x - 9 - sep, hy + 27, 4, DESK - (hy + 27), sl); R(c.x + 5 + sep, hy + 27, 4, DESK - (hy + 27), sl);
+        R(c.x - 6 - sep, hy + 23, 4, 4, c.skin); R(c.x + 2 + sep, hy + 23, 4, 4, c.skin);
+      }
+      // on the phone
+      if (o.act === "phone") {
+        R(c.x - 13, hy + 12, 4, DESK - (hy + 12), sleeveOf(id));
+        R(c.x - 13, hy + 8, 4, 4, c.skin);
+        R(c.x - 12, hy + 5, 2, 9, "#16161f"); R(c.x - 12, hy + 6, 1, 1, "#5ccfe6");
+      }
     }
 
-    drawDesk();
+    drawDesk(t);
     deskBalls();
 
     for (const id in CAST) {
       const c = CAST[id], o = states[id], cx = c.x, hy = o.hy;
       deskItems(id, cx, t, o.act);
       const armsOff = o.pose === "away" || o.pose === "stand";   // crossed, or standing with the other arm down
-      const raisedRight = armsOff || o.pose === "point" || o.pose === "pump" || o.pose === "handsup" || (o.act === "stretch" && o.bob);
-      const raisedLeft = armsOff || o.pose === "handsup" || o.act === "miccheck" || (o.act === "stretch" && o.bob);
+      const raisedRight = armsOff || ["point", "pump", "handsup", "count", "think", "clap"].includes(o.pose) || (o.act === "stretch" && o.bob);
+      const raisedLeft = armsOff || o.pose === "handsup" || o.pose === "clap" || o.act === "miccheck" || o.act === "phone" || (o.act === "stretch" && o.bob);
       const holding = o.act === "notes" || o.act === "tablet";
 
       if (holding) {
@@ -669,6 +886,8 @@ const Studio = (() => {
         }
       } else if (!raisedRight) {
         restArm(id, cx, 1);
+        // tapping the desk to make the point
+        if (o.pose === "tap") R(cx + 5, 112 + (((t / 150) | 0) % 2) * 2, 1, 4, c.skin);
       }
 
       // Royce's pencil: clicks while he talks, stops when he goes cold, lies down at the close
@@ -689,8 +908,19 @@ const Studio = (() => {
       drawArtist(t);
       drawProducer(t, PRODUCER_SPOT, S.countdown);
     }
+    if (S.mode === "preshow") drawCameraOp(t);
+    // dust off the desk on a slam
+    if (t - S.slamAt < 400 && CAST[S.speaker]) {
+      const c = CAST[S.speaker], k = (t - S.slamAt) / 400;
+      g.fillStyle = `rgba(230,236,245,${(0.8 * (1 - k)).toFixed(2)})`;
+      for (const dx of [-14, -8, 8, 14]) g.fillRect(c.x + dx * (1 + k), DESK - 2 - k * 6, 1, 1);
+    }
 
     if (S.dim > 0.005) { g.fillStyle = `rgba(4,8,30,${S.dim.toFixed(3)})`; g.fillRect(0, 0, W, H); }
+    drawConfetti(t, dt);
+    // the lights hit full when we go to air
+    const flash = 1 - (t - S.flashAt) / 380;
+    if (flash > 0) { g.fillStyle = `rgba(255,250,235,${(0.55 * flash).toFixed(3)})`; g.fillRect(0, 0, W, H); }
     if (!once) requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
@@ -707,9 +937,18 @@ const Studio = (() => {
         S.producer = { at: -1e9, x: 344, to: 344 };
       }
       if (mode === "countdown") moveArtist(null, t);
-      if (mode === "live") { S.props = freshProps(); S.speaker = null; }
+      if (mode === "live") { S.props = freshProps(); S.speaker = null; S.flashAt = t; S.react = {}; }
       if (mode !== "live") S.speaker = null;
+      if (mode === "done") S.doneAt = t;
+      if (mode !== "done") { S.winner = null; S.confetti = []; }
     },
+    // The winner celebrates: confetti in his color, a fist pump, and applause from the desk.
+    celebrate(id) {
+      S.winner = CAST[id] ? id : null;
+      S.doneAt = performance.now();
+      if (S.winner) spawnConfetti([ACCENT[id], "#f4b740", "#ffffff", "#d8323a"], reducedMotion ? 40 : 140);
+    },
+    accent(id) { return ACCENT[id] || "#f4b740"; },
     setOnAir(on) { S.onAir = on; },
     // The pipeline moved to a new step (start, research, verify, write, check, judge, close).
     setStep(step) {
@@ -741,6 +980,28 @@ const Studio = (() => {
         const questions = (text.match(/\?/g) || []).length;
         if (delivery === "emphatic" || delivery === "heated" || questions >= 2 || lower.includes("sleeve")) pr.sleeves = true;
       }
+      // a little variety in how he talks: counting off numbers, tapping the desk, thinking it over
+      S.altPose = null;
+      if (CAST[id]) {
+        const r = Math.random();
+        if (/\d/.test(text) && ["confident", "building", "calm", "warm", "curious"].includes(delivery) && r < 0.4) S.altPose = "count";
+        else if (delivery === "emphatic" && r < 0.5) S.altPose = "tap";
+        else if (["curious", "quiet", "calm"].includes(delivery) && (text || "").includes("?") && r < 0.5) S.altPose = "think";
+      }
+      // and the others react while he talks
+      S.react = {};
+      const now = performance.now();
+      for (const other in CAST) {
+        if (other === id) continue;
+        const r = Math.random();
+        let kind = "none";
+        if (other === "hal") kind = r < 0.25 ? "nod" : "none";
+        else if (delivery === "laughing") kind = r < 0.7 ? "smile" : "none";
+        else if (["heated", "fired_up", "slam", "emphatic"].includes(delivery)) kind = r < 0.35 ? "raise" : r < 0.55 ? "lean" : "none";
+        else if (["sarcastic", "dismissive", "cold"].includes(delivery)) kind = r < 0.3 ? "low" : r < 0.45 ? "smile" : "none";
+        else kind = r < 0.25 ? "nod" : r < 0.36 ? "shake" : r < 0.44 ? "smile" : "none";
+        S.react[other] = { kind, at: now + 300 + Math.random() * 900, dur: 900 + Math.random() * 900 };
+      }
     },
     silence() { S.speaker = null; },
     // Where to point a speech bubble, in studio pixels.
@@ -771,6 +1032,17 @@ const Studio = (() => {
       for (let x = 24; x < 129; x += 7) R(x, 23, 4, 2, "#e9eefc");
       g = screen;
     },
+    // A 16 x 16 pixel trophy for the end card.
+    trophy(target) {
+      g = target.getContext("2d");
+      g.clearRect(0, 0, 16, 16);
+      const gold = "#f4b740", light = "#ffe08a", dark = "#b8862a";
+      R(3, 2, 10, 1, light); R(3, 3, 10, 4, gold); R(4, 7, 8, 1, gold); R(5, 8, 6, 1, gold); R(6, 9, 4, 1, dark);
+      R(7, 10, 2, 2, dark); R(1, 3, 2, 1, gold); R(1, 3, 1, 3, gold); R(1, 6, 2, 1, gold);
+      R(13, 3, 2, 1, gold); R(14, 3, 1, 3, gold); R(13, 6, 2, 1, gold);
+      R(5, 12, 6, 1, gold); R(4, 13, 8, 2, "#7a4a1c"); R(4, 3, 1, 3, light); R(6, 14, 4, 1, light);
+      g = screen;
+    },
     // A 16 x 16 icon for the browser tab.
     icon(target) {
       g = target.getContext("2d");
@@ -781,13 +1053,14 @@ const Studio = (() => {
       g = screen;
     },
     // A head-and-shoulders portrait for the monitors and the cast cards (32 x 32 canvas).
-    portrait(target, id) {
+    portrait(target, id, opts = {}) {
       const pg = target.getContext("2d");
       g = pg;
-      R(0, 0, 32, 32, "#2a57c9");
-      R(0, 26, 32, 6, "#2350b8");
+      R(0, 0, 32, 32, opts.bg || "#2a57c9");
+      R(0, 26, 32, 6, opts.bg2 || "#2350b8");
       if (CAST[id]) {
-        drawPerson(id, 16, 6, { bottom: 32, mouth: "closed", brow: "flat", phonesOff: false, toothpick: true });
+        drawPerson(id, 16, 6, { bottom: 32, mouth: opts.mouth || "closed", brow: opts.brow || "flat", blink: !!opts.blink,
+                                lx: opts.lx || 0, phonesOff: false, toothpick: true });
       } else {
         // a phone handset for the caller
         R(9, 8, 14, 4, "#16161f"); R(7, 9, 4, 8, "#16161f"); R(21, 9, 4, 8, "#16161f");

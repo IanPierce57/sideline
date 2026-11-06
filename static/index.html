@@ -7,12 +7,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261106d">
+  <link rel="stylesheet" href="style.css?v=20261106g">
 </head>
 <body>
   <header class="masthead">
     <h1 class="logo"><canvas id="logo" width="130" height="26" aria-label="Sideline"></canvas></h1>
-    <div class="masthead-sub">The NBA and NFL call-in debate show.</div>
+    <div class="masthead-sub">The NBA and NFL call-in debate show. <span>Every number checked twice.</span></div>
+    <div class="air-pill" id="air-pill"><i></i><span id="air-text">Lines open</span></div>
   </header>
 
   <!-- The TV: pixel studio on the canvas, broadcast graphics on top -->
@@ -28,8 +29,9 @@
           <div class="mon-info" id="cam-info">Moderator<br><span class="gold">Lines open</span></div>
         </div>
       </div>
-      <div class="monitor center">
-        <div class="mon-brand">&middot; SIDELINE &middot;</div>
+      <div class="monitor center" id="center-mon">
+        <div class="mon-brand" id="center-brand">&middot; SIDELINE &middot;</div>
+        <div class="mon-anim" id="center-anim" hidden><canvas id="mon-anim" aria-hidden="true"></canvas></div>
         <div class="mon-topic" id="center-topic">ASK THE DESK</div>
         <div class="mon-foot" id="center-foot">NBA &middot; NFL &middot; today's players and teams</div>
       </div>
@@ -72,7 +74,7 @@
 
       <!-- End of segment -->
       <div class="endcard" id="endcard" hidden>
-        <div class="end-tag">THAT'S THE BOARD <span class="sample-stamp" id="end-sample" hidden>SAMPLE</span></div>
+        <div class="end-tag"><canvas id="end-trophy" width="16" height="16" aria-hidden="true"></canvas>THAT'S THE BOARD <span class="sample-stamp" id="end-sample" hidden>SAMPLE</span></div>
         <h2 class="end-topic" id="end-topic"></h2>
         <div class="end-label" id="end-label">Final answers</div>
         <div class="end-rows" id="end-rows"></div>
@@ -80,6 +82,12 @@
           <button type="button" class="pixel-btn small" id="end-replay">Replay</button>
           <button type="button" class="pixel-btn small red" id="end-ask">Ask the desk</button>
         </div>
+      </div>
+
+      <!-- Broadcast wipe between the pre-show and the show, and before the end card -->
+      <div class="stinger" id="stinger" hidden>
+        <i class="wipe w1"></i><i class="wipe w2"></i><i class="wipe w3"></i>
+        <canvas id="stinger-logo" width="130" height="26" aria-hidden="true"></canvas>
       </div>
 
       <div class="ticker">
@@ -110,7 +118,7 @@
       </div>
       <form id="form" class="console-form">
         <label for="topic" class="sr-only">Your NBA or NFL topic</label>
-        <input id="topic" placeholder="Type any NBA or NFL topic..." autocomplete="off" maxlength="200" required>
+        <input id="topic" placeholder="Ask anything about today's NBA or NFL..." autocomplete="off" maxlength="200" required>
         <button id="go" type="submit" class="pixel-btn red">Ask the desk</button>
       </form>
       <div class="examples">
@@ -118,6 +126,19 @@
         <span id="examples-live" class="examples-live"></span>
       </div>
       <p class="console-status" id="status" role="status"></p>
+      <!-- How a segment gets made: lights up step by step while yours is being made -->
+      <div class="pipeline" id="pipeline">
+        <div class="pipeline-head"><span id="pipeline-title">How a segment gets made</span><span class="pipeline-clock" id="pipeline-clock"></span></div>
+        <ol>
+          <li data-step="topic"><b>1</b>Screen the call</li>
+          <li data-step="research"><b>2</b>Pull stats</li>
+          <li data-step="verify"><b>3</b>Check twice</li>
+          <li data-step="write"><b>4</b>Write it</li>
+          <li data-step="check"><b>5</b>Line check</li>
+          <li data-step="judge"><b>6</b>Blind judges</li>
+          <li data-step="close"><b>7</b>The verdict</li>
+        </ol>
+      </div>
     </section>
 
     <!-- Sources: where the numbers come from, and this segment's receipts -->
@@ -127,7 +148,7 @@
         <span class="right">Every number is checked twice</span>
       </div>
       <div class="receipts" id="receipts" hidden>
-        <div class="receipts-head">THE RECEIPTS <span>this segment</span></div>
+        <div class="receipts-head">THE RECEIPTS <span>this segment · every fact on air</span></div>
         <div class="receipts-summary" id="receipts-summary"></div>
         <div class="receipts-list" id="receipts-list"></div>
       </div>
@@ -143,7 +164,7 @@
   <section class="cast">
     <div class="cast-head">
       <h2>The Desk</h2>
-      <p>Who's on the Sideline.</p>
+      <p>Four voices, one desk. All fictional, all opinionated.</p>
     </div>
     <div class="cast-grid" id="cast-grid"></div>
   </section>
@@ -156,10 +177,12 @@
     <p><strong>Stats.</strong> Every number on the show is pulled from one source and checked against a second; anything that can't be confirmed is cut. Data via nflverse (CC BY 4.0) · NFL Next Gen Stats via nflverse · FTN Data via nflverse (CC BY-SA 4.0) · Sleeper · muffed.ai · Wikipedia and Wikidata (CC BY-SA 4.0).</p>
     <p><strong>Scoring.</strong> A panel of three AI judges scores every argument without knowing who made it, on evidence, reasoning, rebuttal, impact, and clarity. Hal announces their result; he doesn't pick the winner.</p>
     <p><strong>Headlines.</strong> The ticker shows real headlines exactly as the outlets wrote them, via GNews (free plan, so they run a few hours behind). A story appears only if at least two outlets report it, and they're named after it.</p>
-    <p><strong>Fonts.</strong> Pixelify Sans and Silkscreen, from Google Fonts (SIL Open Font License).</p>
+    <p><strong>Art and animation.</strong> Every pixel of the studio, the cast, and the monitor animations is drawn in code; there are no image files.</p>
+    <p><strong>Fonts.</strong> Atkinson Hyperlegible and Silkscreen, from Google Fonts (SIL Open Font License).</p>
   </footer>
 
-  <script src="studio.js?v=20261106d"></script>
-  <script src="app.js?v=20261106d"></script>
+  <script src="studio.js?v=20261106g"></script>
+  <script src="monitor.js?v=20261106g"></script>
+  <script src="app.js?v=20261106g"></script>
 </body>
 </html>

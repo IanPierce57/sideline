@@ -40,10 +40,25 @@ const FORMATS = { debate: "WHO'S BETTER?", prediction: "WHO WINS?", buy_or_sell:
 
 // ---------- Small helpers for the on-screen graphics ----------
 
-function setNameplate(name, title) {
+const REDUCED_MOTION = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+const ACCENTS = { hal: "#c9d2e3", royce: "#f2c14e", deacon: "#e0414e", lonnie: "#5ccfe6",
+                  caller: "#f4b740", producer: "#f4b740", artist: "#2fb3a0", crew: "#9aa8d6" };
+
+// The show's state drives the glow behind the TV and the pill in the masthead.
+const AIR_TEXT = { idle: "Lines open", preshow: "Pre-show", countdown: "Stand by", live: "On the air", done: "That's the board" };
+function setShowMode(mode) {
+  document.documentElement.dataset.mode = mode;
+  $("air-text").textContent = AIR_TEXT[mode] || "";
+}
+
+function setNameplate(name, title, who) {
+  const plate = $("nameplate-name").parentElement;
+  const changed = $("nameplate-name").textContent !== name;
   $("nameplate-name").textContent = name;
   $("nameplate-title").textContent = title;
   $("phone-name").textContent = name;          // subtitles under the TV on small screens
+  plate.style.setProperty("--accent", ACCENTS[who] || "var(--gold)");
+  if (changed && !REDUCED_MOTION) { plate.classList.remove("swap"); void plate.offsetWidth; plate.classList.add("swap"); }
 }
 
 function setCamera(id, name, info) {
@@ -52,12 +67,20 @@ function setCamera(id, name, info) {
   $("cam-info").innerHTML = info;
 }
 
-function setCenter(topic, foot) {
+function setCenter(topic, foot, big) {
   const el = $("center-topic");
   el.textContent = topic;
   const n = topic.length;
   el.style.fontSize = n <= 30 ? "3.2cqw" : n <= 60 ? "2.6cqw" : n <= 95 ? "2.15cqw" : "1.8cqw";
+  el.classList.remove("count");
+  if (big) { void el.offsetWidth; el.classList.add("count"); }
   $("center-foot").textContent = foot;
+}
+
+// The center monitor's loading animations (monitor.js) during the pre-show.
+function monitorAnim(on, step) {
+  $("center-mon").classList.toggle("anim", on);
+  if (on) Monitor.start(step); else Monitor.stop();
 }
 
 function setRight(big, small) {
@@ -66,8 +89,10 @@ function setRight(big, small) {
 }
 
 function setTicker(items) {
-  const html = items.map(([label, text]) =>
-    `<span class="gold">${escapeHtml(label)}</span>&nbsp;${escapeHtml(text)}<span class="gem">&#9670;</span>`).join("");
+  const html = items.map(([label, text]) => {
+    const kind = label === "NFL" ? "nfl" : label === "NBA" ? "nba" : "show";
+    return `<span class="tag ${kind}">${escapeHtml(label)}</span>${escapeHtml(text)}<span class="gem">&#9670;</span>`;
+  }).join("");
   const el = $("ticker");
   el.innerHTML = `<span>${html}</span><span>${html}</span>`;   // two copies so it loops smoothly
   const chars = items.reduce((sum, [a, b]) => sum + a.length + b.length, 0);
@@ -111,6 +136,7 @@ function showBubble(anchorId, text, revealSeconds = 0) {
     tail.className = "tail";
     tail.style.left = `${Math.min(Math.max(((xPct - left) / width) * 100, 6), 94)}%`;
   }
+  if (!REDUCED_MOTION) { bubble.classList.remove("pop"); void bubble.offsetWidth; bubble.classList.add("pop"); }
   typeText(text, revealSeconds);
 }
 
@@ -147,9 +173,30 @@ function setOnAir(on) {
 
 // ---------- Stat chyron, score meter, and end card ----------
 
+// Count a number up to its value, then show the value exactly as the fact pack has it
+// ("1,715", "+0.21", "55.1%"). Anything that isn't a plain number ("8-7") just appears.
+const counting = new Map();
+function countUp(el, value, ms = 650) {
+  clearInterval(counting.get(el));
+  const text = String(value);
+  const m = text.match(/^([+-]?)([\d,]*\.?\d+)(%?)$/);
+  if (!m || REDUCED_MOTION) { el.textContent = text; return; }
+  const target = parseFloat(m[2].replace(/,/g, ""));
+  const decimals = (m[2].split(".")[1] || "").length;
+  const commas = m[2].includes(",");
+  const started = performance.now();
+  const id = setInterval(() => {
+    const k = Math.min(1, (performance.now() - started) / ms);
+    if (k >= 1) { el.textContent = text; clearInterval(id); return; }
+    const v = (target * (1 - Math.pow(1 - k, 3))).toFixed(decimals);
+    el.textContent = m[1] + (commas ? Number(v).toLocaleString("en-US", { minimumFractionDigits: decimals }) : v) + m[3];
+  }, 40);
+  counting.set(el, id);
+}
+
 // A stat from the fact pack: { value, label, definition, source, asOf }.
 function showChyron(stat, sample) {
-  $("stat-value").textContent = stat.value;
+  countUp($("stat-value"), stat.value);
   $("stat-label").textContent = stat.label;
   $("stat-def").textContent = stat.definition;
   $("stat-foot").textContent = `Source: ${stat.source} · ${stat.asOf}`;
@@ -173,9 +220,14 @@ function setScores(update, sample) {
   const best = Math.max(...HOSTS.map((h) => scores[h] ?? -1));
   for (const host of HOSTS) {
     const value = scores[host];
-    $(`num-${host}`).textContent = value == null ? "--" : String(Math.round(value));
+    const num = $(`num-${host}`), row = num.parentElement;
+    const shown = value == null ? "--" : String(Math.round(value));
+    if (num.textContent !== shown && value != null) {
+      countUp(num, shown, 500);
+      row.classList.remove("bump"); void row.offsetWidth; row.classList.add("bump");
+    } else if (value == null) num.textContent = "--";
     $(`bar-${host}`).style.width = value == null ? "0" : `${value}%`;
-    $(`num-${host}`).parentElement.classList.toggle("lead", value != null && value === best);
+    row.classList.toggle("lead", value != null && value === best);
   }
 }
 function hideScores() { scores = {}; $("scorecard").hidden = true; }
@@ -197,6 +249,8 @@ function showEndCard() {
     return;
   }
   $("end-label").textContent = "The winning argument";
+  $("endcard").style.setProperty("--accent", ACCENTS[winner] || "var(--gold)");
+  Studio.celebrate(winner);
   const row = document.createElement("div");
   row.className = "end-row winner";
   const face = document.createElement("canvas");
@@ -281,7 +335,7 @@ function stopIdle() { clearTimeout(idleTimer); clearInterval(upNextTimer); upNex
 function idleChatter(i = 0) {
   const [who, text] = IDLE_CHATTER[i % IDLE_CHATTER.length];
   const person = PEOPLE[who];
-  setNameplate(person.name, person.role.replace("Host · ", ""));
+  setNameplate(person.name, person.role.replace("Host · ", ""), who);
   showBubble(who, text, 0.6);
   idleTimer = setTimeout(() => {
     hideBubble();
@@ -308,13 +362,15 @@ function holdChatter() {
 function showIdle() {
   stopIdle();
   Studio.setMode("idle");
+  setShowMode("idle");
+  monitorAnim(false);
   setOnAir(false);
   clearGraphics();
   setCenter("ASK THE DESK", "NBA · NFL · today's players and teams");
   setRight("TONIGHT", "NBA · NFL · call-in debate");
   setCamera("hal", "Hal Brennan", "Moderator<br><span class=\"gold\">Lines open</span>");
   $("show-tag").textContent = "Sideline";
-  setNameplate("Hal Brennan", "Moderator");
+  setNameplate("Hal Brennan", "Moderator", "hal");
   hideBubble();
   idleTimer = setTimeout(() => idleChatter(0), 1200);
   if (upcoming.games.length) showUpNext();
@@ -393,11 +449,13 @@ function showPreshow(topic) {
   clearGraphics();
   setPlayButtons(false);
   Studio.setMode("preshow");
+  setShowMode("preshow");
   setOnAir(false);
+  monitorAnim(true, "start");
   const started = Date.now();
   const tick = () => {
     const s = Math.round((Date.now() - started) / 1000);
-    setCenter("STAND BY", `Writing your segment · 0:${String(s).padStart(2, "0")}`);
+    $("center-foot").textContent = `Making your segment · ${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
   };
   tick();
   preshowTimer = setInterval(tick, 1000);
@@ -406,7 +464,7 @@ function showPreshow(topic) {
   $("show-tag").textContent = "Pre-show";
 }
 Studio.onScene((scene) => {
-  setNameplate(scene.name, scene.title);
+  setNameplate(scene.name, scene.title, scene.who);
   if (scene.text) showBubble(scene.who, scene.text, 0.6);   // most pre-show scenes are silent
   else hideBubble();
 });
@@ -415,12 +473,15 @@ function countdown() {
   return new Promise((resolve) => {
     clearInterval(preshowTimer);
     Studio.setMode("countdown");
-    setNameplate("Floor producer", "Countdown");
+    setShowMode("countdown");
+    monitorAnim(false);
+    $("center-brand").textContent = "ON AIR IN";
+    setNameplate("Floor producer", "Countdown", "producer");
     let n = 3;
     const step = () => {
-      if (n === 0) { resolve(); return; }
+      if (n === 0) { $("center-brand").textContent = "· SIDELINE ·"; resolve(); return; }
       Studio.setCountdown(n);
-      setCenter(`ON AIR IN ${n}`, "Quiet on set");
+      setCenter(String(n), "Quiet on set", true);
       showBubble("producer", n === 3 ? "Quiet on set! We're live in three..." : n === 2 ? "...two..." : "...one.");
       n -= 1;
       setTimeout(step, 1000);
@@ -432,14 +493,15 @@ function countdown() {
 let endTimer = null;
 function showDone() {
   Studio.setMode("done");
+  setShowMode("done");
   hideChyron();
   setCenter("THAT'S THE BOARD", "Ask the desk another one");
-  setNameplate("Hal Brennan", "That's the board");
+  setNameplate("Hal Brennan", "That's the board", "hal");
   hideBubble();
   setLines("", "Lines are open");
   setStatus("That's the board. Ask the desk another one.");
   $("progress").textContent = "Finished";
-  endTimer = setTimeout(() => { setOnAir(false); showEndCard(); }, 1200);
+  endTimer = setTimeout(() => stinger(() => { setOnAir(false); showEndCard(); }), 900);
 }
 
 // ---------- Playing a script ----------
@@ -512,11 +574,11 @@ function playCard() {
 
   if (line.speaker === "caller") {
     const caller = script.caller;
-    setNameplate(`${caller.name} from ${caller.city}`, `On the line · ${CALLER_TYPES[caller.type] || "Caller"}`);
+    setNameplate(`${caller.name} from ${caller.city}`, `On the line · ${CALLER_TYPES[caller.type] || "Caller"}`, "caller");
     setCamera("caller", "Line 1", `${escapeHtml(caller.name)}<br><span class="gold">${escapeHtml(caller.city)}</span>`);
   } else {
     const person = PEOPLE[line.speaker];
-    setNameplate(person.name, person.role);
+    setNameplate(person.name, person.role, line.speaker);
     setCamera(line.speaker, person.name, `${person.role.replace("Host · ", "")}<br><span class="gold">${FORMATS[script.format] || ""}</span>`);
   }
   showBubble(line.speaker, card.text, Math.min(card.seconds * 0.6, card.text.length / 45));
@@ -572,18 +634,61 @@ async function play(newScript) {
   cardIndex = 0;
   showReceipts(script);
   await countdown();
-  Studio.setMode("live");
-  setOnAir(true);
-  setLines("live", "On the air");
-  const format = FORMATS[script.format] || "DEBATE";
-  setCenter(script.topic.toUpperCase(), `Line 1 · ${script.caller.name} from ${script.caller.city}`);
-  setRight(format, `Caller: ${script.caller.name}, ${script.caller.city}`);
-  const TAGS = { debate: "Who's better", prediction: "Who wins", buy_or_sell: "Buy or sell", real_or_not: "Real or not",
-                 rank_em: "Rank 'em", overrated: "Over/under" };
-  $("show-tag").textContent = TAGS[script.format] || "Sideline";
-  if (script.sample) setScores({}, true);   // the preview shows the meter from the start
+  await stinger(() => {
+    Studio.setMode("live");
+    setShowMode("live");
+    setOnAir(true);
+    setLines("live", "On the air");
+    const format = FORMATS[script.format] || "DEBATE";
+    setCenter(script.topic.toUpperCase(), `Line 1 · ${script.caller.name} from ${script.caller.city}`);
+    setRight(format, `Caller: ${script.caller.name}, ${script.caller.city}`);
+    const TAGS = { debate: "Who's better", prediction: "Who wins", buy_or_sell: "Buy or sell", real_or_not: "Real or not",
+                   rank_em: "Rank 'em", overrated: "Over/under" };
+    $("show-tag").textContent = TAGS[script.format] || "Sideline";
+    if (script.sample) setScores({}, true);   // the preview shows the meter from the start
+  });
   setPlayButtons(true);
   playCard();
+}
+
+// ---------- The pipeline strip: how a segment gets made ----------
+
+const PIPE = ["topic", "research", "verify", "write", "check", "judge", "close"];
+let pipeTimer = null;
+function setPipeline(step, startedAt) {
+  const box = $("pipeline");
+  const idx = PIPE.indexOf(step === "start" ? "topic" : step);
+  box.classList.toggle("running", idx >= 0 || step === "all");
+  box.querySelectorAll("li").forEach((li, i) => {
+    li.classList.toggle("done", step === "all" || (idx >= 0 && i < idx));
+    li.classList.toggle("active", idx >= 0 && i === idx);
+  });
+  $("pipeline-title").textContent = step === "all" ? "Your segment, made and checked" : idx >= 0 ? "Making your segment" : "How a segment gets made";
+  if (startedAt && !pipeTimer) {
+    const tick = () => {
+      const s = Math.round((Date.now() - startedAt) / 1000);
+      $("pipeline-clock").textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+    };
+    tick();
+    pipeTimer = setInterval(tick, 1000);
+  }
+  if (!startedAt && step !== "all" && idx < 0) { clearInterval(pipeTimer); pipeTimer = null; $("pipeline-clock").textContent = ""; }
+}
+function pipelineDone() { clearInterval(pipeTimer); pipeTimer = null; setPipeline("all"); }
+
+// ---------- The broadcast wipe ----------
+
+// Red, gold, and navy bars sweep across with the logo. onCovered runs while the screen is
+// covered, so the switch to the show (or the end card) happens behind it.
+function stinger(onCovered) {
+  return new Promise((resolve) => {
+    if (REDUCED_MOTION) { onCovered(); resolve(); return; }
+    const el = $("stinger");
+    el.hidden = false;
+    el.classList.remove("play"); void el.offsetWidth; el.classList.add("play");
+    setTimeout(onCovered, 480);
+    setTimeout(() => { el.hidden = true; el.classList.remove("play"); resolve(); }, 1250);
+  });
 }
 
 // ---------- Asking the desk ----------
@@ -602,14 +707,19 @@ function showControlRoom(job) {
   }
   setRight(STEP_NAMES[step.step] || "PRE-SHOW", step.text || "Getting ready");
   if (step.step && Studio.setStep) Studio.setStep(step.step);
+  if (step.step) { Monitor.setStep(step.step); setPipeline(step.step, askedAt); }
   setStatus(`${step.text || "Working"}...`);
 }
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 let chosenPlayers = [];
+let askedAt = 0;
 async function askDesk(topic) {
   $("go").disabled = true;
+  askedAt = Date.now();
+  clearInterval(pipeTimer); pipeTimer = null;
+  setPipeline("topic", askedAt);
   setLines("busy", "Patching you through");
   showPreshow(topic);
   try {
@@ -631,10 +741,12 @@ async function askDesk(topic) {
     if (job.state === "error") throw new Error(job.error);
     chosenPlayers = [];
     const m = job.script.meta;
+    pipelineDone();
     setStatus("On air.");
     await play(job.script);
   } catch (error) {
     clearInterval(preshowTimer);
+    setPipeline(null);
     showIdle();
     holdChatter();
     setCenter("LINE DROPPED", "Try that one again");
@@ -649,6 +761,7 @@ async function askDesk(topic) {
 // The call screener: a topic that was turned away, or a name that needs a choice.
 function screenCall(topic, details) {
   clearInterval(preshowTimer);
+  setPipeline(null);
   showIdle();
   holdChatter();
   setLines("", "Lines are open");
@@ -756,6 +869,8 @@ $("preview").addEventListener("click", () => {
 // ---------- Logo, tab icon, clock, and cast cards ----------
 
 Studio.logo($("logo"));
+Studio.logo($("stinger-logo"));
+Studio.trophy($("end-trophy"));
 const icon = document.createElement("canvas");
 icon.width = 16; icon.height = 16;
 Studio.icon(icon);
@@ -769,18 +884,37 @@ function tickClock() {
 tickClock();
 setInterval(tickClock, 10000);
 
+// Cast cards: each in his own color, and the portrait talks and blinks when you hover.
+const CARD_BG = { hal: ["#3a4258", "#323a4f"], royce: ["#2a3f86", "#233775"], deacon: ["#6b1d27", "#5a1820"], lonnie: ["#1d5a6b", "#184c5b"] };
 for (const id of ["hal", ...HOSTS]) {
   const person = PEOPLE[id];
   const card = document.createElement("article");
   card.className = "card";
+  card.style.setProperty("--accent", ACCENTS[id]);
   const portrait = document.createElement("canvas");
   portrait.width = 32; portrait.height = 32;
-  Studio.portrait(portrait, id);
+  const [bg, bg2] = CARD_BG[id];
+  const draw = (opts = {}) => Studio.portrait(portrait, id, { bg, bg2, ...opts });
+  draw();
   card.append(portrait);
   card.insertAdjacentHTML("beforeend",
     `<h3>${person.name}</h3><div class="role">${person.role}</div><p>${person.blurb}</p><div class="lean">${person.before}</div>`);
+  let talk = null;
+  card.addEventListener("mouseenter", () => {
+    let k = 0;
+    clearInterval(talk);
+    talk = setInterval(() => { k += 1; draw({ mouth: k % 2 ? "open" : "closed", blink: k % 9 === 0, brow: k % 6 < 3 ? "raise" : "flat" }); }, 150);
+  });
+  card.addEventListener("mouseleave", () => { clearInterval(talk); draw({ mouth: "smile" }); setTimeout(() => draw(), 700); });
   $("cast-grid").append(card);
 }
+
+// The empty question box suggests a question now and then.
+setInterval(() => {
+  const input = $("topic");
+  if (input.value || document.activeElement === input) return;
+  input.placeholder = `Try: ${EVERGREEN[Math.floor(Math.random() * EVERGREEN.length)]}`;
+}, 5000);
 
 // The ticker at the bottom is the news crawl: real-time NFL and NBA headlines, each
 // confirmed by two outlets (pipeline/news.py). No fantasy trends (decided Nov 4, 2026).

@@ -81,6 +81,7 @@ Sources (Nov 4): ESPN, nba_api (NBA.com stats), and NBA team websites are ruled 
 - The writer may use three big-reaction deliveries: `fired_up` (stands), `slam` (desk slam, with a shake and an optional sound), `exasperated` (turns away).
 - **Preview graphics (sample data)** under the TV demos all of this with data stamped SAMPLE. Never show sample numbers anywhere else.
 - `Studio.renderOnce()` draws a single frame, for testing when the browser tab is in the background.
+- Visual upgrade (Nov 6): `static/monitor.js` rotates seven loading animations on the center monitor during the pre-show (none show numbers); a broadcast wipe (`stinger()` in app.js) plays going live and before the end card; `Studio.celebrate(winner)` throws confetti and has the desk applaud; listeners react to each line and speakers sometimes count on fingers, tap the desk, or think; hosts fidget between calls; the pipeline strip under the question box lights up step by step; the page glow follows `data-mode` on `<html>`. Character looks are unchanged (bibles).
 
 ## How to run it
 

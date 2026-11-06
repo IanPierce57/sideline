@@ -444,3 +444,184 @@ body {
 .end-stat strong { display: block; font-family: var(--pixel); color: var(--gold); font-size: 2cqw; }
 .end-stat span { font-family: var(--round); color: #e3eaff; font-size: 1.2cqw; line-height: 1.25; }
 .end-stat em { color: #9fb0d8; font-style: normal; }
+
+/* =====================================================================
+   Visual upgrade (Nov 6, 2026): ambient glow, broadcast motion, loading
+   animations, the pipeline strip, paper receipts, and livelier cards.
+   ===================================================================== */
+
+/* A glow behind the TV that takes on the show's state: blue between calls,
+   amber in the pre-show, red on the air, gold at the verdict. */
+@property --glow { syntax: "<color>"; inherits: true; initial-value: rgba(42, 87, 201, 0.30); }
+:root { --glow: rgba(42, 87, 201, 0.30); transition: --glow 1.2s ease; }
+:root[data-mode="preshow"], :root[data-mode="countdown"] { --glow: rgba(244, 183, 64, 0.22); }
+:root[data-mode="live"] { --glow: rgba(216, 50, 58, 0.26); }
+:root[data-mode="done"] { --glow: rgba(244, 183, 64, 0.32); }
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(55% 42% at 50% 30%, var(--glow), transparent 72%);
+}
+
+/* Masthead */
+.masthead { align-items: center; }
+.masthead-sub span { color: var(--gold-soft); }
+.air-pill {
+  margin-left: auto; display: flex; align-items: center; gap: 8px;
+  font-family: var(--pixel); font-weight: 700; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); background: #0b1536; border: 2px solid var(--line); padding: 6px 10px; box-shadow: 3px 3px 0 #030616;
+}
+.air-pill i { width: 9px; height: 9px; background: #3ddc84; box-shadow: 0 0 8px #3ddc84; animation: blink 1.4s steps(2) infinite; }
+:root[data-mode="preshow"] .air-pill i, :root[data-mode="countdown"] .air-pill i { background: var(--gold); box-shadow: 0 0 8px var(--gold); animation-duration: 0.5s; }
+:root[data-mode="live"] .air-pill { color: #fff; border-color: var(--red); }
+:root[data-mode="live"] .air-pill i { background: var(--red); box-shadow: 0 0 10px var(--red); animation-duration: 1s; }
+
+/* The TV set: a bezel with a power light and a maker's plate */
+.tv-frame { position: relative; background: linear-gradient(180deg, #070b1c, #02040c); }
+.tv-frame::after {
+  content: "SIDELINE · STUDIO 1"; position: absolute; left: 50%; bottom: -1px; transform: translate(-50%, 50%);
+  font-family: var(--pixel); font-size: 10px; letter-spacing: 0.2em; color: #5d6a9c;
+  background: #050916; padding: 2px 10px; border: 1px solid #1b2a5c;
+}
+.tv-frame::before {
+  content: ""; position: absolute; right: 22px; bottom: 3px; width: 6px; height: 4px; z-index: 1;
+  background: #3ddc84; box-shadow: 0 0 6px #3ddc84;
+}
+:root[data-mode="live"] .tv-frame::before { background: var(--red); box-shadow: 0 0 8px var(--red); }
+
+/* Center monitor: loading animations, and a big countdown */
+.mon-anim { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; padding: 0.3cqw 1.2cqw; }
+.tv .mon-anim canvas {
+  position: static; inset: auto; height: 100%; width: auto; max-width: 100%; aspect-ratio: 88 / 40;
+  border: 0.25cqw solid #0a1433; box-shadow: 0 0 0 0.2cqw rgba(255, 255, 255, 0.08);
+}
+.monitor.center.anim .mon-topic { display: none; }
+.monitor.center.anim .mon-brand { color: var(--gold-soft); }
+.center .mon-topic.count { font-size: 11cqw !important; color: var(--gold); animation: countpop 1s steps(5); }
+@keyframes countpop { 0% { transform: scale(1.6); opacity: 0.2; } 30% { transform: scale(1); opacity: 1; } 100% { transform: scale(0.92); } }
+.monitor { box-shadow: 0 0 2.4cqw rgba(60, 110, 255, 0.18); }
+
+/* The broadcast wipe */
+.stinger { position: absolute; inset: 0; z-index: 15; overflow: hidden; pointer-events: none; }
+.stinger .wipe { position: absolute; top: -10%; height: 120%; width: 150%; left: -170%; transform: skewX(-18deg); }
+.stinger .w1 { background: var(--red); }
+.stinger .w2 { background: var(--gold); }
+.stinger .w3 { background: linear-gradient(180deg, #16307f, #0a1433); }
+.stinger.play .w1 { animation: wipe 1.15s steps(14) forwards; }
+.stinger.play .w2 { animation: wipe 1.15s steps(14) 0.05s forwards; }
+.stinger.play .w3 { animation: wipe 1.15s steps(14) 0.1s forwards; }
+@keyframes wipe { 0% { left: -170%; } 38% { left: -25%; } 64% { left: -25%; } 100% { left: 120%; } }
+.stinger canvas {
+  position: absolute; inset: auto; left: 50%; top: 50%; width: 40%; height: auto; aspect-ratio: 130 / 26;
+  transform: translate(-50%, -50%) scale(0.2); opacity: 0; image-rendering: pixelated;
+}
+.stinger.play canvas { animation: stinglogo 1.15s steps(10) 0.1s forwards; }
+@keyframes stinglogo { 0% { opacity: 0; transform: translate(-50%, -50%) scale(0.2); } 30%, 62% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 75%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.15); } }
+
+/* Subtitles pop in; the lower third slides in, in the speaker's color */
+.bubble.pop { animation: bubblepop 0.18s steps(3); }
+@keyframes bubblepop { from { transform: scale(0.88) translateY(1cqw); opacity: 0.4; } to { transform: none; opacity: 1; } }
+.nameplate { border-top-color: var(--accent, var(--gold)); }
+.nameplate::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 0.8cqw; background: var(--accent, var(--gold)); }
+.nameplate { padding-left: 2cqw; }
+.nameplate.swap { animation: plate 0.32s steps(5); }
+@keyframes plate { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+.show-tag.swap { animation: plate 0.25s steps(4); }
+.bug-live.on::before { content: ""; width: 0.9cqw; height: 0.9cqw; background: #fff; margin-right: 0.7cqw; animation: blink 1s steps(2) infinite; }
+
+/* Ticker: league badges */
+.ticker-move .tag { font-family: var(--pixel); font-size: 0.75em; padding: 0.15cqw 0.6cqw; margin-right: 0.7cqw; color: #fff; background: #1f44a8; }
+.ticker-move .tag.nfl { background: #013369; box-shadow: inset 0 -0.25cqw 0 #d50a0a; }
+.ticker-move .tag.nba { background: #c9082a; box-shadow: inset 0 -0.25cqw 0 #17408b; }
+.ticker-move .tag.show { background: var(--red); }
+
+/* Score bug: the leader pulses; a new score flashes */
+.score.lead { background: rgba(244, 183, 64, 0.14); }
+.score.lead .score-name::before { content: "▲ "; font-size: 0.8em; }
+.score.bump .score-num { animation: bump 0.6s steps(4); }
+@keyframes bump { 0% { color: #fff; transform: scale(1.5); } 100% { transform: none; } }
+
+/* Stat chyron number */
+.stat-value { letter-spacing: 0.05em; }
+
+/* End card: trophy, the winner's color, a little shine */
+.end-tag { display: flex; align-items: center; gap: 0.8cqw; }
+.tv .end-tag canvas { position: static; inset: auto; width: 2.4cqw; height: 2.4cqw; image-rendering: pixelated; }
+.endcard { border-top-color: var(--accent, var(--gold)); }
+.end-row.winner { outline-color: var(--accent, var(--gold)); background: linear-gradient(90deg, rgba(255, 196, 46, 0.22), rgba(255, 196, 46, 0.06)); }
+.end-row.winner canvas { width: 6cqw; height: 6cqw; }
+.end-stat { border-left-color: var(--accent, var(--gold)); }
+
+/* Buttons and inputs */
+.pixel-btn { transition: transform 0.08s steps(2); }
+.pixel-btn:hover:not(:disabled) { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 #050a1f, inset 0 -3px 0 rgba(0, 0, 0, 0.25), inset 0 3px 0 rgba(255, 255, 255, 0.15); }
+.chip { transition: transform 0.08s steps(2); }
+.chip:hover { transform: translateY(-1px); background: #1a3486; }
+.chip.live { background: linear-gradient(90deg, rgba(244, 183, 64, 0.16), #142a6e 60%); }
+
+/* The pipeline strip: how a segment gets made, lit up step by step */
+.pipeline { margin: 4px 18px 18px 24px; padding: 12px 14px 14px; background: #0a1536; border: 2px solid #172a66; }
+.pipeline-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px;
+  font-family: var(--pixel); font-size: 12px; color: var(--dim); letter-spacing: 0.04em; text-transform: uppercase; }
+.pipeline-clock { color: var(--gold-soft); }
+.pipeline ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.pipeline li {
+  position: relative; font-family: var(--round); font-size: 13px; line-height: 1.2; color: var(--dim);
+  background: #0e1d4b; border: 2px solid #172a66; padding: 7px 6px 7px; text-align: center;
+}
+.pipeline li b { display: block; margin: 0 auto 4px; width: 20px; height: 20px; line-height: 20px; font-family: var(--pixel); font-size: 11px;
+  color: var(--dim); background: #050a1f; border: 2px solid #22336f; }
+.pipeline.running li { color: #8592c2; }
+.pipeline li.done { color: #cfe9d8; border-color: #1f6b44; background: #0c2a2a; }
+.pipeline li.done b { background: #1f6b44; border-color: #3ddc84; color: transparent; position: relative; }
+.pipeline li.done b::after { content: "✓"; position: absolute; inset: 0; color: #eaffef; font-family: var(--round); font-size: 13px; }
+.pipeline li.active { color: #fff; border-color: var(--gold); background: #2a2a48; box-shadow: 0 0 0 2px rgba(244, 183, 64, 0.25), 0 0 14px rgba(244, 183, 64, 0.25); }
+.pipeline li.active b { background: var(--gold); border-color: #fff3c4; color: var(--ink); animation: blink 0.9s steps(2) infinite; }
+@media (max-width: 860px) { .pipeline ol { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .pipeline ol { grid-template-columns: repeat(2, minmax(0, 1fr)); } .pipeline { margin-left: 16px; margin-right: 16px; } }
+
+/* The receipts, printed on actual receipt paper */
+.receipts {
+  --paper: #f7f0dc;
+  position: relative; border: 0; margin: 18px 18px 18px 24px; padding: 14px 16px 16px;
+  background: var(--paper); color: #2b2a26;
+  font-family: ui-monospace, "SF Mono", Menlo, "Courier New", monospace;
+  filter: drop-shadow(4px 4px 0 #030616);
+}
+/* torn, scalloped edges top and bottom */
+.receipts::before, .receipts::after { content: ""; position: absolute; left: 0; right: 0; height: 6px; }
+.receipts::before { top: -6px; background: radial-gradient(circle at 6px 6px, var(--paper) 5px, transparent 5.5px) 0 0 / 12px 6px repeat-x; }
+.receipts::after { bottom: -6px; background: radial-gradient(circle at 6px 0, var(--paper) 5px, transparent 5.5px) 0 0 / 12px 6px repeat-x; }
+.receipts-head { color: #1a1a1a; text-align: center; font-size: 15px; border-bottom: 2px dashed #9b9583; padding-bottom: 8px; }
+.receipts-head span { display: block; color: #6b665a; font-family: inherit; font-size: 11px; margin: 4px 0 0; }
+.receipts-summary { color: #4a463d; font-family: inherit; font-size: 11px; text-align: center; margin: 8px 0; }
+.receipt { color: #2b2a26; border-top: 1px dashed #c9c2ad; font-family: inherit; font-size: 12px; }
+.receipt b { color: #111; }
+.receipt strong { color: #9d1f27; }
+.receipt em { color: #6b665a; }
+.receipt i.ok { color: #1f7a45; }
+.receipt i.trusted { color: #6b665a; }
+
+/* The Desk: four across, each in his own color; portraits come alive on hover */
+.cast-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 960px) { .cast-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .cast-grid { grid-template-columns: 1fr; } }
+.card { position: relative; border-top: 4px solid var(--accent, var(--gold)); transition: transform 0.12s steps(3), box-shadow 0.12s steps(3); }
+.card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #030616, 0 0 0 1px var(--accent, var(--gold)); }
+.card canvas { width: 112px; height: 112px; border-color: #0a1433; box-shadow: 4px 4px 0 #030616; }
+.card .role { color: var(--accent, var(--gold)); }
+.card .tagline { margin: 10px 0 0; font-family: var(--pixel); font-size: 11px; color: var(--dim); letter-spacing: 0.04em; text-transform: uppercase; }
+
+/* Section titles get a small broadcast tick */
+.cast-head h2::before, .credits h2::before { content: ""; display: inline-block; width: 12px; height: 12px; background: var(--red); margin-right: 10px; vertical-align: middle; box-shadow: 3px 3px 0 var(--gold); }
+
+@media (max-width: 700px) {
+  .air-pill { margin-left: 0; }
+  .tv-frame::after { font-size: 8px; }
+}
+
+/* Less motion for people who ask their system for it */
+@media (prefers-reduced-motion: reduce) {
+  .ticker-move { animation-duration: 240s !important; }
+  .lamp, .air-pill i, .bug-live.on::before, .pipeline li.active b { animation: none; }
+  .bubble.pop, .nameplate.swap, .show-tag.swap, .center .mon-topic.count { animation: none; }
+}
