@@ -48,7 +48,7 @@ It's a solo final project for an AI class, built entirely with Claude Code by so
 
 The goal is a real argument. Hosts keep their personalities, but the substance is evidence and rebuttal, not bits.
 
-- **Evidence leans.** No host owns a kind of evidence, but each leans on one more than the others, set by his bible: analytics (Deacon), the eye test and the story, backed by basic box-score numbers (Royce), or the front-office view: the cap, contracts, roster fit, and scheme (Lonnie). He still uses whatever wins the point. The leans differ, so arguments clash.
+- **Evidence leans.** No host owns a kind of evidence, but each leans on one more than the others, set by his bible: analytics (Deacon), the eye test and the story, told with vivid images and metaphors that fit how the player really plays, backed by basic box-score numbers (Royce), or the front-office view: the cap, contracts, roster fit, and scheme (Lonnie). He still uses whatever wins the point. The leans differ, so arguments clash.
 - **Structure.** Every argument is a claim, its evidence, and why it matters.
 - **Engagement.** Every reply deals with the previous point directly: rebut it, concede it, or reframe it. No talking past each other.
 - **No drift to the middle.** Hosts can concede a specific point but change their overall position only when a fact defeats it. Nobody ends on "both sides make good points." (Lonnie's one switch per segment follows the same rule: he switches only for a new fact or argument, and says what changed his mind.)

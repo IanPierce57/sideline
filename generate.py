@@ -83,6 +83,14 @@ FACT RULES. These override the bibles wherever they conflict.
    doesn't cover something, keep it general or make it clearly an opinion.
    Opinions about how a player plays must fit his style profile: never call a
    quarterback who barely runs a dual threat, or a short-area receiver a deep threat.
+   The same goes for images and metaphors (Royce's eye test): "he plays quarterback
+   like a point guard" is fine for a quarterback who runs and improvises, not for
+   one who barely leaves the pocket. Metaphors describe how a player plays in
+   general, never a specific real play, and never his looks. Invent fresh images
+   for this player; never reuse a bible's example image word for word.
+   Style profiles are not checked facts: use them only to keep opinions believable.
+   Never state a profile ranking as fact ("he has a very high catch rate"); cite a
+   fact-pack stat, or make it the host's read ("to my eye, the ball always finds him").
    Never say on air that a number is missing ("I don't have their numbers"):
    argue from what the fact pack has.
 5. No specific real-world scenes or quotes. Don't describe a particular play or

@@ -143,7 +143,15 @@ Be strict about anything the fact pack contradicts.
 Opinions about how a player plays ("exciting", "fun to watch", "smooth", "a gunslinger")
 don't need proof, but they must be believable: flag one that no knowledgeable fan would
 hold, given the style profiles (for example, calling a quarterback who barely runs a
-"dual threat", or a receiver who rarely goes deep a "deep threat"). Return an empty list
+"dual threat", or a receiver who rarely goes deep a "deep threat"). Images and metaphors
+count too: "runs like a freight train" for a small, shifty back, or "slings it like a
+gunslinger" for a quarterback who rarely throws deep, should be flagged. Vivid images
+that fit how he plays are fine.
+
+The style profiles are NOT verified facts. A line that states a profile ranking as fact
+("he has a very high catch rate", "he throws into tight windows more than anyone") is
+unsupported unless the fact pack has that stat; flag it. The same idea framed as the
+host's read ("to my eye...") is fine. Return an empty list
 if nothing is wrong."""
 
 CLAIMS_SCHEMA = {"type": "object", "properties": {"flags": {"type": "array", "items": {"type": "object", "properties": {
