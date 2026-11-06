@@ -27,6 +27,9 @@ TOPICS = [
     "Should the Bears trade for Jonathan Taylor?",                   # buy or sell
     "Is Shai Gilgeous-Alexander a better player than Nikola Jokic?",  # NBA
     "Are the Lions a real Super Bowl contender this season?",        # NFL team
+    "Who wins Heat at Warriors tonight?",                             # NBA game (needs a game in the next week)
+    "Are the Thunder still the best team in the West?",              # NBA team
+    "Is Victor Wembanyama the best defender in basketball?",          # NBA player, style
 ]
 MIN_FACTS, MAX_SECONDS = 12, 60
 
@@ -44,8 +47,12 @@ def run(topic: str, client) -> dict:
     if not check["ok"]:
         return {"topic": topic, "error": check.get("reason") or check.get("confirm")}
     t = time.time()
-    candidates = catalog.game_pack(check["game"]) if check.get("game") else []
-    candidates += research.research(topic, check["format"], check["players"], client)
+    from pipeline import leagues
+    candidates = leagues.game_pack(check["game"]) if check.get("game") else []
+    for f in candidates:
+        verify.warm(f)
+    candidates += research.research(topic, check["format"], check["players"], client,
+                                    lambda e, f=None: verify.warm(f) if e == "pulled" and isinstance(f, dict) else None)
     timing["research"] = time.time() - t
 
     slow = defaultdict(float)                 # seconds spent per kind of check

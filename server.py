@@ -173,12 +173,14 @@ def _warm_up() -> None:
     """Load (and, once a day, download) the big data files in the background when the
     server starts, so the first segment doesn't wait on a download."""
     try:
-        from pipeline import nflv, sleeper
+        from pipeline import nba, nflv, sleeper
         season = int(sleeper.state("nfl")["season"])
         for load in (lambda: sleeper.players("nfl"), lambda: sleeper.players("nba"), nflv.schedules,
                      nflv.player_stats_by_season, lambda: nflv.player_stats((season,)), lambda: nflv.pbp(season),
                      nflv.sleeper_to_gsis, lambda: nflv.rosters_weekly(season), lambda: sleeper.nfl_schedule(season),
-                     lambda: nflv.nextgen("passing"), lambda: nflv.nextgen("rushing"), lambda: nflv.nextgen("receiving")):
+                     lambda: nflv.nextgen("passing"), lambda: nflv.nextgen("rushing"), lambda: nflv.nextgen("receiving"),
+                     nflv.combine, nflv.draft_picks, lambda: nba.schedule(),
+                     lambda: sleeper.season_stats("nba", nba.season()), lambda: sleeper.season_stats("nba", nba.season() - 1)):
             load()
         print("  data loaded and ready")
     except Exception as problem:            # a slow source shouldn't stop the server

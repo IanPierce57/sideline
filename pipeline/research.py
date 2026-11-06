@@ -12,7 +12,7 @@ import json
 
 import anthropic
 
-from . import catalog, games, nflv, players, sleeper
+from . import catalog, leagues, nba, nflv, players, sleeper
 
 TOPIC_MODEL = "claude-haiku-5-5"
 RESEARCH_MODEL = "claude-sonnet-5-5"
@@ -62,10 +62,8 @@ the greatest QB ever?" -> "Is Patrick Mahomes the best QB in the NFL right now?"
 "Patrick Mahomes or Josh Allen for one playoff game?"
 
 One specific upcoming game ("Who wins Packers at Patriots this Sunday?", "Can the Bears
-win tonight?"): set single_game to true and list the teams. NFL games are fine (code
-confirms the game is real). NBA single games aren't covered yet (decided Nov 5, 2026):
-turn them away and suggest season-long questions about the same teams instead, like
-"Are the Warriors a playoff team this season?"
+win tonight?", "Who wins Heat at Warriors tonight?"): set single_game to true and list
+the teams. NFL and NBA games are both fine (code confirms the game is real).
 
 Pick the format: "debate" (a question with sides), "buy_or_sell" (a team or
 front-office decision), or "prediction" (a future outcome). List every real
@@ -85,11 +83,11 @@ def check_topic(topic: str, client: anthropic.Anthropic, chosen: set | None = No
         return {"ok": False, "reason": data["reason"] or "That one's not an NBA or NFL topic.",
                 "suggestions": data["suggestions"][:3]}
 
-    leagues = ["nfl", "nba"] if data["league"] == "BOTH" else [data["league"].lower()]
+    sports = ["nfl", "nba"] if data["league"] == "BOTH" else [data["league"].lower()]
     resolved, confirm, unknown = [], [], []
     for name in data["players"]:
         found = {"matches": [], "suggestions": []}
-        for league in leagues:
+        for league in sports:
             got = players.find(name, league)
             found["matches"] += got["matches"]
             found["suggestions"] += got["suggestions"]
@@ -110,7 +108,7 @@ def check_topic(topic: str, client: anthropic.Anthropic, chosen: set | None = No
             unknown.append((name, [players.describe(s) for s in found["suggestions"]]))
     if unknown:
         name, close = unknown[0]
-        retired = any(m for lg in leagues for m in players.find(name, lg)["matches"])
+        retired = any(m for lg in sports for m in players.find(name, lg)["matches"])
         if retired:
             return {"ok": False, "reason": f"Sideline only covers current players, and {name} isn't playing now.",
                     "suggestions": data["suggestions"][:3]}
@@ -120,16 +118,15 @@ def check_topic(topic: str, client: anthropic.Anthropic, chosen: set | None = No
         return {"ok": False, "confirm": confirm}
     game = None
     if data["single_game"]:
-        if data["league"] != "NFL":
-            return {"ok": False, "reason": "Sideline can only preview single NFL games for now, not NBA games.",
-                    "suggestions": data["suggestions"][:3]}
-        codes = [c for c in (games.team_code(t) for t in data["teams"]) if c]
+        sched = leagues.schedule(data["league"])           # NBA games added Nov 5, 2026
+        codes = [c for c in (sched.team_code(t) for t in data["teams"]) if c]
         if not codes:
-            return {"ok": False, "reason": "We couldn't tell which NFL teams that game is between.",
-                    "suggestions": games.upcoming_games([])}
-        game, problem = games.find_game(*codes[:2]) if len(codes) > 1 else games.next_game(codes[0])
+            return {"ok": False, "reason": f"We couldn't tell which {data['league']} teams that game is between.",
+                    "suggestions": sched.upcoming_games([])}
+        game, problem = sched.find_game(*codes[:2]) if len(codes) > 1 else sched.next_game(codes[0])
         if not game:
-            return {"ok": False, "reason": problem, "suggestions": games.upcoming_games(codes)}
+            return {"ok": False, "reason": problem, "suggestions": sched.upcoming_games(codes)}
+        game["league"] = data["league"]
     return {"ok": True, "league": data["league"], "format": data["format"], "players": resolved, "game": game}
 
 
@@ -158,6 +155,14 @@ TOOLS = [
      "input_schema": {"type": "object", "properties": {"team": {"type": "string"}, "season": {"type": "integer"},
                       "stats": {"type": "array", "items": {"type": "string", "enum": list(catalog.NFL_TEAM_STATS) + ["head_coach"]}}},
                       "required": ["team", "season", "stats"], "additionalProperties": False}},
+    {"name": "get_nba_team",
+     "description": "NBA team facts for this season, every game checked on two sources. team is the abbreviation, "
+                    "e.g. GSW, BOS, LAL. stats: any of team_record, home_road, scoring (points for and against, point "
+                    "differential), last_five, streak, conference_rank, head_coach, injuries.",
+     "input_schema": {"type": "object", "properties": {"team": {"type": "string"},
+                      "stats": {"type": "array", "items": {"type": "string", "enum": ["team_record", "home_road", "scoring",
+                                "last_five", "streak", "conference_rank", "head_coach", "injuries"]}}},
+                      "required": ["team", "stats"], "additionalProperties": False}},
     {"name": "get_team_record",
      "description": "An NFL team's regular-season record for one season (2016 or later). team is the abbreviation, e.g. KC.",
      "input_schema": {"type": "object", "properties": {"team": {"type": "string"}, "season": {"type": "integer"}},
@@ -187,9 +192,14 @@ Rules:
 - Advanced NFL stats only exist for single regular seasons from 2016 on.
 - The current NFL season is {sleeper.state('nfl')['season']}, with stats through Week {nfl_week}. The current NBA season
   is {int(sleeper.state('nba')['season'])}-{str(int(sleeper.state('nba')['season']) + 1)[-2:]}, in progress.
-- Single-game previews: the game itself, both teams' records, team stats, last three results, last game's
-  starting quarterbacks, and injured starters are already pulled for you. Add player stats for the players who
-  decide the game (both starting quarterbacks, top receivers and runners, pass rushers), this season mainly.
+- Single-game previews: the game itself, both teams' records, team stats, recent results, and injuries are
+  already pulled for you (NFL: last game's starting quarterbacks; NBA: last starting five, rest, standings).
+  Add player stats for the players who decide the game, this season mainly: NFL quarterbacks, top receivers
+  and runners, pass rushers; NBA stars on both sides (points, efficiency, playmaking, rebounding).
+- NBA teams: use get_nba_team (records, home and road, scoring and point differential, last five, streak,
+  standings, injuries). NBA coaches matter less than in the NFL; a name is enough, no scheme talk.
+- NBA rates (true shooting, effective field goal %, assist-to-turnover, minutes, plus-minus) are good for
+  Deacon. NBA playoff stats exist only for the most recent playoffs (season {int(sleeper.state('nba')['season']) - 1}).
 - Positions overlap (pipeline/positions.py): edge rushers may be listed as DE, DL, EDGE, OLB, or LB; the
   secondary as CB, S, DB, or nickel; running backs as RB, HB, or FB. For "best pass rusher" or "best corner",
   consider every player who plays that role, whatever his label. Off-ball linebackers aren't pass rushers.
@@ -232,6 +242,19 @@ def research(topic: str, fmt: str, named: list[dict], client: anthropic.Anthropi
             for stat in args["stats"]:
                 fact = (catalog.head_coach(args["team"].upper()) if stat == "head_coach"
                         else catalog.nfl_team_stat(args["team"].upper(), stat, args["season"]))
+                candidates.append(fact)
+                progress("pulled", fact)
+                out.append({"team": fact["subject"], "stat": fact["label"], "value": fact.get("say"), "note": fact.get("note") or ""})
+            return json.dumps(out)
+        if name == "get_nba_team":
+            code = args["team"].upper()
+            if code not in nba.TEAMS:
+                return json.dumps({"error": f"unknown NBA team {code}; use abbreviations like GSW, BOS, LAL"})
+            got = {f["stat"]: f for f in nba.team_facts(code)}
+            out = []
+            for stat in args["stats"]:
+                fact = got.get(stat) or {"conference_rank": nba.conference_rank, "head_coach": nba.head_coach,
+                                         "injuries": nba.injuries}[stat](code)
                 candidates.append(fact)
                 progress("pulled", fact)
                 out.append({"team": fact["subject"], "stat": fact["label"], "value": fact.get("say"), "note": fact.get("note") or ""})

@@ -96,6 +96,11 @@ STAGE_NOTE = re.compile(r"\b(rhetorical question|to the folks at home:|stage dir
                         r"(?:turns|leans|pauses|gestures|points) (?:to|toward|at)\b[^.!?]*$)|\[[^\]]*\]", re.I)
 
 
+# A host admitting on air that the show is missing a number ("I don't have their numbers").
+MISSING_DATA = re.compile(r"\b(?:i|we) (?:don't|do not|didn't) have (?:the |any |his |her |their |those )?"
+                          r"(?:[\w-]+ ){0,3}(?:numbers?|stats?|data|figures?)\b", re.I)
+
+
 def check_stage_notes(lines: list[dict]) -> list[dict]:
     """Lines that contain a description of an action instead of spoken words.
     Bible stage directions in parentheses at the start of a line are fine."""
@@ -105,6 +110,9 @@ def check_stage_notes(lines: list[dict]) -> list[dict]:
         if STAGE_NOTE.search(spoken):
             problems.append({"line": line["line"], "problem": "contains a note about what someone does instead of "
                              "the words they say; rewrite it as spoken words only"})
+        elif MISSING_DATA.search(spoken):
+            problems.append({"line": line["line"], "problem": "a host says on air that a number is missing; argue "
+                             "from what the fact pack has instead, without mentioning what isn't there"})
     return problems
 
 

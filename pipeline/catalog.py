@@ -12,6 +12,8 @@ Sources and checks (decided Nov 4, 2026; see SOURCES.md):
   Current team        Sleeper (plus nflverse rosters for the NFL)
 """
 
+import re
+
 import polars as pl
 
 from functools import lru_cache
@@ -92,6 +94,22 @@ NBA_PER_GAME = {"points_per_game": "points", "rebounds_per_game": "rebounds", "a
 NBA_PCTS = {"fg_pct": ("fgm", "fga", "field goal percentage"), "three_pct": ("tpm", "tpa", "three-point percentage"),
             "ft_pct": ("ftm", "fta", "free throw percentage")}
 
+# NBA rates built from Sleeper's own numbers (added Nov 5, 2026):
+# name -> (label, definition, decimals, percent?)
+NBA_RATES = {
+    "true_shooting_pct": ("true shooting percentage", "Scoring efficiency counting threes and free throws: points / (2 x (shots + 0.44 x free throws)), in percent.", 1, True),
+    "effective_fg_pct": ("effective field goal percentage", "Field goal percentage with threes worth 1.5 makes, in percent.", 1, True),
+    "assist_to_turnover": ("assist-to-turnover ratio", "Assists for every turnover.", 1, False),
+    "minutes_per_game": ("minutes per game", "Minutes played per game, on average.", 1, False),
+    "plus_minus_per_game": ("plus-minus per game", "Points his team outscored opponents by while he was on the court, per game.", 1, False),
+    "games_started": ("games started", "Games he started.", 0, False),
+}
+# Which column of the Wikipedia career-stats table each stat is checked against.
+NBA_WIKI = {"games": "gp", "games_started": "gs", "minutes_per_game": "mpg", "fg_pct": "fg", "three_pct": "3p", "ft_pct": "ft",
+            "rebounds": "rpg", "rebounds_per_game": "rpg", "assists": "apg", "assists_per_game": "apg",
+            "steals": "spg", "steals_per_game": "spg", "blocks": "bpg", "blocks_per_game": "bpg",
+            "points": "ppg", "points_per_game": "ppg"}
+
 NBA_FIRST_SEASON = 2017          # Sleeper's NBA stats start with 2017-18
 SLEEPER_NFL_FIRST_SEASON = 2009  # Sleeper's NFL stats start with 2009
 MUFFED_FIRST_SEASON = 2016
@@ -113,10 +131,20 @@ def stat_menu() -> str:
     lines += [f"  {k}: {v[1]}" for k, v in NBA_TOTALS.items()]
     lines += [f"  {k}: {k.replace('_', ' ')}" for k in NBA_PER_GAME]
     lines += [f"  {k}: {v[2]}" for k, v in NBA_PCTS.items()]
+    lines += [f"  {k}: {v[0]}" for k, v in NBA_RATES.items()]
+    lines.append("  (NBA playoffs: playoffs=true, 2017-18 or later)")
+    lines.append("NBA team stats (this season; see get_team_stats): team_record, home_road, scoring, last_five, streak, "
+                 "conference_rank, head_coach")
     return "\n".join(lines)
 
 
 # ---------- Helpers ----------
+
+def half_up(value: float, decimals: int = 1) -> float:
+    """Round the way box scores do (33.15 -> 33.2), not the way computers do (33.1)."""
+    from decimal import ROUND_HALF_UP, Decimal
+    return float(Decimal(str(value)).quantize(Decimal(1).scaleb(-decimals), rounding=ROUND_HALF_UP))
+
 
 def say(value, decimals=0, pct=False) -> str:
     """How a number should look (and be said): 5,097 / 64.5% / +0.17."""
@@ -642,37 +670,69 @@ def draft(card: dict) -> dict:
 def nba_player(card: dict, stat: str, scope: dict) -> list[dict]:
     season = scope.get("season") or int(sleeper.state("nba")["season"])
     label_season = _season_label("NBA", season)
-    base = dict(league="NBA", subject=card["name"], subject_key=card["key"], stat=stat,
-                scope=f"{label_season} regular season", source="Sleeper", as_of=_as_of("NBA", season),
-                credit="Data via Sleeper")
-    if scope.get("playoffs"):
-        return [_fact(**base, status="dropped", note="NBA playoff stats aren't available yet")]
+    playoffs = bool(scope.get("playoffs"))
+    current = int(sleeper.state("nba")["season"])
+    base = dict(league="NBA", subject=card["name"], subject_key=card["key"], stat=stat, season=season,
+                playoffs=playoffs, position=card.get("position"),
+                scope=f"{label_season} {'playoffs' if playoffs else 'regular season'}", source="Sleeper",
+                as_of="final" if playoffs or season < current else "season in progress", credit="Data via Sleeper")
+    if playoffs and season >= current:
+        return [_fact(**base, status="dropped", note="this season's playoffs haven't happened yet")]
     if season < NBA_FIRST_SEASON:
         return [_fact(**base, status="dropped", note="NBA stats are only available from 2017-18 on")]
-    row = sleeper.season_stats("nba", season).get(card["sleeper_id"])
+    row = sleeper.season_stats("nba", season, "post" if playoffs else "regular").get(card["sleeper_id"])
     if not row or not row.get("gp"):
         return [_fact(**base, status="dropped", note="no games found for that season")]
     gp = int(row["gp"])
+    raw = None                                      # the unrounded number, for comparing with Wikipedia
     if stat in NBA_TOTALS:
         key, label, definition = NBA_TOTALS[stat]
         value = int(row.get(key) or 0)
         shown = say(value)
     elif stat in NBA_PER_GAME:
         key, label, definition = NBA_TOTALS[NBA_PER_GAME[stat]]
-        value = round((row.get(key) or 0) / gp, 1)
+        raw = (row.get(key) or 0) / gp
+        value = half_up(raw, 1)
         label, definition = f"{label} per game", f"{definition[:-1]} per game, on average."
         shown = say(value, 1)
     elif stat in NBA_PCTS:
         made, tried, label = NBA_PCTS[stat]
         if not row.get(tried):
             return [_fact(**base, status="dropped", note="no attempts")]
-        value = round(100 * row[made] / row[tried], 1)
+        raw = 100 * row[made] / row[tried]
+        value = half_up(raw, 1)
         definition = f"Share of attempts made, in percent ({int(row[made])} of {int(row[tried])})."
         shown = say(value, 1, pct=True)
+    elif stat in NBA_RATES:
+        label, definition, dec, pct = NBA_RATES[stat]
+        g = lambda k: row.get(k) or 0  # noqa: E731
+        minutes = g("min") or g("sp") / 60
+        if stat == "true_shooting_pct":
+            denom = 2 * (g("fga") + 0.44 * g("fta"))
+            value = 100 * g("pts") / denom if denom else None
+        elif stat == "effective_fg_pct":
+            value = 100 * (g("fgm") + 0.5 * g("tpm")) / g("fga") if g("fga") else None
+        elif stat == "assist_to_turnover":
+            value = g("ast") / g("to") if g("to") else None
+        elif stat == "minutes_per_game":
+            value = minutes / gp if minutes else None
+        elif stat == "plus_minus_per_game":
+            value = g("plus_minus") / gp if "plus_minus" in row else None
+        else:
+            value = int(g("gs"))
+        if value is None:
+            return [_fact(**base, status="dropped", note="not enough data for this rate")]
+        raw = value
+        value = half_up(value, dec) if dec else value
+        shown = say(value, dec, pct=pct)
+        if stat == "plus_minus_per_game" and value > 0:
+            shown = "+" + shown
     else:
         return [_fact(**base, status="dropped", note=f"unknown stat '{stat}'")]
+    wiki_col = NBA_WIKI.get(stat)
+    per_game = value / gp if stat in NBA_TOTALS and stat != "games" else None
     return [_fact(**base, label=label, definition=definition, value=value, say=shown, sample=f"{gp} games",
-                  status="trusted", checked_against="Sleeper (trusted on its own)")]
+                  gp=gp, wiki_col=wiki_col, wiki_value=per_game if per_game is not None else (raw if raw is not None else value))]
 
 
 # ---------- Current team and status ----------
@@ -738,8 +798,8 @@ def get(card: dict, stat: str, scope: dict) -> list[dict]:
     if stat == "honors":
         return honors(card)
     if stat in ("measurables", "draft"):
-        if card["league"] != "NFL":
-            return [_fact(subject=card["name"], stat=stat, status="dropped", note="NFL players only")]
+        if card["league"] == "NBA":
+            return nba_measurables(card) if stat == "measurables" else [nba_draft(card)]
         return measurables(card) if stat == "measurables" else [draft(card)]
     if stat == "qb_playoff_record":
         if card["league"] != "NFL":
@@ -748,3 +808,47 @@ def get(card: dict, stat: str, scope: dict) -> list[dict]:
     if card["league"] == "NFL":
         return nfl_player(card, stat, scope)
     return nba_player(card, stat, scope)
+
+
+# ---------- NBA measurables and draft (checked against Wikipedia) ----------
+
+def nba_measurables(card: dict) -> list[dict]:
+    p = sleeper.players("nba").get(card.get("sleeper_id"), {})
+    base = dict(league="NBA", subject=card["name"], subject_key=card["key"], position=card.get("position"),
+                scope="today", source="Sleeper", credit="Data via Sleeper", as_of="today", sample="listed")
+    facts = []
+    if p.get("height"):
+        h = float(p["height"])
+        facts.append(_fact(**base, stat="height", label="listed height", value=h, say=_feet(h),
+                           definition="His listed height, in feet and inches."))
+    if p.get("weight"):
+        facts.append(_fact(**base, stat="listed_weight", label="listed weight", value=int(p["weight"]),
+                           say=f"{int(p['weight'])} pounds", definition="His listed weight today.",
+                           status="trusted", checked_against="Sleeper (trusted on its own)"))
+    return facts or [_fact(**base, stat="measurables", status="dropped", note="no listed height or weight")]
+
+
+def nba_draft(card: dict) -> dict:
+    """Draft position from his Wikipedia infobox; checked against that year's draft page."""
+    base = dict(league="NBA", subject=card["name"], subject_key=card["key"], stat="draft", label="draft position",
+                definition="Where he was picked in the NBA draft.", scope="career", source="Wikipedia",
+                credit="Wikipedia (CC BY-SA)", as_of="final", position=card.get("position"))
+    page = wiki.find_page(card["name"], "NBA", card.get("position"))
+    if not page:
+        return _fact(**base, status="dropped", note="no Wikipedia page found")
+    info = {k.replace("_", ""): wiki._clean(v) for k, v in
+            re.findall(r"\|\s*(draft_?year|draft_?round|draft_?pick|draft_?team)\s*=([^\n]*)", page["text"])}
+    year = re.sub(r"\D", "", info.get("draftyear", ""))[:4]
+    rnd_text = info.get("draftround", "")
+    if "undrafted" in " ".join(info.values()).lower() or (year and not re.sub(r"\D", "", rnd_text)):
+        # Wikipedia lists only the year he entered for undrafted players
+        return _fact(**base, value=None, say=f"went undrafted in {year}" if year else "went undrafted",
+                     undrafted=True, draft_year=int(year) if year else None, sample="undrafted")
+    rnd, pick = re.sub(r"\D", "", info.get("draftround", "")), re.sub(r"\D", "", info.get("draftpick", ""))
+    if not (year and rnd and pick):
+        return _fact(**base, status="dropped", note="his Wikipedia page doesn't list a draft position")
+    team = info.get("draftteam", "")
+    where = "1st overall pick" if pick == "1" else f"round {rnd}, pick {pick} overall"
+    return _fact(**base, value={"year": int(year), "round": int(rnd), "pick": int(pick)},
+                 say=f"{where} in the {year} NBA draft" + (f", by the {team}" if team else ""),
+                 draft_year=int(year), draft_round=int(rnd), draft_pick=int(pick), sample=f"{year} draft")

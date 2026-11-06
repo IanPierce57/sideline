@@ -131,7 +131,7 @@ Format: pick exactly one.
 - "buy_or_sell": a team or front-office decision (trade, sign, extend, buy or sell).
 - "prediction": a future outcome (who wins, will X happen this season).
 
-Length: aim for 550 to 700 spoken words in total (about 4 minutes at 150 words
+Length: aim for 600 to 720 spoken words in total (about 4 to 5 minutes at 150 words
 per minute; it must land between 450 and 750 after the fact check, which cuts any
 line it can't confirm). End when the new arguments run out. Never pad, never repeat a point.
 
@@ -327,15 +327,20 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
     t = time.time()
     game = check.get("game")
     candidates, game_note = [], ""
+    # Facts are checked in the background as soon as they're pulled (verify.warm), so the
+    # second sources are already fetched when research finishes. The real check below is
+    # unchanged; it just finds what it needs already saved.
+    def pulled(event, fact=None):
+        if event == "pulled" and isinstance(fact, dict):
+            verify.warm(fact)
+        progress(event, fact)
     if game:
-        from pipeline import catalog, games
-        candidates = catalog.game_pack(game)
+        from pipeline import leagues
+        candidates = leagues.game_pack(game)
         for fact in candidates:
-            progress("pulled", fact)
-        game_note = (f"This segment previews one game: {games.TEAMS[game['away']][0]} at {games.TEAMS[game['home']][0]}, "
-                     f"{game['weekday']} {game['date']} (Week {game['week']}). Team stats, records, recent results, "
-                     "last game's starting QBs, and injured starters are already pulled.")
-    candidates += research.research(topic, check["format"], named, client, progress, follow_up=game_note)
+            pulled("pulled", fact)
+        game_note = leagues.game_note(game)
+    candidates += research.research(topic, check["format"], named, client, pulled, follow_up=game_note)
     timings["research"] = round(time.time() - t, 1)
 
     # 3. Verify
@@ -350,7 +355,7 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
         progress("step", {"step": "research", "text": f"Replacing {len(crossed_off)} crossed-off stats"})
         listing = "\n".join(f"- {r['subject']}: {r['stat']} ({r.get('scope') or 'n/a'}): {r['reason']}" for r in crossed_off)
         kept = "\n".join(f"- {f['subject']}: {f['label']} ({f.get('scope')})" for f in facts)
-        more = research.research(topic, check["format"], named, client, progress, rounds=2, follow_up=(game_note + "\n\n" +
+        more = research.research(topic, check["format"], named, client, pulled, rounds=2, follow_up=(game_note + "\n\n" +
             "These stats couldn't be confirmed, so they were crossed off:\n" + listing +
             "\n\nAlready confirmed (don't ask for these again):\n" + kept +
             "\n\nFind replacements that can be confirmed and still serve the argument: other seasons or stats "

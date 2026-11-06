@@ -317,6 +317,180 @@ def _check_draft(f: dict) -> dict:
     return f
 
 
+# ---------- NBA checks (added Nov 5, 2026) ----------
+
+NBA_TABLE_KEYS = ["gp", "gs", "mpg", "fg", "3p", "ft", "rpg", "apg", "spg", "bpg", "ppg"]
+
+
+def _nba_table(name: str, position: str | None, playoffs: bool) -> dict:
+    """His Wikipedia career-stats table: {season start year: [row, ...]}, each row a dict of
+    gp, gs, mpg, fg, 3p, ft, rpg, apg, spg, bpg, ppg (and team)."""
+    page = wiki.find_page(name, "NBA", position)
+    if not page:
+        return {}
+    text = page["text"]
+    head = re.search(r"=+\s*" + ("Playoffs" if playoffs else "Regular season") + r"\s*=+", text)
+    if not head:
+        return {}
+    body = text[head.end():]
+    body = body[: body.find("\n|}") if "\n|}" in body else len(body)]
+    out = {}
+    for row in re.split(r"\n\|-", body)[1:]:
+        clean = re.sub(r'style="[^"]*"\s*\|', "", row)
+        clean = re.sub(r"'''|<sup>.*?</sup>|\{\{dagger\}\}|\{\{double-dagger\}\}|\{\{nowrap\|", "", clean).replace("*", "")
+        cells = [c.strip() for line in clean.strip().splitlines() for c in line.lstrip("|").split("||")]
+        if len(cells) < 13:
+            continue
+        year = re.search(r"(\d{4}) NBA playoffs", cells[0]) if playoffs else re.search(r"nbay\|(\d{4})", cells[0])
+        if not year:
+            continue
+        start = int(year.group(1)) - (1 if playoffs else 0)
+        vals = []
+        for x in cells[2:13]:
+            num = re.search(r"\d*\.\d+|\d+", re.sub(r"<ref.*?</ref>|\{\{[^}]*\}\}", "", x))
+            vals.append(float(num.group(0)) if num else None)
+        rowd = dict(zip(NBA_TABLE_KEYS, vals))
+        rowd["team"] = wiki._clean(cells[1])
+        out.setdefault(start, []).append(rowd)
+    return out
+
+
+def _check_nba_stat(f: dict) -> dict:
+    """Sleeper's number against his Wikipedia career table, at the precision Wikipedia shows.
+    Sleeper is trusted (decided Nov 4, 2026), so when Wikipedia hasn't caught up, or he
+    played for two teams that season, Sleeper's number stands; when they disagree on the
+    same games, Sleeper's is used and the disagreement is logged."""
+    rows = _nba_table(f["subject"], f.get("position"), f.get("playoffs", False)).get(f["season"], [])
+    col = f["wiki_col"]
+    f["checked_against"] = "Wikipedia (career statistics table)"
+    if len(rows) != 1:
+        why = "Wikipedia has no row for that season yet" if not rows else "he played for more than one team that season"
+        f.update(status="trusted", checked_against="Sleeper (trusted on its own)", note=why)
+        return f
+    row = rows[0]
+    if row.get("gp") != f["gp"]:
+        f.update(status="trusted", checked_against="Sleeper (trusted on its own)",
+                 note=f"Wikipedia isn't up to date yet ({row.get('gp')} games there, {f['gp']} on Sleeper)")
+        return f
+    theirs = row.get(col)
+    ours = float(f["wiki_value"])
+    if theirs is None:
+        f.update(status="trusted", checked_against="Sleeper (trusted on its own)", note="Wikipedia doesn't show it")
+        return f
+    if col in ("fg", "3p", "ft"):
+        theirs = theirs * 100 if theirs <= 1 else theirs
+    if col in ("fg", "3p", "ft"):
+        tolerance = 0.05 + 1e-6                     # Wikipedia shows .512; anything that rounds to 51.2 matches
+    else:
+        tolerance = 0 if col in ("gp", "gs") else 0.05 + 1e-6
+    f["check_value"] = theirs
+    if abs(ours - theirs) <= tolerance:
+        f["status"] = "verified"
+    else:
+        f.update(status="verified_sleeper_used",
+                 note=f"Wikipedia shows {theirs:g}, Sleeper works out to {ours:.2f}; using Sleeper's")
+    return f
+
+
+def _infobox(name: str, position: str | None, field: str):
+    page = wiki.find_page(name, "NBA", position)
+    m = re.search(r"\|\s*" + field + r"\s*=([^\n]*)", page["text"]) if page else None
+    return wiki._clean(re.sub(r"<!--.*", "", m.group(1))) if m else None
+
+
+def _check_nba_team(f: dict) -> dict:
+    from . import nba
+    theirs = _infobox(f["subject"], f.get("position"), "team")
+    ours = nba.TEAMS.get(f["value"] or "", ("no team",))[0]
+    f.update(checked_against="Wikipedia (infobox)", check_value=theirs)
+    if theirs and theirs == ours:
+        f["status"] = "verified"
+    else:
+        f.update(status="verified_sleeper_used",
+                 note=f"Wikipedia's infobox says {theirs or 'nothing'}; Sleeper (more current) says {ours}")
+    return f
+
+
+def _check_nba_height(f: dict) -> dict:
+    ft = _number(_infobox(f["subject"], f.get("position"), "height_ft") or "")
+    inch = _number(_infobox(f["subject"], f.get("position"), "height_in") or "")
+    if ft is None:
+        f.update(status="trusted", checked_against="Sleeper (trusted on its own)")
+        return f
+    theirs = ft * 12 + (inch or 0)
+    f.update(checked_against="Wikipedia (infobox height)", check_value=theirs)
+    if abs(theirs - f["value"]) <= 1.0:
+        f["status"] = "verified"
+    else:
+        f.update(status="dropped", note=f"Sleeper lists {f['say']}, Wikipedia {theirs:g} inches")
+    return f
+
+
+def _check_nba_draft(f: dict) -> dict:
+    """His infobox draft spot must match his row on that year's draft page."""
+    year = f.get("draft_year")
+    page = wiki._page(f"{year} NBA draft") if year else None
+    f["checked_against"] = f"Wikipedia ({year} NBA draft page)"
+    if not page:
+        f.update(status="dropped", note="that year's draft page couldn't be read")
+        return f
+    first, last = f["subject"].split()[0], f["subject"].split()[-1]
+    text = page["text"]
+    start = text.find("==Draft selections==")
+    section = text[start: text.find("\n==", start + 25)] if start >= 0 else text
+    hit = None
+    def cells(row: str) -> list[str]:
+        """A table row's cells, each with its formatting (align=, style=, bgcolor=) removed
+        and links unwrapped: '|align=center| 7' and '[[List of ... picks|1]]' both become numbers."""
+        out = []
+        for line in row.splitlines():
+            line = line.strip()
+            if not line.startswith("|") or line.startswith("|}"):
+                continue
+            for cell in re.split(r"\|\|", line[1:]):
+                cell = re.sub(r'^\s*(?:[\w-]+\s*=\s*"?[^"|\[]*"?\s*)+\|(?!\|)', "", cell)
+                out.append(wiki._clean(cell).strip())
+        return out
+
+    for row in re.split(r"\n\|-", section):
+        if not any(first in l and last in l and not l.strip().startswith("[[File") for l in row.splitlines()):
+            continue
+        nums = [int(c) for c in cells(row) if re.fullmatch(r"\d{1,2}", c)]
+        if len(nums) >= 2:
+            hit = nums[:2]                        # the table's round and pick columns
+            break
+    if f.get("undrafted"):
+        ok = hit is None
+    else:
+        f["check_value"] = hit
+        ok = hit == [f["draft_round"], f["draft_pick"]]
+    if ok:
+        f["status"] = "verified"
+    else:
+        f.update(status="dropped", note=f"the {year} draft page shows {hit or 'no pick for him'}")
+    return f
+
+
+# ---------- Checking ahead (added Nov 5, 2026) ----------
+
+import copy as _copy
+from concurrent.futures import ThreadPoolExecutor as _Pool
+
+_WARM = _Pool(max_workers=4, thread_name_prefix="warm")
+
+
+def warm(f: dict) -> None:
+    """Run a fact's check on a copy in the background, as soon as research pulls it, so the
+    second source's data is fetched and saved while research keeps working. The real check
+    (check_all) still runs on every fact afterward, the same way; it just finds the data
+    already there. Nothing about the fact itself changes here."""
+    if not isinstance(f, dict) or f.get("status") in ("dropped", "trusted", "verified") or f.get("depends_on"):
+        for part in (f or {}).get("depends_on") or []:
+            warm(part)
+        return
+    _WARM.submit(_check_one, _copy.deepcopy(f))
+
+
 def _check_one(f: dict) -> dict:
     """Check one fact. If the check itself fails (a source is down), drop the fact."""
     try:
@@ -328,6 +502,17 @@ def _check_one(f: dict) -> dict:
 
 def _check(f: dict) -> dict:
     if f["status"] in ("dropped", "trusted", "verified"):
+        return f
+    if f.get("league") == "NBA" and not f.get("honor"):
+        if f["stat"] == "current_team":
+            return _check_nba_team(f)
+        if f["stat"] == "height":
+            return _check_nba_height(f)
+        if f["stat"] == "draft":
+            return _check_nba_draft(f)
+        if f.get("wiki_col"):
+            return _check_nba_stat(f)
+        f.update(status="trusted", checked_against=f.get("checked_against") or "Sleeper (trusted on its own)")
         return f
     if f["stat"] == "head_coach":
         return _check_coach(f)

@@ -45,32 +45,36 @@ HONORS = [
 _LOCK = threading.Lock()   # one request at a time, politely spaced (Wikimedia asks for this)
 
 
-def _get(url: str, cache_name: str):
+def _get(url: str, cache_name: str, max_age_hours: float = 24):
     path = CACHE / "wiki" / f"{cache_name}.json"
-    if path.exists() and time.time() - path.stat().st_mtime < 24 * 3600:
+    if path.exists() and time.time() - path.stat().st_mtime < max_age_hours * 3600:
         return json.loads(path.read_text())
     request = urllib.request.Request(url, headers={"User-Agent": UA})
     with _LOCK:
-        for attempt in range(4):
+        for attempt in range(5):
             try:
                 with urllib.request.urlopen(request, timeout=30, context=SSL) as response:
                     data = json.loads(response.read())
                 break
             except urllib.error.HTTPError as e:
-                if e.code != 429 or attempt == 3:
+                if e.code != 429 or attempt == 4:
                     raise
-                time.sleep(3 * (attempt + 1))     # asked to slow down: wait and retry
+                # Asked to slow down: wait as long as Wikipedia says (or longer each time), then retry.
+                wait = e.headers.get("Retry-After") if e.headers else None
+                time.sleep(min(int(wait), 60) if wait and wait.isdigit() else 5 * (attempt + 1))
         time.sleep(0.2)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data))
     return data
 
 
-def _page(title: str):
+def _page(title: str, max_age_hours: float = 24):
+    """A Wikipedia page's wikitext. Pages that change daily (game logs, standings) pass a
+    shorter max_age_hours."""
     url = "https://en.wikipedia.org/w/api.php?" + urllib.parse.urlencode({
         "action": "query", "prop": "revisions|pageprops", "rvprop": "content", "rvslots": "main",
         "titles": title, "format": "json", "formatversion": 2, "redirects": 1})
-    page = _get(url, "page_" + re.sub(r"\W+", "_", title))["query"]["pages"][0]
+    page = _get(url, "page_" + re.sub(r"\W+", "_", title), max_age_hours)["query"]["pages"][0]
     if page.get("missing"):
         return None
     text = page["revisions"][0]["slots"]["main"]["content"]
