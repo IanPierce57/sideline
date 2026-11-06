@@ -206,7 +206,9 @@ Rules:
   involved, and current_team for any player a host might suggest acquiring.
 - "Right now" and "this season" questions need THIS season's numbers (NFL {sleeper.state('nfl')['season']}, NBA
   {sleeper.state('nba')['season']}). Pull this season's stats for every player first; add last season only as
-  extra context, never instead.
+  extra context, never instead. Early in a season (the first month of the NBA, the first four NFL weeks), also
+  pull last season's version of each player's key stats, so the hosts can tell a breakout or a slump from a
+  player playing like himself.
 - Sideline covers current players only. Never look up or pull numbers for retired players, even for
   "best ever" topics; compare the current player with other current players instead.
 - Cover both sides of the argument fairly, with comparable numbers for the main current rivals.

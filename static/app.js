@@ -654,27 +654,57 @@ async function play(newScript) {
 // ---------- The pipeline strip: how a segment gets made ----------
 
 const PIPE = ["topic", "research", "verify", "write", "check", "judge", "close"];
-let pipeTimer = null;
+// How long each step usually takes (seconds), so the bar keeps creeping through a step
+// instead of jumping; it never fills a step until the server says that step is done.
+const PIPE_EXPECT = { topic: 3, research: 7, verify: 12, write: 50, check: 30, judge: 11, close: 9 };
+const PIPE_NAMES = { topic: "Screening the call", research: "Pulling stats", verify: "Checking every number twice",
+                     write: "Writing the segment", check: "Checking every line", judge: "Blind judges scoring",
+                     close: "The verdict" };
+const pipe = { idx: -1, stepAt: 0, startedAt: 0, timer: null };
+function clockText(ms) {
+  const s = Math.round(ms / 1000);
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+}
+function renderPipeline() {
+  const box = $("pipeline"), step = PIPE[pipe.idx];
+  const frac = Math.min(0.92, 1 - Math.exp(-(Date.now() - pipe.stepAt) / 1000 / PIPE_EXPECT[step]));
+  const pct = ((pipe.idx + frac) / PIPE.length) * 100;
+  $("pbar-fill").style.width = `${pct}%`;
+  $("pbar").setAttribute("aria-valuenow", String(Math.round(pct)));
+  $("pipeline-title").textContent = `Step ${pipe.idx + 1} of 7 · ${PIPE_NAMES[step]}`;
+  $("pipeline-clock").textContent = clockText(Date.now() - pipe.startedAt);
+  box.querySelectorAll(".psteps li").forEach((li, i) => {
+    li.classList.toggle("done", i < pipe.idx);
+    li.classList.toggle("active", i === pipe.idx);
+  });
+}
 function setPipeline(step, startedAt) {
   const box = $("pipeline");
   const idx = PIPE.indexOf(step === "start" ? "topic" : step);
-  box.classList.toggle("running", idx >= 0 || step === "all");
-  box.querySelectorAll("li").forEach((li, i) => {
-    li.classList.toggle("done", step === "all" || (idx >= 0 && i < idx));
-    li.classList.toggle("active", idx >= 0 && i === idx);
-  });
-  $("pipeline-title").textContent = step === "all" ? "Your segment, made and checked" : idx >= 0 ? "Making your segment" : "How a segment gets made";
-  if (startedAt && !pipeTimer) {
-    const tick = () => {
-      const s = Math.round((Date.now() - startedAt) / 1000);
-      $("pipeline-clock").textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
-    };
-    tick();
-    pipeTimer = setInterval(tick, 1000);
+  if (idx < 0) {                                       // back to the explainer
+    clearInterval(pipe.timer); pipe.timer = null; pipe.idx = -1;
+    box.classList.remove("running", "complete");
+    $("pbar-fill").style.width = "0";
+    $("pipeline-title").textContent = "How a segment gets made: 7 steps, about a minute and a half";
+    $("pipeline-clock").textContent = "";
+    box.querySelectorAll(".psteps li").forEach((li) => li.classList.remove("done", "active"));
+    return;
   }
-  if (!startedAt && step !== "all" && idx < 0) { clearInterval(pipeTimer); pipeTimer = null; $("pipeline-clock").textContent = ""; }
+  if (startedAt) pipe.startedAt = startedAt;
+  if (idx !== pipe.idx) { pipe.idx = idx; pipe.stepAt = Date.now(); }
+  box.classList.add("running"); box.classList.remove("complete");
+  if (!pipe.timer) pipe.timer = setInterval(renderPipeline, 200);
+  renderPipeline();
 }
-function pipelineDone() { clearInterval(pipeTimer); pipeTimer = null; setPipeline("all"); }
+function pipelineDone() {
+  const box = $("pipeline");
+  clearInterval(pipe.timer); pipe.timer = null;
+  box.classList.remove("running"); box.classList.add("complete");
+  $("pbar-fill").style.width = "100%";
+  $("pipeline-title").textContent = `Made and checked in ${clockText(Date.now() - pipe.startedAt)}`;
+  $("pipeline-clock").textContent = "";
+  box.querySelectorAll(".psteps li").forEach((li) => { li.classList.add("done"); li.classList.remove("active"); });
+}
 
 // ---------- The broadcast wipe ----------
 
@@ -718,7 +748,7 @@ let askedAt = 0;
 async function askDesk(topic) {
   $("go").disabled = true;
   askedAt = Date.now();
-  clearInterval(pipeTimer); pipeTimer = null;
+  setPipeline(null);
   setPipeline("topic", askedAt);
   setLines("busy", "Patching you through");
   showPreshow(topic);

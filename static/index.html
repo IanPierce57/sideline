@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261106g">
+  <link rel="stylesheet" href="style.css?v=20261106h">
 </head>
 <body>
   <header class="masthead">
@@ -128,15 +128,14 @@
       <p class="console-status" id="status" role="status"></p>
       <!-- How a segment gets made: lights up step by step while yours is being made -->
       <div class="pipeline" id="pipeline">
-        <div class="pipeline-head"><span id="pipeline-title">How a segment gets made</span><span class="pipeline-clock" id="pipeline-clock"></span></div>
-        <ol>
-          <li data-step="topic"><b>1</b>Screen the call</li>
-          <li data-step="research"><b>2</b>Pull stats</li>
-          <li data-step="verify"><b>3</b>Check twice</li>
-          <li data-step="write"><b>4</b>Write it</li>
-          <li data-step="check"><b>5</b>Line check</li>
-          <li data-step="judge"><b>6</b>Blind judges</li>
-          <li data-step="close"><b>7</b>The verdict</li>
+        <div class="pipeline-head"><span id="pipeline-title">How a segment gets made: 7 steps, about a minute and a half</span><span class="pipeline-clock" id="pipeline-clock"></span></div>
+        <div class="pbar" role="progressbar" aria-label="Segment progress" aria-valuemin="0" aria-valuemax="100" id="pbar">
+          <div class="pbar-fill" id="pbar-fill"></div>
+          <i style="left:14.2857%"></i><i style="left:28.5714%"></i><i style="left:42.8571%"></i><i style="left:57.1429%"></i><i style="left:71.4286%"></i><i style="left:85.7143%"></i>
+        </div>
+        <ol class="psteps">
+          <li data-step="topic">Screen</li><li data-step="research">Stats</li><li data-step="verify">Check</li>
+          <li data-step="write">Write</li><li data-step="check">Line check</li><li data-step="judge">Judges</li><li data-step="close">Verdict</li>
         </ol>
       </div>
     </section>
@@ -181,8 +180,8 @@
     <p><strong>Fonts.</strong> Atkinson Hyperlegible and Silkscreen, from Google Fonts (SIL Open Font License).</p>
   </footer>
 
-  <script src="studio.js?v=20261106g"></script>
-  <script src="monitor.js?v=20261106g"></script>
-  <script src="app.js?v=20261106g"></script>
+  <script src="studio.js?v=20261106h"></script>
+  <script src="monitor.js?v=20261106h"></script>
+  <script src="app.js?v=20261106h"></script>
 </body>
 </html>

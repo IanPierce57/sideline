@@ -559,25 +559,31 @@ body::before {
 .chip.live { background: linear-gradient(90deg, rgba(244, 183, 64, 0.16), #142a6e 60%); }
 
 /* The pipeline strip: how a segment gets made, lit up step by step */
-.pipeline { margin: 4px 18px 18px 24px; padding: 12px 14px 14px; background: #0a1536; border: 2px solid #172a66; }
-.pipeline-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px;
-  font-family: var(--pixel); font-size: 12px; color: var(--dim); letter-spacing: 0.04em; text-transform: uppercase; }
-.pipeline-clock { color: var(--gold-soft); }
-.pipeline ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
-.pipeline li {
-  position: relative; font-family: var(--round); font-size: 13px; line-height: 1.2; color: var(--dim);
-  background: #0e1d4b; border: 2px solid #172a66; padding: 7px 6px 7px; text-align: center;
+.pipeline { margin: 6px 18px 20px 24px; padding: 12px 14px 12px; background: #0a1536; border: 2px solid #172a66; }
+.pipeline-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 10px;
+  font-family: var(--round); font-size: 14px; color: var(--muted); }
+.pipeline.running .pipeline-head { color: #fff; }
+.pipeline-clock { font-family: var(--pixel); font-size: 13px; color: var(--gold-soft); }
+.pbar { position: relative; height: 22px; background: #050a1f; border: 2px solid #22336f;
+  box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.45), 3px 3px 0 #030616; overflow: hidden; }
+.pbar-fill {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 0;
+  background: repeating-linear-gradient(-45deg, var(--gold) 0 8px, #ffd77a 8px 16px);
+  background-size: 22.63px 22.63px; animation: stripes 0.7s linear infinite;
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.18), inset 0 3px 0 rgba(255, 255, 255, 0.35);
+  transition: width 0.3s linear;
 }
-.pipeline li b { display: block; margin: 0 auto 4px; width: 20px; height: 20px; line-height: 20px; font-family: var(--pixel); font-size: 11px;
-  color: var(--dim); background: #050a1f; border: 2px solid #22336f; }
-.pipeline.running li { color: #8592c2; }
-.pipeline li.done { color: #cfe9d8; border-color: #1f6b44; background: #0c2a2a; }
-.pipeline li.done b { background: #1f6b44; border-color: #3ddc84; color: transparent; position: relative; }
-.pipeline li.done b::after { content: "✓"; position: absolute; inset: 0; color: #eaffef; font-family: var(--round); font-size: 13px; }
-.pipeline li.active { color: #fff; border-color: var(--gold); background: #2a2a48; box-shadow: 0 0 0 2px rgba(244, 183, 64, 0.25), 0 0 14px rgba(244, 183, 64, 0.25); }
-.pipeline li.active b { background: var(--gold); border-color: #fff3c4; color: var(--ink); animation: blink 0.9s steps(2) infinite; }
-@media (max-width: 860px) { .pipeline ol { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-@media (max-width: 520px) { .pipeline ol { grid-template-columns: repeat(2, minmax(0, 1fr)); } .pipeline { margin-left: 16px; margin-right: 16px; } }
+.pbar-fill::after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 4px; background: #fff; box-shadow: 0 0 10px #fff3c4; animation: blink 0.8s steps(2) infinite; }
+.pipeline:not(.running) .pbar-fill::after { display: none; }
+.pipeline.complete .pbar-fill { background: linear-gradient(180deg, #4be38f, #2fa865); animation: none; }
+@keyframes stripes { from { background-position: 0 0; } to { background-position: 22.63px 0; } }
+.pbar i { position: absolute; top: 0; bottom: 0; width: 2px; background: #050a1f; z-index: 1; }
+.psteps { list-style: none; margin: 7px 0 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.psteps li { font-family: var(--round); font-size: 12px; color: var(--dim); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.psteps li.done { color: #7fe39a; }
+.psteps li.active { color: #fff; font-weight: 700; }
+.psteps li.active::before { content: "▲ "; color: var(--gold); font-size: 0.8em; }
+@media (max-width: 520px) { .psteps li { font-size: 10px; } .psteps li:not(.active) { color: transparent; } .psteps li.done { color: transparent; } .pipeline { margin-left: 16px; margin-right: 16px; } }
 
 /* The receipts, printed on actual receipt paper */
 .receipts {
@@ -622,6 +628,6 @@ body::before {
 /* Less motion for people who ask their system for it */
 @media (prefers-reduced-motion: reduce) {
   .ticker-move { animation-duration: 240s !important; }
-  .lamp, .air-pill i, .bug-live.on::before, .pipeline li.active b { animation: none; }
+  .lamp, .air-pill i, .bug-live.on::before, .pbar-fill, .pbar-fill::after { animation: none; }
   .bubble.pop, .nameplate.swap, .show-tag.swap, .center .mon-topic.count { animation: none; }
 }

@@ -101,7 +101,7 @@ def season_progress() -> str:
         season = int(sleeper.state("nfl")["season"])
         done = sum(1 for g in sleeper.nfl_schedule(season) if g.get("status") == "complete")
         per = round(2 * done / 32)
-        size = ("early: season numbers are still small" if per <= 4 else
+        size = ("early. A small sample only matters when a player's numbers break from what he's done before (a breakout, a rookie, a proven player off to a slow start); a player playing like himself needs no caveat" if per <= 4 else
                 "season numbers are just 'this season' now; nobody comments on sample size")
         out.append(f"NFL: teams have played about {per} of 17 games, {size}.")
     except Exception:
@@ -110,7 +110,7 @@ def season_progress() -> str:
         from pipeline import nba
         done = sum(1 for g in nba.schedule() if g["status"] == "complete")
         per = round(2 * done / 30)
-        size = ("early: season numbers are still small" if per < 20 else
+        size = ("early. A small sample only matters when a player's numbers break from what he's done before (a breakout, a rookie, a proven player off to a slow start); a player playing like himself needs no caveat" if per < 20 else
                 "season numbers are just 'this season' now; nobody comments on sample size")
         out.append(f"NBA: teams have played about {per} of 82 games, {size}.")
     except Exception:
@@ -159,12 +159,22 @@ FACT RULES. These override the bibles wherever they conflict.
    28.8 a night"). Present-tense numbers must be this season's facts.
 6b. Sample size, the way real people talk about it. Most of the time nobody mentions
    it: a season's numbers are just "this season." Never say a sample is big, real, or
-   big enough ("eight games is a real sample"); people don't talk like that. Talk about
-   the season the way fans do ("he started slow, but he's been back to himself for a
-   month"). Call something small only when it really is AND it changes the point, once
-   or twice a segment at most: the first three or four NFL games, under about 20 NBA
-   games (see "How far into the season"), a few playoff games ("it's four playoff
-   games"), a handful of games back from an injury.
+   big enough; people don't talk like that. Early in a season (see "How far into the
+   season"), what a start means depends on the player's track record. It's a "what
+   have you done for me lately" business, but a résumé buys some grace (or none):
+   - A proven player playing like he always has (LeBron or Wembanyama putting up his
+     usual numbers): no caveat at all. It's just who he is.
+   - A breakout or a rookie (a role player suddenly playing like a star; a first-year
+     player): the sample IS the question. "Is it real?" is fair and worth pressing.
+   - A proven player off to a slow start (a great shooter's splits down eight games
+     in): his résumé buys grace, so "it's early" is a fair answer.
+   - A player who struggled before and still is: that isn't a small sample, it's who
+     he's been; nothing has changed.
+   Tell which case it is by comparing this season's facts with his earlier seasons,
+   honors, and draft facts in the pack. With no earlier seasons in the pack, don't call
+   a sample small unless he's a rookie. Small counts are small in any league (a few
+   playoff games, a handful of games back from an injury). When it does come up, it
+   decides something; most segments mention it once or not at all.
 7. Injuries, read like someone who follows the sport.
    - Today's report: "questionable" usually means he plays (teams list nearly
      everything now), so it's never a storyline or an argument on its own. Day-to-day

@@ -170,6 +170,28 @@ SAMPLE_TALK = re.compile(r"\b(?:a |is a |that's a )?(?:real|big|large|decent|fai
                          r"|\bbuild(?:ing)? (?:a |him a )?statue", re.I)        # the old bible tic
 
 
+# Sample-size talk (Nov 6, 2026): most segments mention it once or not at all. A "real or
+# not" segment about a breakout can lean on it more, since the sample is the question.
+SAMPLE_MENTION = re.compile(r"\bsample\b|\bweek and a half\b|\b(?:it's|it is|way too|too) early\b|"
+                            r"\bsmall stretch\b|\bhandful of games\b", re.I)
+
+
+def check_sample_talk(lines: list[dict], fmt: str = "") -> list[dict]:
+    """Lines that bring up sample size past the segment's limit (style: rewritten, never cut)."""
+    limit = 3 if fmt == "real_or_not" else 1
+    last_hal = max((l["line"] for l in lines if l["speaker"] == "hal"), default=0)
+    seen, problems = 0, []
+    for line in lines:
+        if line["speaker"] not in ("royce", "deacon", "lonnie") or line["line"] > last_hal:
+            continue
+        if SAMPLE_MENTION.search(line["text"]):
+            seen += 1
+            if seen > limit:
+                problems.append({"line": line["line"], "problem": "brings up sample size again (the segment's limit is "
+                                 f"{limit}); drop it and argue the numbers, unless they break from his track record"})
+    return problems
+
+
 def check_stock_phrases(lines: list[dict]) -> list[dict]:
     """Style problems (rewritten, never cut): a move name said on air, stock phrases past the
     segment's limit, and a number said for the third time or more."""
@@ -444,7 +466,8 @@ def run(lines: list[dict], facts: list[dict], pack: list[dict], context: str, cl
                        + check_scope(lines, by_id))
     claim_problems = check_claims(lines, pack, context, client)
     progress("line_check", {"checked": len(lines), "flagged": len({p['line'] for p in number_problems + claim_problems})})
-    style_problems = check_stock_phrases(lines)
+    fmt = (re.search(r"Format \(from the topic check\): (\w+)", context or "") or [None, ""])[1]
+    style_problems = check_stock_phrases(lines) + check_sample_talk(lines, fmt)
     problems = number_problems + claim_problems + style_problems
     style_only = {p["line"] for p in style_problems} - {p["line"] for p in number_problems + claim_problems}
     if not problems:
