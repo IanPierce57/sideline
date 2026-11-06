@@ -6,7 +6,7 @@ The "Facts and data" section of BRIEF.md is the authority on sources. This file 
 
 | Source | Used for |
 | --- | --- |
-| [nflverse via nflreadpy](https://github.com/nflverse/nflreadpy) | NFL play-by-play, player stats, Next Gen Stats, FTN charting, injuries, schedules, depth charts, rosters, trades. Tested Nov 4, 2026: works, current through Week 8. |
+| [nflverse via nflreadpy](https://github.com/nflverse/nflreadpy) | NFL play-by-play, player stats, Next Gen Stats, FTN charting, injuries, schedules, depth charts, rosters, trades, head coaches (in schedules), combine results, and draft picks. Tested Nov 4, 2026: works, current through Week 8. |
 | [Sleeper API](https://docs.sleeper.com/) | Approved Nov 4, 2026, including its undocumented stats feed. Current NFL and NBA players (team, position, injury status, depth chart), the current season and week, weekly and season stats for both leagues (including each NFL team defense's points allowed per week, used to confirm final scores), the NFL schedule (`api.sleeper.app/schedule/nfl/...`, used to confirm games), and trending adds and drops. Free for non-commercial use; credit Sleeper wherever its trending data is shown. Ask for the full player list at most once a day, and stay well under 1,000 calls a minute. |
 | Web search | News context and pre-1999 NFL numbers, with links saved |
 
@@ -50,6 +50,7 @@ From the brief:
 | Source | Used for |
 | --- | --- |
 | [PerThirtySix](https://www.perthirtysix.com) | Checking NFL advanced numbers by hand, method notes |
+| Yahoo Fantasy Sports API | Considered Nov 5, 2026, not a fit right now: access is by application and Yahoo account sign-in; its developer terms ask that user data be removed within 24 hours and require the Yahoo Fantasy logo and a privacy policy; it doesn't name its stats provider, and Sleeper, nflverse, and muffed.ai already cover the same numbers. |
 | Bluesky public posts | Considered Nov 5, 2026 for fan opinion, then dropped by the user: Royce's eye-test images and metaphors cover it instead. (Search now requires signing in, and most posts about players are fantasy, betting, or promos.) |
 | [Roll Coverage](https://rollcoverage.com) | Reading by hand: coaching staffs, scheme and matchup pages, and its source list (checked Nov 5, 2026). Its terms ban automated access: "Do not scrape, crawl or download either site in bulk by automated means." Most of its data is nflverse, which Sideline already uses directly. |
 | RayCarp | Checking numbers by hand, method notes |

@@ -154,9 +154,9 @@ TOOLS = [
          "required": ["requests"], "additionalProperties": False}},
     {"name": "get_team_stats",
      "description": "NFL team stats for one regular season (2016 or later), checked against a second source. team is the "
-                    "abbreviation, e.g. KC. stats: any of " + ", ".join(catalog.NFL_TEAM_STATS) + ".",
+                    "abbreviation, e.g. KC. stats: any of " + ", ".join(catalog.NFL_TEAM_STATS) + ", head_coach (who coaches them now).",
      "input_schema": {"type": "object", "properties": {"team": {"type": "string"}, "season": {"type": "integer"},
-                      "stats": {"type": "array", "items": {"type": "string", "enum": list(catalog.NFL_TEAM_STATS)}}},
+                      "stats": {"type": "array", "items": {"type": "string", "enum": list(catalog.NFL_TEAM_STATS) + ["head_coach"]}}},
                       "required": ["team", "season", "stats"], "additionalProperties": False}},
     {"name": "get_team_record",
      "description": "An NFL team's regular-season record for one season (2016 or later). team is the abbreviation, e.g. KC.",
@@ -199,7 +199,11 @@ Stats you can ask for (stat names exactly as written):
 {catalog.stat_menu()}
 current_team: which team he's on right now (any player)
 honors: his career awards and titles (any player; no season needed)
-qb_playoff_record: playoff wins and losses as the starting quarterback (NFL QBs; no season needed)"""
+qb_playoff_record: playoff wins and losses as the starting quarterback (NFL QBs; no season needed)
+measurables: listed height and weight now, plus his NFL Scouting Combine results (40-yard dash, jumps, bench,
+  drills) (NFL; no season needed). Useful for eye-test and "physical tools" arguments.
+draft: where he was drafted, or that he went undrafted (NFL; no season needed)
+head_coach (through get_team_stats): who coaches a team now. Useful for "scheme" and "coaching" arguments."""
 
 
 def research(topic: str, fmt: str, named: list[dict], client: anthropic.Anthropic,
@@ -226,7 +230,8 @@ def research(topic: str, fmt: str, named: list[dict], client: anthropic.Anthropi
         if name == "get_team_stats":
             out = []
             for stat in args["stats"]:
-                fact = catalog.nfl_team_stat(args["team"].upper(), stat, args["season"])
+                fact = (catalog.head_coach(args["team"].upper()) if stat == "head_coach"
+                        else catalog.nfl_team_stat(args["team"].upper(), stat, args["season"]))
                 candidates.append(fact)
                 progress("pulled", fact)
                 out.append({"team": fact["subject"], "stat": fact["label"], "value": fact.get("say"), "note": fact.get("note") or ""})

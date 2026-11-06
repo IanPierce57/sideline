@@ -70,3 +70,15 @@ def sleeper_to_gsis() -> dict:
 def rosters_all() -> pl.DataFrame:
     """Season rosters since 1999 (one row per player per team per season)."""
     return nfl.load_rosters(seasons=True)
+
+
+@lru_cache(maxsize=1)
+def combine() -> pl.DataFrame:
+    """NFL Scouting Combine results since 2000 (height, weight, 40, jumps, bench, drills)."""
+    return nfl.load_combine()
+
+
+@lru_cache(maxsize=1)
+def draft_picks() -> pl.DataFrame:
+    """Every NFL draft pick since 1980, with nflverse and PFR player IDs."""
+    return nfl.load_draft_picks()

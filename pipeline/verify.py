@@ -19,6 +19,7 @@ Rules (BRIEF.md "Facts and data", decided Nov 4, 2026):
   Injuries           Sleeper (trusted on its own).
 """
 
+import re
 from concurrent.futures import ThreadPoolExecutor
 
 import polars as pl
@@ -36,7 +37,7 @@ def _check_nfl_count(f: dict) -> dict:
     sid = f["subject_key"].split(":", 1)[1]
     total = 0.0
     for season in seasons:
-        row = sleeper.season_stats("nfl", season, kind).get(sid)
+        row = catalog.sleeper_season(season, kind).get(sid)
         if row is None:
             f.update(status="dropped", note=f"Sleeper has no {season} {kind}-season record for him to check against")
             return f
@@ -58,6 +59,15 @@ def _check_advanced(f: dict) -> dict:
     if not published or published.get("value") is None:
         f.update(status="dropped", note="muffed.ai doesn't publish this for him that season (often a too-small sample), so it can't be cross-referenced")
         return f
+    pw = published.get("through_week")
+    if pw and f["season"] == int(sleeper.state("nfl")["season"]) and f.get("week") and pw != f["week"]:
+        # The sources are a week apart: recalculate ours through muffed's week.
+        card = {"name": f["subject"], "key": f["subject_key"], "gsis_id": f.get("gsis_id")}
+        redo = catalog.nfl_advanced(card, f["stat"], f["season"], through_week=pw)
+        if redo["status"] == "dropped":
+            f.update(status="dropped", note=redo["note"])
+            return f
+        f.update({k: redo[k] for k in ("value", "say", "sample", "as_of", "week")})
     theirs = float(published["value"])
     ours = float(f["value"])
     if f["stat"] == "success_rate" and theirs <= 1.0 < ours:
@@ -89,6 +99,11 @@ def _check_team_record(f: dict) -> dict:
     if not got["wins"] or got["wins"].get("value") is None:
         f.update(status="dropped", note="muffed.ai has no record for this team and season")
         return f
+    pw = got["wins"].get("through_week")
+    if pw and f["season"] == int(sleeper.state("nfl")["season"]) and f.get("week") and pw != f["week"]:
+        redo = catalog.nfl_team_record(f["subject_key"].split(":", 1)[1], f["season"], through_week=pw)
+        f.update({k: redo[k] for k in ("value", "say", "sample", "as_of", "week")})
+        v = f["value"]
     theirs = {k: int((got[k] or {}).get("value") or 0) for k in got}
     f["check_value"] = theirs
     if theirs == v:
@@ -163,11 +178,15 @@ def _check_team_stat(f: dict) -> dict:
     if not published or published.get("value") is None:
         f.update(status="dropped", note="muffed.ai doesn't publish this for that team and season")
         return f
-    if published.get("through_week") and f["season"] == int(sleeper.state("nfl")["season"]) \
-            and published["through_week"] != f["week"]:
-        f.update(status="dropped", note=f"muffed.ai is through Week {published['through_week']} and nflverse through "
-                                        f"Week {f['week']}, so they can't be compared yet")
-        return f
+    pw = published.get("through_week")
+    if pw and f["season"] == int(sleeper.state("nfl")["season"]) and pw != f["week"]:
+        # The sources are a week apart: recalculate ours through muffed's week.
+        team = f["subject_key"].split(":", 1)[1]
+        redo = catalog.nfl_team_stat(team, f["stat"], f["season"], through_week=pw)
+        if redo["status"] == "dropped":
+            f.update(status="dropped", note=redo["note"])
+            return f
+        f.update({k: redo[k] for k in ("value", "say", "sample", "as_of", "week", "our_rank", "teams")})
     raw = repr(float(published["value"]))
     theirs = float(published["value"]) * (100 if f["pct"] else 1)
     published_decimals = max(0, len(raw.split(".")[1].rstrip("0") or "") - (2 if f["pct"] else 0))
@@ -212,6 +231,92 @@ def _check_qb_start(f: dict) -> dict:
     return f
 
 
+def _predraft(f: dict) -> dict:
+    """The pre-draft measurables table on his Wikipedia page, as {field: text}."""
+    page = wiki.find_page(f["subject"], "NFL", f.get("position"))
+    m = re.search(r"\{\{\s*nfl predraft(.*?)\n\}\}|\{\{\s*nfl predraft(.*?)\}\}", page["text"], re.S | re.I) if page else None
+    body = (m.group(1) or m.group(2)) if m else ""
+    return {k.strip().lower(): re.sub(r"<ref.*", "", v).strip() for k, v in re.findall(r"\|\s*([a-z ]+?)\s*=\s*([^|\n]*)", body)}
+
+
+def _number(text: str):
+    """'10 1/8' -> 10.125; '4.75' -> 4.75; '' -> None."""
+    parts = text.split()
+    try:
+        total = float(parts[0]) if parts else None
+        if len(parts) > 1 and "/" in parts[1]:
+            a, b = parts[1].split("/")
+            total += float(a) / float(b)
+        return total
+    except (ValueError, ZeroDivisionError):
+        return None
+
+
+def _check_coach(f: dict) -> dict:
+    page = wiki._page(f["team_name"])
+    m = re.search(r"\|\s*(?:head[ _]coach|coach)\s*=([^\n]*)", page["text"]) if page else None
+    theirs = wiki._clean(m.group(1)) if m else None
+    f.update(checked_against="Wikipedia (team page)", check_value=theirs)
+    if theirs and theirs.lower() == (f["value"] or "").lower():
+        f["status"] = "verified"
+    else:
+        f.update(status="dropped", note=f"nflverse says {f['value']}, Wikipedia says {theirs or 'nothing'}")
+    return f
+
+
+def _check_height(f: dict) -> dict:
+    """Sleeper's listed height (trusted), as long as the pre-draft height is within an inch:
+    a bigger gap means a mix-up between two players."""
+    pre = _predraft(f)
+    ft, inch = _number(pre.get("height ft", "")), _number(pre.get("height in", ""))
+    if ft is None:
+        f.update(status="trusted", checked_against="Sleeper (trusted on its own)")
+        return f
+    theirs = ft * 12 + (inch or 0)
+    f.update(checked_against="Wikipedia (pre-draft height)", check_value=theirs)
+    if abs(theirs - f["value"]) <= 1.0:
+        f["status"] = "verified"
+    else:
+        f.update(status="dropped", note=f"Sleeper lists {f['say']}, his pre-draft height was {theirs:g} inches")
+    return f
+
+
+def _check_combine(f: dict) -> dict:
+    _, field, _, _ = catalog.COMBINE[f["combine_key"]]
+    pre = _predraft(f)
+    if field == "broad":
+        ft, inch = _number(pre.get("broad ft", "")), _number(pre.get("broad in", ""))
+        theirs = ft * 12 + (inch or 0) if ft is not None else None
+    else:
+        theirs = _number(pre.get(field, ""))
+    f.update(checked_against="Wikipedia (pre-draft measurables)", check_value=theirs)
+    if theirs is None:
+        f.update(status="dropped", note="his Wikipedia page doesn't list it, so it can't be cross-checked")
+    elif abs(theirs - f["value"]) < 0.011:
+        f["status"] = "verified"
+    else:
+        f.update(status="dropped", note=f"nflverse {f['value']:g} vs Wikipedia {theirs:g} (maybe a pro-day number)")
+    return f
+
+
+def _check_draft(f: dict) -> dict:
+    page = wiki.find_page(f["subject"], "NFL", f.get("position"))
+    info = {k.replace("_", ""): wiki._clean(v) for k, v in
+            re.findall(r"\|\s*(draft_?year|draft_?round|draft_?pick|undrafted_?year)\s*=([^\n]*)", page["text"])} if page else {}
+    f["checked_against"] = "Wikipedia (infobox)"
+    if f.get("undrafted"):
+        ok = bool(info.get("undraftedyear")) and not info.get("draftyear")
+    else:
+        got = tuple(int(re.sub(r"\D", "", info.get(k, "")) or 0) for k in ("draftyear", "draftround", "draftpick"))
+        f["check_value"] = got
+        ok = got == (f["draft_year"], f["draft_round"], f["draft_pick"])
+    if ok:
+        f["status"] = "verified"
+    else:
+        f.update(status="dropped", note=f"his Wikipedia page says {info or 'nothing about the draft'}")
+    return f
+
+
 def _check_one(f: dict) -> dict:
     """Check one fact. If the check itself fails (a source is down), drop the fact."""
     try:
@@ -224,6 +329,14 @@ def _check_one(f: dict) -> dict:
 def _check(f: dict) -> dict:
     if f["status"] in ("dropped", "trusted", "verified"):
         return f
+    if f["stat"] == "head_coach":
+        return _check_coach(f)
+    if f["stat"] == "height":
+        return _check_height(f)
+    if f.get("combine_key"):
+        return _check_combine(f)
+    if f["stat"] == "draft":
+        return _check_draft(f)
     if f["stat"] in catalog.NFL_TEAM_STATS:
         return _check_team_stat(f)
     if f["stat"] in ("recent_results", "head_to_head"):
