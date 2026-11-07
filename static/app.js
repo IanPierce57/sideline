@@ -589,6 +589,7 @@ function countdown() {
 
 let endTimer = null;
 function showDone() {
+  $("end").disabled = true;
   Studio.setMode("done");
   setShowMode("done");
   hideChyron();
@@ -724,6 +725,27 @@ function stopPlayback() {
 function setPlayButtons(enabled) {
   $("pause").disabled = !enabled;
   $("replay").disabled = !enabled;
+  $("end").disabled = !enabled || cardIndex >= cards.length;
+}
+
+// End segment (Nov 7, 2026): stop the talking and cut straight to the wrap-up, the closing
+// theme and the end card, as if it had played through. Replay and Last segment still have
+// the whole segment.
+function endSegment() {
+  if (!script || cardIndex >= cards.length) return;
+  clearTimeout(lineTimer);
+  clearInterval(typing);
+  stopVoice();
+  if (paused) {
+    paused = false;
+    Studio.setPaused(false);
+    $("pause").textContent = "Pause";
+    if (audio && audio.state === "suspended") audio.resume();
+  }
+  cardIndex = cards.length;
+  Studio.silence();
+  hideBubble();
+  showDone();
 }
 
 // ---------- The last segment, ready to replay (Nov 6, 2026) ----------
@@ -1038,6 +1060,7 @@ $("pause").addEventListener("click", () => {
 });
 
 $("replay").addEventListener("click", () => { if (script) play(script); });
+$("end").addEventListener("click", endSegment);
 $("end-replay").addEventListener("click", () => { if (script) play(script); });
 $("end-ask").addEventListener("click", () => {
   $("topic").scrollIntoView({ behavior: "smooth", block: "center" });
