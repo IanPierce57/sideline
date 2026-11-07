@@ -43,6 +43,7 @@ The NBA has no second source yet.
 
 | Source | Used for |
 | --- | --- |
+| [Google Cloud Text-to-Speech](https://cloud.google.com/text-to-speech) (Chirp 3 HD voices) | The voices (chosen by the user Nov 6, 2026). 1 million characters a month free; a segment is about 4,000. `pipeline/voices.py` stops at 900,000 a month so it never reaches paid use. Key goes in .env via `./set_key.sh google` (sent in a header, never in a URL). Each line is voiced once and saved with its run. |
 | [GNews](https://gnews.io) (free plan) | The day's NFL and NBA headlines. Terms (checked Nov 4, 2026): free use is "personal, academic, evaluation, and other non-commercial use"; "reasonable caching" allowed; articles about 12 hours late. Key goes in .env via `./set_key.sh gnews`. A story runs only if two or more outlets report it. |
 
 ## Manual only (check numbers by hand; don't connect these to the app)

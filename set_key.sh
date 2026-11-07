@@ -2,6 +2,7 @@
 # set_key.sh: saves an API key into .env without showing it on screen.
 #   ./set_key.sh          your Anthropic key (Claude)
 #   ./set_key.sh gnews    your GNews key (the news ticker; free at gnews.io)
+#   ./set_key.sh google   your Google Cloud Text-to-Speech key (the voices)
 # A Mac pop-up box asks for the key; it's hidden as dots while you paste.
 # Other keys already in .env are left alone.
 cd "$(dirname "$0")"
@@ -9,6 +10,8 @@ cd "$(dirname "$0")"
 WHICH="${1:-anthropic}"
 if [ "$WHICH" = "gnews" ]; then
   NAME="GNEWS_API_KEY"; LABEL="GNews"; PATTERN='^[A-Za-z0-9]{20,64}$'; HINT="about 32 letters and numbers"
+elif [ "$WHICH" = "google" ]; then
+  NAME="GOOGLE_TTS_KEY"; LABEL="Google Cloud"; PATTERN='^AIza[0-9A-Za-z_-]{35}$'; HINT="it starts with AIza and is 39 characters"
 else
   NAME="ANTHROPIC_API_KEY"; LABEL="Anthropic"; PATTERN='^sk-ant-[A-Za-z0-9_-]{60,}$'; HINT="it starts with sk-ant- and is about 100 characters"
 fi

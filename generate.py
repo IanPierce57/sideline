@@ -882,6 +882,14 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
     (run_dir / "rejection_log.json").write_text(json.dumps({"stats": stat_log, "lines": line_log, "close": close_log},
                                                            indent=2, ensure_ascii=False))
     (run_dir / "judge.json").write_text(json.dumps(result, indent=2, ensure_ascii=False, default=str))
+    # 8. Voices (Nov 6, 2026): each line voiced once and saved with the run; no key, no voices
+    from pipeline import voices
+    if voices.enabled():
+        progress("step", {"step": "voices", "text": "Recording the voices"})
+        t = time.time()
+        script["voices"] = voices.voice_script(script, run_dir, progress)
+        timings["voices"] = round(time.time() - t, 1)
+        (run_dir / "script.json").write_text(json.dumps(script, indent=2, ensure_ascii=False))
     prune_runs()
     progress("done", {"run": run_dir.name})
     return run_dir, script

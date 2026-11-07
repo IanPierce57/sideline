@@ -141,6 +141,12 @@ const Studio = (() => {
       sc("deacon", "Deacon Pettiford", "Loosening up", "",
          { hal: "notes", royce: "notes", deacon: "stretch", lonnie: "coffee" }),
     ],
+    voices: [
+      sc("royce", "Royce Stanhope", "Voice check", "",
+         { hal: "notes", royce: "miccheck", deacon: "coffee", lonnie: "tablet" }),
+      sc("deacon", "Deacon Pettiford", "Voice check", "",
+         { hal: "miccheck", royce: "notes", deacon: "stretch", lonnie: "coffee" }),
+    ],
     close: [
       sc("producer", "Floor producer", "Places", "Places, everybody.",
          { hal: "miccheck", royce: "tie", deacon: "coffee", lonnie: "tablet" }, { producer: true }),

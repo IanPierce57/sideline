@@ -151,6 +151,13 @@ class Handler(SimpleHTTPRequestHandler):
         self.send_header("Cache-Control", "no-store")
         super().end_headers()
 
+    def send_bytes(self, body: bytes, kind: str) -> None:
+        self.send_response(200)
+        self.send_header("Content-Type", kind)
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
     def send_json(self, status: int, payload) -> None:
         body = json.dumps(payload, ensure_ascii=False).encode()
         self.send_response(status)
@@ -160,6 +167,26 @@ class Handler(SimpleHTTPRequestHandler):
         self.wfile.write(body)
 
     def do_GET(self):
+        from pipeline import voices
+        if self.path == "/api/voices":
+            return self.send_json(200, {"enabled": voices.enabled()})
+        audio = re.match(r"^/api/runs/([^/]+)/audio/(\d{1,3})\.mp3$", self.path)
+        if audio:
+            path = RUNS / audio.group(1) / "audio" / f"{audio.group(2)}.mp3"
+            if not RUN_NAME.match(audio.group(1)) or not path.exists():
+                return self.send_json(404, {"error": "No audio for that line."})
+            return self.send_bytes(path.read_bytes(), "audio/mpeg")
+        if self.path.startswith("/api/say?"):
+            from urllib.parse import parse_qs, urlparse
+            q = parse_qs(urlparse(self.path).query)
+            try:
+                body = voices.say((q.get("who") or [""])[0], (q.get("text") or [""])[0])
+            except Exception as problem:
+                print(f"  voice failed: {problem}")
+                body = None
+            if not body:
+                return self.send_json(404, {"error": "No voice for that."})
+            return self.send_bytes(body, "audio/mpeg")
         if self.path == "/api/runs":
             runs = []
             for folder in sorted(RUNS.glob("*/script.json"), reverse=True):

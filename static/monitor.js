@@ -174,19 +174,37 @@ const Monitor = (() => {
     } },
   };
 
+  // the voices being recorded: a waveform and two level meters (added with the voices)
+  ANIMS.booth = { title: "IN THE BOOTH", draw(t) {
+    R(0, 0, W, H, "#0a0f24");
+    for (let x = 0; x < W; x += 8) R(x, 0, 1, H, "rgba(255,255,255,0.03)");
+    R(10, 20, 68, 1, "#22336f");
+    for (let x = 10; x < 78; x++) {
+      const k = (x - 10) / 68;
+      const amp = (Math.sin(t / 90 + x * 0.55) * 0.6 + Math.sin(t / 37 + x * 1.3) * 0.4) * Math.sin(Math.PI * k) * 12;
+      R(x, 20 - Math.abs(amp), 1, Math.abs(amp) * 2 + 1, "#5ccfe6");
+    }
+    for (const [mx, ph] of [[2, 0], [82, 2]]) {
+      const level = Math.round(6 + Math.abs(Math.sin(t / 160 + ph) * Math.sin(t / 410 + ph)) * 26);
+      R(mx, 4, 4, 32, "#141a3a");
+      for (let y = 0; y < level; y += 2) R(mx, 35 - y, 4, 1, y > 24 ? "#ff5a64" : y > 18 ? "#f4b740" : "#3ddc84");
+    }
+    if (((t / 500) | 0) % 2) R(40, 3, 8, 3, "#ff3b3b");
+  } };
+
   // What to show first for each pipeline step, then the rest in turn.
   const BY_STEP = {
     start: ["bars", "film", "hoops"], topic: ["bars", "film", "hoops"],
     research: ["radar", "film", "hoops"], verify: ["receipt", "radar", "hoops"],
     write: ["typewriter", "film", "hoops"], check: ["receipt", "typewriter", "film"],
-    judge: ["scales", "hoops", "film"], close: ["bars", "scales"],
+    judge: ["scales", "hoops", "film"], close: ["bars", "scales"], voices: ["booth", "hoops", "film"],
   };
   const ROTATE_MS = 7000, STATIC_MS = 260;
   const state = { on: false, list: [], i: 0, since: 0, step: null, start: 0 };
 
   function order(step) {
     const first = BY_STEP[step] || BY_STEP.start;
-    return [...first, ...Object.keys(ANIMS).filter((k) => !first.includes(k) && k !== "bars")];
+    return [...first, ...Object.keys(ANIMS).filter((k) => !first.includes(k) && k !== "bars" && k !== "booth")];
   }
   function show(name) {
     if (title) title.textContent = ANIMS[name].title;

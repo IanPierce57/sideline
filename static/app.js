@@ -315,7 +315,79 @@ $("sound").addEventListener("click", () => {
   soundOn = !soundOn;
   $("sound").textContent = soundOn ? "Sound: on" : "Sound: off";
   $("sound").setAttribute("aria-pressed", String(soundOn));
+  if (voiceGain) voiceGain.gain.value = soundOn ? 1 : 0;
 });
+
+// ---------- Voices (Nov 6, 2026) ----------
+// Every line was voiced once when the segment was made (Google Cloud, pipeline/voices.py)
+// and saved with it, so replays cost nothing. The page loads a segment's lines during the
+// countdown and plays each one as its subtitle comes up; the subtitle stays as long as the
+// line takes to say. Segments without voices play as timed subtitles, as before.
+let voicesOn = false;          // the server has a voice key (for the countdown and crew lines)
+let voiceGain = null;
+let voiceBuffers = {};         // line number -> decoded audio
+let voiceSource = null;        // the line playing now
+function ensureAudio() {
+  // Opened on a click, so the browser lets it play later.
+  audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+  if (audio.state === "suspended" && !paused) audio.resume();
+  if (!voiceGain) {
+    voiceGain = audio.createGain();
+    voiceGain.gain.value = soundOn ? 1 : 0;
+    voiceGain.connect(audio.destination);
+  }
+  return audio;
+}
+async function loadVoiceStatus() {
+  try { voicesOn = !!(await (await fetch("/api/voices")).json()).enabled; } catch (error) { voicesOn = false; }
+  buildPipeline();
+}
+async function fetchBuffer(url) {
+  const reply = await fetch(url);
+  if (!reply.ok) throw new Error(`no audio (${reply.status})`);
+  return ensureAudio().decodeAudioData(await reply.arrayBuffer());
+}
+async function loadVoices(s) {
+  voiceBuffers = {};
+  if (!s.run) return;
+  await Promise.all(s.lines.filter((l) => l.audio).map(async (l) => {
+    try { voiceBuffers[l.line] = await fetchBuffer(`/api/runs/${encodeURIComponent(s.run)}/audio/${l.audio}`); }
+    catch (error) { /* this line plays as subtitles only */ }
+  }));
+}
+function playVoice(buffer) {
+  stopVoice();
+  const ctx = ensureAudio();
+  const source = ctx.createBufferSource();
+  source.buffer = buffer;
+  source.connect(voiceGain);
+  source.start();
+  voiceSource = source;
+}
+function stopVoice() {
+  if (voiceSource) { try { voiceSource.stop(); } catch (error) { /* already done */ } voiceSource = null; }
+}
+// Short lines on the page (the countdown, the pre-show crew): voiced once on the server, cached.
+const sayCache = new Map();
+function sayBuffer(who, text) {
+  const k = `${who}|${text}`;
+  if (!sayCache.has(k)) {
+    const p = fetchBuffer(`/api/say?who=${encodeURIComponent(who)}&text=${encodeURIComponent(text)}`);
+    p.catch(() => sayCache.delete(k));
+    sayCache.set(k, p);
+  }
+  return sayCache.get(k);
+}
+async function say(who, text) {
+  if (!voicesOn || !audio || !text) return;
+  try {
+    const buffer = await sayBuffer(who, text);
+    const source = audio.createBufferSource();
+    source.buffer = buffer;
+    source.connect(voiceGain);
+    source.start();
+  } catch (error) { /* subtitles only */ }
+}
 
 // ---------- The screens: idle, pre-show, countdown, live, done ----------
 
@@ -465,10 +537,11 @@ function showPreshow(topic) {
 }
 Studio.onScene((scene) => {
   setNameplate(scene.name, scene.title, scene.who);
-  if (scene.text) showBubble(scene.who, scene.text, 0.6);   // most pre-show scenes are silent
+  if (scene.text) { showBubble(scene.who, scene.text, 0.6); say(scene.who, scene.text); }   // most are silent
   else hideBubble();
 });
 
+const COUNT_CALLS = ["Quiet on set! In three...", "Two...", "One."];
 function countdown() {
   return new Promise((resolve) => {
     clearInterval(preshowTimer);
@@ -482,9 +555,11 @@ function countdown() {
       if (n === 0) { $("center-brand").textContent = "· SIDELINE ·"; resolve(); return; }
       Studio.setCountdown(n);
       setCenter(String(n), "Quiet on set", true);
-      showBubble("producer", n === 3 ? "Quiet on set! We're live in three..." : n === 2 ? "...two..." : "...one.");
+      const call = COUNT_CALLS[3 - n];
+      showBubble("producer", call);
+      say("producer", call);
       n -= 1;
-      setTimeout(step, 1000);
+      setTimeout(step, 1100);
     };
     step();
   });
@@ -556,16 +631,24 @@ function buildCards(lines) {
     if (current || !chunks.length) chunks.push(current);
     const isCutIn = line.speaker === "hal" && hostHasSpoken;
     if (HOSTS.includes(line.speaker)) hostHasSpoken = true;
-    chunks.forEach((text, i) => out.push({ line, text, first: i === 0, isCutIn, seconds: secondsFor(text) }));
+    const total = chunks.reduce((sum, c) => sum + c.length, 0) || 1;
+    chunks.forEach((text, i) => out.push({ line, text, first: i === 0, last: i === chunks.length - 1, isCutIn,
+                                           share: text.length / total, seconds: secondsFor(text) }));
   }
   return out;
 }
 
+let cardEnd = 0;
+function nextCard() { cardIndex += 1; playCard(); }
 function playCard() {
-  if (cardIndex >= cards.length) { Studio.silence(); hideBubble(); showDone(); return; }
+  if (cardIndex >= cards.length) { Studio.silence(); hideBubble(); stopVoice(); showDone(); return; }
   const card = cards[cardIndex];
   const { line } = card;
+  // A voiced line sets the pace: each subtitle card gets its share of the audio.
+  const buffer = voiceBuffers[line.line];
+  const seconds = buffer ? buffer.duration * card.share + (card.last ? 0.3 : 0) : card.seconds;
   if (card.first) {
+    if (buffer) playVoice(buffer); else stopVoice();
     Studio.speak(line.speaker, line.delivery, line.text, card.isCutIn);
     // Later pipeline steps attach these to lines: a fact-pack stat, and the judge's scores.
     if (line.stat) showChyron(line.stat, !!script.sample); else hideChyron();
@@ -581,15 +664,18 @@ function playCard() {
     setNameplate(person.name, person.role, line.speaker);
     setCamera(line.speaker, person.name, `${person.role.replace("Host · ", "")}<br><span class="gold">${FORMATS[script.format] || ""}</span>`);
   }
-  showBubble(line.speaker, card.text, Math.min(card.seconds * 0.6, card.text.length / 45));
+  showBubble(line.speaker, card.text, Math.min(seconds * 0.6, card.text.length / 45));
   $("progress").textContent = `LINE ${line.line} / ${script.lines.length}`;
-  lineTimer = setTimeout(() => { cardIndex += 1; playCard(); }, card.seconds * 1000);
+  cardEnd = performance.now() + seconds * 1000;
+  lineTimer = setTimeout(nextCard, seconds * 1000);
 }
 
 function stopPlayback() {
   clearTimeout(lineTimer);
   clearTimeout(endTimer);
   clearInterval(typing);
+  stopVoice();
+  if (audio && audio.state === "suspended") audio.resume();
   paused = false;
   Studio.setPaused(false);
   $("pause").textContent = "Pause";
@@ -660,7 +746,9 @@ async function play(newScript) {
   clearGraphics();
   setPlayButtons(false);
   script = newScript;
+  ensureAudio();
   loadLast();
+  const voicesReady = loadVoices(script);       // loads during the countdown
   cards = buildCards(script.lines);
   cardIndex = 0;
   showReceipts(script);
@@ -678,19 +766,38 @@ async function play(newScript) {
     $("show-tag").textContent = TAGS[script.format] || "Sideline";
     if (script.sample) setScores({}, true);   // the preview shows the meter from the start
   });
+  await Promise.race([voicesReady, wait(8000)]);
   setPlayButtons(true);
   playCard();
 }
 
 // ---------- The pipeline strip: how a segment gets made ----------
 
-const PIPE = ["topic", "research", "verify", "write", "check", "judge", "close"];
+const PIPE_BASE = ["topic", "research", "verify", "write", "check", "judge", "close"];
+let PIPE = [...PIPE_BASE];
+const PIPE_LABELS = { topic: "Screen", research: "Stats", verify: "Check", write: "Write", check: "Line check",
+                      judge: "Judges", close: "Verdict", voices: "Voices" };
+function pipeIntro() { return `How a segment gets made: ${PIPE.length} steps, about a minute and a half`; }
+function buildPipeline() {
+  PIPE = voicesOn ? [...PIPE_BASE, "voices"] : [...PIPE_BASE];
+  const bar = $("pbar");
+  bar.querySelectorAll("i").forEach((i) => i.remove());
+  for (let k = 1; k < PIPE.length; k++) {
+    const tick = document.createElement("i");
+    tick.style.left = `${(k / PIPE.length) * 100}%`;
+    bar.append(tick);
+  }
+  const ol = $("pipeline").querySelector(".psteps");
+  ol.style.gridTemplateColumns = `repeat(${PIPE.length}, minmax(0, 1fr))`;
+  ol.innerHTML = PIPE.map((s) => `<li data-step="${s}">${PIPE_LABELS[s]}</li>`).join("");
+  if (pipe.idx < 0) $("pipeline-title").textContent = pipeIntro();
+}
 // How long each step usually takes (seconds), so the bar keeps creeping through a step
 // instead of jumping; it never fills a step until the server says that step is done.
-const PIPE_EXPECT = { topic: 3, research: 7, verify: 12, write: 50, check: 30, judge: 11, close: 9 };
+const PIPE_EXPECT = { topic: 3, research: 7, verify: 12, write: 50, check: 30, judge: 11, close: 9, voices: 15 };
 const PIPE_NAMES = { topic: "Screening the call", research: "Pulling stats", verify: "Checking every number twice",
                      write: "Writing the segment", check: "Checking every line", judge: "Blind judges scoring",
-                     close: "The verdict" };
+                     close: "The verdict", voices: "Recording the voices" };
 const pipe = { idx: -1, stepAt: 0, startedAt: 0, timer: null };
 function clockText(ms) {
   const s = Math.round(ms / 1000);
@@ -702,7 +809,7 @@ function renderPipeline() {
   const pct = ((pipe.idx + frac) / PIPE.length) * 100;
   $("pbar-fill").style.width = `${pct}%`;
   $("pbar").setAttribute("aria-valuenow", String(Math.round(pct)));
-  $("pipeline-title").textContent = `Step ${pipe.idx + 1} of 7 · ${PIPE_NAMES[step]}`;
+  $("pipeline-title").textContent = `Step ${pipe.idx + 1} of ${PIPE.length} · ${PIPE_NAMES[step]}`;
   $("pipeline-clock").textContent = clockText(Date.now() - pipe.startedAt);
   box.querySelectorAll(".psteps li").forEach((li, i) => {
     li.classList.toggle("done", i < pipe.idx);
@@ -716,7 +823,7 @@ function setPipeline(step, startedAt) {
     clearInterval(pipe.timer); pipe.timer = null; pipe.idx = -1;
     box.classList.remove("running", "complete");
     $("pbar-fill").style.width = "0";
-    $("pipeline-title").textContent = "How a segment gets made: 7 steps, about a minute and a half";
+    $("pipeline-title").textContent = pipeIntro();
     $("pipeline-clock").textContent = "";
     box.querySelectorAll(".psteps li").forEach((li) => li.classList.remove("done", "active"));
     return;
@@ -757,7 +864,7 @@ function stinger(onCovered) {
 // The pre-show's control room shows what the pipeline is really doing.
 const STEP_NAMES = { start: "ON THE LINE", topic: "SCREENING", research: "PULLING STATS",
                      verify: "CHECKING STATS", write: "WRITING", check: "LINE CHECK",
-                     judge: "JUDGE SCORING", close: "THE VERDICT" };
+                     judge: "JUDGE SCORING", close: "THE VERDICT", voices: "IN THE BOOTH" };
 function showControlRoom(job) {
   const c = job.counts || {};
   const step = job.step || {};
@@ -861,22 +968,31 @@ $("form").addEventListener("submit", (event) => {
   const topic = $("topic").value.trim();
   if (!topic) return;
   chosenPlayers = [];
+  ensureAudio();
+  if (voicesOn) COUNT_CALLS.forEach((c) => sayBuffer("producer", c).catch(() => {}));   // ready for the countdown
   setStatus("You're on hold. The desk is getting ready (usually about two minutes).");
   askDesk(topic);
   refreshChips();          // new suggestions every time someone asks
 });
 
 
+let pausedLeft = 0;
 $("pause").addEventListener("click", () => {
   if (!script || cardIndex >= cards.length) return;
   if (paused) {
     paused = false;
     Studio.setPaused(false);
     $("pause").textContent = "Pause";
-    playCard();
+    if (voiceSource && audio) {
+      audio.resume();                                    // pick the line up where it stopped
+      cardEnd = performance.now() + pausedLeft;
+      lineTimer = setTimeout(nextCard, pausedLeft);
+    } else playCard();
   } else {
     paused = true;
     clearTimeout(lineTimer);
+    pausedLeft = Math.max(0, cardEnd - performance.now());
+    if (voiceSource && audio) audio.suspend();
     Studio.setPaused(true);
     typeText(cards[cardIndex].text, 0);
     $("pause").textContent = "Resume";
@@ -1003,3 +1119,4 @@ setInterval(loadNews, 5 * 60 * 1000);
 showIdle();
 loadUpcoming();
 loadLast();
+loadVoiceStatus();
