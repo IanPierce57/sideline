@@ -43,6 +43,9 @@ CAST = {
 CALLERS = ["en-US-Chirp3-HD-Puck", "en-US-Chirp3-HD-Zubenelgenubi", "en-US-Chirp3-HD-Sadachbia",
            "en-US-Chirp3-HD-Aoede", "en-US-Chirp3-HD-Kore", "en-US-Chirp3-HD-Laomedeia",
            "en-US-Chirp3-HD-Umbriel", "en-US-Chirp3-HD-Callirrhoe"]
+# How fast everyone talks, overall (1.0 is Google's normal pace). Raised Nov 7, 2026: the user
+# felt the hosts spoke a bit slow. Each person's own pace and each line's delivery scale from here.
+SPEED = 1.08
 # Each person's natural pace, nudged by how the line is delivered.
 PACE = {"hal": 0.97, "royce": 1.0, "deacon": 1.03, "lonnie": 1.0, "caller": 1.02, "producer": 1.05, "artist": 1.0}
 DELIVERY = {"heated": 1.07, "fired_up": 1.09, "slam": 1.07, "emphatic": 1.04, "exasperated": 1.03, "laughing": 1.04,
@@ -211,7 +214,7 @@ def voice_script(script: dict, run_dir: Path, progress=lambda *a: None) -> dict:
     for line in script["lines"]:
         if line["speaker"] not in SPOKEN:
             continue
-        rate = PACE.get(line["speaker"], 1.0) * DELIVERY.get(line.get("delivery", ""), 1.0)
+        rate = SPEED * PACE.get(line["speaker"], 1.0) * DELIVERY.get(line.get("delivery", ""), 1.0)
         line["cards"] = [{"text": c, "audio": None} for c in cards_for(line["text"])]
         for i, card in enumerate(line["cards"]):
             text = speech_text(card["text"])
