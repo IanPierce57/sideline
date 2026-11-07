@@ -882,8 +882,25 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
     (run_dir / "rejection_log.json").write_text(json.dumps({"stats": stat_log, "lines": line_log, "close": close_log},
                                                            indent=2, ensure_ascii=False))
     (run_dir / "judge.json").write_text(json.dumps(result, indent=2, ensure_ascii=False, default=str))
+    prune_runs()
     progress("done", {"run": run_dir.name})
     return run_dir, script
+
+
+KEEP_RUNS = 10
+
+
+def prune_runs(keep: int = KEEP_RUNS) -> int:
+    """Keep only the newest run folders (user, Nov 6, 2026: no archive of every segment; the
+    page offers a video download instead). Ten stay so the audit and judge tests have recent
+    scripts to read. Returns how many were deleted."""
+    import shutil
+    folders = sorted(d for d in RUNS.iterdir()
+                     if d.is_dir() and re.fullmatch(r"\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}", d.name))
+    old = folders[:-keep] if keep else folders
+    for d in old:
+        shutil.rmtree(d)
+    return len(old)
 
 
 def main() -> None:

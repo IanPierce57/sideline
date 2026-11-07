@@ -631,3 +631,9 @@ body::before {
   .lamp, .air-pill i, .bug-live.on::before, .pbar-fill, .pbar-fill::after { animation: none; }
   .bubble.pop, .nameplate.swap, .show-tag.swap, .center .mon-topic.count { animation: none; }
 }
+
+/* Download video: recording indicator (Nov 6, 2026) */
+.pixel-btn.gold { background: var(--gold); color: var(--ink); }
+.rec { display: flex; align-items: center; gap: 6px; font-family: var(--pixel); font-size: 13px; color: #fff;
+  background: #3a0d12; border: 2px solid var(--red); padding: 5px 10px; }
+.rec i { width: 10px; height: 10px; border-radius: 50%; background: #ff3b3b; box-shadow: 0 0 8px #ff3b3b; animation: blink 1s steps(2) infinite; }

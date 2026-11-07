@@ -246,6 +246,7 @@ function showEndCard() {
   if (!winner) {
     $("end-label").textContent = script.tie ? "Split decision" : "Final answers";
     $("endcard").hidden = false;
+    endCardShown();
     return;
   }
   $("end-label").textContent = "The winning argument";
@@ -282,8 +283,11 @@ function showEndCard() {
     rows.append(box);
   }
   $("endcard").hidden = false;
+  endCardShown();
 }
 function hideEndCard() { $("endcard").hidden = true; }
+let endCardWaiters = [];
+function endCardShown() { const w = endCardWaiters; endCardWaiters = []; w.forEach((f) => f()); }
 
 function clearGraphics() { hideChyron(); hideScores(); hideEndCard(); }
 
@@ -596,8 +600,82 @@ function stopPlayback() {
 }
 
 function setPlayButtons(enabled) {
-  $("pause").disabled = !enabled;
-  $("replay").disabled = !enabled;
+  $("pause").disabled = !enabled || recording;
+  $("replay").disabled = !enabled || recording;
+  $("download").disabled = !script || recording;
+}
+
+// ---------- Download the segment as a video (Nov 6, 2026) ----------
+// The browser records this tab (it asks permission first), cropped to the TV where the
+// browser allows it (Chrome and Edge), while the segment replays from the countdown to the
+// end card. The video saves to your Downloads folder. Nothing is kept on the server.
+let recording = false;
+function slug(text) { return String(text).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60); }
+async function recordSegment() {
+  if (!script || recording) return;
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia || !window.MediaRecorder) {
+    setStatus("This browser can't record the screen. Try Chrome or Edge.", true);
+    return;
+  }
+  let stream;
+  try {
+    stream = await navigator.mediaDevices.getDisplayMedia({
+      video: { displaySurface: "browser", frameRate: 30 }, audio: true,
+      preferCurrentTab: true, selfBrowserSurface: "include", surfaceSwitching: "exclude",
+    });
+  } catch (error) {
+    setStatus("Recording cancelled. Click Download video to try again.");
+    return;
+  }
+  const [track] = stream.getVideoTracks();
+  if (window.CropTarget && track.cropTo) {
+    try { await track.cropTo(await CropTarget.fromElement($("tv"))); } catch (error) { /* record the whole tab */ }
+  }
+  const type = ["video/mp4;codecs=avc1", "video/mp4", "video/webm;codecs=vp9", "video/webm"]
+    .find((t) => MediaRecorder.isTypeSupported(t)) || "";
+  const recorder = new MediaRecorder(stream, type ? { mimeType: type, videoBitsPerSecond: 6000000 } : undefined);
+  const chunks = [];
+  recorder.ondataavailable = (event) => { if (event.data.size) chunks.push(event.data); };
+  const stopped = new Promise((resolve) => { recorder.onstop = resolve; });
+  let finish;
+  const finished = new Promise((resolve) => { finish = resolve; });
+  track.addEventListener("ended", () => finish("stopped"));       // "Stop sharing" in the browser bar
+
+  recording = true;
+  setPlayButtons(true);
+  $("go").disabled = true;
+  hideEndCard();
+  $("tv").scrollIntoView({ block: "center" });
+  const started = Date.now();
+  $("rec").hidden = false;
+  const clock = setInterval(() => { $("rec-time").textContent = clockText(Date.now() - started); }, 500);
+  setStatus("Recording. The segment replays from the top; the video saves when the end card shows.");
+  await wait(600);                                                   // let the share prompt clear
+  recorder.start(1000);
+  endCardWaiters.push(() => setTimeout(() => finish("done"), 3000));  // hold on the end card a moment
+  play(script);
+  const how = await finished;
+
+  if (recorder.state !== "inactive") recorder.stop();
+  stream.getTracks().forEach((t) => t.stop());
+  await stopped;
+  clearInterval(clock);
+  $("rec").hidden = true;
+  recording = false;
+  $("go").disabled = false;
+  setPlayButtons(true);
+  if (!chunks.length) { setStatus("Nothing was recorded. Try again.", true); return; }
+  const blob = new Blob(chunks, { type: recorder.mimeType || type || "video/webm" });
+  const ext = (recorder.mimeType || type).includes("mp4") ? "mp4" : "webm";
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `sideline-${slug(script.topic) || "segment"}.${ext}`;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(link.href), 60000);
+  setStatus(how === "done" ? `Saved ${link.download} to your Downloads folder.`
+                           : `Recording stopped early. Saved what was recorded as ${link.download}.`);
 }
 
 // The Sources panel: this segment's receipts (every fact used and what it was checked against).
@@ -850,8 +928,10 @@ $("pause").addEventListener("click", () => {
   }
 });
 
-$("replay").addEventListener("click", () => { if (script) play(script); });
-$("end-replay").addEventListener("click", () => { if (script) play(script); });
+$("replay").addEventListener("click", () => { if (script && !recording) play(script); });
+$("download").addEventListener("click", recordSegment);
+$("end-download").addEventListener("click", recordSegment);
+$("end-replay").addEventListener("click", () => { if (script && !recording) play(script); });
 $("end-ask").addEventListener("click", () => {
   $("topic").scrollIntoView({ behavior: "smooth", block: "center" });
   $("topic").focus();
