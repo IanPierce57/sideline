@@ -603,7 +603,15 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
     load_dotenv(PROJECT / ".env")
     if not os.environ.get("ANTHROPIC_API_KEY", "").strip():
         raise RuntimeError("No API key yet. Run set_key.sh (see README.md).")
-    client = anthropic.Anthropic()  # reads ANTHROPIC_API_KEY from .env
+    from pipeline.meter import Meter
+    meter = Meter()                 # adds up what every Claude call costs, by step
+    client = meter.wrap(anthropic.Anthropic())  # reads ANTHROPIC_API_KEY from .env
+    report_progress = progress
+
+    def progress(event, details):  # noqa: F811 - the same reporter, also telling the meter which step is running
+        if event == "step":
+            meter.step = details.get("step", meter.step)
+        report_progress(event, details)
     started = time.time()
     timings = {}
 
@@ -702,8 +710,10 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
         betas=["server-side-fallback-2026-07-01"],
         fallbacks="default",
         system=[{"type": "text", "text": build_system_prompt(),
-                 # The bibles are the same every run, so cache them (cheaper and faster).
-                 "cache_control": {"type": "ephemeral"}}],
+                 # The bibles are the same every run, so cache them (cheaper and faster). One hour,
+                 # not five minutes (Nov 7, 2026): segments start 6-10 minutes apart, so a 5-minute
+                 # cache almost always expired and the 50,000 tokens were re-saved every segment.
+                 "cache_control": {"type": "ephemeral", "ttl": "1h"}}],
         messages=[{"role": "user", "content": f"Topic: {topic}\n\n{context}\n\n"
                    f"Fact pack (every number you may use):\n{json.dumps(pack, indent=1, ensure_ascii=False)}"
                    + (f"\n\nStyle profiles (how each player actually plays, ranked against his position; for choosing "
@@ -907,7 +917,8 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
                 line.pop("cards", None)
             script["voices"] = {"failed": [f"{type(problem).__name__}: {problem}"]}
         timings["voices"] = round(time.time() - t, 1)
-        (run_dir / "script.json").write_text(json.dumps(script, indent=2, ensure_ascii=False))
+    script["meta"]["usage"] = meter.report()
+    (run_dir / "script.json").write_text(json.dumps(script, indent=2, ensure_ascii=False))
     prune_runs()
     progress("done", {"run": run_dir.name})
     return run_dir, script
@@ -974,6 +985,10 @@ def main() -> None:
     print(f"Scores: {board}   Winner: {'tie' if script['tie'] else SPEAKERS.get(script['winner'], script['winner'])}")
     for warning in script["warnings"]:
         print(f"WARNING: {warning}")
+    usage = m.get("usage") or {}
+    if usage:
+        parts = ", ".join(f"{k} ${v['usd']:.3f}" for k, v in sorted(usage["by_step"].items(), key=lambda x: -x[1]["usd"]))
+        print(f"Cost: ${usage['total_usd']:.2f} ({parts})")
     print(f"Saved to {run_dir.relative_to(PROJECT)}/script.json")
 
 

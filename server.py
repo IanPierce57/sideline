@@ -120,7 +120,8 @@ def run_job(job_id: str, topic: str, chosen: list) -> None:
     try:
         run_dir, script = generate_script(topic, progress, chosen)
         script["run"] = run_dir.name
-        print(f"  saved {run_dir.relative_to(PROJECT)}/script.json")
+        cost = (script.get("meta", {}).get("usage") or {}).get("total_usd")
+        print(f"  saved {run_dir.relative_to(PROJECT)}/script.json" + (f" (cost ${cost:.2f})" if cost is not None else ""))
         with JOBS_LOCK:
             job.update(state="done", script=script)
     except TopicProblem as problem:

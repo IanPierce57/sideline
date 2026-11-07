@@ -316,10 +316,15 @@ def research(topic: str, fmt: str, named: list[dict], client: anthropic.Anthropi
                                 "note": fact.get("note") if fact.get("status") == "dropped" else ""})
         return json.dumps(results)
 
+    # Each round re-sends the rules, the tools, and the whole conversation so far, seconds
+    # apart, so cache them (Nov 7, 2026): a marker on the rules (tools and rules, the same
+    # every round and every segment of this format) plus automatic caching for the growing
+    # conversation. Rounds after the first re-read it all at a twentieth of the price.
+    rules = [{"type": "text", "text": _research_rules(fmt), "cache_control": {"type": "ephemeral"}}]
     for _ in range(rounds):                  # at most this many rounds of tool calls
         reply = client.messages.create(
-            model=RESEARCH_MODEL, max_tokens=8000, system=_research_rules(fmt), tools=TOOLS,
-            output_config={"effort": "low"}, messages=messages,
+            model=RESEARCH_MODEL, max_tokens=8000, system=rules, tools=TOOLS,
+            output_config={"effort": "low"}, messages=messages, cache_control={"type": "ephemeral"},
         )
         messages.append({"role": "assistant", "content": reply.content})
         calls = [b for b in reply.content if b.type == "tool_use"]
