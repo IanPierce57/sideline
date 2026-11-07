@@ -89,6 +89,10 @@ Sources (Nov 4): ESPN, nba_api (NBA.com stats), and NBA team websites are ruled 
 - `Studio.renderOnce()` draws a single frame, for testing when the browser tab is in the background.
 - Visual upgrade (Nov 6): `static/monitor.js` rotates seven loading animations on the center monitor during the pre-show (none show numbers); a broadcast wipe (`stinger()` in app.js) plays going live and before the end card; `Studio.celebrate(winner)` throws confetti and has the desk applaud; listeners react to each line and speakers sometimes count on fingers, tap the desk, or think; hosts fidget between calls; the pipeline strip under the question box lights up step by step; the page glow follows `data-mode` on `<html>`. Character looks are unchanged (bibles).
 
+## Submitting (Nov 7)
+
+`.venv/bin/python export.py` writes `outputs/` (readable transcripts of the saved runs) and `~/Documents/Sideline-submission-<date>.zip` (code, docs, git history, runs with audio, transcripts; never `.env`, `.venv`, `.cache`; refuses if a key pattern is found). The professor asked for the full project: code and outputs.
+
 ## How to run it
 
 ```bash

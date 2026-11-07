@@ -15,3 +15,6 @@ runs/
 
 # Voice samples you listen to locally
 tests/voice_samples/
+
+# Readable transcripts made by export.py (rebuilt each time)
+outputs/

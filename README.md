@@ -50,6 +50,14 @@ Type a question under **Ask the desk**. While it's made, you're "on hold": hold 
 cd ~/Documents/the-receipts && .venv/bin/python generate.py "Who wins the Super Bowl this season?"
 ```
 
+## Submitting the project
+
+```bash
+cd ~/Documents/the-receipts && .venv/bin/python export.py
+```
+
+It writes `outputs/` (one readable transcript per saved segment: the script, the judges' scores, every fact used and what it was checked against, and what the checkers caught) and builds `~/Documents/Sideline-submission-<date>.zip` with the code, docs, bibles, tests, git history, the saved segments with their voice clips, and the transcripts. It leaves out `.env` (your keys), `.venv`, and `.cache`, and stops if anything that looks like an API key would go in. Run it again after making new segments; only the 10 newest are kept.
+
 ## Tests
 
 Free (no AI calls): `tests/accuracy.py` (are the sources still agreeing?), `tests/linecheck_test.py`, `tests/style_test.py`, `tests/positions_test.py`, `tests/news_test.py`, and `tests/voices_test.py` (`--samples` saves one voice per character). A few cents each: `tests/pipeline_test.py` (research and checking on six topics) and `tests/audit.py --latest 4` (a stronger model lists every claim in recent scripts and marks any the facts don't support).
