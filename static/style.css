@@ -644,3 +644,6 @@ body::before {
 .last-topic { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); }
 .last-seg b { flex: none; font-family: var(--pixel); font-size: 11px; color: var(--gold); }
 @media (max-width: 700px) { .last-seg { max-width: 100%; flex: 1 1 100%; } }
+
+/* The browser is blocking sound: the Sound button asks for a click (Nov 7, 2026) */
+#sound.blocked { background: var(--gold); color: var(--ink); animation: blink 0.9s steps(2) infinite; }

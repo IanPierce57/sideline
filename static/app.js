@@ -48,6 +48,7 @@ const ACCENTS = { hal: "#c9d2e3", royce: "#f2c14e", deacon: "#e0414e", lonnie: "
 const AIR_TEXT = { idle: "Lines open", preshow: "Pre-show", countdown: "Stand by", live: "On the air", done: "That's the board" };
 function setShowMode(mode) {
   document.documentElement.dataset.mode = mode;
+  if (typeof updateSoundButton === "function") setTimeout(updateSoundButton, 400);
   $("air-text").textContent = AIR_TEXT[mode] || "";
 }
 
@@ -301,6 +302,7 @@ Studio.onSlam(() => {
   Sound.slam();
 });
 $("sound").addEventListener("click", () => {
+  if ($("sound").classList.contains("blocked")) { unlockAudio(); updateSoundButton(); return; }
   soundOn = !soundOn;
   $("sound").textContent = soundOn ? "Sound: on" : "Sound: off";
   $("sound").setAttribute("aria-pressed", String(soundOn));
@@ -320,8 +322,11 @@ let voiceBuffers = {};         // line number -> decoded audio
 let voiceSource = null;        // the line playing now
 function ensureAudio() {
   // Opened on a click, so the browser lets it play later.
-  audio = audio || new (window.AudioContext || window.webkitAudioContext)();
-  if (audio.state === "suspended" && !paused) audio.resume();
+  if (!audio) {
+    audio = new (window.AudioContext || window.webkitAudioContext)();
+    audio.addEventListener("statechange", updateSoundButton);
+  }
+  if (audio.state !== "running" && audio.state !== "closed" && !paused) audio.resume().catch(() => {});
   if (!voiceGain) {
     voiceGain = audio.createGain();
     voiceGain.gain.value = soundOn ? 1 : 0;
@@ -333,6 +338,39 @@ function ensureAudio() {
   }
   return audio;
 }
+// Safari (and some other browsers) only let a page start sound during a click or keypress,
+// and keep it silent for the whole visit if sound starts a moment later (Nov 7, 2026: the
+// user's Safari stayed silent). So the first click or keypress anywhere on the page turns the
+// sound on, with a tiny silent sound to wake it, and any later one wakes it again if needed.
+function unlockAudio() {
+  if (paused && audio) return;                       // paused on purpose: leave it
+  const ctx = ensureAudio();
+  if (ctx.state === "running") return;
+  try {
+    const quiet = ctx.createBufferSource();
+    quiet.buffer = ctx.createBuffer(1, 1, 22050);
+    quiet.connect(ctx.destination);
+    quiet.start(0);
+  } catch (error) { /* nothing to wake */ }
+}
+for (const kind of ["pointerdown", "touchend", "keydown", "click"]) {
+  document.addEventListener(kind, unlockAudio, { capture: true, passive: true });
+}
+// Run something as soon as the browser lets sound play (right away if it already does).
+function whenSoundReady(fn) {
+  const ctx = ensureAudio();
+  if (ctx.state === "running") { fn(); return; }
+  const check = () => { if (ctx.state === "running") { ctx.removeEventListener("statechange", check); fn(); } };
+  ctx.addEventListener("statechange", check);
+}
+// If the browser is still blocking sound while a segment plays, the Sound button says how to fix it.
+function updateSoundButton() {
+  const blocked = soundOn && audio && audio.state !== "running" && !paused
+    && ["preshow", "countdown", "live", "done"].includes(document.documentElement.dataset.mode);
+  $("sound").textContent = blocked ? "Click for sound" : soundOn ? "Sound: on" : "Sound: off";
+  $("sound").classList.toggle("blocked", !!blocked);
+}
+
 async function loadVoiceStatus() {
   try { voicesOn = !!(await (await fetch("/api/voices")).json()).enabled; } catch (error) { voicesOn = false; }
   buildPipeline();
@@ -504,7 +542,7 @@ function showPreshow(topic) {
   setPlayButtons(false);
   Studio.setMode("preshow");
   setShowMode("preshow");
-  Sound.hold.start();
+  whenSoundReady(() => { if (document.documentElement.dataset.mode === "preshow") Sound.hold.start(); });
   setOnAir(false);
   monitorAnim(true, "start");
   const started = Date.now();
@@ -705,6 +743,7 @@ async function loadLast() {
 }
 $("last").addEventListener("click", async () => {
   if (!lastRun) return;
+  unlockAudio();                                     // during the click, before anything loads
   const run = lastRun;
   try {
     const saved = await (await fetch(`/api/runs/${encodeURIComponent(run.name)}`)).json();
