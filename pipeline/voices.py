@@ -54,10 +54,10 @@ _rate_ok = True                # set False if this voice type turns out not to t
 
 
 def key() -> str:
-    if not os.environ.get("GOOGLE_TTS_KEY"):
-        from dotenv import load_dotenv
-        load_dotenv(Path(__file__).resolve().parent.parent / ".env")
-    return os.environ.get("GOOGLE_TTS_KEY", "").strip()
+    """Read fresh from .env each time, so a new key saved with set_key.sh works without a restart."""
+    from dotenv import dotenv_values
+    saved = dotenv_values(Path(__file__).resolve().parent.parent / ".env").get("GOOGLE_TTS_KEY") or ""
+    return (saved or os.environ.get("GOOGLE_TTS_KEY", "")).strip()
 
 
 def enabled() -> bool:
