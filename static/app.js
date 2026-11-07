@@ -246,7 +246,6 @@ function showEndCard() {
   if (!winner) {
     $("end-label").textContent = script.tie ? "Split decision" : "Final answers";
     $("endcard").hidden = false;
-    endCardShown();
     return;
   }
   $("end-label").textContent = "The winning argument";
@@ -283,11 +282,8 @@ function showEndCard() {
     rows.append(box);
   }
   $("endcard").hidden = false;
-  endCardShown();
 }
 function hideEndCard() { $("endcard").hidden = true; }
-let endCardWaiters = [];
-function endCardShown() { const w = endCardWaiters; endCardWaiters = []; w.forEach((f) => f()); }
 
 function clearGraphics() { hideChyron(); hideScores(); hideEndCard(); }
 
@@ -600,83 +596,39 @@ function stopPlayback() {
 }
 
 function setPlayButtons(enabled) {
-  $("pause").disabled = !enabled || recording;
-  $("replay").disabled = !enabled || recording;
-  $("download").disabled = !script || recording;
+  $("pause").disabled = !enabled;
+  $("replay").disabled = !enabled;
 }
 
-// ---------- Download the segment as a video (Nov 6, 2026) ----------
-// The browser records this tab (it asks permission first), cropped to the TV where the
-// browser allows it (Chrome and Edge), while the segment replays from the countdown to the
-// end card. The video saves to your Downloads folder. Nothing is kept on the server.
-let recording = false;
-function slug(text) { return String(text).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60); }
-async function recordSegment() {
-  if (!script || recording) return;
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia || !window.MediaRecorder) {
-    setStatus("This browser can't record the screen. Try Chrome or Edge.", true);
-    return;
-  }
-  let stream;
+// ---------- The last segment, ready to replay (Nov 6, 2026) ----------
+// A rolling replay: the most recent saved segment that isn't the one on screen. Ask the
+// desk something new and the one you just watched becomes "last segment"; play that, and
+// the button offers the newer one back. Replays cost nothing (no AI calls).
+let lastRun = null;
+async function loadLast() {
   try {
-    stream = await navigator.mediaDevices.getDisplayMedia({
-      video: { displaySurface: "browser", frameRate: 30 }, audio: true,
-      preferCurrentTab: true, selfBrowserSurface: "include", surfaceSwitching: "exclude",
-    });
+    const runs = await (await fetch("/api/runs")).json();
+    lastRun = runs.find((r) => !script || r.name !== script.run) || null;
   } catch (error) {
-    setStatus("Recording cancelled. Click Download video to try again.");
-    return;
+    lastRun = null;
   }
-  const [track] = stream.getVideoTracks();
-  if (window.CropTarget && track.cropTo) {
-    try { await track.cropTo(await CropTarget.fromElement($("tv"))); } catch (error) { /* record the whole tab */ }
-  }
-  const type = ["video/mp4;codecs=avc1", "video/mp4", "video/webm;codecs=vp9", "video/webm"]
-    .find((t) => MediaRecorder.isTypeSupported(t)) || "";
-  const recorder = new MediaRecorder(stream, type ? { mimeType: type, videoBitsPerSecond: 6000000 } : undefined);
-  const chunks = [];
-  recorder.ondataavailable = (event) => { if (event.data.size) chunks.push(event.data); };
-  const stopped = new Promise((resolve) => { recorder.onstop = resolve; });
-  let finish;
-  const finished = new Promise((resolve) => { finish = resolve; });
-  track.addEventListener("ended", () => finish("stopped"));       // "Stop sharing" in the browser bar
-
-  recording = true;
-  setPlayButtons(true);
-  $("go").disabled = true;
-  hideEndCard();
-  $("tv").scrollIntoView({ block: "center" });
-  const started = Date.now();
-  $("rec").hidden = false;
-  const clock = setInterval(() => { $("rec-time").textContent = clockText(Date.now() - started); }, 500);
-  setStatus("Recording. The segment replays from the top; the video saves when the end card shows.");
-  await wait(600);                                                   // let the share prompt clear
-  recorder.start(1000);
-  endCardWaiters.push(() => setTimeout(() => finish("done"), 3000));  // hold on the end card a moment
-  play(script);
-  const how = await finished;
-
-  if (recorder.state !== "inactive") recorder.stop();
-  stream.getTracks().forEach((t) => t.stop());
-  await stopped;
-  clearInterval(clock);
-  $("rec").hidden = true;
-  recording = false;
-  $("go").disabled = false;
-  setPlayButtons(true);
-  if (!chunks.length) { setStatus("Nothing was recorded. Try again.", true); return; }
-  const blob = new Blob(chunks, { type: recorder.mimeType || type || "video/webm" });
-  const ext = (recorder.mimeType || type).includes("mp4") ? "mp4" : "webm";
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = `sideline-${slug(script.topic) || "segment"}.${ext}`;
-  document.body.append(link);
-  link.click();
-  link.remove();
-  setTimeout(() => URL.revokeObjectURL(link.href), 60000);
-  setStatus(how === "done" ? `Saved ${link.download} to your Downloads folder.`
-                           : `Recording stopped early. Saved what was recorded as ${link.download}.`);
+  $("last").hidden = !lastRun;
+  if (lastRun) $("last-topic").textContent = lastRun.topic;
 }
+$("last").addEventListener("click", async () => {
+  if (!lastRun) return;
+  const run = lastRun;
+  try {
+    const saved = await (await fetch(`/api/runs/${encodeURIComponent(run.name)}`)).json();
+    if (!saved.lines) throw new Error("missing");
+    saved.run = run.name;
+    setStatus("Replaying the last segment.");
+    await play(saved);
+  } catch (error) {
+    setStatus("That segment isn't saved anymore.", true);
+    loadLast();
+  }
+});
 
 // The Sources panel: this segment's receipts (every fact used and what it was checked against).
 function showReceipts(s) {
@@ -708,6 +660,7 @@ async function play(newScript) {
   clearGraphics();
   setPlayButtons(false);
   script = newScript;
+  loadLast();
   cards = buildCards(script.lines);
   cardIndex = 0;
   showReceipts(script);
@@ -825,6 +778,7 @@ let chosenPlayers = [];
 let askedAt = 0;
 async function askDesk(topic) {
   $("go").disabled = true;
+  $("last").disabled = true;
   askedAt = Date.now();
   setPipeline(null);
   setPipeline("topic", askedAt);
@@ -863,6 +817,7 @@ async function askDesk(topic) {
     setStatus(error.message, true);
   } finally {
     $("go").disabled = false;
+    $("last").disabled = false;
   }
 }
 
@@ -928,10 +883,8 @@ $("pause").addEventListener("click", () => {
   }
 });
 
-$("replay").addEventListener("click", () => { if (script && !recording) play(script); });
-$("download").addEventListener("click", recordSegment);
-$("end-download").addEventListener("click", recordSegment);
-$("end-replay").addEventListener("click", () => { if (script && !recording) play(script); });
+$("replay").addEventListener("click", () => { if (script) play(script); });
+$("end-replay").addEventListener("click", () => { if (script) play(script); });
 $("end-ask").addEventListener("click", () => {
   $("topic").scrollIntoView({ behavior: "smooth", block: "center" });
   $("topic").focus();
@@ -1049,3 +1002,4 @@ setInterval(loadNews, 5 * 60 * 1000);
 
 showIdle();
 loadUpcoming();
+loadLast();

@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261106i">
+  <link rel="stylesheet" href="style.css?v=20261106j">
 </head>
 <body>
   <header class="masthead">
@@ -80,7 +80,6 @@
         <div class="end-rows" id="end-rows"></div>
         <div class="end-actions">
           <button type="button" class="pixel-btn small" id="end-replay">Replay</button>
-          <button type="button" class="pixel-btn small gold" id="end-download">Download video</button>
           <button type="button" class="pixel-btn small red" id="end-ask">Ask the desk</button>
         </div>
       </div>
@@ -105,8 +104,9 @@
     <button type="button" class="pixel-btn small" id="pause" disabled>Pause</button>
     <button type="button" class="pixel-btn small" id="replay" disabled>Replay</button>
     <button type="button" class="pixel-btn small" id="sound" aria-pressed="true">Sound: on</button>
-    <button type="button" class="pixel-btn small gold" id="download" disabled>Download video</button>
-    <span class="rec" id="rec" hidden><i></i>REC <span id="rec-time">0:00</span></span>
+    <button type="button" class="last-seg" id="last" hidden title="Replay the last segment">
+      <span class="last-tag">LAST SEGMENT</span><span class="last-topic" id="last-topic"></span><b>&#9654; Replay</b>
+    </button>
     <span class="progress" id="progress"></span>
     <button type="button" class="link-btn" id="preview">Preview graphics (sample data)</button>
   </div>
@@ -183,8 +183,8 @@
     <p><strong>Fonts.</strong> Atkinson Hyperlegible and Silkscreen, from Google Fonts (SIL Open Font License).</p>
   </footer>
 
-  <script src="studio.js?v=20261106i"></script>
-  <script src="monitor.js?v=20261106i"></script>
-  <script src="app.js?v=20261106i"></script>
+  <script src="studio.js?v=20261106j"></script>
+  <script src="monitor.js?v=20261106j"></script>
+  <script src="app.js?v=20261106j"></script>
 </body>
 </html>
