@@ -1,29 +1,34 @@
 # Sideline
 
-Type an NBA or NFL topic, and AI writes a 3-to-5-minute debate between a moderator (Hal) and three hosts (Royce, Deacon, Lonnie), then plays it as subtitles. The full spec is in [BRIEF.md](BRIEF.md); the characters are in [characters/](characters/).
+Type an NBA or NFL question, and a few minutes later a fictional call-in debate show airs it: a caller asks, three AI hosts (Royce, Deacon, Lonnie) argue it with double-checked stats while Hal moderates, a blind panel of AI judges scores every argument, and the whole thing plays in a pixel-art studio with voices, subtitles, theme music, and broadcast graphics. The full spec is in [BRIEF.md](BRIEF.md); the characters are in [characters/](characters/).
 
-**Where it stands:** real, double-checked stats; the pixel studio; no scoring or voices yet.
+## How a segment is made (about 1½ to 2 minutes)
 
-**How a segment is made (about 1.5 to 2 minutes):** a topic check, then a research agent that requests stats from nflverse and Sleeper, then a checker that re-fetches every number from a second source (Sleeper, or muffed.ai for advanced stats) and drops anything that doesn't match, then the writer (allowed to use only those numbers), then a line checker that reads every number in the script. Each run's folder also has `fact_pack.json` (every verified stat) and `rejection_log.json` (every stat and line that was dropped, fixed, or cut, and why).
+| Step | What happens |
+| --- | --- |
+| 1. Screen the call | Checks it's an NBA or NFL question about today's players and teams; a bare name gets three suggested questions back. |
+| 2. Pull stats | A research agent picks the stats the debate needs from nflverse, Sleeper, muffed.ai, and Wikipedia. It never types a number. |
+| 3. Check twice | Code re-fetches every number from a second source. Anything that can't be confirmed is crossed off and replaced. |
+| 4. Write it | The writer may use only checked numbers, and every line lists the facts it uses. |
+| 5. Line check | Code checks every number in every line; an AI reader checks every claim. Bad lines are rewritten once, then cut. |
+| 6. Blind judges | Three AI judges score each argument without knowing who made it; code does the math. |
+| 7. The verdict | Hal announces the judges' result. |
+| 8. Voices | Each subtitle card is voiced once (Google Cloud Text-to-Speech) and saved, so replays are free. |
 
-To recheck the data sources (free, no API credits): `.venv/bin/python tests/accuracy.py`
+Each run's folder in `runs/` has `script.json`, `fact_pack.json` (every checked stat), `rejection_log.json` (every stat and line that was dropped, fixed, or cut, and why), `judge.json`, and the voice clips. Only the 10 newest are kept.
 
-## One-time setup: add your API key
+## One-time setup: your keys
 
-Your key is a password for the Claude API. It goes in a file called `.env` that git never saves, so it stays on your computer only.
+Keys are passwords for outside services. They go in a file called `.env` that git never saves. Each one is saved through a pop-up box that hides what you paste; never paste a key into a chat or a file.
 
-1. At [console.anthropic.com](https://console.anthropic.com), go to **API Keys** → **Create Key**, then click the **Copy** button in the window that appears. (The list of keys only shows a shortened version, which won't work.)
-2. Run:
+```bash
+~/Documents/the-receipts/set_key.sh
+```
 
-   ```bash
-   ~/Documents/the-receipts/set_key.sh
-   ```
+That's the Anthropic (Claude) key: [console.anthropic.com](https://console.anthropic.com) → **API Keys** → **Create Key** → **Copy**. Two more are optional:
 
-3. Paste the key into the pop-up box and click **Save**. Terminal should say `Saved` and the key's length (about 106 characters).
-
-Never paste the key into a chat, the page, or any other file. To change keys later, run `set_key.sh` again.
-
-**Optional: the news ticker.** Sign up free at [gnews.io](https://gnews.io), copy your API key, and run `~/Documents/the-receipts/set_key.sh gnews`. Without it, the ticker shows a short Sideline placeholder.
+- **Voices:** a Google Cloud key restricted to the Cloud Text-to-Speech API (`set_key.sh google`). Free up to 1 million characters a month; Sideline stops itself at 900,000. Without it, segments play with subtitles only.
+- **News ticker:** a free [gnews.io](https://gnews.io) key (`set_key.sh gnews`). Without it, the ticker shows a short placeholder.
 
 ## Run it
 
@@ -31,26 +36,13 @@ Never paste the key into a chat, the page, or any other file. To change keys lat
 ~/Documents/the-receipts/start.sh
 ```
 
-The first time, it spends about a minute installing Python packages. Then it opens http://localhost:8000 in your browser. The page only works while this is running.
+The first time, it spends about a minute installing Python packages. Then it opens http://localhost:8000. The page only works while this is running; to stop it, click its Terminal window and press **Control-C**.
 
-Type a topic under **Ask the desk** and press the button. While the script is written (about a minute), you watch the pre-show: makeup, research, a mic check, the floor producer. Then a 3-2-1 countdown, the ON AIR sign lights, and the segment plays one line at a time in a speech bubble over whoever is talking. Each line stays up about as long as it takes to say it (150 words per minute). **Pause** and **Replay** sit under the screen.
+Type a question under **Ask the desk**. While it's made, you're "on hold": hold music, the pre-show animation, and a progress bar. Then a countdown, the theme, and the segment.
 
-To stop it, click the Terminal window and press **Control-C**.
+**Under the TV:** **Pause** (Space), **Replay**, **End segment** (Esc; jumps to the verdict), **Sound** (music and voices), and **Last segment**, which replays the one before for free. If your browser blocks sound (Safari can), the Sound button turns gold and says "Click for sound." **Preview graphics (sample data)** demos every graphic with numbers stamped SAMPLE.
 
-**Preview graphics (sample data)** under the screen plays a short demo of the graphics that later steps fill with real data: the stat chyron, the score bug, the big reactions (standing up, the desk slam, turning away), and the end card. Everything in it is stamped SAMPLE. **Sound** turns the desk-slam thump on or off.
-
-## Where scripts are saved
-
-Every run gets its own folder named by date and time, like `runs/2026-11-04_14-30-05/script.json`. Each file holds:
-
-- `topic`: what you typed
-- `format`: `debate`, `buy_or_sell`, or `prediction` (the AI picks)
-- `caller`: the caller type, first name, and city
-- `lines`: every line, with `line` (number), `speaker`, `speaker_name`, `text`, `delivery` (calm, heated, laughing, and so on), and `argument` (which argument it belongs to; blank for the caller and Hal)
-- `word_count`, `estimated_minutes`, and `warnings` (plain checks for length, stray numbers, and leftover placeholders)
-- `meta`: the model, how long it took, and how many tokens it used
-
-The `runs/` folder isn't saved to git, so delete old runs whenever you like.
+**If Python is missing:** this Mac has Python 3.11. On another computer, install Python 3 from [python.org/downloads](https://www.python.org/downloads/), then run `start.sh` again.
 
 ## Write a script without the page
 
@@ -58,32 +50,26 @@ The `runs/` folder isn't saved to git, so delete old runs whenever you like.
 cd ~/Documents/the-receipts && .venv/bin/python generate.py "Who wins the Super Bowl this season?"
 ```
 
-It prints the script in Terminal and saves it to `runs/` the same way.
+## Tests
+
+Free (no AI calls): `tests/accuracy.py` (are the sources still agreeing?), `tests/linecheck_test.py`, `tests/style_test.py`, `tests/positions_test.py`, `tests/news_test.py`, and `tests/voices_test.py` (`--samples` saves one voice per character). A few cents each: `tests/pipeline_test.py` (research and checking on six topics) and `tests/audit.py --latest 4` (a stronger model lists every claim in recent scripts and marks any the facts don't support).
 
 ## Files
 
 | File | What it is |
 | --- | --- |
-| `BRIEF.md` | The project spec. The rules everything else follows. |
-| `SOURCES.md` | Every stats source, and whether the app may use it. |
-| `characters/` | One bible per character, plus `callers.md`. |
-| `generate.py` | Builds the prompt from the brief and bibles, asks Claude for the script, checks it, and saves it. |
-| `server.py` | The small local web server that the page talks to. |
-| `static/index.html` | The page: the TV, the Ask the desk console, sources, the cast, and credits. |
-| `static/style.css` | The broadcast look: colors, pixel fonts, monitors, name plate, ticker. |
-| `static/studio.js` | Draws the pixel studio and the characters in code, and animates them. |
-| `static/app.js` | Runs the show: pre-show, countdown, then the segment line by line. |
-| `start.sh` | The one command that sets up and starts everything. |
-| `set_key.sh` | Saves your API key into `.env` through a pop-up box, without showing it. |
-| `requirements.txt` | The Python packages the project needs. |
-| `.env.example` | A blank copy of the key file. Your real key goes in `.env`. |
-| `originals/` | The PDFs and files these Markdown copies were made from. |
-| `CLAUDE.md` | Instructions for future Claude Code sessions. |
-
-## If Python is missing
-
-This Mac already has Python 3.11. On another computer, download Python 3 from [python.org/downloads](https://www.python.org/downloads/), run the installer, then run `start.sh` again.
+| `BRIEF.md`, `SOURCES.md`, `characters/` | The spec, every data source and whether it may be used, and the character bibles. |
+| `generate.py` | Runs the whole pipeline for one question and saves the run. |
+| `pipeline/` | Each step: the topic check and research, the stat catalog and checker, injuries, the line checker, the judge, voices, and the data sources. |
+| `server.py` | The small local web server the page talks to. |
+| `static/index.html`, `style.css` | The page and its broadcast look. |
+| `static/studio.js` | Draws and animates the pixel studio and cast in code. |
+| `static/monitor.js` | The loading animations on the center monitor. |
+| `static/sound.js` | The theme music and sound effects, synthesized in code. |
+| `static/app.js` | Runs the show: pre-show, countdown, voices and subtitles, graphics, the end card. |
+| `start.sh`, `set_key.sh` | Start everything; save a key without showing it. |
+| `CLAUDE.md` | Notes for future Claude Code sessions. |
 
 ## Cost
 
-Each script is one Sonnet call. The bibles are about 25,000 tokens and get cached, so repeat runs within a few minutes cost less. Each run's real token counts are saved in its `meta` section.
+A segment costs roughly a dime to a few dimes in Claude API credits (research, writing, checking, judging). Voices are free within Google's monthly allowance. Replays cost nothing.

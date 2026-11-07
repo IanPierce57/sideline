@@ -132,6 +132,20 @@ def run_job(job_id: str, topic: str, chosen: list) -> None:
     except anthropic.APIConnectionError:
         with JOBS_LOCK:
             job.update(state="error", error="Couldn't reach the Claude API. Check your internet.")
+    except anthropic.APIStatusError as problem:
+        # Plain words for the ones that can happen on demo day (Nov 7, 2026)
+        text = str(problem).lower()
+        if "credit balance" in text:
+            message = "The desk is out of Claude API credits. Add credits at console.anthropic.com (Plans & Billing), then ask again."
+        elif problem.status_code == 429:
+            message = "The Claude API is busy (too many requests). Wait a minute and ask again."
+        elif problem.status_code in (500, 502, 503, 529):
+            message = "The Claude API is overloaded right now. Wait a minute and ask again."
+        else:
+            message = f"The Claude API said no ({problem.status_code}). Try asking again."
+        print(f"  API error: {problem}")
+        with JOBS_LOCK:
+            job.update(state="error", error=message)
     except (ValueError, RuntimeError) as problem:
         with JOBS_LOCK:
             job.update(state="error", error=str(problem))
@@ -216,7 +230,10 @@ class Handler(SimpleHTTPRequestHandler):
             return self.send_json(400, {"error": "Type a topic first."})
         job_id = uuid.uuid4().hex[:12]
         with JOBS_LOCK:
-            JOBS[job_id] = {"state": "running", "step": {"step": "start", "text": "Picking up the call"},
+            now = time.time()
+            for old in [k for k, v in JOBS.items() if v.get("state") != "running" and now - v.get("at", now) > 3600]:
+                del JOBS[old]
+            JOBS[job_id] = {"at": now, "state": "running", "step": {"step": "start", "text": "Picking up the call"},
                             "counts": {"found": 0, "verified": 0, "dropped": 0}, "recent": "", "players": []}
         threading.Thread(target=run_job, args=(job_id, topic, chosen), daemon=True).start()
         return self.send_json(200, {"job": job_id})

@@ -14,10 +14,12 @@ Run it on its own:
 """
 
 import json
+import shutil
 import os
 import re
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
 
@@ -733,6 +735,14 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
                                     client, progress, topic, profiles=profiles)
     timings["line_check"] = round(time.time() - t, 1)
 
+    # The debate's lines are final now, so their voices are recorded in the background while
+    # the judge scores and Hal's close is written (saves the wait at the end; Nov 7, 2026).
+    from pipeline import voices
+    voicing = None
+    if voices.enabled():
+        pending = voices.CACHE / "pending" / f"{os.getpid()}-{int(time.time() * 1000)}"
+        voicing = (pending, _BACKGROUND.submit(voices.voice_lines, list(lines), pending, caller["name"]))
+
     # 6. Judge: score every argument blind (pipeline/judge.py). The math is done in code.
     from pipeline import judge as judging
     progress("step", {"step": "judge", "text": "The judge is scoring every argument"})
@@ -882,12 +892,20 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
     (run_dir / "rejection_log.json").write_text(json.dumps({"stats": stat_log, "lines": line_log, "close": close_log},
                                                            indent=2, ensure_ascii=False))
     (run_dir / "judge.json").write_text(json.dumps(result, indent=2, ensure_ascii=False, default=str))
-    # 8. Voices (Nov 6, 2026): each line voiced once and saved with the run; no key, no voices
-    from pipeline import voices
-    if voices.enabled():
+    # 8. Voices (Nov 6, 2026): each line voiced once and saved with the run; no key, no voices.
+    # The debate was voiced in the background (above); only Hal's close is left.
+    if voicing:
         progress("step", {"step": "voices", "text": "Recording the voices"})
         t = time.time()
-        script["voices"] = voices.voice_script(script, run_dir, progress)
+        pending, job = voicing
+        try:
+            early = job.result()
+            shutil.move(str(pending), str(run_dir / "audio"))
+            script["voices"] = voices.merge(early, voices.voice_lines(close, run_dir / "audio", caller["name"]))
+        except Exception as problem:               # voices must never sink the segment: subtitles only
+            for line in lines:
+                line.pop("cards", None)
+            script["voices"] = {"failed": [f"{type(problem).__name__}: {problem}"]}
         timings["voices"] = round(time.time() - t, 1)
         (run_dir / "script.json").write_text(json.dumps(script, indent=2, ensure_ascii=False))
     prune_runs()
@@ -896,6 +914,7 @@ def generate_script(topic: str, progress=None, chosen: list[str] | None = None) 
 
 
 KEEP_RUNS = 10
+_BACKGROUND = ThreadPoolExecutor(max_workers=2)       # voices recorded while the judge works
 
 
 def prune_runs(keep: int = KEEP_RUNS) -> int:
@@ -908,6 +927,11 @@ def prune_runs(keep: int = KEEP_RUNS) -> int:
     old = folders[:-keep] if keep else folders
     for d in old:
         shutil.rmtree(d)
+    pending = Path(__file__).parent / ".cache" / "voices" / "pending"
+    if pending.exists():
+        for d in pending.iterdir():
+            if d.is_dir() and time.time() - d.stat().st_mtime > 3600:
+                shutil.rmtree(d, ignore_errors=True)
     return len(old)
 
 

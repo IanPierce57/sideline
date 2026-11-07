@@ -46,8 +46,12 @@ const ACCENTS = { hal: "#c9d2e3", royce: "#f2c14e", deacon: "#e0414e", lonnie: "
 
 // The show's state drives the glow behind the TV and the pill in the masthead.
 const AIR_TEXT = { idle: "Lines open", preshow: "Pre-show", countdown: "Stand by", live: "On the air", done: "That's the board" };
+// The browser tab says what's happening, so you can tell from another tab when you're on the air.
+const TAB_TITLE = { idle: "Sideline", preshow: "On hold · Sideline", countdown: "Stand by · Sideline",
+                    live: "● On the air · Sideline", done: "That's the board · Sideline" };
 function setShowMode(mode) {
   document.documentElement.dataset.mode = mode;
+  document.title = TAB_TITLE[mode] || "Sideline";
   if (typeof updateSoundButton === "function") setTimeout(updateSoundButton, 400);
   $("air-text").textContent = AIR_TEXT[mode] || "";
 }
@@ -307,7 +311,7 @@ $("sound").addEventListener("click", () => {
   $("sound").textContent = soundOn ? "Sound: on" : "Sound: off";
   $("sound").setAttribute("aria-pressed", String(soundOn));
   if (voiceGain) voiceGain.gain.value = soundOn ? 1 : 0;
-  if (musicGain) musicGain.gain.value = soundOn ? 1 : 0;
+  if (musicGain) musicGain.gain.value = soundOn ? MUSIC_LEVEL : 0;
 });
 
 // ---------- Voices (Nov 6, 2026) ----------
@@ -318,6 +322,9 @@ $("sound").addEventListener("click", () => {
 let voicesOn = false;          // the server has a voice key (for the countdown and crew lines)
 let voiceGain = null;
 let musicGain = null;          // the theme music and sound effects (sound.js)
+// Music and effects sit a little under the voices (Nov 7, 2026: measured, the theme ran 2-3x
+// louder than speech on average; at 0.6 it lands about as loud as a host's loudest lines).
+const MUSIC_LEVEL = 0.6;
 let voiceBuffers = {};         // line number -> decoded audio
 let voiceSource = null;        // the line playing now
 function ensureAudio() {
@@ -332,7 +339,7 @@ function ensureAudio() {
     voiceGain.gain.value = soundOn ? 1 : 0;
     voiceGain.connect(audio.destination);
     musicGain = audio.createGain();
-    musicGain.gain.value = soundOn ? 1 : 0;
+    musicGain.gain.value = soundOn ? MUSIC_LEVEL : 0;
     musicGain.connect(audio.destination);
     Sound.attach(audio, musicGain);
   }
@@ -707,6 +714,7 @@ function playCard() {
   // Voiced: the words type out at the pace they're spoken. Timed: a quick reveal, as before.
   showBubble(line.speaker, card.text, buffer ? seconds * 0.92 : Math.min(seconds * 0.6, card.text.length / 45));
   $("progress").textContent = `LINE ${line.line} / ${script.lines.length}`;
+  $("sr-line").textContent = `${line.speaker === "caller" ? script.caller.name : (PEOPLE[line.speaker] || {}).name}: ${card.text}`;
   cardEnd = performance.now() + seconds * 1000;
   if (!buffer) lineTimer = setTimeout(nextCard, seconds * 1000);
 }
@@ -858,7 +866,7 @@ function buildPipeline() {
 }
 // How long each step usually takes (seconds), so the bar keeps creeping through a step
 // instead of jumping; it never fills a step until the server says that step is done.
-const PIPE_EXPECT = { topic: 3, research: 7, verify: 12, write: 50, check: 30, judge: 11, close: 9, voices: 15 };
+const PIPE_EXPECT = { topic: 3, research: 7, verify: 12, write: 50, check: 30, judge: 11, close: 9, voices: 3 };
 const PIPE_NAMES = { topic: "Screening the call", research: "Pulling stats", verify: "Checking every number twice",
                      write: "Writing the segment", check: "Checking every line", judge: "Blind judges scoring",
                      close: "The verdict", voices: "Recording the voices" };
@@ -1061,6 +1069,15 @@ $("pause").addEventListener("click", () => {
 
 $("replay").addEventListener("click", () => { if (script) play(script); });
 $("end").addEventListener("click", endSegment);
+
+// Keyboard: Space pauses or resumes, Esc ends the segment. Not while typing a question.
+document.addEventListener("keydown", (event) => {
+  // (a focused button already answers Space itself, so leave that to the button)
+  const typing = ["INPUT", "TEXTAREA", "BUTTON"].includes(document.activeElement && document.activeElement.tagName);
+  if (typing || event.metaKey || event.ctrlKey || event.altKey) return;
+  if (event.code === "Space" && !$("pause").disabled) { event.preventDefault(); $("pause").click(); }
+  if (event.key === "Escape" && !$("end").disabled) { event.preventDefault(); endSegment(); }
+});
 $("end-replay").addEventListener("click", () => { if (script) play(script); });
 $("end-ask").addEventListener("click", () => {
   $("topic").scrollIntoView({ behavior: "smooth", block: "center" });

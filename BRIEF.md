@@ -19,10 +19,10 @@ Nov 3, 2026 · @Ian (aligned with the bibles Nov 4, 2026)
 - [x] Name: Sideline (renamed from The Receipts on Nov 4, 2026)
 - [x] Project folder holding this brief (saved as BRIEF.md), the bibles, and SOURCES.md
 
-**Not done yet**
+**Also done**
 
-- [ ] Claude Code running, plus an API key with about $25 of credits
-- [ ] Step 1 working: text scripts from a typed topic
+- [x] Claude Code running, plus an API key with about $25 of credits
+- [x] Step 1 working: text scripts from a typed topic
 
 ## What it is
 
@@ -235,10 +235,10 @@ Everything runs on your laptop: a small local server starts each generation, and
 
 Get an ugly version working end to end, with a plain page showing a scored, subtitled segment, by November 9. Then improve it. The dates are a guide for making sure everything gets addressed, not a fixed order.
 
-- [ ] **Nov 4-5:** Set up Claude Code and the API key. Put the brief and bibles in the project folder. Generate text scripts from a typed topic, read five, and fix the bibles.
-- [ ] **Nov 6-7:** Data pull from nflverse and the NBA source, the topic check, the research and checker agents, the fact pack, the number checker, and the rejection log.
-- [ ] **Nov 8:** The judge, scoring, and the close. Time a full run from topic to finished script.
-- [ ] **Nov 9-11:** The webpage: input box, studio, sprites, subtitles, player, loading screen, chyron, and meter.
+- [x] **Nov 4-5:** Set up Claude Code and the API key. Put the brief and bibles in the project folder. Generate text scripts from a typed topic, read five, and fix the bibles.
+- [x] **Nov 6-7:** Data pull from nflverse and the NBA source, the topic check, the research and checker agents, the fact pack, the number checker, and the rejection log.
+- [x] **Nov 8:** The judge, scoring, and the close. Time a full run from topic to finished script.
+- [x] **Nov 9-11:** The webpage: input box, studio, sprites, subtitles, player, loading screen, chyron, and meter.
 - [ ] **Nov 12:** Test 20 topics and fix what breaks.
 - [ ] **Nov 13:** Freeze the code, record a backup segment, and build the presentation.
 - [ ] **Nov 14:** Due.
@@ -254,7 +254,7 @@ Get an ugly version working end to end, with a plain page showing a scored, subt
 
 **Never cut:** a typed topic becoming a subtitled, scored segment on a pixel page, backed by the research step and the fact-check log.
 
-**Stretch goal, only if everything above works:** voices.
+**Stretch goal, only if everything above works:** voices. (Built Nov 6-7, 2026: Google Cloud Text-to-Speech, one voice per character, in sync with the subtitles; plus original theme music and sound effects made in code.)
 
 ## Presentation
 

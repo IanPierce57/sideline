@@ -647,3 +647,9 @@ body::before {
 
 /* The browser is blocking sound: the Sound button asks for a click (Nov 7, 2026) */
 #sound.blocked { background: var(--gold); color: var(--ink); animation: blink 0.9s steps(2) infinite; }
+
+/* Keyboard focus you can see (Nov 7, 2026) */
+.pixel-btn:focus-visible, .chip:focus-visible, .last-seg:focus-visible, .link-btn:focus-visible {
+  outline: 3px solid var(--gold); outline-offset: 3px;
+}
+.controls { flex-wrap: wrap; row-gap: 10px; }

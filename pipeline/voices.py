@@ -118,6 +118,8 @@ def cards_for(text: str) -> list[str]:
 
 # ---------- What the voice reads (the subtitles keep the original text) ----------
 
+MONTHS = {"Jan": "January", "Feb": "February", "Mar": "March", "Apr": "April", "Jun": "June", "Jul": "July",
+          "Aug": "August", "Sep": "September", "Oct": "October", "Nov": "November", "Dec": "December"}
 SCORE_WORDS = re.compile(r"\b(beat|beats|won|win|wins|lost|loses|final|score|scored)\b", re.I)
 
 
@@ -129,7 +131,11 @@ def speech_text(text: str) -> str:
     t = re.sub(r"\b20(\d\d)[–-](\d\d)\b", r"\1 \2", t)
     joiner = "to" if SCORE_WORDS.search(t) else "and"
     t = re.sub(r"(?<![\d.])(\d{1,3})[-–](\d{1,3})(?![\d-])", rf"\1 {joiner} \2", t)
-    t = t.replace("ANY/A", "any-slash-A")
+    t = t.replace("ANY/A", "any-slash-A").replace(" & ", " and ")
+    t = re.sub(r"\bvs\.?(?=\s)", "versus", t)
+    t = re.sub(r"\bNo\.\s?(?=\d)|#(?=\d)", "number ", t)
+    t = re.sub(r"\b(Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sept?|Oct|Nov|Dec)\.(?=\s+\d)",
+               lambda m: MONTHS[m.group(1)[:3]], t)
     t = re.sub(r"(?<![\w.])\+(?=\.?\d)", "plus ", t)
     t = re.sub(r"(?<![\w.])[-–](?=0?\.\d)", "minus ", t)
     t = re.sub(r"(?<![\d.])0\.(\d)", r".\1", t)
@@ -205,13 +211,23 @@ def list_voices() -> list[dict]:
 # ---------- A whole segment ----------
 
 def voice_script(script: dict, run_dir: Path, progress=lambda *a: None) -> dict:
-    """Voice every spoken line into run_dir/audio/<line>.mp3 and mark the line with its file.
-    A line that fails just plays as subtitles. Returns a short summary for the run's meta."""
-    folder = run_dir / "audio"
-    folder.mkdir(exist_ok=True)
-    caller = (script.get("caller") or {}).get("name", "")
+    """Voice a whole saved segment into run_dir/audio (used to re-voice old runs)."""
+    return voice_lines(script["lines"], run_dir / "audio", (script.get("caller") or {}).get("name", ""), progress)
+
+
+def merge(a: dict, b: dict) -> dict:
+    """Two voicing summaries as one (the debate, voiced early, plus Hal's close)."""
+    return {"voiced_cards": a["voiced_cards"] + b["voiced_cards"], "cards": a["cards"] + b["cards"],
+            "characters": a["characters"] + b["characters"], "failed": (a["failed"] + b["failed"])[:5],
+            "used_this_month": used_this_month()}
+
+
+def voice_lines(lines: list[dict], folder: Path, caller: str = "", progress=lambda *a: None) -> dict:
+    """Voice these lines into folder/<line>-<card>.mp3, one clip per subtitle card, and mark each
+    card with its file. A card that fails just plays as a timed subtitle. Returns a summary."""
+    folder.mkdir(parents=True, exist_ok=True)
     jobs = []
-    for line in script["lines"]:
+    for line in lines:
         if line["speaker"] not in SPOKEN:
             continue
         rate = SPEED * PACE.get(line["speaker"], 1.0) * DELIVERY.get(line.get("delivery", ""), 1.0)
@@ -232,7 +248,7 @@ def voice_script(script: dict, run_dir: Path, progress=lambda *a: None) -> dict:
 
     voiced = chars = 0
     failed = []
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=8) as pool:
         for line, i, name, n, problem in pool.map(one, jobs):
             if problem:
                 failed.append({"line": line["line"], "card": i, "problem": problem})

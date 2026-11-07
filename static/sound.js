@@ -148,6 +148,11 @@ const Sound = (() => {
     { chord: [59, 62, 66, 69], root: 35, bell: [78, 76, 74, 76] },
     { chord: [55, 59, 62, 66], root: 31, bell: [74, 76, 78, 81] },
     { chord: [57, 61, 64, 66], root: 33, bell: [76, 73, 69, 73] },
+    // the second phrase (Nov 7, 2026), so the wait doesn't loop the same ten seconds
+    { chord: [64, 67, 71, 74], root: 40, bell: [79, 78, 76, 74] },     // E minor seventh
+    { chord: [57, 61, 64, 67], root: 33, bell: [76, 78, 79, 81] },     // A seventh
+    { chord: [62, 66, 69, 73], root: 38, bell: [81, 78, 74, 78] },     // D major seventh
+    { chord: [59, 62, 66, 69], root: 35, bell: [78, 76, 73, 69] },     // B minor seventh
   ];
   const hold = { gain: null, timer: null, next: 0, bar: 0 };
   function holdBar(at, bar) {
@@ -160,8 +165,10 @@ const Sound = (() => {
     bass(b.root + 7, at + HOLD_BEAT * 2.5, HOLD_BEAT * 1.2, 0.09, dest);
     for (let i = 0; i < 8; i++) hat(at + (i * HOLD_BEAT) / 2, i % 2 ? 0.012 : 0.02, dest);
     snare(at + HOLD_BEAT, 0.035, dest); snare(at + HOLD_BEAT * 3, 0.035, dest);
-    if (bar % 2 === 0) b.bell.forEach((n, i) => tone(hz(n), at + HOLD_BEAT * (0.5 + i * 0.75), 0.5,
-                                                       { type: "sine", gain: 0.022, release: 0.4, dest }));
+    const second = (bar % HOLD_BARS.length) >= 4;
+    if (bar % 2 === 0 || second) b.bell.forEach((n, i) => tone(hz(n), at + HOLD_BEAT * (second ? i : 0.5 + i * 0.75), 0.5,
+                                                                { type: "sine", gain: second ? 0.016 : 0.022, release: 0.4, dest }));
+    if (second) hat(at + HOLD_BEAT * 3.75, 0.02, dest);                 // a little pickup into the next bar
   }
   hold.start = () => {
     if (!ready() || hold.timer) return;

@@ -39,7 +39,9 @@ for said, heard in [("Philly's 8-1 this year.", "Philly's 8 and 1 this year."),
                     ("He's at +0.37 EPA.", "He's at plus .37 EPA."),
                     ("He was -0.54 per carry.", "He was minus .54 per carry."),
                     ("A 2-time All-Pro, 3-for-10 tonight.", "A 2-time All-Pro, 3-for-10 tonight."),
-                    ("Seven of seven (pencil down).", "Seven of seven.")]:
+                    ("Seven of seven (pencil down).", "Seven of seven."),
+                    ("Who wins Bengals vs. Falcons on Sunday, Nov. 8?", "Who wins Bengals versus Falcons on Sunday, November 8?"),
+                    ("He's No. 1 in EPA, #2 in yards, offense & defense.", "He's number 1 in EPA, number 2 in yards, offense and defense.")]:
     got = voices.speech_text(said)
     check(got == heard, f"reads {said!r} as {heard!r}" + ("" if got == heard else f" (got {got!r})"))
 
