@@ -12,3 +12,6 @@ runs/
 
 # Downloaded sports data (re-downloadable)
 .cache/
+
+# Voice samples you listen to locally
+tests/voice_samples/

@@ -170,7 +170,7 @@ class Handler(SimpleHTTPRequestHandler):
         from pipeline import voices
         if self.path == "/api/voices":
             return self.send_json(200, {"enabled": voices.enabled()})
-        audio = re.match(r"^/api/runs/([^/]+)/audio/(\d{1,3})\.mp3$", self.path)
+        audio = re.match(r"^/api/runs/([^/]+)/audio/(\d{1,3}-\d{1,2})\.mp3$", self.path)
         if audio:
             path = RUNS / audio.group(1) / "audio" / f"{audio.group(2)}.mp3"
             if not RUN_NAME.match(audio.group(1)) or not path.exists():

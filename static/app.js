@@ -347,25 +347,32 @@ async function fetchBuffer(url) {
   if (!reply.ok) throw new Error(`no audio (${reply.status})`);
   return ensureAudio().decodeAudioData(await reply.arrayBuffer());
 }
+// Every subtitle card has its own clip (pipeline/voices.py splits lines the same way), so a
+// card shows when its audio starts and moves on when its audio ends: they can't drift apart.
 async function loadVoices(s) {
   voiceBuffers = {};
   if (!s.run) return;
-  await Promise.all(s.lines.filter((l) => l.audio).map(async (l) => {
-    try { voiceBuffers[l.line] = await fetchBuffer(`/api/runs/${encodeURIComponent(s.run)}/audio/${l.audio}`); }
-    catch (error) { /* this line plays as subtitles only */ }
+  const files = s.lines.flatMap((l) => (l.cards || []).map((c) => c.audio).filter(Boolean));
+  await Promise.all(files.map(async (file) => {
+    try { voiceBuffers[file] = await fetchBuffer(`/api/runs/${encodeURIComponent(s.run)}/audio/${file}`); }
+    catch (error) { /* this card plays as a timed subtitle */ }
   }));
 }
-function playVoice(buffer) {
+function playVoice(buffer, onEnded) {
   stopVoice();
   const ctx = ensureAudio();
   const source = ctx.createBufferSource();
   source.buffer = buffer;
   source.connect(voiceGain);
+  source.onended = () => { if (voiceSource === source) { voiceSource = null; if (onEnded) onEnded(); } };
   source.start();
   voiceSource = source;
 }
 function stopVoice() {
-  if (voiceSource) { try { voiceSource.stop(); } catch (error) { /* already done */ } voiceSource = null; }
+  if (!voiceSource) return;
+  const source = voiceSource;
+  voiceSource = null;                      // so its "ended" doesn't move the show along
+  try { source.stop(); } catch (error) { /* already done */ }
 }
 // Short lines on the page (the countdown, the pre-show crew): voiced once on the server, cached.
 const sayCache = new Map();
@@ -620,6 +627,15 @@ function buildCards(lines) {
   const out = [];
   let hostHasSpoken = false;
   for (const line of lines) {
+    if (line.cards && line.cards.length) {
+      // voiced segments: the server split the line into cards and voiced each one
+      const isCutIn = line.speaker === "hal" && hostHasSpoken;
+      if (HOSTS.includes(line.speaker)) hostHasSpoken = true;
+      const total = line.cards.reduce((sum, c) => sum + c.text.length, 0) || 1;
+      line.cards.forEach((c, i) => out.push({ line, text: c.text, audio: c.audio, first: i === 0,
+        last: i === line.cards.length - 1, isCutIn, share: c.text.length / total, seconds: secondsFor(c.text) }));
+      continue;
+    }
     const spoken = spokenText(line.text);
     const parts = sentences(spoken);
     const chunks = [];
@@ -639,16 +655,24 @@ function buildCards(lines) {
 }
 
 let cardEnd = 0;
+let cardDone = false;          // a voiced card finished; the short gap before the next one is running
 function nextCard() { cardIndex += 1; playCard(); }
 function playCard() {
   if (cardIndex >= cards.length) { Studio.silence(); hideBubble(); stopVoice(); showDone(); return; }
   const card = cards[cardIndex];
   const { line } = card;
-  // A voiced line sets the pace: each subtitle card gets its share of the audio.
-  const buffer = voiceBuffers[line.line];
-  const seconds = buffer ? buffer.duration * card.share + (card.last ? 0.3 : 0) : card.seconds;
+  cardDone = false;
+  // A voiced card plays its own clip and moves on when the clip ends (plus a breath).
+  // Without audio (or if the browser won't play sound), it's a timed subtitle as before.
+  const buffer = card.audio && voiceBuffers[card.audio] && audio && audio.state === "running" ? voiceBuffers[card.audio] : null;
+  const seconds = buffer ? buffer.duration : card.seconds;
+  if (buffer) {
+    playVoice(buffer, () => {
+      cardDone = true;
+      lineTimer = setTimeout(nextCard, card.last ? 350 : 120);
+    });
+  } else stopVoice();
   if (card.first) {
-    if (buffer) playVoice(buffer); else stopVoice();
     Studio.speak(line.speaker, line.delivery, line.text, card.isCutIn);
     // Later pipeline steps attach these to lines: a fact-pack stat, and the judge's scores.
     if (line.stat) showChyron(line.stat, !!script.sample); else hideChyron();
@@ -664,10 +688,11 @@ function playCard() {
     setNameplate(person.name, person.role, line.speaker);
     setCamera(line.speaker, person.name, `${person.role.replace("Host · ", "")}<br><span class="gold">${FORMATS[script.format] || ""}</span>`);
   }
-  showBubble(line.speaker, card.text, Math.min(seconds * 0.6, card.text.length / 45));
+  // Voiced: the words type out at the pace they're spoken. Timed: a quick reveal, as before.
+  showBubble(line.speaker, card.text, buffer ? seconds * 0.92 : Math.min(seconds * 0.6, card.text.length / 45));
   $("progress").textContent = `LINE ${line.line} / ${script.lines.length}`;
   cardEnd = performance.now() + seconds * 1000;
-  lineTimer = setTimeout(nextCard, seconds * 1000);
+  if (!buffer) lineTimer = setTimeout(nextCard, seconds * 1000);
 }
 
 function stopPlayback() {
@@ -976,22 +1001,18 @@ $("form").addEventListener("submit", (event) => {
 });
 
 
-let pausedLeft = 0;
 $("pause").addEventListener("click", () => {
   if (!script || cardIndex >= cards.length) return;
   if (paused) {
     paused = false;
     Studio.setPaused(false);
     $("pause").textContent = "Pause";
-    if (voiceSource && audio) {
-      audio.resume();                                    // pick the line up where it stopped
-      cardEnd = performance.now() + pausedLeft;
-      lineTimer = setTimeout(nextCard, pausedLeft);
-    } else playCard();
+    if (voiceSource && audio) audio.resume();           // the clip picks up mid-word; its end moves the show on
+    else if (cardDone) nextCard();                       // paused in the breath between cards
+    else playCard();
   } else {
     paused = true;
     clearTimeout(lineTimer);
-    pausedLeft = Math.max(0, cardEnd - performance.now());
     if (voiceSource && audio) audio.suspend();
     Studio.setPaused(true);
     typeText(cards[cardIndex].text, 0);

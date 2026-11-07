@@ -68,6 +68,48 @@ def voice_for(speaker: str, caller_name: str = "") -> str:
     return CAST.get(speaker, CAST["hal"])
 
 
+# ---------- Subtitle cards (the same split the page used before voices) ----------
+
+MAX_CARD = 170          # longer lines become two or more subtitle cards (static/app.js MAX_BUBBLE_CHARS)
+ABBREV = re.compile(r"(?:^|\s)(?:jr|sr|st|vs|mr|mrs|dr|no|mt|ft|jan|feb|mar|apr|jun|jul|aug|sep|sept|oct|nov|dec"
+                    r"|a\.m|p\.m|u\.s)\.$", re.I)
+
+
+def spoken(text: str) -> str:
+    """The line without stage directions in parentheses (they drive the animation)."""
+    return re.sub(r"\s+", " ", re.sub(r"\([^)]*\)", " ", text)).strip()
+
+
+def sentences(text: str) -> list[str]:
+    """Split at real sentence ends. '0.37' and 'Jr.' don't end a sentence."""
+    out, start = [], 0
+    for m in re.finditer(r"[.!?]+[\"'’”)\]]*\s+", text):
+        piece = text[start: m.start() + len(m.group(0).rstrip())]
+        nxt = text[m.end()] if m.end() < len(text) else ""
+        if ABBREV.search(piece) or not re.match(r"[A-Z0-9\"'“(]", nxt):
+            continue
+        out.append(piece.strip())
+        start = m.end()
+    if start < len(text):
+        out.append(text[start:].strip())
+    return [s for s in out if s]
+
+
+def cards_for(text: str) -> list[str]:
+    """The subtitle cards for one line: whole sentences, up to MAX_CARD characters each."""
+    said = spoken(text)
+    chunks, current = [], ""
+    for s in sentences(said) or [said]:
+        if current and len(current + " " + s) > MAX_CARD:
+            chunks.append(current)
+            current = s
+        else:
+            current = f"{current} {s}" if current else s
+    if current or not chunks:
+        chunks.append(current)
+    return [c for c in chunks if c]
+
+
 # ---------- What the voice reads (the subtitles keep the original text) ----------
 
 SCORE_WORDS = re.compile(r"\b(beat|beats|won|win|wins|lost|loses|final|score|scored)\b", re.I)
@@ -85,7 +127,7 @@ def speech_text(text: str) -> str:
     t = re.sub(r"(?<![\w.])\+(?=\.?\d)", "plus ", t)
     t = re.sub(r"(?<![\w.])[-–](?=0?\.\d)", "minus ", t)
     t = re.sub(r"(?<![\d.])0\.(\d)", r".\1", t)
-    t = re.sub(r"\s+([.,!?;:])", r"\1", t)
+    t = re.sub(r"\s+([.,!?;:])(?!\d)", r"\1", t)          # no space before a period, but keep "plus .37"
     return re.sub(r"\s+", " ", t).strip()
 
 
@@ -166,32 +208,34 @@ def voice_script(script: dict, run_dir: Path, progress=lambda *a: None) -> dict:
     for line in script["lines"]:
         if line["speaker"] not in SPOKEN:
             continue
-        text = speech_text(line["text"])
-        if not text:
-            continue
         rate = PACE.get(line["speaker"], 1.0) * DELIVERY.get(line.get("delivery", ""), 1.0)
-        jobs.append((line, text, voice_for(line["speaker"], caller), rate))
+        line["cards"] = [{"text": c, "audio": None} for c in cards_for(line["text"])]
+        for i, card in enumerate(line["cards"]):
+            text = speech_text(card["text"])
+            if text:
+                jobs.append((line, i, text, voice_for(line["speaker"], caller), rate))
 
     def one(job):
-        line, text, voice, rate = job
+        line, i, text, voice, rate = job
+        name = f"{line['line']}-{i}.mp3"
         try:
-            (folder / f"{line['line']}.mp3").write_bytes(synthesize(text, voice, rate))
-            return line, len(text), None
+            (folder / name).write_bytes(synthesize(text, voice, rate))
+            return line, i, name, len(text), None
         except Exception as problem:            # noqa: BLE001 - any failure means "subtitles only"
-            return line, 0, f"{type(problem).__name__}: {problem}"
+            return line, i, None, 0, f"{type(problem).__name__}: {problem}"
 
     voiced = chars = 0
     failed = []
     with ThreadPoolExecutor(max_workers=6) as pool:
-        for line, n, problem in pool.map(one, jobs):
+        for line, i, name, n, problem in pool.map(one, jobs):
             if problem:
-                failed.append({"line": line["line"], "problem": problem})
+                failed.append({"line": line["line"], "card": i, "problem": problem})
             else:
-                line["audio"] = f"{line['line']}.mp3"
+                line["cards"][i]["audio"] = name
                 voiced += 1
                 chars += n
     progress("voiced", {"voiced": voiced, "failed": len(failed)})
-    return {"voiced": voiced, "lines": len(jobs), "characters": chars, "failed": failed[:5],
+    return {"voiced_cards": voiced, "cards": len(jobs), "characters": chars, "failed": failed[:5],
             "used_this_month": used_this_month()}
 
 
