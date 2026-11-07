@@ -176,17 +176,6 @@ class Handler(SimpleHTTPRequestHandler):
             if not RUN_NAME.match(audio.group(1)) or not path.exists():
                 return self.send_json(404, {"error": "No audio for that line."})
             return self.send_bytes(path.read_bytes(), "audio/mpeg")
-        if self.path.startswith("/api/say?"):
-            from urllib.parse import parse_qs, urlparse
-            q = parse_qs(urlparse(self.path).query)
-            try:
-                body = voices.say((q.get("who") or [""])[0], (q.get("text") or [""])[0])
-            except Exception as problem:
-                print(f"  voice failed: {problem}")
-                body = None
-            if not body:
-                return self.send_json(404, {"error": "No voice for that."})
-            return self.send_bytes(body, "audio/mpeg")
         if self.path == "/api/runs":
             runs = []
             for folder in sorted(RUNS.glob("*/script.json"), reverse=True):

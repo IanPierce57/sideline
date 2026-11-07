@@ -21,13 +21,16 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 from pathlib import Path
 
+from .net import SSL            # certifi's certificates (Python on macOS doesn't trust HTTPS by default)
+
 URL = "https://texttospeech.googleapis.com/v1/text:synthesize"
 VOICES_URL = "https://texttospeech.googleapis.com/v1/voices?languageCode=en-US"
 CACHE = Path(__file__).resolve().parent.parent / ".cache" / "voices"
 MONTHLY_CAP = 900_000          # stay under Google's 1,000,000 free characters a month
 
 # Who sounds like whom (Chirp 3 HD voice names). Chosen to fit each bible: Hal smooth and
-# unhurried, Royce clear and polished, Deacon gravelly, Lonnie friendly.
+# unhurried, Royce clear and polished, Deacon gravelly, Lonnie friendly. Only the segment is
+# voiced (user, Nov 6, 2026); the crew voices are only for the samples.
 CAST = {
     "hal": "en-US-Chirp3-HD-Algieba",
     "royce": "en-US-Chirp3-HD-Iapetus",
@@ -174,7 +177,7 @@ def synthesize(text: str, voice: str, rate: float = 1.0) -> bytes:
         req = urllib.request.Request(URL, data=json.dumps(body).encode(), method="POST",
                                      headers={"Content-Type": "application/json", "X-Goog-Api-Key": key()})
         try:
-            with urllib.request.urlopen(req, timeout=40) as r:
+            with urllib.request.urlopen(req, timeout=40, context=SSL) as r:
                 return base64.b64decode(json.loads(r.read())["audioContent"])
         except urllib.error.HTTPError as e:
             detail = e.read().decode(errors="replace")[:300]
@@ -192,7 +195,7 @@ def synthesize(text: str, voice: str, rate: float = 1.0) -> bytes:
 
 def list_voices() -> list[dict]:
     req = urllib.request.Request(VOICES_URL, headers={"X-Goog-Api-Key": key()})
-    with urllib.request.urlopen(req, timeout=20) as r:
+    with urllib.request.urlopen(req, timeout=20, context=SSL) as r:
         return json.loads(r.read()).get("voices", [])
 
 
@@ -237,22 +240,3 @@ def voice_script(script: dict, run_dir: Path, progress=lambda *a: None) -> dict:
     progress("voiced", {"voiced": voiced, "failed": len(failed)})
     return {"voiced_cards": voiced, "cards": len(jobs), "characters": chars, "failed": failed[:5],
             "used_this_month": used_this_month()}
-
-
-# ---------- Short fixed lines on the page (the countdown, the pre-show crew) ----------
-
-def say(who: str, text: str) -> bytes | None:
-    """A short line for the page, voiced once and cached on disk. Only the cast and crew, and
-    only short lines (the page asks for the countdown and pre-show lines)."""
-    text = re.sub(r"\s+", " ", text or "").strip()
-    if not enabled() or who not in CAST or not text or len(text) > 120:
-        return None
-    voice = CAST[who]
-    name = hashlib.sha1(f"{voice}|{text}".encode()).hexdigest()[:20] + ".mp3"
-    path = CACHE / name
-    if path.exists():
-        return path.read_bytes()
-    audio = synthesize(speech_text(text), voice, PACE.get(who, 1.0))
-    CACHE.mkdir(parents=True, exist_ok=True)
-    path.write_bytes(audio)
-    return audio

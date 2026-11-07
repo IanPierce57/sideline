@@ -196,6 +196,7 @@ function countUp(el, value, ms = 650) {
 
 // A stat from the fact pack: { value, label, definition, source, asOf }.
 function showChyron(stat, sample) {
+  Sound.ping();
   countUp($("stat-value"), stat.value);
   $("stat-label").textContent = stat.label;
   $("stat-def").textContent = stat.definition;
@@ -218,17 +219,20 @@ function setScores(update, sample) {
   $("scorecard").hidden = false;
   $("score-sample").hidden = !sample;
   const best = Math.max(...HOSTS.map((h) => scores[h] ?? -1));
+  let changed = false;
   for (const host of HOSTS) {
     const value = scores[host];
     const num = $(`num-${host}`), row = num.parentElement;
     const shown = value == null ? "--" : String(Math.round(value));
     if (num.textContent !== shown && value != null) {
       countUp(num, shown, 500);
+      changed = true;
       row.classList.remove("bump"); void row.offsetWidth; row.classList.add("bump");
     } else if (value == null) num.textContent = "--";
     $(`bar-${host}`).style.width = value == null ? "0" : `${value}%`;
     row.classList.toggle("lead", value != null && value === best);
   }
+  if (changed && $("endcard").hidden) Sound.blip();          // not for the final tally on the end card
 }
 function hideScores() { scores = {}; $("scorecard").hidden = true; }
 
@@ -291,31 +295,17 @@ function clearGraphics() { hideChyron(); hideScores(); hideEndCard(); }
 
 let soundOn = true;
 let audio = null;
-function thump() {
-  if (!soundOn) return;
-  audio = audio || new (window.AudioContext || window.webkitAudioContext)();
-  const now = audio.currentTime;
-  const osc = audio.createOscillator();
-  const gain = audio.createGain();
-  osc.type = "square";
-  osc.frequency.setValueAtTime(120, now);
-  osc.frequency.exponentialRampToValueAtTime(38, now + 0.18);
-  gain.gain.setValueAtTime(0.35, now);
-  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
-  osc.connect(gain).connect(audio.destination);
-  osc.start(now);
-  osc.stop(now + 0.26);
-}
 Studio.onSlam(() => {
   const tv = $("tv");
   tv.classList.remove("shake"); void tv.offsetWidth; tv.classList.add("shake");
-  thump();
+  Sound.slam();
 });
 $("sound").addEventListener("click", () => {
   soundOn = !soundOn;
   $("sound").textContent = soundOn ? "Sound: on" : "Sound: off";
   $("sound").setAttribute("aria-pressed", String(soundOn));
   if (voiceGain) voiceGain.gain.value = soundOn ? 1 : 0;
+  if (musicGain) musicGain.gain.value = soundOn ? 1 : 0;
 });
 
 // ---------- Voices (Nov 6, 2026) ----------
@@ -325,6 +315,7 @@ $("sound").addEventListener("click", () => {
 // line takes to say. Segments without voices play as timed subtitles, as before.
 let voicesOn = false;          // the server has a voice key (for the countdown and crew lines)
 let voiceGain = null;
+let musicGain = null;          // the theme music and sound effects (sound.js)
 let voiceBuffers = {};         // line number -> decoded audio
 let voiceSource = null;        // the line playing now
 function ensureAudio() {
@@ -335,6 +326,10 @@ function ensureAudio() {
     voiceGain = audio.createGain();
     voiceGain.gain.value = soundOn ? 1 : 0;
     voiceGain.connect(audio.destination);
+    musicGain = audio.createGain();
+    musicGain.gain.value = soundOn ? 1 : 0;
+    musicGain.connect(audio.destination);
+    Sound.attach(audio, musicGain);
   }
   return audio;
 }
@@ -373,27 +368,6 @@ function stopVoice() {
   const source = voiceSource;
   voiceSource = null;                      // so its "ended" doesn't move the show along
   try { source.stop(); } catch (error) { /* already done */ }
-}
-// Short lines on the page (the countdown, the pre-show crew): voiced once on the server, cached.
-const sayCache = new Map();
-function sayBuffer(who, text) {
-  const k = `${who}|${text}`;
-  if (!sayCache.has(k)) {
-    const p = fetchBuffer(`/api/say?who=${encodeURIComponent(who)}&text=${encodeURIComponent(text)}`);
-    p.catch(() => sayCache.delete(k));
-    sayCache.set(k, p);
-  }
-  return sayCache.get(k);
-}
-async function say(who, text) {
-  if (!voicesOn || !audio || !text) return;
-  try {
-    const buffer = await sayBuffer(who, text);
-    const source = audio.createBufferSource();
-    source.buffer = buffer;
-    source.connect(voiceGain);
-    source.start();
-  } catch (error) { /* subtitles only */ }
 }
 
 // ---------- The screens: idle, pre-show, countdown, live, done ----------
@@ -440,6 +414,7 @@ function holdChatter() {
 
 function showIdle() {
   stopIdle();
+  Sound.hold.stop();
   Studio.setMode("idle");
   setShowMode("idle");
   monitorAnim(false);
@@ -529,6 +504,7 @@ function showPreshow(topic) {
   setPlayButtons(false);
   Studio.setMode("preshow");
   setShowMode("preshow");
+  Sound.hold.start();
   setOnAir(false);
   monitorAnim(true, "start");
   const started = Date.now();
@@ -544,7 +520,7 @@ function showPreshow(topic) {
 }
 Studio.onScene((scene) => {
   setNameplate(scene.name, scene.title, scene.who);
-  if (scene.text) { showBubble(scene.who, scene.text, 0.6); say(scene.who, scene.text); }   // most are silent
+  if (scene.text) showBubble(scene.who, scene.text, 0.6);   // most pre-show scenes are silent
   else hideBubble();
 });
 
@@ -552,6 +528,7 @@ const COUNT_CALLS = ["Quiet on set! In three...", "Two...", "One."];
 function countdown() {
   return new Promise((resolve) => {
     clearInterval(preshowTimer);
+    Sound.hold.stop();
     Studio.setMode("countdown");
     setShowMode("countdown");
     monitorAnim(false);
@@ -564,7 +541,7 @@ function countdown() {
       setCenter(String(n), "Quiet on set", true);
       const call = COUNT_CALLS[3 - n];
       showBubble("producer", call);
-      say("producer", call);
+      Sound.beep();
       n -= 1;
       setTimeout(step, 1100);
     };
@@ -583,7 +560,7 @@ function showDone() {
   setLines("", "Lines are open");
   setStatus("That's the board. Ask the desk another one.");
   $("progress").textContent = "Finished";
-  endTimer = setTimeout(() => stinger(() => { setOnAir(false); showEndCard(); }), 900);
+  endTimer = setTimeout(() => stinger(() => { setOnAir(false); showEndCard(); }, Sound.close), 900);
 }
 
 // ---------- Playing a script ----------
@@ -790,7 +767,8 @@ async function play(newScript) {
                    rank_em: "Rank 'em", overrated: "Over/under" };
     $("show-tag").textContent = TAGS[script.format] || "Sideline";
     if (script.sample) setScores({}, true);   // the preview shows the meter from the start
-  });
+  }, Sound.open);
+  await wait(650);                            // a breath after the theme before the first line
   await Promise.race([voicesReady, wait(8000)]);
   setPlayButtons(true);
   playCard();
@@ -873,7 +851,8 @@ function pipelineDone() {
 
 // Red, gold, and navy bars sweep across with the logo. onCovered runs while the screen is
 // covered, so the switch to the show (or the end card) happens behind it.
-function stinger(onCovered) {
+function stinger(onCovered, music) {
+  if (music) music();
   return new Promise((resolve) => {
     if (REDUCED_MOTION) { onCovered(); resolve(); return; }
     const el = $("stinger");
@@ -994,7 +973,6 @@ $("form").addEventListener("submit", (event) => {
   if (!topic) return;
   chosenPlayers = [];
   ensureAudio();
-  if (voicesOn) COUNT_CALLS.forEach((c) => sayBuffer("producer", c).catch(() => {}));   // ready for the countdown
   setStatus("You're on hold. The desk is getting ready (usually about two minutes).");
   askDesk(topic);
   refreshChips();          // new suggestions every time someone asks
