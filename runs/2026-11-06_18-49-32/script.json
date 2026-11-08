@@ -11,9 +11,8 @@
   "estimated_minutes": 3.8,
   "warnings": [],
   "sources": [
-    "Advanced stats: nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
-    "Advanced stats: nflverse, checked against muffed.ai (Data via nflverse)",
-    "NFL stats: nflverse, checked against Sleeper"
+    "Head coach: nflverse, checked against Wikipedia (team page)",
+    "NFL team stats: nflverse, checked against muffed.ai"
   ],
   "receipts": [
     {
@@ -291,7 +290,7 @@
         "value": "6-1",
         "label": "Buffalo Bills · regular-season record",
         "definition": "Wins and losses in regular-season games.",
-        "source": "nflverse, checked against muffed.ai (Data via nflverse)",
+        "source": "nflverse, checked against muffed.ai",
         "asOf": "2026 regular season · through Week 9"
       }
     },
@@ -317,7 +316,7 @@
         "value": "6-2",
         "label": "Denver Broncos · regular-season record",
         "definition": "Wins and losses in regular-season games.",
-        "source": "nflverse, checked against muffed.ai (Data via nflverse)",
+        "source": "nflverse, checked against muffed.ai",
         "asOf": "2026 regular season · through Week 9"
       }
     },
@@ -338,7 +337,7 @@
         "value": "21.5",
         "label": "Denver Broncos · points scored per game",
         "definition": "Points the team scored per regular-season game.",
-        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "source": "nflverse, checked against muffed.ai",
         "asOf": "2026 regular season · through Week 9"
       }
     },
@@ -361,7 +360,7 @@
         "value": "+0.063",
         "label": "Buffalo Bills · defensive EPA allowed per play",
         "definition": "Expected points added per opponent pass or run play. For a defense, lower (below zero) is better.",
-        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "source": "nflverse, checked against muffed.ai",
         "asOf": "2026 regular season · through Week 9"
       }
     },
@@ -408,7 +407,7 @@
         "value": "+0.173",
         "label": "Buffalo Bills · offensive EPA per play",
         "definition": "Expected points added per pass or run play on offense: how much each play raised or lowered the points the team should expect on that drive. Above zero is better than average.",
-        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "source": "nflverse, checked against muffed.ai",
         "asOf": "2026 regular season · through Week 9"
       }
     },
@@ -445,7 +444,7 @@
         "value": "23.9",
         "label": "Kansas City Chiefs · points scored per game",
         "definition": "Points the team scored per regular-season game.",
-        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "source": "nflverse, checked against muffed.ai",
         "asOf": "2026 regular season · through Week 9"
       }
     },
@@ -468,7 +467,7 @@
         "value": "+0.126",
         "label": "Kansas City Chiefs · offensive EPA per play",
         "definition": "Expected points added per pass or run play on offense: how much each play raised or lowered the points the team should expect on that drive. Above zero is better than average.",
-        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "source": "nflverse, checked against muffed.ai",
         "asOf": "2026 regular season · through Week 9"
       }
     },
@@ -490,7 +489,7 @@
         "value": "5-2",
         "label": "Kansas City Chiefs · regular-season record",
         "definition": "Wins and losses in regular-season games.",
-        "source": "nflverse, checked against muffed.ai (Data via nflverse)",
+        "source": "nflverse, checked against muffed.ai",
         "asOf": "2026 regular season · through Week 9"
       }
     },
@@ -511,7 +510,7 @@
         "value": "-0.022",
         "label": "Denver Broncos · offensive EPA per play",
         "definition": "Expected points added per pass or run play on offense: how much each play raised or lowered the points the team should expect on that drive. Above zero is better than average.",
-        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "source": "nflverse, checked against muffed.ai",
         "asOf": "2026 regular season · through Week 9"
       }
     },
@@ -549,7 +548,7 @@
         "value": "11",
         "label": "Denver Broncos · takeaways",
         "definition": "Interceptions plus fumbles recovered from the other team.",
-        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "source": "nflverse, checked against muffed.ai",
         "asOf": "2026 regular season · through Week 9"
       }
     },
@@ -589,7 +588,7 @@
         "value": "33.3",
         "label": "Buffalo Bills · points scored per game",
         "definition": "Points the team scored per regular-season game.",
-        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "source": "nflverse, checked against muffed.ai",
         "asOf": "2026 regular season · through Week 9"
       }
     },
@@ -608,7 +607,7 @@
         "value": "18.7",
         "label": "Kansas City Chiefs · points allowed per game",
         "definition": "Points opponents scored per regular-season game.",
-        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "source": "nflverse, checked against muffed.ai",
         "asOf": "2026 regular season · through Week 9"
       }
     },

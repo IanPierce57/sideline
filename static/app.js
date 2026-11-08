@@ -202,8 +202,17 @@ function countUp(el, value, ms = 650) {
 // A stat from the fact pack: { value, label, definition, source, asOf }.
 function showChyron(stat, sample) {
   Sound.ping();
-  countUp($("stat-value"), stat.value);
-  $("stat-label").textContent = stat.label;
+  // A value can be words ("2 NBA All-Star selections (2025, 2026)"), not just a number
+  // (Nov 8, 2026: it ran off the monitor). The part in parentheses moves to the label line,
+  // and longer values get a smaller font so they always fit.
+  let value = String(stat.value), label = stat.label;
+  const extra = value.match(/^(.+?)\s*\((.+)\)\s*$/);
+  if (extra) { value = extra[1]; label = `${label} · ${extra[2]}`; }
+  const el = $("stat-value");
+  el.style.fontSize = value.length <= 8 ? "" : value.length <= 14 ? "2.8cqw" : value.length <= 24 ? "2.1cqw" : "1.6cqw";
+  el.style.lineHeight = value.length <= 8 ? "" : "1.15";
+  countUp(el, value);
+  $("stat-label").textContent = label;
   $("stat-def").textContent = stat.definition;
   $("stat-foot").textContent = `Source: ${stat.source} · ${stat.asOf}`;
   $("stat-sample").hidden = !sample;
@@ -372,7 +381,7 @@ function whenSoundReady(fn) {
 }
 // If the browser is still blocking sound while a segment plays, the Sound button says how to fix it.
 function updateSoundButton() {
-  const blocked = soundOn && audio && audio.state !== "running" && !paused
+  const blocked = !SHOT && soundOn && audio && audio.state !== "running" && !paused
     && ["preshow", "countdown", "live", "done"].includes(document.documentElement.dataset.mode);
   $("sound").textContent = blocked ? "Click for sound" : soundOn ? "Sound: on" : "Sound: off";
   $("sound").classList.toggle("blocked", !!blocked);
@@ -538,7 +547,7 @@ async function loadUpcoming() {
     upcoming = { games: [], questions: [] };
   }
   refreshChips();
-  if (Studio && !script && !upNextTimer && upcoming.games.length) showUpNext();
+  if (Studio && !script && !upNextTimer && upcoming.games.length && !SHOT) showUpNext();
 }
 
 let preshowTimer = null;
@@ -1194,7 +1203,61 @@ async function loadNews() {
 loadNews();
 setInterval(loadNews, 5 * 60 * 1000);
 
+// Screenshot mode (Nov 8, 2026): ?shot=home, ?shot=preshow, ?shot=live, or ?shot=end freezes the page in that
+// state, using the newest saved segment, so the README and the slides show real screens. It's
+// only on when the link asks for it; the normal page never runs this.
+async function shotMode(kind) {
+  document.documentElement.classList.add("shot");      // graphics shown finished, not mid-animation
+  if (kind === "home") return;                         // the page as you first see it
+  stopIdle();
+  hideBubble();
+  if (kind === "preshow") {
+    showPreshow("Is Cade Cunningham a top-10 player right now?");
+    Monitor.start("verify");
+    setLines("busy", "Patching you through");
+    setPipeline("write", Date.now() - 74000);
+    setRight("WRITING", "Writing the segment");
+    setStatus("You're on hold. The desk is getting ready (usually about two minutes).");
+    return;
+  }
+  const runs = await (await fetch("/api/runs")).json();
+  const saved = await (await fetch(`/api/runs/${encodeURIComponent(runs[0].name)}`)).json();
+  saved.run = runs[0].name;
+  script = saved;
+  cards = buildCards(script.lines);
+  showReceipts(script);
+  Studio.setMode("live");
+  setShowMode("live");
+  setOnAir(true);
+  setLines("live", "On the air");
+  setCenter(script.topic.toUpperCase(), `Line 1 · ${script.caller.name} from ${script.caller.city}`);
+  setRight(FORMATS[script.format] || "DEBATE", `Caller: ${script.caller.name}, ${script.caller.city}`);
+  $("show-tag").textContent = { debate: "Who's better", prediction: "Who wins", buy_or_sell: "Buy or sell",
+                                real_or_not: "Real or not", rank_em: "Rank 'em", overrated: "Over/under" }[script.format] || "Sideline";
+  if (kind === "end") {
+    setScores(script.scores || {}, false);
+    Studio.setMode("done");
+    setShowMode("done");
+    setOnAir(false);
+    setCenter("THAT'S THE BOARD", "Ask the desk another one");
+    setLines("", "Lines are open");
+    showEndCard();
+    return;
+  }
+  // live: the first host line with a stat card, mid-segment, with the score bug as it stood then
+  const at = Math.max(3, cards.findIndex((c, i) => i >= 3 && c.first && c.line.stat && ["royce", "deacon", "lonnie"].includes(c.line.speaker)));
+  const running = {};
+  for (const c of cards.slice(0, at + 1)) if (c.first && c.line.score) Object.assign(running, c.line.score);
+  setScores(running, false);
+  cardIndex = at;
+  playCard();
+  clearTimeout(lineTimer);
+  typeText(cards[at].text, 0);
+  setPlayButtons(true);
+}
+const SHOT = new URLSearchParams(location.search).get("shot");
 showIdle();
 loadUpcoming();
 loadLast();
 loadVoiceStatus();
+if (SHOT) shotMode(SHOT);

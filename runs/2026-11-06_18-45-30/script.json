@@ -13,8 +13,10 @@
   "estimated_minutes": 3.5,
   "warnings": [],
   "sources": [
-    "NBA stats: Sleeper",
-    "NBA stats: nflverse, checked against Sleeper"
+    "Honors: Wikipedia (trusted on its own)",
+    "Honors: Wikipedia, checked against Wikidata",
+    "NBA stats: Sleeper (trusted on its own)",
+    "NBA stats: Sleeper, checked against Wikipedia (career statistics table)"
   ],
   "receipts": [
     {
@@ -258,7 +260,7 @@
         "value": "38.5",
         "label": "Luka Dončić · points per game",
         "definition": "Points scored per game, on average.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2026-27 regular season · season in progress"
       }
     },
@@ -283,7 +285,7 @@
         "value": "33.5",
         "label": "Luka Dončić · points per game",
         "definition": "Points scored per game, on average.",
-        "source": "Sleeper",
+        "source": "Sleeper, checked against Wikipedia (career statistics table)",
         "asOf": "2025-26 regular season · final"
       }
     },
@@ -306,7 +308,7 @@
         "value": "NBA Defensive Player of the Year (2026)",
         "label": "Victor Wembanyama · NBA Defensive Player of the Year",
         "definition": "From his Wikipedia page: NBA Defensive Player of the Year (2026)",
-        "source": "nflverse, checked against Sleeper",
+        "source": "Wikipedia (trusted on its own)",
         "asOf": "career · today"
       }
     },
@@ -328,7 +330,7 @@
         "value": "2-time NBA MVP (2025, 2026)",
         "label": "Shai Gilgeous-Alexander · NBA MVP",
         "definition": "From his Wikipedia page: 2× NBA Most Valuable Player (2025, 2026)",
-        "source": "nflverse, checked against Sleeper",
+        "source": "Wikipedia, checked against Wikidata",
         "asOf": "career · today"
       }
     },
@@ -349,7 +351,7 @@
         "value": "55.8%",
         "label": "Shai Gilgeous-Alexander · true shooting percentage",
         "definition": "Scoring efficiency counting threes and free throws: points / (2 x (shots + 0.44 x free throws)), in percent.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2026-27 regular season · season in progress"
       }
     },
@@ -371,7 +373,7 @@
         "value": "57.0%",
         "label": "Victor Wembanyama · true shooting percentage",
         "definition": "Scoring efficiency counting threes and free throws: points / (2 x (shots + 0.44 x free throws)), in percent.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2026-27 regular season · season in progress"
       }
     },
@@ -406,7 +408,7 @@
         "value": "31.1",
         "label": "Shai Gilgeous-Alexander · points per game",
         "definition": "Points scored per game, on average.",
-        "source": "Sleeper",
+        "source": "Sleeper, checked against Wikipedia (career statistics table)",
         "asOf": "2025-26 regular season · final"
       }
     },
@@ -428,7 +430,7 @@
         "value": "2 NBA All-Star selections (2025, 2026)",
         "label": "Victor Wembanyama · NBA All-Star selection",
         "definition": "From his Wikipedia page: 2× NBA All-Star (2025, 2026)",
-        "source": "nflverse, checked against Sleeper",
+        "source": "Wikipedia (trusted on its own)",
         "asOf": "career · today"
       }
     },
@@ -450,7 +452,7 @@
         "value": "25.0",
         "label": "Victor Wembanyama · points per game",
         "definition": "Points scored per game, on average.",
-        "source": "Sleeper",
+        "source": "Sleeper, checked against Wikipedia (career statistics table)",
         "asOf": "2025-26 regular season · final"
       }
     },
@@ -492,7 +494,7 @@
         "value": "68.5%",
         "label": "Luka Dončić · true shooting percentage",
         "definition": "Scoring efficiency counting threes and free throws: points / (2 x (shots + 0.44 x free throws)), in percent.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2026-27 regular season · season in progress"
       }
     },
@@ -538,7 +540,7 @@
         "value": "29.0",
         "label": "Victor Wembanyama · points per game",
         "definition": "Points scored per game, on average.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2026-27 regular season · season in progress"
       }
     },
@@ -571,7 +573,7 @@
         "value": "30.1",
         "label": "Shai Gilgeous-Alexander · points per game",
         "definition": "Points scored per game, on average.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2026-27 regular season · season in progress"
       }
     },

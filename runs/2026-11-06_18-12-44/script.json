@@ -13,9 +13,15 @@
   "estimated_minutes": 3.9,
   "warnings": [],
   "sources": [
-    "Advanced stats: nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
-    "NFL stats: Sleeper",
-    "NFL stats: nflverse, checked against Sleeper"
+    "Advanced stats: nflverse, checked against muffed.ai",
+    "Games played: Sleeper, checked against nflverse games",
+    "Head coach: nflverse, checked against Wikipedia (team page)",
+    "NFL stats: nflverse, checked against Sleeper",
+    "NFL stats: nflverse, checked against Sleeper (both parts)",
+    "NFL stats: nflverse, checked against Sleeper (games started, every season)",
+    "NFL stats: nflverse, checked against Sleeper (playoff starts)",
+    "NFL team stats: nflverse, checked against muffed.ai",
+    "Team history: nflverse rosters, checked against Sleeper (current team)"
   ],
   "receipts": [
     {
@@ -268,7 +274,7 @@
         "value": "with the Panthers since the 2023 season",
         "label": "Bryce Young · time with his current team",
         "definition": "The season he joined his current team, and his previous team.",
-        "source": "nflverse, checked against Sleeper",
+        "source": "nflverse rosters, checked against Sleeper (current team)",
         "asOf": "career · today"
       }
     },
@@ -312,7 +318,7 @@
         "value": "+0.05",
         "label": "Bryce Young · EPA per dropback",
         "definition": "Expected points added per dropback: how much each pass attempt, sack, or scramble raised or lowered the points his team should expect on that drive.",
-        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "source": "nflverse, checked against muffed.ai",
         "asOf": "2026 regular season · through Week 9"
       }
     },
@@ -334,7 +340,7 @@
         "value": "-0.01",
         "label": "Bryce Young · EPA per dropback",
         "definition": "Expected points added per dropback: how much each pass attempt, sack, or scramble raised or lowered the points his team should expect on that drive.",
-        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "source": "nflverse, checked against muffed.ai",
         "asOf": "2025 regular season · final"
       }
     },
@@ -404,7 +410,7 @@
         "value": "5.49",
         "label": "Bryce Young · adjusted net yards per attempt (ANY/A)",
         "definition": "Passing yards per dropback, with touchdowns worth 20 extra yards, interceptions costing 45, and sack yardage taken off.",
-        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "source": "nflverse, checked against muffed.ai",
         "asOf": "2025 regular season · final"
       }
     },
@@ -447,7 +453,7 @@
         "value": "0-1 (playoffs after the 2025 season)",
         "label": "Bryce Young · playoff record as a starting QB",
         "definition": "Playoff wins and losses in games he started at quarterback.",
-        "source": "nflverse, checked against Sleeper",
+        "source": "nflverse, checked against Sleeper (playoff starts)",
         "asOf": "career playoffs · final"
       }
     },
@@ -469,7 +475,7 @@
         "value": "2023: 16 of 17; 2024: 14 of 17; 2025: 16 of 17; 2026: 7 of 7 so far, through Week 8. In his last 3 full seasons he played every game in 0 and missed a quarter or more of his team's games in 0",
         "label": "Bryce Young · games played by season",
         "definition": "Games he played each regular season, out of his team's games. Missing games can be injury, rest, suspension, or not being on a roster yet; this doesn't say which.",
-        "source": "Sleeper",
+        "source": "Sleeper, checked against nflverse games",
         "asOf": "last 5 full seasons and this one · today"
       }
     },
@@ -490,7 +496,7 @@
         "value": "58.7%",
         "label": "Bryce Young · completion percentage",
         "definition": "Share of passes caught, in percent. (158 completions / 269 pass attempts)",
-        "source": "nflverse, checked against Sleeper",
+        "source": "nflverse, checked against Sleeper (both parts)",
         "asOf": "2026 regular season · through Week 8"
       }
     },
@@ -511,7 +517,7 @@
         "value": "+0.031",
         "label": "Carolina Panthers · offensive EPA per play",
         "definition": "Expected points added per pass or run play on offense: how much each play raised or lowered the points the team should expect on that drive. Above zero is better than average.",
-        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "source": "nflverse, checked against muffed.ai",
         "asOf": "2026 regular season · through Week 9"
       }
     },

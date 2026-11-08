@@ -14,8 +14,10 @@
   "estimated_minutes": 3.5,
   "warnings": [],
   "sources": [
-    "NBA stats: Sleeper",
-    "NBA stats: nflverse, checked against Sleeper"
+    "Games played: Sleeper, checked against Wikipedia (career statistics table)",
+    "Honors: Wikipedia (trusted on its own)",
+    "Injury history: Wikipedia, confirmed by games played, checked against games played those seasons (Sleeper)",
+    "NBA stats: Sleeper (trusted on its own)"
   ],
   "receipts": [
     {
@@ -294,7 +296,7 @@
         "value": "NBA Finals MVP (2024)",
         "label": "Jaylen Brown · NBA Finals MVP",
         "definition": "From his Wikipedia page: NBA Finals MVP (2024)",
-        "source": "nflverse, checked against Sleeper",
+        "source": "Wikipedia (trusted on its own)",
         "asOf": "career · today"
       }
     },
@@ -318,7 +320,7 @@
         "value": "NBA champion (2024)",
         "label": "Jayson Tatum · NBA champion",
         "definition": "From his Wikipedia page: NBA champion (2024)",
-        "source": "nflverse, checked against Sleeper",
+        "source": "Wikipedia (trusted on its own)",
         "asOf": "career · today"
       }
     },
@@ -344,7 +346,7 @@
         "value": "27.0",
         "label": "Jayson Tatum · points per game",
         "definition": "Points scored per game, on average.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2026-27 regular season · season in progress"
       }
     },
@@ -367,7 +369,7 @@
         "value": "2021–22: 76 of 82; 2022–23: 74 of 82; 2023–24: 74 of 82; 2024–25: 72 of 82; 2025–26: 16 of 82; 2026–27: 7 of 8 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
         "label": "Jayson Tatum · games played by season",
         "definition": "Games he played each regular season, out of his team's games. Missing games can be injury, rest, suspension, or not being on a roster yet; this doesn't say which.",
-        "source": "Sleeper",
+        "source": "Sleeper, checked against Wikipedia (career statistics table)",
         "asOf": "last 5 full seasons and this one · today"
       }
     },
@@ -390,7 +392,7 @@
         "value": "ruptured Achilles (major) in the 2024–25 season (he played 72 of 82 games that season; in the seasons since: 16 of 82 in 2025–26, 7 of 8 so far this season (23 games in all))",
         "label": "Jayson Tatum · injury history",
         "definition": "Injuries his Wikipedia article reports, kept only when his games played show real time missed. Games played are for the whole regular season, not a count of games that injury cost him.",
-        "source": "nflverse, checked against Sleeper",
+        "source": "Wikipedia, confirmed by games played, checked against games played those seasons (Sleeper)",
         "asOf": "the last 6 seasons · today"
       }
     },
@@ -435,7 +437,7 @@
         "value": "6 NBA All-Star selections",
         "label": "Jayson Tatum · NBA All-Star selection",
         "definition": "From his Wikipedia page: 6× NBA All-Star (2020–2025)",
-        "source": "nflverse, checked against Sleeper",
+        "source": "Wikipedia (trusted on its own)",
         "asOf": "career · today"
       }
     },
@@ -459,7 +461,7 @@
         "value": "6.9",
         "label": "Jaylen Brown · rebounds per game",
         "definition": "Rebounds grabbed per game, on average.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2026-27 regular season · season in progress"
       }
     },
@@ -490,7 +492,7 @@
         "value": "7.9",
         "label": "Jayson Tatum · assists per game",
         "definition": "Assists per game, on average.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2026-27 regular season · season in progress"
       }
     },
@@ -511,7 +513,7 @@
         "value": "7",
         "label": "Jayson Tatum · games played",
         "definition": "Games he played in.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2026-27 regular season · season in progress"
       }
     },
@@ -530,7 +532,7 @@
         "value": "3.9",
         "label": "Jaylen Brown · assists per game",
         "definition": "Assists per game, on average.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2026-27 regular season · season in progress"
       }
     },

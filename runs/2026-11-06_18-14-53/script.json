@@ -13,9 +13,14 @@
   "estimated_minutes": 4.2,
   "warnings": [],
   "sources": [
-    "Current rosters: Sleeper",
-    "NBA stats: Sleeper",
-    "NBA stats: nflverse, checked against Sleeper"
+    "Current rosters: Sleeper, checked against Wikipedia (infobox)",
+    "Games played: Sleeper, checked against Wikipedia (career statistics table)",
+    "Honors: Wikipedia (trusted on its own)",
+    "Honors: Wikipedia, checked against Wikidata",
+    "Injury history: Wikipedia, confirmed by games played, checked against games played those seasons (Sleeper)",
+    "NBA stats: Sleeper (trusted on its own)",
+    "NBA team stats: Sleeper and Wikipedia, checked against Wikipedia game log (every game)",
+    "NBA team stats: Sleeper and Wikipedia, checked against Wikipedia standings (every team's record)"
   ],
   "receipts": [
     {
@@ -304,7 +309,7 @@
         "value": "53.8%",
         "label": "Jalen Brunson · true shooting percentage",
         "definition": "Scoring efficiency counting threes and free throws: points / (2 x (shots + 0.44 x free throws)), in percent.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2026-27 regular season · season in progress"
       }
     },
@@ -327,7 +332,7 @@
         "value": "8",
         "label": "Jalen Brunson · games played",
         "definition": "Games he played in.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2026-27 regular season · season in progress"
       }
     },
@@ -351,7 +356,7 @@
         "value": "NBA champion",
         "label": "Jalen Brunson · NBA champion",
         "definition": "From his Wikipedia page: NBA champion ()",
-        "source": "nflverse, checked against Sleeper",
+        "source": "Wikipedia (trusted on its own)",
         "asOf": "career · today"
       }
     },
@@ -384,7 +389,7 @@
         "value": "NBA Finals MVP (2026)",
         "label": "Jalen Brunson · NBA Finals MVP",
         "definition": "From his Wikipedia page: NBA Finals MVP (2026)",
-        "source": "nflverse, checked against Sleeper",
+        "source": "Wikipedia, checked against Wikidata",
         "asOf": "career · today"
       }
     },
@@ -420,7 +425,7 @@
         "value": "2021–22: 79 of 82; 2022–23: 68 of 82; 2023–24: 76 of 82; 2024–25: 65 of 82; 2025–26: 74 of 82; 2026–27: 8 of 8 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 0",
         "label": "Jalen Brunson · games played by season",
         "definition": "Games he played each regular season, out of his team's games. Missing games can be injury, rest, suspension, or not being on a roster yet; this doesn't say which.",
-        "source": "Sleeper",
+        "source": "Sleeper, checked against Wikipedia (career statistics table)",
         "asOf": "last 5 full seasons and this one · today"
       }
     },
@@ -443,7 +448,7 @@
         "value": "2021–22: 65 of 82; 2022–23: 66 of 82; 2023–24: 70 of 82; 2024–25: 50 of 82; 2025–26: 64 of 82; 2026–27: 8 of 9 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
         "label": "Luka Dončić · games played by season",
         "definition": "Games he played each regular season, out of his team's games. Missing games can be injury, rest, suspension, or not being on a roster yet; this doesn't say which.",
-        "source": "Sleeper",
+        "source": "Sleeper, checked against Wikipedia (career statistics table)",
         "asOf": "last 5 full seasons and this one · today"
       }
     },
@@ -498,7 +503,7 @@
         "value": "9.3",
         "label": "Nikola Jokić · assists per game",
         "definition": "Assists per game, on average.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2026-27 regular season · season in progress"
       }
     },
@@ -520,7 +525,7 @@
         "value": "5.1",
         "label": "Jalen Brunson · assists per game",
         "definition": "Assists per game, on average.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2026-27 regular season · season in progress"
       }
     },
@@ -578,7 +583,7 @@
         "value": "110.0 points scored and 105.1 allowed per game (+4.9 differential)",
         "label": "New York Knicks · points scored and allowed per game",
         "definition": "Average points the team scores and gives up per game; the difference is its point differential.",
-        "source": "nflverse, checked against Sleeper",
+        "source": "Sleeper and Wikipedia, checked against Wikipedia game log (every game)",
         "asOf": "2026–27 regular season · through Nov. 4"
       }
     },
@@ -600,7 +605,7 @@
         "value": "4-4",
         "label": "New York Knicks · record",
         "definition": "Wins and losses this regular season.",
-        "source": "nflverse, checked against Sleeper",
+        "source": "Sleeper and Wikipedia, checked against Wikipedia game log (every game)",
         "asOf": "2026–27 regular season · through Nov. 4"
       }
     },

@@ -569,15 +569,28 @@ class TopicProblem(Exception):
 
 
 def _source_line(fact: dict) -> str:
-    """One plain line for the end card's source list."""
-    checked = str(fact.get("checked_against") or "")
-    if fact["stat"] == "current_team":
-        return "Current rosters: Sleeper" + (", checked against nflverse" if "nflverse" in checked else "")
-    if "muffed" in checked:
-        return "Advanced stats: nflverse, checked against muffed.ai (" + fact.get("credit", "Data via nflverse") + ")"
-    if fact["source"] == "Sleeper":
-        return f"{fact['league']} stats: Sleeper"
-    return f"{fact['league']} stats: nflverse, checked against Sleeper"
+    """One plain line for the stat card and the end card: where the fact came from, and what it
+    was checked against. Read from the fact itself (Nov 8, 2026: this used to fall back to
+    "nflverse, checked against Sleeper" for everything else, including Wikipedia honors)."""
+    source = str(fact.get("source") or "").strip() or "the fact pack"
+    checked = str(fact.get("checked_against") or "").strip()
+    stat = fact.get("stat", "")
+    kind = {"current_team": "Current rosters", "tenure": "Team history", "availability": "Games played",
+            "injury_history": "Injury history", "injuries": "Injury report", "head_coach": "Head coach",
+            "game": "The game"}.get(stat)
+    if not kind:
+        from pipeline import catalog
+        team = str(fact.get("subject_key", "")).startswith(("nflteam", "nbateam"))
+        kind = ("Honors" if fact.get("honor") or stat.startswith("honor")
+                else f"{fact.get('league', '')} team stats".strip() if team
+                else "Advanced stats" if stat in catalog.NFL_ADVANCED
+                else f"{fact.get('league', '')} stats".strip())
+    if not checked or checked.split(" (")[0].lower() == source.lower():
+        detail = " (trusted on its own)" if "trusted on its own" in checked else ""
+        return f"{kind}: {source}{detail}"
+    if "trusted on its own" in checked:
+        return f"{kind}: {source} (trusted on its own)"
+    return f"{kind}: {source}, checked against {checked}"
 
 
 def _chyron(fact: dict) -> dict:

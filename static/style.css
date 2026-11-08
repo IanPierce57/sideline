@@ -653,3 +653,6 @@ body::before {
   outline: 3px solid var(--gold); outline-offset: 3px;
 }
 .controls { flex-wrap: wrap; row-gap: 10px; }
+
+/* Screenshot mode (?shot=...): every graphic in its finished state */
+:root.shot *, :root.shot *::before, :root.shot *::after { animation-duration: 0s !important; animation-delay: 0s !important; transition: none !important; }

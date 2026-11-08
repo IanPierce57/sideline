@@ -13,8 +13,12 @@
   "estimated_minutes": 3.4,
   "warnings": [],
   "sources": [
-    "NBA stats: Sleeper",
-    "NBA stats: nflverse, checked against Sleeper"
+    "Games played: Sleeper, checked against Wikipedia (career statistics table)",
+    "Honors: Wikipedia (trusted on its own)",
+    "NBA stats: Sleeper (trusted on its own)",
+    "NBA stats: Sleeper, checked against Wikipedia (career statistics table)",
+    "NBA team stats: Sleeper and Wikipedia, checked against Wikipedia game log (every game)",
+    "NBA team stats: Sleeper and Wikipedia, checked against Wikipedia standings (every team's record)"
   ],
   "receipts": [
     {
@@ -343,7 +347,7 @@
         "value": "24.0",
         "label": "Cade Cunningham · points per game",
         "definition": "Points scored per game, on average.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2026-27 regular season · season in progress"
       }
     },
@@ -375,7 +379,7 @@
         "value": "2 NBA All-Star selections (2025, 2026)",
         "label": "Cade Cunningham · NBA All-Star selection",
         "definition": "From his Wikipedia page: 2× NBA All-Star (2025, 2026)",
-        "source": "nflverse, checked against Sleeper",
+        "source": "Wikipedia (trusted on its own)",
         "asOf": "career · today"
       }
     },
@@ -409,7 +413,7 @@
         "value": "58.5%",
         "label": "Cade Cunningham · true shooting percentage",
         "definition": "Scoring efficiency counting threes and free throws: points / (2 x (shots + 0.44 x free throws)), in percent.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2026-27 regular season · season in progress"
       }
     },
@@ -438,7 +442,7 @@
         "value": "56.2%",
         "label": "Shai Gilgeous-Alexander · true shooting percentage",
         "definition": "Scoring efficiency counting threes and free throws: points / (2 x (shots + 0.44 x free throws)), in percent.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2026-27 regular season · season in progress"
       }
     },
@@ -486,7 +490,7 @@
         "value": "56.4%",
         "label": "Cade Cunningham · true shooting percentage",
         "definition": "Scoring efficiency counting threes and free throws: points / (2 x (shots + 0.44 x free throws)), in percent.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2025-26 regular season · final"
       }
     },
@@ -513,7 +517,7 @@
         "value": "9.9",
         "label": "Cade Cunningham · assists per game",
         "definition": "Assists per game, on average.",
-        "source": "Sleeper",
+        "source": "Sleeper, checked against Wikipedia (career statistics table)",
         "asOf": "2025-26 regular season · final"
       }
     },
@@ -542,7 +546,7 @@
         "value": "7.6",
         "label": "Cade Cunningham · assists per game",
         "definition": "Assists per game, on average.",
-        "source": "Sleeper",
+        "source": "Sleeper (trusted on its own)",
         "asOf": "2026-27 regular season · season in progress"
       }
     },
@@ -576,7 +580,7 @@
         "value": "23.9",
         "label": "Cade Cunningham · points per game",
         "definition": "Points scored per game, on average.",
-        "source": "Sleeper",
+        "source": "Sleeper, checked against Wikipedia (career statistics table)",
         "asOf": "2025-26 regular season · final"
       }
     },
@@ -633,7 +637,7 @@
         "value": "2021–22: 64 of 82; 2022–23: 12 of 82; 2023–24: 62 of 82; 2024–25: 70 of 82; 2025–26: 64 of 82; 2026–27: 8 of 8 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
         "label": "Cade Cunningham · games played by season",
         "definition": "Games he played each regular season, out of his team's games. Missing games can be injury, rest, suspension, or not being on a roster yet; this doesn't say which.",
-        "source": "Sleeper",
+        "source": "Sleeper, checked against Wikipedia (career statistics table)",
         "asOf": "last 5 full seasons and this one · today"
       }
     },
@@ -663,7 +667,7 @@
         "value": "2021–22: 65 of 82; 2022–23: 66 of 82; 2023–24: 70 of 82; 2024–25: 50 of 82; 2025–26: 64 of 82; 2026–27: 9 of 10 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
         "label": "Luka Dončić · games played by season",
         "definition": "Games he played each regular season, out of his team's games. Missing games can be injury, rest, suspension, or not being on a roster yet; this doesn't say which.",
-        "source": "Sleeper",
+        "source": "Sleeper, checked against Wikipedia (career statistics table)",
         "asOf": "last 5 full seasons and this one · today"
       }
     },
@@ -727,7 +731,7 @@
         "value": "2 NBA All-Star selections (2025, 2026)",
         "label": "Victor Wembanyama · NBA All-Star selection",
         "definition": "From his Wikipedia page: 2× NBA All-Star (2025, 2026)",
-        "source": "nflverse, checked against Sleeper",
+        "source": "Wikipedia (trusted on its own)",
         "asOf": "career · today"
       }
     },
@@ -818,13 +822,6 @@
         "deacon": 53,
         "lonnie": 55
       },
-      "stat": {
-        "value": "2023–24: 71 of 82; 2024–25: 46 of 82; 2025–26: 64 of 82; 2026–27: 9 of 9 so far. In his last 3 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
-        "label": "Victor Wembanyama · games played by season",
-        "definition": "Games he played each regular season, out of his team's games. Missing games can be injury, rest, suspension, or not being on a roster yet; this doesn't say which.",
-        "source": "Sleeper",
-        "asOf": "last 5 full seasons and this one · today"
-      },
       "cards": [
         {
           "text": "On the scorecard, tonight goes to Royce.",
@@ -834,7 +831,14 @@
           "text": "His strongest case was that Cade held up on availability: he played 64 games last season, the same as Luka and Wemby, and one fewer than Jokic's 65, so that gap never opened.",
           "audio": "23-1.mp3"
         }
-      ]
+      ],
+      "stat": {
+        "value": "2023–24: 71 of 82; 2024–25: 46 of 82; 2025–26: 64 of 82; 2026–27: 9 of 9 so far. In his last 3 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
+        "label": "Victor Wembanyama · games played by season",
+        "definition": "Games he played each regular season, out of his team's games. Missing games can be injury, rest, suspension, or not being on a roster yet; this doesn't say which.",
+        "source": "Sleeper, checked against Wikipedia (career statistics table)",
+        "asOf": "last 5 full seasons and this one · today"
+      }
     },
     {
       "line": 24,

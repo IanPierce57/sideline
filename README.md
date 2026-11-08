@@ -2,6 +2,14 @@
 
 Type an NBA or NFL question, and a few minutes later a fictional call-in debate show airs it: a caller asks, three AI hosts (Royce, Deacon, Lonnie) argue it with double-checked stats while Hal moderates, a blind panel of AI judges scores every argument, and the whole thing plays in a pixel-art studio with voices, subtitles, theme music, and broadcast graphics. The full spec is in [BRIEF.md](BRIEF.md); the characters are in [characters/](characters/); readable transcripts of saved segments are in [outputs/](outputs/).
 
+| On the air | The verdict |
+| --- | --- |
+| ![A live segment: Royce talking, a stat card on the right monitor, the score bar on top](docs/screenshots/03-live.png) | ![The end card: the winner's argument and key stats](docs/screenshots/04-end-card.png) |
+| **While it's made:** the pre-show, a fact-check animation, and the progress bar | **The whole page** |
+| ![The pre-show](docs/screenshots/02-preshow.png) | ![The full page](docs/screenshots/05-full-page.png) |
+
+More screenshots are in [docs/screenshots/](docs/screenshots/).
+
 ## How a segment is made (about 1½ to 2 minutes)
 
 | Step | What happens |
