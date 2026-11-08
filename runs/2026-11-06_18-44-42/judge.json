@@ -1,0 +1,352 @@
+{
+  "arguments": {
+    "1": {
+      "host": "royce",
+      "score": 56.0,
+      "base": 56.0,
+      "dropped": false,
+      "lines": [
+        3
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Cites real 27.4 ppg and 50.4% on 7 games, but the team record is about the team and the sample is tiny; no argument for why it lasts. / Cites 27.4 ppg and 50.4% on 7 games, which fits the claim; the team record is about the wrong subject, and the 7-game sample is small. / Cites 27.4 ppg and 50.4% on 7 games, which is a small sample. The team record says little about him, and nothing shows the scoring will last.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 2.0,
+        "rebuttal": null,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "2": {
+      "host": "deacon",
+      "score": 72.7,
+      "base": 72.7,
+      "dropped": false,
+      "lines": [
+        4
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        1
+      ],
+      "note": "Uses prior seasons' scoring and the 7-game sample to challenge whether the jump is a trend, directly hitting Host 1's thin sample. / Compares this year's 7 games with 19.7 and 12.5 in prior seasons to argue the jump is too sudden to trust; it answers the small-sample weakness directly. / Uses 19.7 and 12.5 ppg history against a 7-game sample. This goes straight at the sustainability of the 27.4.",
+      "ratings": {
+        "evidence": 3.33,
+        "reasoning": 3.33,
+        "rebuttal": 4.0,
+        "impact": 4.0,
+        "clarity": 4.0
+      }
+    },
+    "3": {
+      "host": "lonnie",
+      "score": 74.0,
+      "base": 74.0,
+      "dropped": false,
+      "lines": [
+        5
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        2
+      ],
+      "note": "Minutes jump from 22.6 to 30.7 explains part of scoring rise, but it explains the jump rather than whether it's sustainable, only partly answering Host 2. / Minutes up from 22.6 to 30.7 is a relevant like-for-like comparison that explains the scoring jump, but it partly concedes Host 1's point instead of defending 'real'. / Minutes rose from 22.6 to 30.7, which is a like-for-like explanation for part of the scoring jump. It partly concedes Host 2's point rather than answering the sustainability claim.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 3.67,
+        "rebuttal": 3.0,
+        "impact": 4.0,
+        "clarity": 4.33
+      }
+    },
+    "4": {
+      "host": "deacon",
+      "score": 78.0,
+      "base": 78.0,
+      "dropped": false,
+      "lines": [
+        6
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        3
+      ],
+      "note": "Splits volume from durability and uses the games-played history to question sustaining 30 minutes; F3 doesn't say the misses were injuries. / Separates volume from durability and uses the games-played history (missed a quarter or more in 4 of 5 seasons) to question lasting at 30 minutes. / Separates volume from lasting and uses the games-missed history (F3) to question durability of 30 minutes a night. The cause of the missed games is unspecified.",
+      "ratings": {
+        "evidence": 3.67,
+        "reasoning": 4.0,
+        "rebuttal": 4.0,
+        "impact": 4.0,
+        "clarity": 4.0
+      }
+    },
+    "5": {
+      "host": "royce",
+      "score": 50.0,
+      "base": 50.0,
+      "dropped": false,
+      "lines": [
+        7
+      ],
+      "rebuttal": 2.0,
+      "answers": [
+        4
+      ],
+      "note": "Seven of eight games doesn't answer a multi-year availability history, and the team's standing doesn't bear on whether he's for real. / Says he has played 7 of 8 so far, which doesn't answer the multi-year history; the team standing is about the team, not him. / Playing 7 of 8 games doesn't answer the multi-season missed-games history. Standings position is team-level and doesn't bear on his durability.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 2.0,
+        "rebuttal": 2.0,
+        "impact": 3.0,
+        "clarity": 3.0
+      }
+    },
+    "6": {
+      "host": "lonnie",
+      "score": 66.5,
+      "base": 61.5,
+      "dropped": true,
+      "lines": [
+        8
+      ],
+      "rebuttal": 2.5,
+      "answers": [
+        4,
+        5
+      ],
+      "note": "Injuries to Pippen and Stewart and his point guard listing support a role, but that also implies the role depends on others being out, so it's a partial answer. / Uses injured teammates plus his point guard role to argue the job is his, though it could cut the other way (the role is temporary). / Injuries to Pippen and Stewart plus his listed point guard role suggest a role-driven jump. It is mostly its own new point rather than an answer to the durability issue.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.0,
+        "rebuttal": 2.5,
+        "impact": 4.0,
+        "clarity": 4.0
+      }
+    },
+    "7": {
+      "host": "royce",
+      "score": 52.9,
+      "base": 52.9,
+      "dropped": false,
+      "lines": [
+        9
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "5.3 assists shows playmaking beyond scoring, but the coach-trust claim is asserted without support. / Cites 5.3 assists to show he isn't only shooting; relevant but a thin single stat. / 5.3 assists shows he's not only scoring, but the claim that the coach trusts him is asserted with little behind it.",
+      "ratings": {
+        "evidence": 2.33,
+        "reasoning": 2.33,
+        "rebuttal": null,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "8": {
+      "host": "deacon",
+      "score": 78.0,
+      "base": 78.0,
+      "dropped": false,
+      "lines": [
+        10
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        7
+      ],
+      "note": "Compares 2.2 assist-to-turnover with last year's 3.1, which is like for like though small samples, and directly challenges the playmaking point. / Uses the assist-to-turnover ratio falling from 3.1 to 2.2 to push back on the passing claim; the small samples on both sides are not addressed. / Compares 2.2 to 3.1 assist-to-turnover directly, which rebuts the playmaking claim. The comparison is 7 games against 15, so the sample is small.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 4.0,
+        "rebuttal": 4.0,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "9": {
+      "host": "royce",
+      "score": 47.0,
+      "base": 42.0,
+      "dropped": true,
+      "lines": [
+        11
+      ],
+      "rebuttal": 2.0,
+      "answers": [
+        8
+      ],
+      "note": "Dismisses last year's ratio as 15 games, which is a fair sample point, but it's thin and snarky and doesn't address the drop. / Notes last year was only 15 games, a fair small-sample point, but then makes a quip and does not engage the decline. / Notes last year's sample was 15 games, a fair point, but mostly a jab. It leaves the 2.2 versus 3.1 gap unanswered.",
+      "ratings": {
+        "evidence": 2.0,
+        "reasoning": 2.0,
+        "rebuttal": 2.0,
+        "impact": 2.0,
+        "clarity": 3.0
+      }
+    },
+    "10": {
+      "host": "lonnie",
+      "score": 68.0,
+      "base": 63.0,
+      "dropped": true,
+      "lines": [
+        12
+      ],
+      "rebuttal": 3.3333333333333335,
+      "answers": [
+        8
+      ],
+      "note": "Higher minutes plausibly explain a ratio dip, but it doesn't show the ratio is fine and mostly speculates. / Argues that more minutes and usage naturally lower the ratio, which answers the point head-on, though it's asserted without data. / Argues more minutes naturally lower the ratio, which is plausible but unproven. The rhetorical question dodges whether the ratio drop matters.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.0,
+        "rebuttal": 3.33,
+        "impact": 3.0,
+        "clarity": 3.67
+      }
+    },
+    "11": {
+      "host": "deacon",
+      "score": 80.9,
+      "base": 80.9,
+      "dropped": false,
+      "lines": [
+        13
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Asks whether 62.6 TS this year matches 64.3 over 70 games, a good like-for-like comparison, though it effectively concedes efficiency. / Frames the key question around true shooting, comparing 62.6% over 7 games with 64.3% over 70 games. / Offers a clean true-shooting comparison of 62.6 versus 64.3 over 70 games, which is relevant and like for like.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 4.0,
+        "rebuttal": null,
+        "impact": 4.0,
+        "clarity": 4.33
+      }
+    },
+    "12": {
+      "host": "royce",
+      "score": 82.0,
+      "base": 82.0,
+      "dropped": false,
+      "lines": [
+        14
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        11
+      ],
+      "note": "Turns Host 2's own numbers into evidence the shooting is sustained, a clean head-on answer. / Turns Host 1's own numbers around: 62.6 vs 64.3 is similar efficiency, so the shot holds, which directly rebuts the intended point. / Reads the same two true-shooting numbers as showing stable efficiency. That turns Host 2's evidence on him and targets the shooting claim.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 4.0,
+        "rebuttal": 4.0,
+        "impact": 4.0,
+        "clarity": 5.0
+      }
+    },
+    "13": {
+      "host": "deacon",
+      "score": 75.0,
+      "base": 75.0,
+      "dropped": false,
+      "lines": [
+        15
+      ],
+      "rebuttal": 3.3333333333333335,
+      "answers": [
+        12
+      ],
+      "note": "Concedes the shot and narrows the dispute to the 27-point volume, citing 19.7 and 12.5 for the jump, which is a clear specific claim. / Concedes the shot and narrows the dispute to the scoring volume against 19.7 and 12.5; it is specific and honest but leaves the open claim unproven. / Concedes the shot and narrows the dispute to the 27 ppg volume. The jump from 19.7 and 12.5 is already on the table.",
+      "ratings": {
+        "evidence": 3.67,
+        "reasoning": 3.67,
+        "rebuttal": 3.33,
+        "impact": 4.0,
+        "clarity": 5.0
+      }
+    },
+    "14": {
+      "host": "lonnie",
+      "score": 51.3,
+      "base": 51.3,
+      "dropped": false,
+      "lines": [
+        16
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        13
+      ],
+      "note": "Says more shots is the role, which is relevant to the volume dispute, but offers no new facts and mostly repeats an earlier point. / Says more shots per night comes with the role, which bears on the jump; no new facts are cited, and the speaker is talking to a host on their own side. / Argues more shots is the role, and ties the volume to the job. It cites no new facts and mostly echoes the earlier minutes point.",
+      "ratings": {
+        "evidence": 1.0,
+        "reasoning": 3.0,
+        "rebuttal": 3.0,
+        "impact": 4.0,
+        "clarity": 3.67
+      }
+    }
+  },
+  "hosts": {
+    "royce": {
+      "score": 57.6,
+      "arguments": 5,
+      "rebuttal": 2.67
+    },
+    "deacon": {
+      "score": 76.9,
+      "arguments": 5,
+      "rebuttal": 3.83
+    },
+    "lonnie": {
+      "score": 65.0,
+      "arguments": 4,
+      "rebuttal": 2.96
+    }
+  },
+  "ranked": [
+    "deacon",
+    "lonnie",
+    "royce"
+  ],
+  "winner": "deacon",
+  "tie": false,
+  "tiebreak": false,
+  "close_call": false,
+  "order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "blind_labels": [
+    {
+      "royce": "Host 1",
+      "deacon": "Host 2",
+      "lonnie": "Host 3"
+    },
+    {
+      "deacon": "Host 1",
+      "lonnie": "Host 2",
+      "royce": "Host 3"
+    },
+    {
+      "royce": "Host 1",
+      "deacon": "Host 2",
+      "lonnie": "Host 3"
+    }
+  ]
+}

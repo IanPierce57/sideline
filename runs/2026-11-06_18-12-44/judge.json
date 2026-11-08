@@ -1,0 +1,375 @@
+{
+  "arguments": {
+    "1": {
+      "host": "lonnie",
+      "score": 48.0,
+      "base": 48.0,
+      "dropped": false,
+      "lines": [
+        3
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Defines franchise and cites games played and team scoring, but team offense stats and tenure say little about him individually; the 'played all seven' claim fits F3. / Defines franchise and cites tenure, games played and team scoring, which are mostly team results and not about his own play; the claim that he is the guy to stop shopping for is weakly supported. / Uses team-level facts (offense scoring, tenure, games played) to claim franchise status; team results only weakly speak to the player and F2/F3 show tenure and availability, not quality.",
+      "ratings": {
+        "evidence": 2.0,
+        "reasoning": 2.0,
+        "rebuttal": null,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "2": {
+      "host": "royce",
+      "score": 56.7,
+      "base": 56.7,
+      "dropped": false,
+      "lines": [
+        4
+      ],
+      "rebuttal": 3.3333333333333335,
+      "answers": [
+        1
+      ],
+      "note": "Fairly points out team stats mask the QB and offers his own totals, but raw totals with a pitcher metaphor don't show quality; 13-5 TD-INT is mildly supportive. / Points out that team numbers are not his own and offers his raw stats, but the totals lack context and the 13-to-5 ratio alone doesn't show franchise level; the pitcher metaphor adds nothing. / Pivots to his own passing totals (F7-F9) which are relevant, but 13 TD to 5 INT in seven games is small and the pitcher metaphor adds little; no benchmark offered.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 2.0,
+        "rebuttal": 3.33,
+        "impact": 3.0,
+        "clarity": 3.0
+      }
+    },
+    "3": {
+      "host": "deacon",
+      "score": 81.3,
+      "base": 81.3,
+      "dropped": false,
+      "lines": [
+        5
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        2
+      ],
+      "note": "Counters raw totals with EPA per dropback rank (17th of 35) and ties it directly to the franchise bar of top of the pack. / Counters raw totals with EPA per dropback ranked 17th of 35, a like-for-like efficiency measure, and ties middle-of-the-pack to the franchise bar. / Counters raw totals with efficiency (EPA 17th of 35, F11) and ties it directly to the franchise bar.",
+      "ratings": {
+        "evidence": 3.67,
+        "reasoning": 4.0,
+        "rebuttal": 4.0,
+        "impact": 4.67,
+        "clarity": 5.0
+      }
+    },
+    "4": {
+      "host": "royce",
+      "score": 71.0,
+      "base": 71.0,
+      "dropped": false,
+      "lines": [
+        6
+      ],
+      "rebuttal": 3.3333333333333335,
+      "answers": [
+        3
+      ],
+      "note": "Uses last year's 29th of 38 against this year's 17th of 35 to argue trajectory, which is like-for-like EPA, but it only partly answers the 'middle of the pack' point. / Uses the 2025 and 2026 EPA ranks to show a big jump, which is relevant, but trajectory over one year doesn't show he's already a franchise QB. / Uses F13 vs F11 to show a big year-over-year jump; trajectory is real but doesn't prove he is a franchise QB now.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 3.0,
+        "rebuttal": 3.33,
+        "impact": 3.67,
+        "clarity": 4.0
+      }
+    },
+    "5": {
+      "host": "deacon",
+      "score": 52.3,
+      "base": 52.3,
+      "dropped": false,
+      "lines": [
+        7
+      ],
+      "rebuttal": 3.6666666666666665,
+      "answers": [
+        4
+      ],
+      "note": "Short pushback that climbing isn't arriving and asks for a bar; no new facts but a fair challenge. / Cites no new facts, but cleanly separates climbing from arriving and presses for a bar. / Says climbing isn't arriving and demands a bar; a pointed challenge but no new facts.",
+      "ratings": {
+        "evidence": 1.0,
+        "reasoning": 2.67,
+        "rebuttal": 3.67,
+        "impact": 3.33,
+        "clarity": 4.0
+      }
+    },
+    "6": {
+      "host": "royce",
+      "score": 44.0,
+      "base": 44.0,
+      "dropped": false,
+      "lines": [
+        8
+      ],
+      "rebuttal": 2.6666666666666665,
+      "answers": [
+        5
+      ],
+      "note": "Gives a clear bar of top half, but with no support for why that's the right standard. / Gives a bar of top half, which is a clear answer but unsupported and it loosens the standard. / Gives a bar of top half without support, and it conflicts with his own claim that he is arriving.",
+      "ratings": {
+        "evidence": 1.0,
+        "reasoning": 2.0,
+        "rebuttal": 2.67,
+        "impact": 3.0,
+        "clarity": 4.33
+      }
+    },
+    "7": {
+      "host": "deacon",
+      "score": 56.3,
+      "base": 56.3,
+      "dropped": false,
+      "lines": [
+        9
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        6
+      ],
+      "note": "Shows the top-half bar would make half the league franchise QBs, which exposes the weak standard. / Shows that a top-half bar would make half the league franchise quarterbacks, which is a sharp challenge to the definition. / Shows that a top-half bar would make half the league franchise QBs; a fair reductio but no facts.",
+      "ratings": {
+        "evidence": 1.0,
+        "reasoning": 3.0,
+        "rebuttal": 4.0,
+        "impact": 3.33,
+        "clarity": 4.33
+      }
+    },
+    "8": {
+      "host": "royce",
+      "score": 43.3,
+      "base": 38.3,
+      "dropped": true,
+      "lines": [
+        10
+      ],
+      "rebuttal": 2.3333333333333335,
+      "answers": [
+        7
+      ],
+      "note": "Deflects to half the league having a problem and asserts Carolina isn't in it without support. / Dodges the point with a quip that doesn't defend the bar, and Carolina's place has no support. / Dodges the reductio with an assertion that half the league has a problem and Carolina isn't in it.",
+      "ratings": {
+        "evidence": 1.0,
+        "reasoning": 2.0,
+        "rebuttal": 2.33,
+        "impact": 2.0,
+        "clarity": 3.33
+      }
+    },
+    "9": {
+      "host": "lonnie",
+      "score": 72.7,
+      "base": 72.7,
+      "dropped": false,
+      "lines": [
+        11
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        3,
+        5
+      ],
+      "note": "Uses ANY/A improvement from 5.49 to 6.23 across seasons to support trajectory, a comparable measure. / Uses ANY/A, 5.49 to 6.23, to show improvement, which is relevant, though it compares different sample sizes. / ANY/A rising from 5.49 to 6.23 (F18, F12) is like-for-like, but it is a question and leaves the implication to the listener.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 3.67,
+        "rebuttal": 3.0,
+        "impact": 3.67,
+        "clarity": 4.0
+      }
+    },
+    "10": {
+      "host": "lonnie",
+      "score": 51.1,
+      "base": 51.1,
+      "dropped": false,
+      "lines": [
+        13
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Presses Host 2 to separate current level from trajectory, which sharpens the dispute. / Frames the key issue of current level versus trajectory, but it adds no new facts. / Clearly separates the 'where he is' versus 'where he's headed' question, which is useful framing but without facts.",
+      "ratings": {
+        "evidence": 1.0,
+        "reasoning": 3.0,
+        "rebuttal": null,
+        "impact": 4.0,
+        "clarity": 4.67
+      }
+    },
+    "11": {
+      "host": "deacon",
+      "score": 62.3,
+      "base": 62.3,
+      "dropped": false,
+      "lines": [
+        14
+      ],
+      "rebuttal": 3.3333333333333335,
+      "answers": [
+        9,
+        10
+      ],
+      "note": "Picks present level and adds playoff 0-1 and 3-4 record, which are team-outcome stats with tiny samples that say little about him individually. / Answers that his case is where he is now and adds the 0-1 playoff and 3-4 records, but those are team results and a one-game sample. / Answers where he is with average, then cites 0-1 playoffs and 3-4 record, which are small samples and team-heavy.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 2.33,
+        "rebuttal": 3.33,
+        "impact": 4.0,
+        "clarity": 4.0
+      }
+    },
+    "12": {
+      "host": "royce",
+      "score": 67.0,
+      "base": 67.0,
+      "dropped": false,
+      "lines": [
+        15
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        11
+      ],
+      "note": "Correctly notes one playoff start is too small a sample; the availability claim is supported by F3 but availability isn't quality. / Rightly dismisses a one-game playoff sample and notes availability, but games played don't show he got them to January, and the 14-game 2024 season is a stretch. / Rightly flags one playoff start as too small a sample (F6), but the games-played claim is availability and says nothing of quality, and the 'got them to January' claim goes beyond the facts.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.0,
+        "rebuttal": 4.0,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "13": {
+      "host": "deacon",
+      "score": 47.7,
+      "base": 47.7,
+      "dropped": false,
+      "lines": [
+        16
+      ],
+      "rebuttal": 2.3333333333333335,
+      "answers": [
+        12
+      ],
+      "note": "Concedes the playoff point, then uses completion rate with a speculated deep-throw cause not backed by data. / Concedes the playoff point and offers completion rate, but the guess that it comes from deep throwing is speculation. / Concedes the playoff point, then uses 58.7% completion (F10) with a speculative deep-throw explanation.",
+      "ratings": {
+        "evidence": 2.0,
+        "reasoning": 2.0,
+        "rebuttal": 2.33,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "14": {
+      "host": "lonnie",
+      "score": 61.7,
+      "base": 56.7,
+      "dropped": true,
+      "lines": [
+        17
+      ],
+      "rebuttal": 3.3333333333333335,
+      "answers": [
+        13
+      ],
+      "note": "Argues low completion rate is role-driven, but the claim of deep throwing is not in the facts and team EPA rank doesn't isolate him. / Reframes completion rate as role and cites team offensive EPA, but this is a team metric and the deep-throw claim isn't supported. / Claims low completion is role-driven and cites team EPA rank (F16), but no fact shows he throws deep and team EPA is not his own.",
+      "ratings": {
+        "evidence": 2.67,
+        "reasoning": 2.0,
+        "rebuttal": 3.33,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "15": {
+      "host": "deacon",
+      "score": 60.0,
+      "base": 60.0,
+      "dropped": false,
+      "lines": [
+        19
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Gives a clear standard (plus-zero EPA or better) and a verdict of good starter, with a loose tie to the +0.05 fact. / Sets a clear test of plus-zero EPA and calls him a good starter, which is on the question but cites no new facts. / Sets a clear test (EPA at plus-zero or better) and concludes he is a good starter, tying to the question though with limited new facts.",
+      "ratings": {
+        "evidence": 2.0,
+        "reasoning": 3.0,
+        "rebuttal": null,
+        "impact": 4.0,
+        "clarity": 5.0
+      }
+    }
+  },
+  "hosts": {
+    "royce": {
+      "score": 56.4,
+      "arguments": 5,
+      "rebuttal": 3.13
+    },
+    "deacon": {
+      "score": 60.0,
+      "arguments": 6,
+      "rebuttal": 3.47
+    },
+    "lonnie": {
+      "score": 58.4,
+      "arguments": 4,
+      "rebuttal": 3.17
+    }
+  },
+  "ranked": [
+    "deacon",
+    "lonnie",
+    "royce"
+  ],
+  "winner": "deacon",
+  "tie": false,
+  "tiebreak": false,
+  "close_call": true,
+  "order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "blind_labels": [
+    {
+      "lonnie": "Host 1",
+      "deacon": "Host 2",
+      "royce": "Host 3"
+    },
+    {
+      "lonnie": "Host 1",
+      "deacon": "Host 2",
+      "royce": "Host 3"
+    },
+    {
+      "royce": "Host 1",
+      "deacon": "Host 2",
+      "lonnie": "Host 3"
+    }
+  ]
+}

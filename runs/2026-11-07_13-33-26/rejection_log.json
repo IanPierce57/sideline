@@ -1,0 +1,99 @@
+{
+  "stats": [
+    {
+      "subject": "Cincinnati Bengals",
+      "stat": "third-down conversion rate",
+      "scope": "2026 regular season",
+      "what_we_found": "54.0%",
+      "reason": "ours 54.0230 vs muffed.ai 55.1700: the numbers don't match, so it's left out"
+    },
+    {
+      "subject": "Cincinnati Bengals",
+      "stat": "red-zone touchdown rate",
+      "scope": "2026 regular season",
+      "what_we_found": "66.7%",
+      "reason": "ours 66.6667 vs muffed.ai 68.5700: the numbers don't match, so it's left out"
+    },
+    {
+      "subject": "Cincinnati Bengals",
+      "stat": "last 3 results",
+      "scope": "2026 regular season",
+      "what_we_found": "W 43-36 vs Titans (Week 8); W 35-13 at Ravens (Week 7); W 31-24 at Dolphins (Week 5)",
+      "reason": "Week 8 score: nflverse 43-36, Sleeper 41.0-36.0; they don't match"
+    },
+    {
+      "subject": "Atlanta Falcons",
+      "stat": "third-down conversion rate",
+      "scope": "2026 regular season",
+      "what_we_found": "33.7%",
+      "reason": "ours 33.6842 vs muffed.ai 34.7400: the numbers don't match, so it's left out"
+    },
+    {
+      "subject": "Atlanta Falcons",
+      "stat": "red-zone touchdown rate",
+      "scope": "2026 regular season",
+      "what_we_found": "66.7%",
+      "reason": "ours 66.6667 vs muffed.ai 69.2300: the numbers don't match, so it's left out"
+    },
+    {
+      "subject": "Atlanta Falcons",
+      "stat": "last 3 results",
+      "scope": "2026 regular season",
+      "what_we_found": "L 0-16 at Buccaneers (Week 8); W 29-20 vs 49ers (Week 7); L 23-31 vs Bears (Week 6)",
+      "reason": "Week 8 score: nflverse 0-16, Sleeper None-16.0; they don't match"
+    },
+    {
+      "subject": "Atlanta Falcons",
+      "stat": "head coach",
+      "scope": "today",
+      "what_we_found": "Raheem Morris",
+      "reason": "nflverse says Raheem Morris, Wikipedia says Kevin Stefanski"
+    },
+    {
+      "subject": "Ja'Marr Chase",
+      "stat": "games played by season",
+      "scope": "last 5 full seasons and this one",
+      "what_we_found": "2021: 17 of 17; 2022: 13 of 16; 2023: 16 of 17; 2024: 17 of 17; 2025: 16 of 17; 2026: 7 of 7 so far, through Week 9. In his last 5 full seasons he played every game in 2 and missed a quarter or more of his team's games in 0",
+      "reason": "kept, but the sources disagreed: games played differ: 2022: Sleeper 13, nflverse 12; using Sleeper's"
+    },
+    {
+      "subject": "Michael Penix Jr.",
+      "stat": "career honors",
+      "scope": "career",
+      "what_we_found": null,
+      "reason": "no honors listed"
+    }
+  ],
+  "lines": [
+    {
+      "line": 11,
+      "speaker": "deacon",
+      "said": "Hah. He walked into that one.",
+      "problem": "uses the stock phrase 'hah' after the segment's limit of 2; say it fresh, in other words, or drop it",
+      "action": "rewritten",
+      "now": "He walked right into that one."
+    },
+    {
+      "line": 15,
+      "speaker": "royce",
+      "said": "Remember this: Atlanta's best player is a running back, and Cincinnati's best player has the football on every snap. That's the gap.",
+      "problem": "Atlanta's best player is a running back, and Cincinnati's best player is the quarterback: No fact ranks the best player on either team. (unsupported); uses the stock phrase 'remember this' after the segment's limit of 2; say it fresh, in other words, or drop it",
+      "action": "rewritten",
+      "now": "Here's the gap: Atlanta leans on a running back, and Cincinnati's offense runs through a quarterback who has the football on every snap. That's the difference."
+    },
+    {
+      "line": 18,
+      "speaker": "deacon",
+      "said": "Bengals, because their offense moves the ball every drive, and Atlanta's has to fight just to get a first down.",
+      "problem": "Cincinnati's offense moves the ball every drive: The EPA rank shows the offense is good, but no fact says it moves the ball on every drive. (unsupported)",
+      "action": "rewritten",
+      "now": "Bengals, because their offense is fifth in the league in EPA per play, and Atlanta's is twenty-eighth."
+    }
+  ],
+  "close": [
+    {
+      "line": 21,
+      "problem": "The caller on the segment was Pat.: No fact or earlier script line names the caller. (unsupported)"
+    }
+  ]
+}

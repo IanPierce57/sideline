@@ -1,0 +1,131 @@
+{
+  "stats": [
+    {
+      "subject": "Ty Jerome",
+      "stat": "career honors",
+      "scope": "career",
+      "what_we_found": null,
+      "reason": "no honors listed"
+    }
+  ],
+  "lines": [
+    {
+      "line": 2,
+      "speaker": "caller",
+      "said": "Everybody's crowning Ty Jerome after a week and a half. I don't buy it. Convince me he's for real.",
+      "problem": "Jerome has been getting crowned after a week and a half: No fact gives the season's start date. Eight games played suggests more than a week and a half. (unsupported)",
+      "action": "rewritten",
+      "now": "Everybody's crowning Ty Jerome after a handful of games. I don't buy it. Convince me he's for real."
+    },
+    {
+      "line": 3,
+      "speaker": "royce",
+      "said": "I'll convince you, Dennis. Twenty-seven and a half a night, shooting better than fifty percent, and Memphis is six and two. To my eye he scores like a guy who's found the one door in the building nobody locked.",
+      "problem": "says fifty, which doesn't match any fact this line cites; Jerome is scoring twenty-seven and a half a night: He averages 27.4, not 27.5. (contradicted)",
+      "action": "rewritten",
+      "now": "I'll convince you, Dennis. Twenty-seven point four a night, shooting 50.4 percent, and Memphis is six and two. To my eye he scores like a guy who's found the one door in the building nobody locked."
+    },
+    {
+      "line": 4,
+      "speaker": "deacon",
+      "said": "Listen here. Last season he was at 19.7 a game, and two seasons ago he was at 12.5. You don't go from a role player to a star scorer in seven games and call it a trend.",
+      "problem": "says two, seven, which doesn't match any fact this line cites",
+      "action": "rewritten",
+      "now": "Listen here. Last season he was at 19.7 a game, and the season before that, 12.5. You don't go from a role player to a star scorer in 7 games and call it a trend."
+    },
+    {
+      "line": 5,
+      "speaker": "lonnie",
+      "said": "So what changed? Not the shot. The job. He's playing over thirty minutes now, and last season he was at 22.6. That's the whole scoring jump, right there.",
+      "problem": "says thirty, which doesn't match any fact this line cites",
+      "action": "rewritten",
+      "now": "So what changed? Not the shot. The job. He's playing 30.7 minutes now, and last season he was at 22.6. That's a big piece of the scoring jump, right there."
+    },
+    {
+      "line": 8,
+      "speaker": "lonnie",
+      "said": "And look at who's not there. Pippen's out at point guard, Stewart's out at center. Somebody has to run the offense, and the coach picked him. That's a decision, not a hot streak.",
+      "problem": "The coach picked Jerome to run the offense because those two are out: No fact says the coach chose him to run the offense. (unsupported)",
+      "action": "rewritten",
+      "now": "And look at who's not there. Pippen's out at point guard, Stewart's out at center. Somebody has to run the offense, and he's the point guard on the roster. That looks more like a role than a hot streak."
+    },
+    {
+      "line": 9,
+      "speaker": "royce",
+      "said": "The coach trusts him with it, and he's repaying that. Five and a third assists, so he's not just shooting.",
+      "problem": "says third, which doesn't match any fact this line cites",
+      "action": "rewritten",
+      "now": "The coach trusts him with it, and he's repaying that. 5.3 assists, so he's not just shooting."
+    },
+    {
+      "line": 10,
+      "speaker": "deacon",
+      "said": "Nah, nah. Five assists with 2.2 for every turnover is fine. Last year he was at 3.1. That went the wrong way.",
+      "problem": "says five, which doesn't match any fact this line cites",
+      "action": "rewritten",
+      "now": "Nah, nah. 5.3 assists with 2.2 for every turnover is fine. Last year he was at 3.1. That went the wrong way."
+    },
+    {
+      "line": 12,
+      "speaker": "lonnie",
+      "said": "Deac, you want him to do more and turn it over less. He's got the ball more. Of course the ratio dips. Who's handling it if it's not him?",
+      "problem": "He's got the ball more this season: No usage or time-of-possession fact. Minutes are up, but that doesn't show he handles the ball more. (unsupported)",
+      "action": "rewritten",
+      "now": "Deac, you want him to do more and turn it over less. He's playing more minutes. Of course the ratio might dip. Who's running it if it's not him?"
+    },
+    {
+      "line": 13,
+      "speaker": "deacon",
+      "said": "Fine. Then answer mine. Is he the guy at 62.6 true shooting, which is points per shot counting threes and free throws? Because two seasons ago he was at 64.3 on seventy games.",
+      "problem": "says two seasons (no cited fact has 2 seasons), which doesn't match any fact this line cites",
+      "action": "rewritten",
+      "now": "Fine. Then answer mine. Is he the guy at 62.6 true shooting, which is points per shot counting threes and free throws? Because in 2024-25 he was at 64.3 over 70 games."
+    },
+    {
+      "line": 14,
+      "speaker": "royce",
+      "said": "Hang on. Hang on. You just said the efficiency is the same. So the shot's real. You're telling me the shot is real and he's not?",
+      "problem": "Deacon just said the efficiency is the same: Deacon never said that. He contrasted 62.6 with 64.3. (contradicted); uses the stock phrase 'hang on. hang on' after the segment's limit of 2; say it fresh, in other words, or drop it",
+      "action": "rewritten",
+      "now": "Wait a second. 62.6 this year, 64.3 back then. That's about the same level of efficiency. So the shot's real. You're telling me the shot is real and he's not?"
+    },
+    {
+      "line": 15,
+      "speaker": "deacon",
+      "said": "The shot's real. Okay. That's fair. The 27 is what I don't buy, because it's three more attempts a game than anything he's done.",
+      "problem": "says three, which doesn't match any fact this line cites; His 27 comes from three more attempts a game than anything he's done: He's at about 19.0 FGA a game this season, and last season about 14.3. No facts cover his other seasons, and three more than anything he's done isn't established. (unsupported)",
+      "action": "rewritten",
+      "now": "The shot's real. Okay. That's fair. The 27 is what I don't buy, because it's a big jump from 19.7 last year and 12.5 the year before."
+    },
+    {
+      "line": 16,
+      "speaker": "lonnie",
+      "said": "Careful, Deac. Three more attempts a night is the role. That's what I said at the start.",
+      "problem": "says three, which doesn't match any fact this line cites (it cites none); Three more attempts a night is the role: The attempt gap isn't backed by facts. (unsupported)",
+      "action": "rewritten",
+      "now": "Careful, Deac. More shots a night is the role. That's what I said at the start."
+    },
+    {
+      "line": 17,
+      "speaker": "hal",
+      "said": "Alright, hold it there. The shooting skill is settled. Is the 27 real, or is it a hot week? Final answers. One sentence each. Royce.",
+      "problem": "says 27, which doesn't match any fact this line cites (it cites none)",
+      "action": "rewritten",
+      "now": "Alright, hold it there. The shooting skill is settled. Is the 27.4 real, or is it a hot week? Final answers. One sentence each. Royce."
+    },
+    {
+      "line": 19,
+      "speaker": "deacon",
+      "said": "Not real as a 27-a-game guy: the shot holds up, but the volume goes back down when the health history shows up.",
+      "problem": "says 27, which doesn't match any fact this line cites (it cites none)",
+      "action": "rewritten",
+      "now": "Not real as a 27.4-a-game guy: the shot holds up, but the volume goes back down when the health history shows up."
+    }
+  ],
+  "close": [
+    {
+      "line": 21,
+      "problem": "says two seasons (no cited fact has 2 seasons), which doesn't match any fact this line cites"
+    }
+  ]
+}

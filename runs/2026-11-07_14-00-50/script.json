@@ -1,0 +1,888 @@
+{
+  "topic": "Is Cade Cunningham a top-10 player right now?",
+  "format": "debate",
+  "caller": {
+    "type": "skeptic",
+    "name": "Dana",
+    "city": "Columbus"
+  },
+  "players": [
+    "Cade Cunningham"
+  ],
+  "word_count": 510,
+  "estimated_minutes": 3.4,
+  "warnings": [],
+  "sources": [
+    "NBA stats: Sleeper",
+    "NBA stats: nflverse, checked against Sleeper"
+  ],
+  "receipts": [
+    {
+      "subject": "Cade Cunningham",
+      "label": "games played by season",
+      "say": "2021–22: 64 of 82; 2022–23: 12 of 82; 2023–24: 62 of 82; 2024–25: 70 of 82; 2025–26: 64 of 82; 2026–27: 8 of 8 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
+      "scope": "last 5 full seasons and this one",
+      "source": "Sleeper",
+      "checked": "Wikipedia (career statistics table)",
+      "status": "verified"
+    },
+    {
+      "subject": "Cade Cunningham",
+      "label": "NBA All-Star selection",
+      "say": "2 NBA All-Star selections (2025, 2026)",
+      "scope": "career",
+      "source": "Wikipedia",
+      "checked": "Wikipedia (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Cade Cunningham",
+      "label": "points per game",
+      "say": "24.0",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Cade Cunningham",
+      "label": "assists per game",
+      "say": "7.6",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Cade Cunningham",
+      "label": "rebounds per game",
+      "say": "5.6",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Cade Cunningham",
+      "label": "true shooting percentage",
+      "say": "58.5%",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Cade Cunningham",
+      "label": "assist-to-turnover ratio",
+      "say": "2.0",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Cade Cunningham",
+      "label": "points per game",
+      "say": "23.9",
+      "scope": "2025-26 regular season",
+      "source": "Sleeper",
+      "checked": "Wikipedia (career statistics table)",
+      "status": "verified"
+    },
+    {
+      "subject": "Cade Cunningham",
+      "label": "assists per game",
+      "say": "9.9",
+      "scope": "2025-26 regular season",
+      "source": "Sleeper",
+      "checked": "Wikipedia (career statistics table)",
+      "status": "verified"
+    },
+    {
+      "subject": "Cade Cunningham",
+      "label": "true shooting percentage",
+      "say": "56.4%",
+      "scope": "2025-26 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Detroit Pistons",
+      "label": "record",
+      "say": "6-2",
+      "scope": "2026–27 regular season",
+      "source": "Sleeper and Wikipedia",
+      "checked": "Wikipedia game log (every game)",
+      "status": "verified"
+    },
+    {
+      "subject": "Detroit Pistons",
+      "label": "place in the Eastern Conference",
+      "say": "3rd in the East at 6-2",
+      "scope": "2026–27 regular season",
+      "source": "Sleeper and Wikipedia",
+      "checked": "Wikipedia standings (every team's record)",
+      "status": "verified"
+    },
+    {
+      "subject": "Shai Gilgeous-Alexander",
+      "label": "true shooting percentage",
+      "say": "56.2%",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Shai Gilgeous-Alexander",
+      "label": "true shooting percentage",
+      "say": "66.5%",
+      "scope": "2025-26 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Nikola Jokić",
+      "label": "games played by season",
+      "say": "2021–22: 74 of 82; 2022–23: 69 of 82; 2023–24: 78 of 82; 2024–25: 70 of 82; 2025–26: 65 of 82; 2026–27: 7 of 7 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 0",
+      "scope": "last 5 full seasons and this one",
+      "source": "Sleeper",
+      "checked": "Wikipedia (career statistics table)",
+      "status": "verified_sleeper_used"
+    },
+    {
+      "subject": "Nikola Jokić",
+      "label": "assists per game",
+      "say": "9.3",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Nikola Jokić",
+      "label": "true shooting percentage",
+      "say": "57.9%",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Nikola Jokić",
+      "label": "true shooting percentage",
+      "say": "67.0%",
+      "scope": "2025-26 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Luka Dončić",
+      "label": "games played by season",
+      "say": "2021–22: 65 of 82; 2022–23: 66 of 82; 2023–24: 70 of 82; 2024–25: 50 of 82; 2025–26: 64 of 82; 2026–27: 9 of 10 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
+      "scope": "last 5 full seasons and this one",
+      "source": "Sleeper",
+      "checked": "Wikipedia (career statistics table)",
+      "status": "verified_sleeper_used"
+    },
+    {
+      "subject": "Victor Wembanyama",
+      "label": "games played by season",
+      "say": "2023–24: 71 of 82; 2024–25: 46 of 82; 2025–26: 64 of 82; 2026–27: 9 of 9 so far. In his last 3 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
+      "scope": "last 5 full seasons and this one",
+      "source": "Sleeper",
+      "checked": "Wikipedia (career statistics table)",
+      "status": "verified"
+    },
+    {
+      "subject": "Victor Wembanyama",
+      "label": "NBA All-Star selection",
+      "say": "2 NBA All-Star selections (2025, 2026)",
+      "scope": "career",
+      "source": "Wikipedia",
+      "checked": "Wikipedia (trusted on its own)",
+      "status": "trusted"
+    }
+  ],
+  "winning_case": {
+    "host": "royce",
+    "score": 63.1,
+    "argument": "Yes, and anyone who watches him gets there before the spreadsheet does.",
+    "stats": [
+      {
+        "subject": "Cade Cunningham",
+        "label": "NBA All-Star selection",
+        "say": "2 NBA All-Star selections (2025, 2026)",
+        "scope": "career"
+      },
+      {
+        "subject": "Detroit Pistons",
+        "label": "place in the Eastern Conference",
+        "say": "3rd in the East at 6-2",
+        "scope": "2026–27 regular season"
+      },
+      {
+        "subject": "Shai Gilgeous-Alexander",
+        "label": "true shooting percentage",
+        "say": "56.2%",
+        "scope": "2026-27 regular season"
+      },
+      {
+        "subject": "Nikola Jokić",
+        "label": "true shooting percentage",
+        "say": "57.9%",
+        "scope": "2026-27 regular season"
+      }
+    ]
+  },
+  "plan": {
+    "cases": {
+      "royce": {
+        "claim": "Cade is a top-10 player: voters and the standings back him, and he's still improving.",
+        "supports": [
+          "Honors: two All-Star selections, voted over seasons (F4)",
+          "Team result: Pistons third in the East (F14)",
+          "Turn on Deacon's number: this season's true shooting beats Shai's and Jokic's at the same scope (F8, F25, F36)"
+        ],
+        "answer": "The assist drop: he says last season's 9.9 is who Cade is and eight games is a small slice, using Deacon's own grace rule."
+      },
+      "deacon": {
+        "claim": "Cade is a strong player but sits just outside the top 10, in the 11 to 15 range.",
+        "supports": [
+          "Efficiency against the elite: true shooting this season and last (F8, F12) against Jokic's and Shai's last-season marks (F37, F26)",
+          "Playmaking: 7.6 assists with a 2.0 assist-to-turnover ratio against Jokic's 9.3 (F6, F9, F35)",
+          "Availability: never played every game in five full seasons (F3)"
+        ],
+        "answer": "The same-scope turn on true shooting: he concedes that eight games cuts both ways, then moves to the bigger samples."
+      },
+      "lonnie": {
+        "claim": "Cade is top 10 because Detroit's offense runs through what he does as scorer and creator.",
+        "supports": [
+          "Role: 24 points, 7.6 assists, 5.6 rebounds as the hub (F5, F6, F7)",
+          "Results tied to his role: Pistons 6-2 with a +9.4 differential (F13, F15)",
+          "Steady scoring: this season's points match last season's (F5, F10)"
+        ],
+        "answer": "The assist drop is eight games from a player who was at 9.9, so it gets the same grace Deacon gives Shai."
+      }
+    },
+    "beats": [
+      "Opening positions: Lonnie on role, Royce on honors and the standings, Deacon on efficiency against the elite",
+      "Main clash: same-scope true shooting turns Deacon, then Lonnie traps him on grace for slow starts",
+      "Exposed weakness: the assist drop to 7.6 hits Royce and Lonnie, who answer with last season's 9.9 and the grace rule",
+      "Decisive exchange: availability, where last season's games played put Cade level with Luka, Wemby, and Jokic, and Deacon is left conceding the ground and holding only the 11-to-15 call"
+    ]
+  },
+  "scores": {
+    "royce": 63.1,
+    "deacon": 53.4,
+    "lonnie": 55.0
+  },
+  "winner": "royce",
+  "tie": false,
+  "lines": [
+    {
+      "line": 1,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "You're on the Sideline. Go ahead, Dana from Columbus.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "You're on the Sideline. Go ahead, Dana from Columbus.",
+          "audio": "1-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 2,
+      "speaker": "caller",
+      "speaker_name": "Dana from Columbus",
+      "text": "Everybody's crowning Cade Cunningham like he's already a top-ten guy. I don't buy it. Convince me.",
+      "delivery": "cold",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "Everybody's crowning Cade Cunningham like he's already a top-ten guy. I don't buy it. Convince me.",
+          "audio": "2-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 3,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Top ten, yes, and I'll start with the job he does. Twenty-four points, 7.6 assists, 5.6 rebounds. That's a guard who scores, creates, and rebounds, and the Pistons are 6-2 running everything through him.",
+      "delivery": "confident",
+      "facts": [
+        "F5",
+        "F6",
+        "F7",
+        "F13"
+      ],
+      "argument": 1,
+      "cards": [
+        {
+          "text": "Top ten, yes, and I'll start with the job he does. Twenty-four points, 7.6 assists, 5.6 rebounds.",
+          "audio": "3-0.mp3"
+        },
+        {
+          "text": "That's a guard who scores, creates, and rebounds, and the Pistons are 6-2 running everything through him.",
+          "audio": "3-1.mp3"
+        }
+      ],
+      "score": {
+        "lonnie": 63
+      },
+      "stat": {
+        "value": "24.0",
+        "label": "Cade Cunningham · points per game",
+        "definition": "Points scored per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 4,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "And the people who watch him over a whole season already voted. Two straight All-Star selections. To my eye he plays point guard like a heavyweight working the body, patient, then the big shot lands. Third in the East. That's a top-ten player.",
+      "delivery": "building",
+      "facts": [
+        "F4",
+        "F14"
+      ],
+      "argument": 2,
+      "cards": [
+        {
+          "text": "And the people who watch him over a whole season already voted. Two straight All-Star selections.",
+          "audio": "4-0.mp3"
+        },
+        {
+          "text": "To my eye he plays point guard like a heavyweight working the body, patient, then the big shot lands. Third in the East. That's a top-ten player.",
+          "audio": "4-1.mp3"
+        }
+      ],
+      "score": {
+        "royce": 55
+      },
+      "stat": {
+        "value": "2 NBA All-Star selections (2025, 2026)",
+        "label": "Cade Cunningham · NBA All-Star selection",
+        "definition": "From his Wikipedia page: 2× NBA All-Star (2025, 2026)",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "career · today"
+      }
+    },
+    {
+      "line": 5,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Listen here, All-Star's a big list. Top ten's a small one. True shooting, that's points per shot counting threes and free throws, he's 58.5 this season, 56.4 last. Jokic was 67 last season. Shai, 66.5. That ain't a top-ten scorer.",
+      "delivery": "confident",
+      "facts": [
+        "F8",
+        "F12",
+        "F37",
+        "F26"
+      ],
+      "argument": 3,
+      "cards": [
+        {
+          "text": "Listen here, All-Star's a big list. Top ten's a small one. True shooting, that's points per shot counting threes and free throws, he's 58.5 this season, 56.4 last.",
+          "audio": "5-0.mp3"
+        },
+        {
+          "text": "Jokic was 67 last season. Shai, 66.5. That ain't a top-ten scorer.",
+          "audio": "5-1.mp3"
+        }
+      ],
+      "score": {
+        "deacon": 64
+      },
+      "stat": {
+        "value": "58.5%",
+        "label": "Cade Cunningham · true shooting percentage",
+        "definition": "Scoring efficiency counting threes and free throws: points / (2 x (shots + 0.44 x free throws)), in percent.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 6,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "You're putting his eight games next to their whole last year. Same scope, this season: Shai's at 56.2, Jokic 57.9. Cade's ahead of both.",
+      "delivery": "cold",
+      "facts": [
+        "F25",
+        "F36",
+        "F8"
+      ],
+      "argument": 4,
+      "cards": [
+        {
+          "text": "You're putting his eight games next to their whole last year. Same scope, this season: Shai's at 56.2, Jokic 57.9. Cade's ahead of both.",
+          "audio": "6-0.mp3"
+        }
+      ],
+      "score": {
+        "royce": 69
+      },
+      "stat": {
+        "value": "56.2%",
+        "label": "Shai Gilgeous-Alexander · true shooting percentage",
+        "definition": "Scoring efficiency counting threes and free throws: points / (2 x (shots + 0.44 x free throws)), in percent.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 7,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Deac, quick question. Do you discount Shai's slow start? Yes or no?",
+      "delivery": "curious",
+      "facts": [
+        "F25"
+      ],
+      "argument": 5,
+      "cards": [
+        {
+          "text": "Deac, quick question. Do you discount Shai's slow start? Yes or no?",
+          "audio": "7-0.mp3"
+        }
+      ],
+      "score": {
+        "lonnie": 53
+      }
+    },
+    {
+      "line": 8,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Yes. He's a proven guy, his track record buys grace. Cade's up a couple points on a year that was ordinary. That ain't a track record.",
+      "delivery": "heated",
+      "facts": [
+        "F8",
+        "F12"
+      ],
+      "argument": 3,
+      "cards": [
+        {
+          "text": "Yes. He's a proven guy, his track record buys grace. Cade's up a couple points on a year that was ordinary. That ain't a track record.",
+          "audio": "8-0.mp3"
+        }
+      ],
+      "score": {
+        "deacon": 60
+      },
+      "stat": {
+        "value": "56.4%",
+        "label": "Cade Cunningham · true shooting percentage",
+        "definition": "Scoring efficiency counting threes and free throws: points / (2 x (shots + 0.44 x free throws)), in percent.",
+        "source": "Sleeper",
+        "asOf": "2025-26 regular season · final"
+      }
+    },
+    {
+      "line": 9,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "So grace for the ones you already like. Cade has to prove it from scratch. Meanwhile last season he was at 9.9 assists a night.",
+      "delivery": "dismissive",
+      "facts": [
+        "F11"
+      ],
+      "argument": 4,
+      "cards": [
+        {
+          "text": "So grace for the ones you already like. Cade has to prove it from scratch. Meanwhile last season he was at 9.9 assists a night.",
+          "audio": "9-0.mp3"
+        }
+      ],
+      "score": {
+        "royce": 67
+      },
+      "stat": {
+        "value": "9.9",
+        "label": "Cade Cunningham · assists per game",
+        "definition": "Assists per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2025-26 regular season · final"
+      }
+    },
+    {
+      "line": 10,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "And he's at 7.6 now. Assist-to-turnover, 2.0. Jokic is handing out 9.3. That's a scorer's line, Royce.",
+      "delivery": "emphatic",
+      "facts": [
+        "F6",
+        "F9",
+        "F35"
+      ],
+      "argument": 6,
+      "cards": [
+        {
+          "text": "And he's at 7.6 now. Assist-to-turnover, 2.0. Jokic is handing out 9.3. That's a scorer's line, Royce.",
+          "audio": "10-0.mp3"
+        }
+      ],
+      "score": {
+        "deacon": 59
+      },
+      "stat": {
+        "value": "7.6",
+        "label": "Cade Cunningham · assists per game",
+        "definition": "Assists per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 11,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "It's down, fair point. But eight games from a guy who was at 9.9 assists last season is exactly where your grace rule applies, Deac. And the scoring hasn't moved, 24.0 now against 23.9 last year.",
+      "delivery": "calm",
+      "facts": [
+        "F10",
+        "F5",
+        "F11",
+        "F6"
+      ],
+      "argument": 1,
+      "cards": [
+        {
+          "text": "It's down, fair point. But eight games from a guy who was at 9.9 assists last season is exactly where your grace rule applies, Deac.",
+          "audio": "11-0.mp3"
+        },
+        {
+          "text": "And the scoring hasn't moved, 24.0 now against 23.9 last year.",
+          "audio": "11-1.mp3"
+        }
+      ],
+      "score": {
+        "lonnie": 62
+      },
+      "stat": {
+        "value": "23.9",
+        "label": "Cade Cunningham · points per game",
+        "definition": "Points scored per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2025-26 regular season · final"
+      }
+    },
+    {
+      "line": 12,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Convenient.",
+      "delivery": "dismissive",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "Convenient.",
+          "audio": "12-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 13,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "It's your rule, Deacon.",
+      "delivery": "cold",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "It's your rule, Deacon.",
+          "audio": "13-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 14,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Okay. Eight games cuts both ways. That's fair. So go bigger. Five full seasons, never played every game.",
+      "delivery": "conceding",
+      "facts": [
+        "F3"
+      ],
+      "argument": 6,
+      "cards": [
+        {
+          "text": "Okay. Eight games cuts both ways. That's fair. So go bigger. Five full seasons, never played every game.",
+          "audio": "14-0.mp3"
+        }
+      ],
+      "score": {
+        "deacon": 57
+      },
+      "stat": {
+        "value": "2021–22: 64 of 82; 2022–23: 12 of 82; 2023–24: 62 of 82; 2024–25: 70 of 82; 2025–26: 64 of 82; 2026–27: 8 of 8 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
+        "label": "Cade Cunningham · games played by season",
+        "definition": "Games he played each regular season, out of his team's games. Missing games can be injury, rest, suspension, or not being on a roster yet; this doesn't say which.",
+        "source": "Sleeper",
+        "asOf": "last 5 full seasons and this one · today"
+      }
+    },
+    {
+      "line": 15,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Cade played 64 last season. So did Luka and Wemby, and Jokic played 65. Who's separating on that?",
+      "delivery": "cold",
+      "facts": [
+        "F3",
+        "F40",
+        "F49",
+        "F29"
+      ],
+      "argument": 4,
+      "cards": [
+        {
+          "text": "Cade played 64 last season. So did Luka and Wemby, and Jokic played 65. Who's separating on that?",
+          "audio": "15-0.mp3"
+        }
+      ],
+      "score": {
+        "royce": 71
+      },
+      "stat": {
+        "value": "2021–22: 65 of 82; 2022–23: 66 of 82; 2023–24: 70 of 82; 2024–25: 50 of 82; 2025–26: 64 of 82; 2026–27: 9 of 10 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
+        "label": "Luka Dončić · games played by season",
+        "definition": "Games he played each regular season, out of his team's games. Missing games can be injury, rest, suspension, or not being on a roster yet; this doesn't say which.",
+        "source": "Sleeper",
+        "asOf": "last 5 full seasons and this one · today"
+      }
+    },
+    {
+      "line": 16,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "None of them, fine. But you gave up the efficiency fight to stand there. Four guys are already ahead of him in my book, and I want to hear who he passes.",
+      "delivery": "heated",
+      "facts": [],
+      "argument": 6,
+      "cards": [
+        {
+          "text": "None of them, fine. But you gave up the efficiency fight to stand there. Four guys are already ahead of him in my book, and I want to hear who he passes.",
+          "audio": "16-0.mp3"
+        }
+      ],
+      "score": {
+        "deacon": 53
+      }
+    },
+    {
+      "line": 17,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Royce, same question for you. All-Star votes don't rank ten spots. Who's he actually beating?",
+      "delivery": "curious",
+      "facts": [],
+      "argument": 5,
+      "cards": [
+        {
+          "text": "Royce, same question for you. All-Star votes don't rank ten spots. Who's he actually beating?",
+          "audio": "17-0.mp3"
+        }
+      ],
+      "score": {
+        "lonnie": 56
+      }
+    },
+    {
+      "line": 18,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "He's got the same two All-Star nods as Wemby, in the same years. I'm not putting him above anybody here. I'm saying ten spots is wide, and he's already inside them.",
+      "delivery": "calm",
+      "facts": [
+        "F4",
+        "F50"
+      ],
+      "argument": 2,
+      "cards": [
+        {
+          "text": "He's got the same two All-Star nods as Wemby, in the same years. I'm not putting him above anybody here. I'm saying ten spots is wide, and he's already inside them.",
+          "audio": "18-0.mp3"
+        }
+      ],
+      "score": {
+        "royce": 68
+      },
+      "stat": {
+        "value": "2 NBA All-Star selections (2025, 2026)",
+        "label": "Victor Wembanyama · NBA All-Star selection",
+        "definition": "From his Wikipedia page: 2× NBA All-Star (2025, 2026)",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "career · today"
+      }
+    },
+    {
+      "line": 19,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "We've done efficiency and games played. Final answers, one sentence each. Lonnie.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "We've done efficiency and games played. Final answers, one sentence each. Lonnie.",
+          "audio": "19-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 20,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Top ten, because Detroit's offense runs through him and the scoring has held while the assists settle.",
+      "delivery": "confident",
+      "facts": [],
+      "argument": 5,
+      "cards": [
+        {
+          "text": "Top ten, because Detroit's offense runs through him and the scoring has held while the assists settle.",
+          "audio": "20-0.mp3"
+        }
+      ],
+      "score": {
+        "lonnie": 54
+      }
+    },
+    {
+      "line": 21,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Yes, and anyone who watches him gets there before the spreadsheet does.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": 2,
+      "cards": [
+        {
+          "text": "Yes, and anyone who watches him gets there before the spreadsheet does.",
+          "audio": "21-0.mp3"
+        }
+      ],
+      "score": {
+        "royce": 61
+      }
+    },
+    {
+      "line": 22,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Not yet, he's eleven through fifteen, and he moves up when the efficiency and the passing both hold all winter.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": 6,
+      "cards": [
+        {
+          "text": "Not yet, he's eleven through fifteen, and he moves up when the efficiency and the passing both hold all winter.",
+          "audio": "22-0.mp3"
+        }
+      ],
+      "score": {
+        "deacon": 53
+      }
+    },
+    {
+      "line": 23,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "On the scorecard, tonight goes to Royce. His strongest case was that Cade held up on availability: he played 64 games last season, the same as Luka and Wemby, and one fewer than Jokic's 65, so that gap never opened.",
+      "delivery": "calm",
+      "facts": [
+        "F3",
+        "F40",
+        "F49",
+        "F29"
+      ],
+      "argument": null,
+      "score": {
+        "royce": 63,
+        "deacon": 53,
+        "lonnie": 55
+      },
+      "stat": {
+        "value": "2023–24: 71 of 82; 2024–25: 46 of 82; 2025–26: 64 of 82; 2026–27: 9 of 9 so far. In his last 3 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
+        "label": "Victor Wembanyama · games played by season",
+        "definition": "Games he played each regular season, out of his team's games. Missing games can be injury, rest, suspension, or not being on a roster yet; this doesn't say which.",
+        "source": "Sleeper",
+        "asOf": "last 5 full seasons and this one · today"
+      },
+      "cards": [
+        {
+          "text": "On the scorecard, tonight goes to Royce.",
+          "audio": "23-0.mp3"
+        },
+        {
+          "text": "His strongest case was that Cade held up on availability: he played 64 games last season, the same as Luka and Wemby, and one fewer than Jokic's 65, so that gap never opened.",
+          "audio": "23-1.mp3"
+        }
+      ]
+    },
+    {
+      "line": 24,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "That's the board. Thanks for the call, Dana.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "That's the board. Thanks for the call, Dana.",
+          "audio": "24-0.mp3"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "step": 2,
+    "model": "claude-sonnet-5-5",
+    "created": "2026-11-07T14:00:50",
+    "generation_seconds": 162.8,
+    "timings": {
+      "topic_check": 1.2,
+      "research": 53.5,
+      "verify": 0.9,
+      "write": 61.8,
+      "line_check": 23.1,
+      "judge": 11.0,
+      "close": 11.2,
+      "voices": 1.9
+    },
+    "stats_found": 51,
+    "stats_verified": 51,
+    "stats_dropped": 0,
+    "facts_used": 21,
+    "lines_checked": 24,
+    "lines_rewritten": 1,
+    "lines_cut": 0,
+    "writer_input_tokens": 9385,
+    "writer_cache_read_tokens": 0,
+    "writer_output_tokens": 7668
+  },
+  "voices": {
+    "voiced_cards": 29,
+    "cards": 29,
+    "characters": 2856,
+    "failed": [],
+    "used_this_month": 14973
+  }
+}

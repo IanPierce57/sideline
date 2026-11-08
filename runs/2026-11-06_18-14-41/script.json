@@ -1,0 +1,607 @@
+{
+  "topic": "Is Bryce Young a franchise quarterback?",
+  "format": "debate",
+  "caller": {
+    "type": "skeptic",
+    "name": "Ray",
+    "city": "Charlotte"
+  },
+  "players": [
+    "Bryce Young"
+  ],
+  "word_count": 531,
+  "estimated_minutes": 3.5,
+  "warnings": [],
+  "sources": [
+    "Advanced stats: nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+    "NFL stats: Sleeper",
+    "NFL stats: nflverse, checked against Sleeper"
+  ],
+  "receipts": [
+    {
+      "subject": "Bryce Young",
+      "label": "games played by season",
+      "say": "2023: 16 of 17; 2024: 14 of 17; 2025: 16 of 17; 2026: 7 of 7 so far, through Week 8. In his last 3 full seasons he played every game in 0 and missed a quarter or more of his team's games in 0",
+      "scope": "last 5 full seasons and this one",
+      "source": "Sleeper",
+      "checked": "nflverse games",
+      "status": "verified"
+    },
+    {
+      "subject": "Bryce Young",
+      "label": "record as a starting QB",
+      "say": "3-4",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "Sleeper (games started, every season)",
+      "status": "verified"
+    },
+    {
+      "subject": "Bryce Young",
+      "label": "playoff record as a starting QB",
+      "say": "0-1 (playoffs after the 2025 season)",
+      "scope": "career playoffs",
+      "source": "nflverse",
+      "checked": "Sleeper (playoff starts)",
+      "status": "verified"
+    },
+    {
+      "subject": "Bryce Young",
+      "label": "passing yards",
+      "say": "1,921",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "Sleeper",
+      "status": "verified"
+    },
+    {
+      "subject": "Bryce Young",
+      "label": "passing touchdowns",
+      "say": "13",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "Sleeper",
+      "status": "verified"
+    },
+    {
+      "subject": "Bryce Young",
+      "label": "interceptions thrown",
+      "say": "5",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "Sleeper",
+      "status": "verified"
+    },
+    {
+      "subject": "Bryce Young",
+      "label": "completion percentage",
+      "say": "58.7%",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "Sleeper (both parts)",
+      "status": "verified"
+    },
+    {
+      "subject": "Bryce Young",
+      "label": "EPA per dropback",
+      "say": "+0.05",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Bryce Young",
+      "label": "adjusted net yards per attempt (ANY/A)",
+      "say": "6.23",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Bryce Young",
+      "label": "draft position",
+      "say": "1st overall pick in the 2023 NFL Draft, by the Panthers",
+      "scope": "career",
+      "source": "nflverse",
+      "checked": "Wikipedia (infobox)",
+      "status": "verified"
+    },
+    {
+      "subject": "Bryce Young",
+      "label": "EPA per dropback",
+      "say": "-0.01",
+      "scope": "2025 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Carolina Panthers",
+      "label": "points scored per game",
+      "say": "25.4",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Carolina Panthers",
+      "label": "head coach",
+      "say": "Dave Canales",
+      "scope": "today",
+      "source": "nflverse",
+      "checked": "Wikipedia (team page)",
+      "status": "verified"
+    },
+    {
+      "subject": "Bryce Young",
+      "label": "adjusted net yards per attempt (ANY/A)",
+      "say": "5.49",
+      "scope": "2025 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    }
+  ],
+  "winning_case": {
+    "host": "deacon",
+    "score": 67.9,
+    "argument": "Not yet: he's improved, but average doesn't carry a franchise.",
+    "stats": [
+      {
+        "subject": "Bryce Young",
+        "label": "EPA per dropback",
+        "say": "+0.05",
+        "scope": "2026 regular season"
+      },
+      {
+        "subject": "Bryce Young",
+        "label": "EPA per dropback",
+        "say": "-0.01",
+        "scope": "2025 regular season"
+      },
+      {
+        "subject": "Bryce Young",
+        "label": "passing yards",
+        "say": "1,921",
+        "scope": "2026 regular season"
+      },
+      {
+        "subject": "Bryce Young",
+        "label": "interceptions thrown",
+        "say": "5",
+        "scope": "2026 regular season"
+      }
+    ]
+  },
+  "plan": {
+    "cases": {
+      "royce": {
+        "claim": "Not yet: a franchise quarterback has won when it mattered, and Young's record and one playoff start haven't answered that.",
+        "supports": [
+          "Record: 3-4 this season and 0-1 in the playoffs (F4, F5)",
+          "Draft pedigree raises the bar: first overall pick (F12)",
+          "Turn: Deacon's rank is middle of the pack, which is not a franchise label (F10)"
+        ],
+        "answer": "Concedes the offense scores, then says a franchise quarterback is the reason, not a passenger, and the numbers show a middle-of-the-pack player."
+      },
+      "deacon": {
+        "claim": "Not yet: he is a league-average starter on efficiency, up from last year but not elite.",
+        "supports": [
+          "EPA per dropback +0.05, 17th of 35, vs -0.01 and 29th of 38 last season (F10, F13)",
+          "ANY/A 6.23 vs 5.49 last season (F11, F21)",
+          "Completion 58.7% and 5 picks in 7 games (F9, F8)"
+        ],
+        "answer": "Grants the improvement is real and says better than last year is not the same as franchise."
+      },
+      "lonnie": {
+        "claim": "Yes, he's the guy you build around: the offense is working with him and the improvement is real, so you commit.",
+        "supports": [
+          "Role and fit: deep-throwing style, low aggressiveness into tight coverage, and the team is 9th in scoring and 12th in offensive EPA (F15, F16)",
+          "Availability: 7 of 7 games this season, 16 of 17 and 14 of 17 before (F3)",
+          "Production: 1,921 yards, 13 TD, 5 INT (F6, F7, F8)"
+        ],
+        "answer": "Concedes the record is 3-4, then says the franchise label is about whether you can build around him, and the point is he's trending up."
+      }
+    },
+    "beats": [
+      "Opening positions: Lonnie says yes, Deacon says average so no",
+      "Main clash: last season to this season. Is the improvement real or a small bump?",
+      "Trap: Royce gets Lonnie to commit to the offense as the evidence, then points to the 3-4 record and the playoff loss",
+      "Decisive: Deacon corners the yes case with the rank, and Lonnie has to say what would flip him"
+    ]
+  },
+  "scores": {
+    "royce": 58.5,
+    "deacon": 67.9,
+    "lonnie": 51.3
+  },
+  "winner": "deacon",
+  "tie": false,
+  "lines": [
+    {
+      "line": 1,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "You're on the Sideline. Go ahead, Ray from Charlotte.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 2,
+      "speaker": "caller",
+      "speaker_name": "Ray from Charlotte",
+      "text": "Everybody wants to hand Bryce Young the keys to Carolina. I don't buy it. Convince me he's a franchise quarterback.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 3,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "I'll convince you. Yes. Look at how they use him. To my eye he's a guy who fits what they want, and the offense backs it up: ninth in the league in scoring.",
+      "delivery": "confident",
+      "facts": [
+        "F15"
+      ],
+      "argument": 1,
+      "score": {
+        "lonnie": 44
+      },
+      "stat": {
+        "value": "25.4",
+        "label": "Carolina Panthers · points scored per game",
+        "definition": "Points the team scored per regular-season game.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 4,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Ninth in scoring is a team stat, Lonnie. Look at him. EPA per dropback, that's the points each pass play adds to what the offense should score. He's at plus 0.05, seventeenth of thirty-five. That's the middle of the pack. Middle isn't a franchise.",
+      "delivery": "confident",
+      "facts": [
+        "F10"
+      ],
+      "argument": 2,
+      "score": {
+        "deacon": 82
+      },
+      "stat": {
+        "value": "+0.05",
+        "label": "Bryce Young · EPA per dropback",
+        "definition": "Expected points added per dropback: how much each pass attempt, sack, or scramble raised or lowered the points his team should expect on that drive.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 5,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "And a franchise quarterback was the first pick in the draft, Lonnie. That's the price they paid. At that price you don't get to be pretty good. Three and four this season, and his one playoff start was a loss.",
+      "delivery": "cold",
+      "facts": [
+        "F4",
+        "F5",
+        "F12"
+      ],
+      "argument": 3,
+      "score": {
+        "royce": 52
+      },
+      "stat": {
+        "value": "3-4",
+        "label": "Bryce Young · record as a starting QB",
+        "definition": "Regular-season wins and losses in games he started at quarterback.",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "2026 regular season · through Week 8"
+      }
+    },
+    {
+      "line": 6,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Hold on, Royce, I'll give him something. Last year he was minus 0.01, twenty-ninth of thirty-eight. So he's up. Real up. I'm not arguing that.",
+      "delivery": "calm",
+      "facts": [
+        "F13"
+      ],
+      "argument": 2,
+      "score": {
+        "deacon": 72
+      },
+      "stat": {
+        "value": "-0.01",
+        "label": "Bryce Young · EPA per dropback",
+        "definition": "Expected points added per dropback: how much each pass attempt, sack, or scramble raised or lowered the points his team should expect on that drive.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2025 regular season · final"
+      }
+    },
+    {
+      "line": 7,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Thank you. So that's the trend, and a franchise quarterback is a trend plus a roster you can build on. Last season his yards per dropback, adjusted for touchdowns and picks, was 5.49. This year it's 6.23. Canales is the coach today, and he's getting better.",
+      "delivery": "building",
+      "facts": [
+        "F21",
+        "F11",
+        "F17"
+      ],
+      "argument": 1,
+      "score": {
+        "lonnie": 57
+      },
+      "stat": {
+        "value": "5.49",
+        "label": "Bryce Young · adjusted net yards per attempt (ANY/A)",
+        "definition": "Passing yards per dropback, with touchdowns worth 20 extra yards, interceptions costing 45, and sack yardage taken off.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2025 regular season · final"
+      }
+    },
+    {
+      "line": 8,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Seven games, Lonnie. I'm the one who says that, and I'm saying it. Seven games of improvement is a good start. It isn't a verdict.",
+      "delivery": "confident",
+      "facts": [
+        "F6"
+      ],
+      "argument": 2,
+      "score": {
+        "deacon": 68
+      },
+      "stat": {
+        "value": "1,921",
+        "label": "Bryce Young · passing yards",
+        "definition": "Yards gained on completed passes.",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "2026 regular season · through Week 8"
+      }
+    },
+    {
+      "line": 9,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Here's what I'd ask. Lonnie, you want to build around him. What's the evidence he's the reason it works? Not the team. Him.",
+      "delivery": "curious",
+      "facts": [],
+      "argument": 3,
+      "score": {
+        "royce": 54
+      }
+    },
+    {
+      "line": 10,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Fair. He's played every game this season, and 16 of 17 and 14 of 17 before that. Thirteen touchdowns to five picks. You can build around a guy who's on the field.",
+      "delivery": "calm",
+      "facts": [
+        "F3",
+        "F7",
+        "F8"
+      ],
+      "argument": 1,
+      "score": {
+        "lonnie": 55
+      },
+      "stat": {
+        "value": "2023: 16 of 17; 2024: 14 of 17; 2025: 16 of 17; 2026: 7 of 7 so far, through Week 8. In his last 3 full seasons he played every game in 0 and missed a quarter or more of his team's games in 0",
+        "label": "Bryce Young · games played by season",
+        "definition": "Games he played each regular season, out of his team's games. Missing games can be injury, rest, suspension, or not being on a roster yet; this doesn't say which.",
+        "source": "Sleeper",
+        "asOf": "last 5 full seasons and this one · today"
+      }
+    },
+    {
+      "line": 11,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Available. Okay. Available isn't franchise. To my eye he's a steady hand, a guy who takes what's there. That's a good starter. Franchise means you win games because of him, and the record's 3-4.",
+      "delivery": "building",
+      "facts": [
+        "F4"
+      ],
+      "argument": 3,
+      "score": {
+        "royce": 57
+      }
+    },
+    {
+      "line": 12,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Five picks in seven games, 58.7 percent completions. That's not the efficient guy you'd bank on.",
+      "delivery": "confident",
+      "facts": [
+        "F8",
+        "F9"
+      ],
+      "argument": 2,
+      "score": {
+        "deacon": 66
+      },
+      "stat": {
+        "value": "5",
+        "label": "Bryce Young · interceptions thrown",
+        "definition": "Passes intercepted by the defense.",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "2026 regular season · through Week 8"
+      }
+    },
+    {
+      "line": 13,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Five picks in seven games doesn't tell me he's a gunslinger, that's my read. Anyway, you're both grading him on a record. The question is whether you commit.",
+      "delivery": "calm",
+      "facts": [
+        "F8"
+      ],
+      "argument": 1,
+      "score": {
+        "lonnie": 51
+      }
+    },
+    {
+      "line": 14,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Then answer this. If he goes to the playoffs again and loses, are you still building around him?",
+      "delivery": "curious",
+      "facts": [
+        "F5"
+      ],
+      "argument": 3,
+      "score": {
+        "royce": 57
+      },
+      "stat": {
+        "value": "0-1 (playoffs after the 2025 season)",
+        "label": "Bryce Young · playoff record as a starting QB",
+        "definition": "Playoff wins and losses in games he started at quarterback.",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "career playoffs · final"
+      }
+    },
+    {
+      "line": 15,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Yes. One playoff start doesn't change a plan. If his efficiency slides back to where it was last year, I change my answer.",
+      "delivery": "calm",
+      "facts": [
+        "F5",
+        "F13"
+      ],
+      "argument": 1,
+      "score": {
+        "lonnie": 53
+      }
+    },
+    {
+      "line": 16,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "There it is. So you're already saying the number could flip you. That's a not-yet, Lonnie, not a yes.",
+      "delivery": "emphatic",
+      "facts": [
+        "F10"
+      ],
+      "argument": 2,
+      "score": {
+        "deacon": 67
+      }
+    },
+    {
+      "line": 17,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "It's a yes with a condition. Everybody's is.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": 1,
+      "score": {
+        "lonnie": 51
+      }
+    },
+    {
+      "line": 18,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "Final answers. One sentence each. Deacon.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 19,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Not yet: he's improved, but average doesn't carry a franchise.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 20,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Not yet: a franchise quarterback wins the games that matter, and he hasn't.",
+      "delivery": "cold",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 21,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Yes: he fits the offense, he's on the field, and he's trending the right way.",
+      "delivery": "confident",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 22,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "On the scorecard, tonight goes to Deacon. His case was that the offense's ninth-place scoring is a team number, and that on his own plays Young sits in the middle of the pack, seventeenth of thirty-five.",
+      "delivery": "calm",
+      "facts": [
+        "F10",
+        "F15"
+      ],
+      "argument": null,
+      "score": {
+        "royce": 58,
+        "deacon": 68,
+        "lonnie": 51
+      }
+    },
+    {
+      "line": 23,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "That's the board. Thanks for the call, Ray.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null
+    }
+  ],
+  "meta": {
+    "step": 2,
+    "model": "claude-sonnet-5-5",
+    "created": "2026-11-06T18:14:41",
+    "generation_seconds": 70.2,
+    "timings": {
+      "topic_check": 1.2,
+      "research": 4.8,
+      "verify": 3.2,
+      "write": 21.3,
+      "line_check": 18.8,
+      "judge": 11.0,
+      "close": 9.8
+    },
+    "stats_found": 28,
+    "stats_verified": 22,
+    "stats_dropped": 6,
+    "facts_used": 14,
+    "lines_checked": 23,
+    "lines_rewritten": 3,
+    "lines_cut": 0,
+    "writer_input_tokens": 4034,
+    "writer_cache_read_tokens": 0,
+    "writer_output_tokens": 2545
+  }
+}

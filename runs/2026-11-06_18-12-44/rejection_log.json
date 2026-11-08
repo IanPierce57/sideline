@@ -1,0 +1,84 @@
+{
+  "stats": [
+    {
+      "subject": "Bryce Young",
+      "stat": "career honors",
+      "scope": "career",
+      "what_we_found": null,
+      "reason": "no honors listed"
+    },
+    {
+      "subject": "Bryce Young",
+      "stat": "record as a starting QB",
+      "scope": "career regular season, 2023-2026",
+      "what_we_found": "16-32",
+      "reason": "starts don't match Sleeper (2024: 8 vs 12; 2025: 17 vs 16)"
+    },
+    {
+      "subject": "Bryce Young",
+      "stat": "CPOE (nflverse model)",
+      "scope": "2026 regular season",
+      "what_we_found": "-0.2",
+      "reason": "ours -0.2494 vs muffed.ai -0.3170: the numbers don't match, so it's left out"
+    },
+    {
+      "subject": "Bryce Young",
+      "stat": "dropback success rate",
+      "scope": "2026 regular season",
+      "what_we_found": "42.6%",
+      "reason": "ours 42.6174 vs muffed.ai 42.6200: the numbers don't match, so it's left out"
+    },
+    {
+      "subject": "Bryce Young",
+      "stat": "record as a starting QB",
+      "scope": "2025 regular season",
+      "what_we_found": "8-9",
+      "reason": "starts don't match Sleeper (2025: 17 vs 16)"
+    },
+    {
+      "subject": "Bryce Young",
+      "stat": "record as a starting QB",
+      "scope": "2024 regular season",
+      "what_we_found": "3-5",
+      "reason": "starts don't match Sleeper (2024: 8 vs 12)"
+    },
+    {
+      "subject": "Bryce Young",
+      "stat": "CPOE (Next Gen Stats model)",
+      "scope": "2026 regular season",
+      "what_we_found": "-0.0",
+      "reason": "Next Gen Stats only publish season averages, so this can't be compared through Week 9 while the sources are a week apart"
+    },
+    {
+      "subject": "Bryce Young",
+      "stat": "career honors",
+      "scope": "career",
+      "what_we_found": null,
+      "reason": "no honors listed"
+    }
+  ],
+  "lines": [
+    {
+      "line": 3,
+      "speaker": "lonnie",
+      "said": "Start with what franchise means. It's the guy you stop shopping for. And I think for Carolina, that's him. He's been there since 2023, he's played all seven games this year, and that offense scores about 25 a game, ninth in the league. Canales built it around a quarterback who pushes it downfield, and he does.",
+      "problem": "Canales built the offense around a quarterback who pushes it downfield.: F17 confirms Canales is the head coach, but no fact says how he built the offense or around what. (unsupported)",
+      "action": "rewritten",
+      "now": "Start with what franchise means. It's the guy you stop shopping for. And I think for Carolina, that's him. He's been there since the 2023 season, he's played all seven games this year, and that offense scores about 25 a game, ninth in the league. Canales is the head coach, and I like how that offense has been working with him."
+    },
+    {
+      "line": 15,
+      "speaker": "royce",
+      "said": "One playoff start. You don't hang a man on one start, and you wouldn't let me do it either. But somebody had to get them to January, and he's been out there for 16, 14 and 16 games in his first three seasons.",
+      "problem": "says first three, which doesn't match any fact this line cites",
+      "action": "rewritten",
+      "now": "One playoff start. You don't hang a man on one start, and you wouldn't let me do it either. But somebody had to get them to January, and he's been out there for 16, 14 and 16 games in 2023, 2024 and 2025."
+    }
+  ],
+  "close": [
+    {
+      "line": 25,
+      "problem": "Denise was the caller who called in.: No fact or earlier script line identifies the caller as Denise, and the caller is not shown in the script. (unsupported)"
+    }
+  ]
+}

@@ -1,0 +1,638 @@
+{
+  "topic": "jt or jb",
+  "format": "debate",
+  "caller": {
+    "type": "settler",
+    "name": "Dana",
+    "city": "Scranton"
+  },
+  "players": [
+    "Jayson Tatum",
+    "Jaylen Brown"
+  ],
+  "word_count": 531,
+  "estimated_minutes": 3.5,
+  "warnings": [],
+  "sources": [
+    "NBA stats: Sleeper",
+    "NBA stats: nflverse, checked against Sleeper"
+  ],
+  "receipts": [
+    {
+      "subject": "Jayson Tatum",
+      "label": "games played by season",
+      "say": "2021–22: 76 of 82; 2022–23: 74 of 82; 2023–24: 74 of 82; 2024–25: 72 of 82; 2025–26: 16 of 82; 2026–27: 7 of 8 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
+      "scope": "last 5 full seasons and this one",
+      "source": "Sleeper",
+      "checked": "Wikipedia (career statistics table)",
+      "status": "verified"
+    },
+    {
+      "subject": "Jayson Tatum",
+      "label": "injury history",
+      "say": "ruptured Achilles (major) in the 2024–25 season (he played 72 of 82 games that season; in the seasons since: 16 of 82 in 2025–26, 7 of 8 so far this season (23 games in all))",
+      "scope": "the last 6 seasons",
+      "source": "Wikipedia, confirmed by games played",
+      "checked": "games played those seasons (Sleeper)",
+      "status": "verified"
+    },
+    {
+      "subject": "Jaylen Brown",
+      "label": "games played by season",
+      "say": "2021–22: 66 of 82; 2022–23: 67 of 82; 2023–24: 70 of 82; 2024–25: 63 of 82; 2025–26: 71 of 82; 2026–27: 8 of 9 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 0",
+      "scope": "last 5 full seasons and this one",
+      "source": "Sleeper",
+      "checked": "Wikipedia (career statistics table)",
+      "status": "verified"
+    },
+    {
+      "subject": "Jayson Tatum",
+      "label": "NBA champion",
+      "say": "NBA champion (2024)",
+      "scope": "career",
+      "source": "Wikipedia",
+      "checked": "Wikipedia (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jayson Tatum",
+      "label": "NBA All-Star selection",
+      "say": "6 NBA All-Star selections",
+      "scope": "career",
+      "source": "Wikipedia",
+      "checked": "Wikipedia (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jaylen Brown",
+      "label": "NBA champion",
+      "say": "NBA champion (2024)",
+      "scope": "career",
+      "source": "Wikipedia",
+      "checked": "Wikipedia (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jaylen Brown",
+      "label": "NBA Finals MVP",
+      "say": "NBA Finals MVP (2024)",
+      "scope": "career",
+      "source": "Wikipedia",
+      "checked": "Wikipedia (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jaylen Brown",
+      "label": "NBA All-Star selection",
+      "say": "5 NBA All-Star selections",
+      "scope": "career",
+      "source": "Wikipedia",
+      "checked": "Wikipedia (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jayson Tatum",
+      "label": "points per game",
+      "say": "27.0",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jaylen Brown",
+      "label": "points per game",
+      "say": "21.8",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jayson Tatum",
+      "label": "true shooting percentage",
+      "say": "55.1%",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jaylen Brown",
+      "label": "true shooting percentage",
+      "say": "56.8%",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jayson Tatum",
+      "label": "rebounds per game",
+      "say": "6.0",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jaylen Brown",
+      "label": "rebounds per game",
+      "say": "6.9",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jayson Tatum",
+      "label": "assists per game",
+      "say": "7.9",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jaylen Brown",
+      "label": "assists per game",
+      "say": "3.9",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jayson Tatum",
+      "label": "games played",
+      "say": "7",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jaylen Brown",
+      "label": "games played",
+      "say": "8",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    }
+  ],
+  "winning_case": {
+    "host": "lonnie",
+    "score": 75.5,
+    "argument": "Tatum, because when you need somebody to run the offense, you take the creator.",
+    "stats": [
+      {
+        "subject": "Jayson Tatum",
+        "label": "assists per game",
+        "say": "7.9",
+        "scope": "2026-27 regular season"
+      },
+      {
+        "subject": "Jayson Tatum",
+        "label": "NBA champion",
+        "say": "NBA champion (2024)",
+        "scope": "career"
+      },
+      {
+        "subject": "Jaylen Brown",
+        "label": "NBA champion",
+        "say": "NBA champion (2024)",
+        "scope": "career"
+      },
+      {
+        "subject": "Jaylen Brown",
+        "label": "assists per game",
+        "say": "3.9",
+        "scope": "2026-27 regular season"
+      }
+    ]
+  },
+  "plan": {
+    "cases": {
+      "royce": {
+        "claim": "Jaylen Brown is better right now: he has the Finals MVP, the steadier availability, and the cleaner scoring.",
+        "supports": [
+          "Honors: Finals MVP in 2024 and 5 All-Star selections (F11, F12)",
+          "Availability: 71 of 82 last season against Tatum's 16 (F7, F3)",
+          "Rate stat: Brown's true shooting beats Tatum's this season, plus 6.9 boards to 6.0 (F16, F15, F18, F17)"
+        ],
+        "answer": "To the point that Tatum has more All-Star picks and more assists, he concedes the 6-to-5 and says assists come in a small sample and honors are the past, while Brown's Finals MVP was won on the biggest stage."
+      },
+      "deacon": {
+        "claim": "Tatum is better right now: he scores more and creates far more for teammates, at a small efficiency cost.",
+        "supports": [
+          "Production: 27.0 points to 21.8 (F13, F14)",
+          "Playmaking: 7.9 assists to 3.9 (F19, F20)",
+          "Honors over time: 6 All-Star selections to 5 (F9, F12)"
+        ],
+        "answer": "He grants Brown's better true shooting (F15, F16) and the small samples, then shows the gap is small next to the five extra points and four extra assists a night."
+      },
+      "lonnie": {
+        "claim": "Tatum is the better player right now because of his role: he runs the offense and creates, which is the job a team can't replace.",
+        "supports": [
+          "Role: 7.9 assists a night as the Celtics' creator (F19, F20)",
+          "Shared title: the same 2024 championship, so the ring doesn't separate them (F8, F10)",
+          "Availability: back and playing 7 of 8 this season, 23 games since the Achilles (F21, F4, F3)"
+        ],
+        "answer": "Granting that the Achilles is a fair question, he points to 7 of 8 games played this season and says last season's 16 answers a different question than 'right now'."
+      }
+    },
+    "beats": [
+      "Opening positions: Royce for Brown on the Finals MVP, Lonnie and Deacon for Tatum on creation and scoring",
+      "Clash over efficiency and availability: Deacon concedes true shooting, Royce brings 71 vs 16 games, Lonnie says that's last season",
+      "The trap: Royce's honors standard turns against him (6 All-Stars to 5), then Lonnie's 7-game assist sample gets turned on him",
+      "Decisive exchange: Royce catches the small sample, Deacon concedes it and names what would flip him"
+    ]
+  },
+  "scores": {
+    "royce": 61.5,
+    "deacon": 66.3,
+    "lonnie": 75.5
+  },
+  "winner": "lonnie",
+  "tie": false,
+  "lines": [
+    {
+      "line": 1,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "You're on the Sideline. Go ahead, Dana from Scranton.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 2,
+      "speaker": "caller",
+      "speaker_name": "Dana from Scranton",
+      "text": "My brother and I have argued about this since Sunday dinner. Jayson Tatum or Jaylen Brown, who's better right now? Loser buys the wings.",
+      "delivery": "curious",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 3,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Brown. He's the Finals MVP, 2024, and he's a five-time All-Star. He plays like a freight train that learned to shoot threes. And he was on the floor for 71 of 82 games last season. That's the guy you want.",
+      "delivery": "confident",
+      "facts": [
+        "F11",
+        "F12",
+        "F7"
+      ],
+      "argument": 1,
+      "score": {
+        "royce": 73
+      },
+      "stat": {
+        "value": "NBA Finals MVP (2024)",
+        "label": "Jaylen Brown · NBA Finals MVP",
+        "definition": "From his Wikipedia page: NBA Finals MVP (2024)",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "career · today"
+      }
+    },
+    {
+      "line": 4,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Same ring, though. Tatum won that title too. And you said right now, Royce. This season Tatum's handing out 7.9 assists a night to Brown's 3.9. To my eye, the Celtics' offense runs through him. So who's creating for everybody else on the other side?",
+      "delivery": "curious",
+      "facts": [
+        "F8",
+        "F10",
+        "F19",
+        "F20"
+      ],
+      "argument": 2,
+      "score": {
+        "lonnie": 76
+      },
+      "stat": {
+        "value": "NBA champion (2024)",
+        "label": "Jayson Tatum · NBA champion",
+        "definition": "From his Wikipedia page: NBA champion (2024)",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "career · today"
+      }
+    },
+    {
+      "line": 5,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Listen, Lonnie's right, and scoring says the same: 27.0 to 21.8. Now, Brown's the more efficient scorer, 56.8 true shooting to 55.1. That's scoring efficiency counting threes and free throws. I'll give him that. But that's a small efficiency edge for a big gap in scoring. And it's seven, eight games. I'd hold all of it loosely.",
+      "delivery": "confident",
+      "facts": [
+        "F13",
+        "F14",
+        "F15",
+        "F16",
+        "F21",
+        "F22"
+      ],
+      "argument": 3,
+      "score": {
+        "deacon": 65
+      },
+      "stat": {
+        "value": "27.0",
+        "label": "Jayson Tatum · points per game",
+        "definition": "Points scored per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 6,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "You just gave me the efficiency, Deacon. That gap in scoring is just more shots. And Tatum played 16 games last season. You can't build the best player on a guy you're waiting on.",
+      "delivery": "cold",
+      "facts": [
+        "F3",
+        "F13",
+        "F14"
+      ],
+      "argument": 4,
+      "score": {
+        "royce": 64
+      },
+      "stat": {
+        "value": "2021–22: 76 of 82; 2022–23: 74 of 82; 2023–24: 74 of 82; 2024–25: 72 of 82; 2025–26: 16 of 82; 2026–27: 7 of 8 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
+        "label": "Jayson Tatum · games played by season",
+        "definition": "Games he played each regular season, out of his team's games. Missing games can be injury, rest, suspension, or not being on a roster yet; this doesn't say which.",
+        "source": "Sleeper",
+        "asOf": "last 5 full seasons and this one · today"
+      }
+    },
+    {
+      "line": 7,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Fair question after an Achilles. I'd want to see the burst myself. But it's last season's number, Royce. This season he's played 7 of 8, and he's got 23 games in since the injury. That's what right now looks like.",
+      "delivery": "calm",
+      "facts": [
+        "F3",
+        "F4",
+        "F21"
+      ],
+      "argument": 5,
+      "score": {
+        "lonnie": 81
+      },
+      "stat": {
+        "value": "ruptured Achilles (major) in the 2024–25 season (he played 72 of 82 games that season; in the seasons since: 16 of 82 in 2025–26, 7 of 8 so far this season (23 games in all))",
+        "label": "Jayson Tatum · injury history",
+        "definition": "Injuries his Wikipedia article reports, kept only when his games played show real time missed. Games played are for the whole regular season, not a count of games that injury cost him.",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "the last 6 seasons · today"
+      }
+    },
+    {
+      "line": 8,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Right. Last season's games tell you about last season.",
+      "delivery": "dismissive",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 9,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Then give me the stage. Name what Tatum did that beats Finals MVP.",
+      "delivery": "building",
+      "facts": [
+        "F11"
+      ],
+      "argument": 4,
+      "score": {
+        "royce": 60
+      }
+    },
+    {
+      "line": 10,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "You want honors voted on over years? Six All-Star selections to five. That's Tatum.",
+      "delivery": "fired_up",
+      "facts": [
+        "F9",
+        "F12"
+      ],
+      "argument": 6,
+      "score": {
+        "deacon": 66
+      },
+      "stat": {
+        "value": "6 NBA All-Star selections",
+        "label": "Jayson Tatum · NBA All-Star selection",
+        "definition": "From his Wikipedia page: 6× NBA All-Star (2020–2025)",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "career · today"
+      }
+    },
+    {
+      "line": 11,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Right, six to five. That's the trophy case, Deacon, not tonight. And tonight Brown's pulling down 6.9 boards to his 6.0, and still scoring cleaner. That's the more complete night.",
+      "delivery": "calm",
+      "facts": [
+        "F18",
+        "F17",
+        "F16",
+        "F15"
+      ],
+      "argument": 7,
+      "score": {
+        "royce": 63
+      },
+      "stat": {
+        "value": "6.9",
+        "label": "Jaylen Brown · rebounds per game",
+        "definition": "Rebounds grabbed per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 12,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "We've had honors and games played. What does an actual possession look like for each of them?",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 13,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Brown does things Tatum doesn't, the threes, the steals, to my read. But 27 and nearly eight assists? That's the one line the team can't replace. If Tatum's out of the lineup, who creates?",
+      "delivery": "curious",
+      "facts": [
+        "F13",
+        "F19"
+      ],
+      "argument": 8,
+      "score": {
+        "lonnie": 76
+      },
+      "stat": {
+        "value": "7.9",
+        "label": "Jayson Tatum · assists per game",
+        "definition": "Assists per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 14,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Seven games, Lonnie. Deacon just told you not to bet on eight. And you're building on seven.",
+      "delivery": "sarcastic",
+      "facts": [
+        "F21"
+      ],
+      "argument": 9,
+      "score": {
+        "royce": 61
+      },
+      "stat": {
+        "value": "7",
+        "label": "Jayson Tatum · games played",
+        "definition": "Games he played in.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 15,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Okay, that's fair, mine too. If those assists hold up once he's played a lot more games, I'm right. If they drop to Brown's level, I'm wrong, and I'll say it right here.",
+      "delivery": "conceding",
+      "facts": [
+        "F19",
+        "F20"
+      ],
+      "argument": null,
+      "stat": {
+        "value": "3.9",
+        "label": "Jaylen Brown · assists per game",
+        "definition": "Assists per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 16,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Notice what he didn't say. Brown's got the trophy that settles who showed up when it counted. Remember that.",
+      "delivery": "quiet",
+      "facts": [
+        "F11"
+      ],
+      "argument": null
+    },
+    {
+      "line": 17,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "Final answers. One sentence each.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 18,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Brown, because the best player is the one who owns the biggest stage, and he's the Finals MVP.",
+      "delivery": "calm",
+      "facts": [
+        "F11"
+      ],
+      "argument": null
+    },
+    {
+      "line": 19,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Tatum, because a guy who scores that much and sets up that many teammates is giving you two kinds of value.",
+      "delivery": "confident",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 20,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Tatum, because when you need somebody to run the offense, you take the creator.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 21,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "On the scorecard, tonight goes to Lonnie. His case was about who creates for the team right now, and Tatum is handing out 7.9 assists a night to Brown's 3.9.",
+      "delivery": "calm",
+      "facts": [
+        "F19",
+        "F20"
+      ],
+      "argument": null,
+      "score": {
+        "royce": 62,
+        "deacon": 66,
+        "lonnie": 76
+      }
+    },
+    {
+      "line": 22,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "That's the board. Thanks for the call, Dana.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null
+    }
+  ],
+  "meta": {
+    "step": 2,
+    "model": "claude-sonnet-5-5",
+    "created": "2026-11-06T18:33:09",
+    "generation_seconds": 112.2,
+    "timings": {
+      "topic_check": 2.6,
+      "research": 5.0,
+      "verify": 0.0,
+      "write": 63.2,
+      "line_check": 24.0,
+      "judge": 8.5,
+      "close": 8.9
+    },
+    "stats_found": 26,
+    "stats_verified": 26,
+    "stats_dropped": 0,
+    "facts_used": 18,
+    "lines_checked": 22,
+    "lines_rewritten": 5,
+    "lines_cut": 0,
+    "writer_input_tokens": 4763,
+    "writer_cache_read_tokens": 0,
+    "writer_output_tokens": 7618
+  }
+}

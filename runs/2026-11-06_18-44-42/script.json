@@ -1,0 +1,671 @@
+{
+  "topic": "Is Ty Jerome for real?",
+  "format": "real_or_not",
+  "caller": {
+    "type": "skeptic",
+    "name": "Dennis",
+    "city": "Memphis"
+  },
+  "players": [
+    "Ty Jerome"
+  ],
+  "word_count": 577,
+  "estimated_minutes": 3.8,
+  "warnings": [],
+  "sources": [
+    "Current rosters: Sleeper",
+    "NBA stats: Sleeper",
+    "NBA stats: nflverse, checked against Sleeper"
+  ],
+  "receipts": [
+    {
+      "subject": "Ty Jerome",
+      "label": "current team",
+      "say": "Memphis Grizzlies (point guard), no injury designation today",
+      "scope": "today",
+      "source": "Sleeper",
+      "checked": "Wikipedia (infobox)",
+      "status": "verified"
+    },
+    {
+      "subject": "Ty Jerome",
+      "label": "games played by season",
+      "say": "2021–22: 48 of 82; 2022–23: 45 of 82; 2023–24: 2 of 82; 2024–25: 70 of 82; 2025–26: 15 of 82; 2026–27: 7 of 8 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 4",
+      "scope": "last 5 full seasons and this one",
+      "source": "Sleeper",
+      "checked": "Wikipedia (career statistics table)",
+      "status": "verified"
+    },
+    {
+      "subject": "Ty Jerome",
+      "label": "points per game",
+      "say": "27.4",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Ty Jerome",
+      "label": "assists per game",
+      "say": "5.3",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Ty Jerome",
+      "label": "field goal percentage",
+      "say": "50.4%",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Ty Jerome",
+      "label": "true shooting percentage",
+      "say": "62.6%",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Ty Jerome",
+      "label": "minutes per game",
+      "say": "30.7",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Ty Jerome",
+      "label": "assist-to-turnover ratio",
+      "say": "2.2",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Ty Jerome",
+      "label": "games played",
+      "say": "7",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Ty Jerome",
+      "label": "points per game",
+      "say": "19.7",
+      "scope": "2025-26 regular season",
+      "source": "Sleeper",
+      "checked": "Wikipedia (career statistics table)",
+      "status": "verified"
+    },
+    {
+      "subject": "Ty Jerome",
+      "label": "minutes per game",
+      "say": "22.6",
+      "scope": "2025-26 regular season",
+      "source": "Sleeper",
+      "checked": "Wikipedia (career statistics table)",
+      "status": "verified"
+    },
+    {
+      "subject": "Ty Jerome",
+      "label": "games played",
+      "say": "15",
+      "scope": "2025-26 regular season",
+      "source": "Sleeper",
+      "checked": "Wikipedia (career statistics table)",
+      "status": "verified"
+    },
+    {
+      "subject": "Memphis Grizzlies",
+      "label": "record",
+      "say": "6-2",
+      "scope": "2026–27 regular season",
+      "source": "Sleeper and Wikipedia",
+      "checked": "Wikipedia game log (every game)",
+      "status": "verified"
+    },
+    {
+      "subject": "Memphis Grizzlies",
+      "label": "place in the Western Conference",
+      "say": "tied for 4th in the West at 6-2",
+      "scope": "2026–27 regular season",
+      "source": "Sleeper and Wikipedia",
+      "checked": "Wikipedia standings (every team's record)",
+      "status": "verified"
+    },
+    {
+      "subject": "Ty Jerome",
+      "label": "assist-to-turnover ratio",
+      "say": "3.1",
+      "scope": "2025-26 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Ty Jerome",
+      "label": "points per game",
+      "say": "12.5",
+      "scope": "2024-25 regular season",
+      "source": "Sleeper",
+      "checked": "Wikipedia (career statistics table)",
+      "status": "verified"
+    },
+    {
+      "subject": "Ty Jerome",
+      "label": "true shooting percentage",
+      "say": "64.3%",
+      "scope": "2024-25 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Memphis Grizzlies",
+      "label": "injured rotation players",
+      "say": "rotation players only (15+ minutes a game; bench players aren't covered): Out: Isaiah Stewart (C, knee), Scotty Pippen Jr. (PG, back)",
+      "scope": "today",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    }
+  ],
+  "winning_case": {
+    "host": "deacon",
+    "score": 76.9,
+    "argument": "Not real as a 27.4-a-game guy: the shot holds up, but the volume goes back down when the health history shows up.",
+    "stats": [
+      {
+        "subject": "Ty Jerome",
+        "label": "points per game",
+        "say": "19.7",
+        "scope": "2025-26 regular season"
+      },
+      {
+        "subject": "Ty Jerome",
+        "label": "points per game",
+        "say": "12.5",
+        "scope": "2024-25 regular season"
+      },
+      {
+        "subject": "Ty Jerome",
+        "label": "points per game",
+        "say": "27.4",
+        "scope": "2026-27 regular season"
+      },
+      {
+        "subject": "Ty Jerome",
+        "label": "games played",
+        "say": "7",
+        "scope": "2026-27 regular season"
+      }
+    ]
+  },
+  "plan": {
+    "cases": {
+      "royce": {
+        "claim": "Real: Jerome is a genuine scoring guard, and his scoring has been a level above anything he did in recent years.",
+        "supports": [
+          "Results: 27.4 a night on 50.4% shooting with Memphis 6-2 and tied for 4th in the West (F4, F7, F20, F21)",
+          "Image of how he plays, tied to the 5.3 assists and 30.7 minutes the coach trusts him with (F5, F11)",
+          "Track record: 12.5 a game on 70 games two seasons ago, so the shooting is not new (F27, F28)"
+        ],
+        "answer": "Concedes the 7-game sample and the missed time, then says the shooting skill has held up in every season he has played, and the coach is giving him the minutes."
+      },
+      "deacon": {
+        "claim": "Not real: the 27.4 is a hot week on top of a spotty career, and he will drift back toward the player he was.",
+        "supports": [
+          "Jump in scoring versus past: 27.4 now against 19.7 last season and 12.5 two seasons ago (F4, F14, F27)",
+          "Availability: missed a quarter or more of games in 4 of his last 5 full seasons (F3)",
+          "Efficiency is good but not new: true shooting 62.6% this year against 64.3% two seasons ago (F9, F28)"
+        ],
+        "answer": "Grants the shooting skill is real and the efficiency holds up, but says scoring volume doubling is the part that won't last, and a hot 7 games on a thin sample doesn't change that."
+      },
+      "lonnie": {
+        "claim": "Real, because his role changed: he is the lead ball handler getting 30 minutes and the shots, and that role is why the scoring jumped.",
+        "supports": [
+          "Role: minutes up from 22.6 last season and 19.9 two seasons ago to 30.7 (F11, F17, F30)",
+          "Fit: Memphis lost Scotty Pippen Jr. at point guard and Isaiah Stewart at center, so someone has to handle the ball (F32)",
+          "Playmaking tied to scoring: 5.3 assists at 2.2 assist-to-turnover (F5, F12)"
+        ],
+        "answer": "Concedes the health history and says the question is the role, not the calendar: the minutes and shots are the coach's decision, and they explain the jump."
+      }
+    },
+    "beats": [
+      "Opening positions: Royce says real on results, Deacon says not real on the jump from his career, Lonnie says real because the role changed.",
+      "Main clash: is a jump in volume the same as a jump in skill? Deacon's career scoring against Royce's results and Lonnie's minutes.",
+      "Exposed weakness: Deacon's own efficiency numbers say the shooting is real, and Lonnie's minutes argument is tested by the health record.",
+      "Decisive exchange: the minutes explain the volume and the efficiency is steady, so the claim left standing is whether he stays on the floor."
+    ]
+  },
+  "scores": {
+    "royce": 57.6,
+    "deacon": 76.9,
+    "lonnie": 65.0
+  },
+  "winner": "deacon",
+  "tie": false,
+  "lines": [
+    {
+      "line": 1,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "You're on the Sideline. Go ahead, Dennis from Memphis.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 2,
+      "speaker": "caller",
+      "speaker_name": "Dennis from Memphis",
+      "text": "Everybody's crowning Ty Jerome after a handful of games. I don't buy it. Convince me he's for real.",
+      "delivery": "curious",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 3,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "I'll convince you, Dennis. Twenty-seven point four a night, shooting 50.4 percent, and Memphis is six and two. To my eye he scores like a guy who's found the one door in the building nobody locked.",
+      "delivery": "confident",
+      "facts": [
+        "F4",
+        "F7",
+        "F20"
+      ],
+      "argument": 1,
+      "score": {
+        "royce": 56
+      },
+      "stat": {
+        "value": "27.4",
+        "label": "Ty Jerome · points per game",
+        "definition": "Points scored per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 4,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Listen here. Last season he was at 19.7 a game, and the season before that, 12.5. You don't go from a role player to a star scorer in 7 games and call it a trend.",
+      "delivery": "confident",
+      "facts": [
+        "F14",
+        "F27",
+        "F13"
+      ],
+      "argument": 2,
+      "score": {
+        "deacon": 73
+      },
+      "stat": {
+        "value": "19.7",
+        "label": "Ty Jerome · points per game",
+        "definition": "Points scored per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2025-26 regular season · final"
+      }
+    },
+    {
+      "line": 5,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "So what changed? Not the shot. The job. He's playing 30.7 minutes now, and last season he was at 22.6. That's a big piece of the scoring jump, right there.",
+      "delivery": "curious",
+      "facts": [
+        "F11",
+        "F17"
+      ],
+      "argument": 3,
+      "score": {
+        "lonnie": 74
+      },
+      "stat": {
+        "value": "30.7",
+        "label": "Ty Jerome · minutes per game",
+        "definition": "Minutes played per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 6,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Minutes explain volume. They don't explain it lasting. And hold on, he's missed a quarter or more of the games in four of his last five full seasons. How's he stay on the floor for thirty a night?",
+      "delivery": "building",
+      "facts": [
+        "F3"
+      ],
+      "argument": 2,
+      "score": {
+        "deacon": 75
+      },
+      "stat": {
+        "value": "2021–22: 48 of 82; 2022–23: 45 of 82; 2023–24: 2 of 82; 2024–25: 70 of 82; 2025–26: 15 of 82; 2026–27: 7 of 8 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 4",
+        "label": "Ty Jerome · games played by season",
+        "definition": "Games he played each regular season, out of his team's games. Missing games can be injury, rest, suspension, or not being on a roster yet; this doesn't say which.",
+        "source": "Sleeper",
+        "asOf": "last 5 full seasons and this one · today"
+      }
+    },
+    {
+      "line": 7,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Fair question. And he's played seven of eight so far, so he's on the floor right now. But you just made my point for me, Deacon. The coach is giving him the ball because the shots keep going in. Memphis is tied for fourth in the West.",
+      "delivery": "calm",
+      "facts": [
+        "F3",
+        "F21"
+      ],
+      "argument": 4,
+      "score": {
+        "royce": 53
+      },
+      "stat": {
+        "value": "tied for 4th in the West at 6-2",
+        "label": "Memphis Grizzlies · place in the Western Conference",
+        "definition": "Place in the conference standings by winning percentage.",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "2026–27 regular season · today"
+      }
+    },
+    {
+      "line": 8,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "And look at who's not there. Pippen's out at point guard, Stewart's out at center. Somebody has to run the offense, and he's the point guard on the roster. That looks more like a role than a hot streak.",
+      "delivery": "calm",
+      "facts": [
+        "F32",
+        "F1"
+      ],
+      "argument": 3,
+      "score": {
+        "lonnie": 68
+      },
+      "stat": {
+        "value": "rotation players only (15+ minutes a game; bench players aren't covered): Out: Isaiah Stewart (C, knee), Scotty Pippen Jr. (PG, back)",
+        "label": "Memphis Grizzlies · injured rotation players",
+        "definition": "Players averaging 15+ minutes on today's injury report. Day-to-day is minor and often plays; out means out.",
+        "source": "Sleeper",
+        "asOf": "today · today"
+      }
+    },
+    {
+      "line": 9,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "The coach trusts him with it, and he's repaying that. 5.3 assists, so he's not just shooting.",
+      "delivery": "building",
+      "facts": [
+        "F5"
+      ],
+      "argument": 4,
+      "score": {
+        "royce": 53
+      },
+      "stat": {
+        "value": "5.3",
+        "label": "Ty Jerome · assists per game",
+        "definition": "Assists per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 10,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Nah, nah. 5.3 assists with 2.2 for every turnover is fine. Last year he was at 3.1. That went the wrong way.",
+      "delivery": "emphatic",
+      "facts": [
+        "F5",
+        "F12",
+        "F25"
+      ],
+      "argument": 5,
+      "score": {
+        "deacon": 76
+      },
+      "stat": {
+        "value": "2.2",
+        "label": "Ty Jerome · assist-to-turnover ratio",
+        "definition": "Assists for every turnover.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 11,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Last year was fifteen games. And you're quoting it, which is funny.",
+      "delivery": "sarcastic",
+      "facts": [
+        "F19"
+      ],
+      "argument": 4,
+      "score": {
+        "royce": 50
+      },
+      "stat": {
+        "value": "15",
+        "label": "Ty Jerome · games played",
+        "definition": "Games he played in.",
+        "source": "Sleeper",
+        "asOf": "2025-26 regular season · final"
+      }
+    },
+    {
+      "line": 12,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Deac, you want him to do more and turn it over less. He's playing more minutes. Of course the ratio might dip. Who's running it if it's not him?",
+      "delivery": "curious",
+      "facts": [
+        "F11",
+        "F17"
+      ],
+      "argument": 3,
+      "score": {
+        "lonnie": 66
+      },
+      "stat": {
+        "value": "22.6",
+        "label": "Ty Jerome · minutes per game",
+        "definition": "Minutes played per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2025-26 regular season · final"
+      }
+    },
+    {
+      "line": 13,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Fine. Then answer mine. Is he the guy at 62.6 true shooting, which is points per shot counting threes and free throws? Because in 2024-25 he was at 64.3 over 70 games.",
+      "delivery": "building",
+      "facts": [
+        "F9",
+        "F28"
+      ],
+      "argument": 2,
+      "score": {
+        "deacon": 77
+      },
+      "stat": {
+        "value": "62.6%",
+        "label": "Ty Jerome · true shooting percentage",
+        "definition": "Scoring efficiency counting threes and free throws: points / (2 x (shots + 0.44 x free throws)), in percent.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 14,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Wait a second. 62.6 this year, 64.3 back then. That's about the same level of efficiency. So the shot's real. You're telling me the shot is real and he's not?",
+      "delivery": "fired_up",
+      "facts": [
+        "F9",
+        "F28"
+      ],
+      "argument": 6,
+      "score": {
+        "royce": 57
+      },
+      "stat": {
+        "value": "64.3%",
+        "label": "Ty Jerome · true shooting percentage",
+        "definition": "Scoring efficiency counting threes and free throws: points / (2 x (shots + 0.44 x free throws)), in percent.",
+        "source": "Sleeper",
+        "asOf": "2024-25 regular season · final"
+      }
+    },
+    {
+      "line": 15,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "The shot's real. Okay. That's fair. The 27 is what I don't buy, because it's a big jump from 19.7 last year and 12.5 the year before.",
+      "delivery": "conceding",
+      "facts": [
+        "F4",
+        "F14",
+        "F27"
+      ],
+      "argument": 2,
+      "score": {
+        "deacon": 77
+      },
+      "stat": {
+        "value": "12.5",
+        "label": "Ty Jerome · points per game",
+        "definition": "Points scored per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2024-25 regular season · final"
+      }
+    },
+    {
+      "line": 16,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Careful, Deac. More shots a night is the role. That's what I said at the start.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": 3,
+      "score": {
+        "lonnie": 62
+      }
+    },
+    {
+      "line": 17,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "Alright, hold it there. The shooting skill is settled. Is the 27.4 real, or is it a hot week? Final answers. One sentence each. Royce.",
+      "delivery": "calm",
+      "facts": [
+        "F4"
+      ],
+      "argument": null
+    },
+    {
+      "line": 18,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Real, because a coach doesn't hand a man the offense on a hot week, and Memphis is winning with it.",
+      "delivery": "confident",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 19,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Not real as a 27.4-a-game guy: the shot holds up, but the volume goes back down when the health history shows up.",
+      "delivery": "calm",
+      "facts": [
+        "F4"
+      ],
+      "argument": null
+    },
+    {
+      "line": 20,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Real, because the job is his now, and the only thing that flips me is him sitting out.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 21,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "On the scorecard, tonight goes to Deacon. He kept the shooting and the scoring apart: his true shooting is 62.6% this season, right in line with the 64.3% he posted in 2024-25, but the jump to 27.4 a night is far above the 12.5 he scored then.",
+      "delivery": "calm",
+      "facts": [
+        "F9",
+        "F28",
+        "F4",
+        "F27"
+      ],
+      "argument": null,
+      "score": {
+        "royce": 58,
+        "deacon": 77,
+        "lonnie": 65
+      }
+    },
+    {
+      "line": 22,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "That's the board. Thanks for the call, Dennis.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null
+    }
+  ],
+  "meta": {
+    "step": 2,
+    "model": "claude-sonnet-5-5",
+    "created": "2026-11-06T18:44:42",
+    "generation_seconds": 88.8,
+    "timings": {
+      "topic_check": 2.2,
+      "research": 5.7,
+      "verify": 5.8,
+      "write": 21.1,
+      "line_check": 32.3,
+      "judge": 10.6,
+      "close": 10.9
+    },
+    "stats_found": 34,
+    "stats_verified": 33,
+    "stats_dropped": 1,
+    "facts_used": 18,
+    "lines_checked": 22,
+    "lines_rewritten": 14,
+    "lines_cut": 0,
+    "writer_input_tokens": 5694,
+    "writer_cache_read_tokens": 50499,
+    "writer_output_tokens": 2659
+  }
+}

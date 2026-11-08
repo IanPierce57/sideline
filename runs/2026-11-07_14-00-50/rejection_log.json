@@ -1,0 +1,45 @@
+{
+  "stats": [
+    {
+      "subject": "Shai Gilgeous-Alexander",
+      "stat": "games played by season",
+      "scope": "last 5 full seasons and this one",
+      "what_we_found": "2021–22: 56 of 82; 2022–23: 68 of 82; 2023–24: 74 of 82; 2024–25: 76 of 82; 2025–26: 68 of 82; 2026–27: 9 of 9 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
+      "reason": "kept, but the sources disagreed: games played differ: 2023–24: Sleeper 74, Wikipedia 75; using Sleeper's"
+    },
+    {
+      "subject": "Nikola Jokić",
+      "stat": "games played by season",
+      "scope": "last 5 full seasons and this one",
+      "what_we_found": "2021–22: 74 of 82; 2022–23: 69 of 82; 2023–24: 78 of 82; 2024–25: 70 of 82; 2025–26: 65 of 82; 2026–27: 7 of 7 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 0",
+      "reason": "kept, but the sources disagreed: games played differ: 2023–24: Sleeper 78, Wikipedia 79; using Sleeper's"
+    },
+    {
+      "subject": "Luka Dončić",
+      "stat": "games played by season",
+      "scope": "last 5 full seasons and this one",
+      "what_we_found": "2021–22: 65 of 82; 2022–23: 66 of 82; 2023–24: 70 of 82; 2024–25: 50 of 82; 2025–26: 64 of 82; 2026–27: 9 of 10 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
+      "reason": "kept, but the sources disagreed: games played differ: 2024–25: Sleeper 50, Wikipedia 22; using Sleeper's"
+    }
+  ],
+  "lines": [
+    {
+      "line": 11,
+      "speaker": "lonnie",
+      "said": "It's down, I'll give you that. But eight games from a guy who was at 9.9 is exactly where your grace rule applies, Deac. And the scoring hasn't moved, 24.0 now against 23.9 last year.",
+      "problem": "says 9.9, which doesn't match any fact this line cites; uses the stock phrase \"i'll give you that\" after the segment's limit of 2; say it fresh, in other words, or drop it",
+      "action": "rewritten",
+      "now": "It's down, fair point. But eight games from a guy who was at 9.9 assists last season is exactly where your grace rule applies, Deac. And the scoring hasn't moved, 24.0 now against 23.9 last year."
+    }
+  ],
+  "close": [
+    {
+      "line": 23,
+      "problem": "Jokic played 65 games, which is one more than 64.: F29 confirms Jokic played 65, but Hal says Cade played one more than Jokic's 65. In fact Jokic played one more than Cade's 64. The phrasing reverses the comparison. (contradicted)"
+    },
+    {
+      "line": 24,
+      "problem": "The caller on the show was Dana.: No fact or earlier line names the caller as Dana. (unsupported)"
+    }
+  ]
+}

@@ -1,0 +1,292 @@
+{
+  "arguments": {
+    "1": {
+      "host": "deacon",
+      "score": 73.3,
+      "base": 73.3,
+      "dropped": false,
+      "lines": [
+        3
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Verified current-season scoring and efficiency numbers favor Luka, but the sample is only 8 games and scoring efficiency is not the whole picture of 'best'. / Uses verified this-season scoring and efficiency for Luka and Victor, but it's only 8 games and ignores defense and other players. / Verified current-season PPG and TS% for Luka and Victor bear on the claim, but 8 games is a small sample and scoring efficiency is only part of 'best'.",
+      "ratings": {
+        "evidence": 3.67,
+        "reasoning": 3.0,
+        "rebuttal": null,
+        "impact": 4.0,
+        "clarity": 5.0
+      }
+    },
+    "2": {
+      "host": "royce",
+      "score": 75.0,
+      "base": 75.0,
+      "dropped": false,
+      "lines": [
+        4
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        1
+      ],
+      "note": "Attacks the 8-game sample with last year's 33.5 and points to Shai's MVPs and ring, though it leans on voting and doesn't prove he's the best right now. / Attacks the eight-game sample with Luka's last-year scoring and offers Shai's MVPs and title, though MVP awards are an indirect measure of best right now. / Directly attacks the 8-game sample with last year's 33.5 and offers Shai's MVPs and title, though award facts don't prove who is best right now and Shai's 30.1 is also an 8-game number.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 3.0,
+        "rebuttal": 4.0,
+        "impact": 4.0,
+        "clarity": 4.0
+      }
+    },
+    "3": {
+      "host": "lonnie",
+      "score": 62.3,
+      "base": 62.3,
+      "dropped": false,
+      "lines": [
+        5
+      ],
+      "rebuttal": 2.6666666666666665,
+      "answers": [
+        1,
+        2
+      ],
+      "note": "Reframes to two-way value with DPOY and scoring growth, but the rhetorical question skips over how much defense is worth versus the others' output. / Brings in Victor's DPOY and scoring rise, but doesn't answer the sample-size or MVP points and counts only a small sample. / DPOY plus rising scoring supports a two-way case, but it only partly answers the scorers and uses an 8-game 29.0.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.0,
+        "rebuttal": 2.67,
+        "impact": 4.0,
+        "clarity": 4.0
+      }
+    },
+    "4": {
+      "host": "royce",
+      "score": 68.0,
+      "base": 68.0,
+      "dropped": false,
+      "lines": [
+        6
+      ],
+      "rebuttal": 3.6666666666666665,
+      "answers": [
+        3
+      ],
+      "note": "Fairly argues that DPOY is one end while MVP covers overall, with both awards from the same season, though MVP voting isn't conclusive. / Answers the defense point by saying DPOY covers one end while the MVP covers overall, with both awards cited, though MVP voting is not proof of who is best now. / Fairly notes DPOY is one end and MVP is the overall award, but it doesn't engage Victor's scoring rise.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.0,
+        "rebuttal": 3.67,
+        "impact": 3.67,
+        "clarity": 4.67
+      }
+    },
+    "5": {
+      "host": "deacon",
+      "score": 67.0,
+      "base": 67.0,
+      "dropped": false,
+      "lines": [
+        7
+      ],
+      "rebuttal": 3.6666666666666665,
+      "answers": [
+        2,
+        4
+      ],
+      "note": "Uses Shai's 55.8 TS and turns Host 1's small-sample point back on him, but it mainly undercuts Shai rather than building Luka's case. / Uses Shai's lower efficiency and catches the eight-game inconsistency, but this doesn't answer the MVP point directly. / Turns Host 3's small-sample charge back on Shai's eight games and cites his lowest TS%, but doesn't address the MVP point.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.33,
+        "rebuttal": 3.67,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "6": {
+      "host": "lonnie",
+      "score": 62.0,
+      "base": 62.0,
+      "dropped": false,
+      "lines": [
+        8
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        4,
+        5
+      ],
+      "note": "Correctly notes Victor's 57.0 TS beats Shai's and asks about defense, but it's an 8-game comparison and the defense question is a deflection. / Correctly notes Victor's TS beats Shai's and asks whether efficiency captures defense, which is a fair challenge but a narrow one. / Correctly notes Victor's TS% beats Shai's and questions the scoring-only measure, but it's a narrow comparison.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.0,
+        "rebuttal": 3.0,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "7": {
+      "host": "deacon",
+      "score": 48.7,
+      "base": 43.7,
+      "dropped": true,
+      "lines": [
+        9
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        6
+      ],
+      "note": "Concedes the defense award then argues Luka touches the ball every trip, an unsupported usage claim with no cited facts. / Concedes defense and offers an unsupported claim about touches per trip, which partly answers the defense challenge. / Concedes the defense award and argues Luka touches more trips, but there are no supporting facts, only an unsupported analogy.",
+      "ratings": {
+        "evidence": 1.0,
+        "reasoning": 2.0,
+        "rebuttal": 3.0,
+        "impact": 3.0,
+        "clarity": 3.33
+      }
+    },
+    "8": {
+      "host": "royce",
+      "score": 64.0,
+      "base": 64.0,
+      "dropped": false,
+      "lines": [
+        10
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        5,
+        6
+      ],
+      "note": "Concedes Shai's efficiency and cites his consistent scoring and MVP, but consistency at 30 ppg doesn't directly show he's best. / Shows Shai's consistency across seasons with verified points per game and the MVP vote, and concedes efficiency, but doesn't address the sample-size point head-on. / Concedes the efficiency gap and argues Shai's consistency plus the MVP vote, but it doesn't address the sample-size critique of his current numbers.",
+      "ratings": {
+        "evidence": 3.33,
+        "reasoning": 3.0,
+        "rebuttal": 3.0,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "9": {
+      "host": "lonnie",
+      "score": 69.0,
+      "base": 69.0,
+      "dropped": false,
+      "lines": [
+        11
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        4,
+        8
+      ],
+      "note": "Turns the voting argument back by noting voters also honored Victor, though DPOY and All-Star picks are lesser honors than MVP. / Turns the voting logic around with Victor's DPOY and All-Star picks, though All-Star selections are weak evidence of being best. / Exposes selective use of voting by citing DPOY and All-Star picks for Victor, though those honors are weaker than MVP.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.0,
+        "rebuttal": 4.0,
+        "impact": 3.67,
+        "clarity": 4.33
+      }
+    },
+    "10": {
+      "host": "deacon",
+      "score": 61.3,
+      "base": 61.3,
+      "dropped": false,
+      "lines": [
+        12
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        9
+      ],
+      "note": "Says a vote isn't a rate and that Victor's early jump is unproven, which partly answers but is inconsistent with his own use of 8-game Luka numbers. / Says a vote is not a rate and notes the early leap, but the early-leap point applies equally to Luka and it only partly answers the voting point. / Notes that a vote isn't a rate and that an early leap is shaky, but it only partly answers the voter-consistency point.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.0,
+        "rebuttal": 3.0,
+        "impact": 3.0,
+        "clarity": 3.67
+      }
+    },
+    "11": {
+      "host": "deacon",
+      "score": 49.8,
+      "base": 49.8,
+      "dropped": false,
+      "lines": [
+        15
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Concedes the small-sample point applies to Luka and commits to revisiting, an honest answer but it adds little to the case. / Concedes that the early-sample caution cuts his own pick and offers a future test, which answers the point but adds no new case for Luka. / Concedes the leap point cuts both ways and commits to revisiting, but it adds little new substance for the question.",
+      "ratings": {
+        "evidence": 2.0,
+        "reasoning": 2.67,
+        "rebuttal": null,
+        "impact": 2.0,
+        "clarity": 4.0
+      }
+    }
+  },
+  "hosts": {
+    "royce": {
+      "score": 69.0,
+      "arguments": 3,
+      "rebuttal": 3.56
+    },
+    "deacon": {
+      "score": 60.0,
+      "arguments": 5,
+      "rebuttal": 3.22
+    },
+    "lonnie": {
+      "score": 64.4,
+      "arguments": 3,
+      "rebuttal": 3.22
+    }
+  },
+  "ranked": [
+    "royce",
+    "lonnie",
+    "deacon"
+  ],
+  "winner": "royce",
+  "tie": false,
+  "tiebreak": false,
+  "close_call": false,
+  "order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "blind_labels": [
+    {
+      "royce": "Host 1",
+      "lonnie": "Host 2",
+      "deacon": "Host 3"
+    },
+    {
+      "lonnie": "Host 1",
+      "royce": "Host 2",
+      "deacon": "Host 3"
+    },
+    {
+      "deacon": "Host 1",
+      "lonnie": "Host 2",
+      "royce": "Host 3"
+    }
+  ]
+}

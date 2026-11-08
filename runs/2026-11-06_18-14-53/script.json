@@ -1,0 +1,695 @@
+{
+  "topic": "Is Jalen Brunson a top-10 player right now?",
+  "format": "debate",
+  "caller": {
+    "type": "skeptic",
+    "name": "Terrence",
+    "city": "Albany"
+  },
+  "players": [
+    "Jalen Brunson"
+  ],
+  "word_count": 635,
+  "estimated_minutes": 4.2,
+  "warnings": [],
+  "sources": [
+    "Current rosters: Sleeper",
+    "NBA stats: Sleeper",
+    "NBA stats: nflverse, checked against Sleeper"
+  ],
+  "receipts": [
+    {
+      "subject": "Jalen Brunson",
+      "label": "current team",
+      "say": "New York Knicks (point guard), no injury designation today",
+      "scope": "today",
+      "source": "Sleeper",
+      "checked": "Wikipedia (infobox)",
+      "status": "verified"
+    },
+    {
+      "subject": "Jalen Brunson",
+      "label": "games played by season",
+      "say": "2021–22: 79 of 82; 2022–23: 68 of 82; 2023–24: 76 of 82; 2024–25: 65 of 82; 2025–26: 74 of 82; 2026–27: 8 of 8 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 0",
+      "scope": "last 5 full seasons and this one",
+      "source": "Sleeper",
+      "checked": "Wikipedia (career statistics table)",
+      "status": "verified_sleeper_used"
+    },
+    {
+      "subject": "Jalen Brunson",
+      "label": "NBA champion",
+      "say": "NBA champion",
+      "scope": "career",
+      "source": "Wikipedia",
+      "checked": "Wikipedia (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jalen Brunson",
+      "label": "NBA Finals MVP",
+      "say": "NBA Finals MVP (2026)",
+      "scope": "career",
+      "source": "Wikipedia",
+      "checked": "Wikidata",
+      "status": "verified"
+    },
+    {
+      "subject": "Jalen Brunson",
+      "label": "NBA All-Star selection",
+      "say": "3 NBA All-Star selections",
+      "scope": "career",
+      "source": "Wikipedia",
+      "checked": "Wikipedia (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jalen Brunson",
+      "label": "points per game",
+      "say": "25.6",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jalen Brunson",
+      "label": "assists per game",
+      "say": "5.1",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jalen Brunson",
+      "label": "true shooting percentage",
+      "say": "53.8%",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jalen Brunson",
+      "label": "field goal percentage",
+      "say": "41.4%",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Jalen Brunson",
+      "label": "games played",
+      "say": "8",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "New York Knicks",
+      "label": "record",
+      "say": "4-4",
+      "scope": "2026–27 regular season",
+      "source": "Sleeper and Wikipedia",
+      "checked": "Wikipedia game log (every game)",
+      "status": "verified"
+    },
+    {
+      "subject": "New York Knicks",
+      "label": "place in the Eastern Conference",
+      "say": "tied for 5th in the East at 4-4",
+      "scope": "2026–27 regular season",
+      "source": "Sleeper and Wikipedia",
+      "checked": "Wikipedia standings (every team's record)",
+      "status": "verified"
+    },
+    {
+      "subject": "New York Knicks",
+      "label": "points scored and allowed per game",
+      "say": "110.0 points scored and 105.1 allowed per game (+4.9 differential)",
+      "scope": "2026–27 regular season",
+      "source": "Sleeper and Wikipedia",
+      "checked": "Wikipedia game log (every game)",
+      "status": "verified"
+    },
+    {
+      "subject": "Shai Gilgeous-Alexander",
+      "label": "true shooting percentage",
+      "say": "55.8%",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Nikola Jokić",
+      "label": "assists per game",
+      "say": "9.3",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Luka Dončić",
+      "label": "games played by season",
+      "say": "2021–22: 65 of 82; 2022–23: 66 of 82; 2023–24: 70 of 82; 2024–25: 50 of 82; 2025–26: 64 of 82; 2026–27: 8 of 9 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
+      "scope": "last 5 full seasons and this one",
+      "source": "Sleeper",
+      "checked": "Wikipedia (career statistics table)",
+      "status": "verified_sleeper_used"
+    },
+    {
+      "subject": "Luka Dončić",
+      "label": "injury history",
+      "say": "calf strain in the 2024–25 season (he played 50 of 82 games that season)",
+      "scope": "the last 6 seasons",
+      "source": "Wikipedia, confirmed by games played",
+      "checked": "games played those seasons (Sleeper)",
+      "status": "verified"
+    },
+    {
+      "subject": "Luka Dončić",
+      "label": "true shooting percentage",
+      "say": "68.5%",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Luka Dončić",
+      "label": "assists per game",
+      "say": "8.0",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    }
+  ],
+  "winning_case": {
+    "host": "lonnie",
+    "score": 63.1,
+    "argument": "Yes. Nobody else does what he does for his team, and I'd take him over almost every guard in the league.",
+    "stats": [
+      {
+        "subject": "Jalen Brunson",
+        "label": "points per game",
+        "say": "25.6",
+        "scope": "2026-27 regular season"
+      },
+      {
+        "subject": "Jalen Brunson",
+        "label": "assists per game",
+        "say": "5.1",
+        "scope": "2026-27 regular season"
+      },
+      {
+        "subject": "Jalen Brunson",
+        "label": "games played",
+        "say": "8",
+        "scope": "2026-27 regular season"
+      },
+      {
+        "subject": "New York Knicks",
+        "label": "points scored and allowed per game",
+        "say": "110.0 points scored and 105.1 allowed per game (+4.9 differential)",
+        "scope": "2026–27 regular season"
+      }
+    ]
+  },
+  "plan": {
+    "cases": {
+      "royce": {
+        "claim": "Yes, Brunson is a top-10 player: he just won Finals MVP, and that is what top-10 means.",
+        "supports": [
+          "Result and honor: NBA champion and 2026 Finals MVP, 3 All-Star picks (F4, F5, F6)",
+          "Image: a smaller guard who keeps getting to his spots, landed on his 25.6 a night (F7)",
+          "Turn Deacon's efficiency number: a shooting slump in 8 games is a small sample against a title run (F9, F11)"
+        ],
+        "answer": "Concedes the 8-game efficiency is soft, says it is a small sample and the season-long record of awards is the bigger one."
+      },
+      "deacon": {
+        "claim": "Not right now: this season his efficiency is ordinary and several guards clearly outproduce him, so he is top-15, not top-10.",
+        "supports": [
+          "Rate stat: true shooting 53.8% and 41.4% from the field vs Luka at 68.5% and Shai at 55.8% (F9, F10, F41, F23)",
+          "Volume vs. others: 25.6 points and 5.1 assists vs Jokic's 9.3 assists and Luka's 38.5 and 8.0 (F7, F8, F34, F40, F42)",
+          "Availability: never played every game in five full seasons, 65 of 82 in 2024-25 (F3)"
+        ],
+        "answer": "Grants the Finals MVP is real, but says it is a result from last season and a team outcome, and the question says right now."
+      },
+      "lonnie": {
+        "claim": "Yes, he is top-10 because of what he does for the Knicks: he is the engine of their offense and the scoring-and-playmaking combo is rare.",
+        "supports": [
+          "Role and fit: very high scoring, high playmaking and high three-point volume, the profile of a lead guard (F7, F8)",
+          "Team context tied to what he does: Knicks +4.9 differential and tied for 5th in the East while he carries the ball (F14, F13)",
+          "Durability: 74 of 82 last season and 8 of 8 now vs Luka's calf year and 8 of 9 (F3, F37, F38)"
+        ],
+        "answer": "Concedes Luka and Jokic are ahead of him, and says top-10 only needs him to be ahead of the field behind them."
+      }
+    },
+    "beats": [
+      "Opening positions: Deacon says top-15 on efficiency, Lonnie and Royce say top-10 on role and results",
+      "Main clash: this season's numbers vs. a title and a Finals MVP, and whose sample is small",
+      "Trap: Deacon is asked whether eight games or five seasons decides it; Royce is asked who he drops to make room",
+      "Decisive exchange: availability and the gap to the players ahead of him; Deacon's case gets pressed on using small-sample numbers"
+    ]
+  },
+  "scores": {
+    "royce": 60.3,
+    "deacon": 58.8,
+    "lonnie": 63.1
+  },
+  "winner": "lonnie",
+  "tie": false,
+  "lines": [
+    {
+      "line": 1,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "You're on the Sideline. Go ahead, Terrence from Albany.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 2,
+      "speaker": "caller",
+      "speaker_name": "Terrence from Albany",
+      "text": "Everybody in New York has crowned Jalen Brunson already. I don't buy it. Convince me he's a top-10 player right now.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 3,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Listen here, I'll tell you where I land. Not top-10, he's just outside it. Right now he's at 53.8 true shooting, that's scoring efficiency counting threes and free throws, and Luka's at 68.5. Shai's at 55.8. He's shooting 41.4 from the field. That's a lot of shots for that kind of return.",
+      "delivery": "confident",
+      "facts": [
+        "F9",
+        "F41",
+        "F23",
+        "F10"
+      ],
+      "argument": 1,
+      "score": {
+        "deacon": 68
+      },
+      "stat": {
+        "value": "53.8%",
+        "label": "Jalen Brunson · true shooting percentage",
+        "definition": "Scoring efficiency counting threes and free throws: points / (2 x (shots + 0.44 x free throws)), in percent.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 4,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Eight games, Deac. Eight. You're grading a whole season off a week and a half. What does the guy actually do for that team? He scores, he creates, he runs the point. That's a lead guard, and there aren't many who do both.",
+      "delivery": "curious",
+      "facts": [
+        "F11",
+        "F7",
+        "F8"
+      ],
+      "argument": 2,
+      "score": {
+        "lonnie": 62
+      },
+      "stat": {
+        "value": "8",
+        "label": "Jalen Brunson · games played",
+        "definition": "Games he played in.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 5,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "And you want to talk about right now? Right now he's the Finals MVP. Champion. Three straight All-Star teams. To my eye, he's a guy who keeps getting where he wants to go against bigger defenders, and that's 25.6 a night. That's not a slump, that's a man who just won the whole thing.",
+      "delivery": "building",
+      "facts": [
+        "F4",
+        "F5",
+        "F6",
+        "F7"
+      ],
+      "argument": 3,
+      "score": {
+        "royce": 66
+      },
+      "stat": {
+        "value": "NBA champion",
+        "label": "Jalen Brunson · NBA champion",
+        "definition": "From his Wikipedia page: NBA champion ()",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "career · today"
+      }
+    },
+    {
+      "line": 6,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Okay, Deacon. You want him out of the top ten. Name who's ahead of him. Because I count Luka, Jokic, Shai. Who else?",
+      "delivery": "curious",
+      "facts": [],
+      "argument": 2,
+      "score": {
+        "lonnie": 54
+      }
+    },
+    {
+      "line": 7,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Don't dodge. Royce, that Finals MVP is last season. The question says right now. And it's a team outcome, he had help.",
+      "delivery": "heated",
+      "facts": [
+        "F5"
+      ],
+      "argument": 4,
+      "score": {
+        "deacon": 68
+      },
+      "stat": {
+        "value": "NBA Finals MVP (2026)",
+        "label": "Jalen Brunson · NBA Finals MVP",
+        "definition": "From his Wikipedia page: NBA Finals MVP (2026)",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "career · today"
+      }
+    },
+    {
+      "line": 8,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Team outcome. Okay, I hear you. But voters picked him out of the whole roster, Deacon. And Lonnie just pointed out eight games is a small sample. Is it enough to drop him?",
+      "delivery": "cold",
+      "facts": [
+        "F5",
+        "F11"
+      ],
+      "argument": 5,
+      "score": {
+        "royce": 63
+      }
+    },
+    {
+      "line": 9,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "No. Fair, it's eight games, for me too. So I'll go bigger. In five full seasons he hasn't played every game once. 65 of 82 in 2024-25. A top-10 guy is out there.",
+      "delivery": "confident",
+      "facts": [
+        "F3"
+      ],
+      "argument": 4,
+      "score": {
+        "deacon": 63
+      },
+      "stat": {
+        "value": "2021–22: 79 of 82; 2022–23: 68 of 82; 2023–24: 76 of 82; 2024–25: 65 of 82; 2025–26: 74 of 82; 2026–27: 8 of 8 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 0",
+        "label": "Jalen Brunson · games played by season",
+        "definition": "Games he played each regular season, out of his team's games. Missing games can be injury, rest, suspension, or not being on a roster yet; this doesn't say which.",
+        "source": "Sleeper",
+        "asOf": "last 5 full seasons and this one · today"
+      }
+    },
+    {
+      "line": 10,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Hold on. 74 of 82 last season. Eight for eight now. And Luka's the one who played 50 of 82 in 2024-25. Who's more available?",
+      "delivery": "calm",
+      "facts": [
+        "F3",
+        "F37",
+        "F38"
+      ],
+      "argument": 6,
+      "score": {
+        "lonnie": 64
+      },
+      "stat": {
+        "value": "2021–22: 65 of 82; 2022–23: 66 of 82; 2023–24: 70 of 82; 2024–25: 50 of 82; 2025–26: 64 of 82; 2026–27: 8 of 9 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
+        "label": "Luka Dončić · games played by season",
+        "definition": "Games he played each regular season, out of his team's games. Missing games can be injury, rest, suspension, or not being on a roster yet; this doesn't say which.",
+        "source": "Sleeper",
+        "asOf": "last 5 full seasons and this one · today"
+      }
+    },
+    {
+      "line": 11,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Right.",
+      "delivery": "dismissive",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 12,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Missed a quarter of the games in zero of five seasons? Okay. That's real. He's durable. I give you that.",
+      "delivery": "conceding",
+      "facts": [
+        "F3"
+      ],
+      "argument": 4,
+      "score": {
+        "deacon": 59
+      }
+    },
+    {
+      "line": 13,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "And you gave it up quick. So where's the case now?",
+      "delivery": "sarcastic",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 14,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "The case is Jokic at 9.3 assists. Luka at 8. He's at 5.1. If you're elite, you create more than that. That's the playmaker bar.",
+      "delivery": "emphatic",
+      "facts": [
+        "F34",
+        "F42",
+        "F8"
+      ],
+      "argument": 7,
+      "score": {
+        "deacon": 60
+      },
+      "stat": {
+        "value": "9.3",
+        "label": "Nikola Jokić · assists per game",
+        "definition": "Assists per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 15,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "That's the bar for top-three. Is it the bar for ten? He's at 5.1 assists and scoring 25.6 on top of it. Who else in the league does both?",
+      "delivery": "curious",
+      "facts": [
+        "F8",
+        "F7"
+      ],
+      "argument": 2,
+      "score": {
+        "lonnie": 66
+      },
+      "stat": {
+        "value": "5.1",
+        "label": "Jalen Brunson · assists per game",
+        "definition": "Assists per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 16,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Wait a second. Deacon, you're comparing him to Jokic, a center. Of course Jokic has more assists. That's a different job.",
+      "delivery": "fired_up",
+      "facts": [
+        "F34"
+      ],
+      "argument": 8,
+      "score": {
+        "royce": 60
+      }
+    },
+    {
+      "line": 17,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Same question, Royce. Who's better right now?",
+      "delivery": "heated",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 18,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Jokic. Luka. Shai. I said it. Brunson's fourth or fifth, so he's top-10. Easy.",
+      "delivery": "confident",
+      "facts": [],
+      "argument": 8,
+      "score": {
+        "royce": 58
+      }
+    },
+    {
+      "line": 19,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "And the Knicks are plus 4.9 a game, tied for fifth in the East. He's the point guard on that team, so that tells you something. I'd say top-10. Nobody has named anyone ahead of him besides those three.",
+      "delivery": "calm",
+      "facts": [
+        "F14",
+        "F13",
+        "F1"
+      ],
+      "argument": 9,
+      "score": {
+        "lonnie": 61
+      },
+      "stat": {
+        "value": "110.0 points scored and 105.1 allowed per game (+4.9 differential)",
+        "label": "New York Knicks · points scored and allowed per game",
+        "definition": "Average points the team scores and gives up per game; the difference is its point differential.",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "2026–27 regular season · through Nov. 4"
+      }
+    },
+    {
+      "line": 20,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "A 4-4 team. That's the record, Lonnie. And what would change it? If his efficiency is still sitting where it is now a month from now, I'm right. If it climbs well past that by Christmas, I'm wrong.",
+      "delivery": "confident",
+      "facts": [
+        "F12",
+        "F9"
+      ],
+      "argument": 1,
+      "score": {
+        "deacon": 58
+      },
+      "stat": {
+        "value": "4-4",
+        "label": "New York Knicks · record",
+        "definition": "Wins and losses this regular season.",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "2026–27 regular season · through Nov. 4"
+      }
+    },
+    {
+      "line": 21,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "Final answers. One sentence each. Is he top-10?",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 22,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Not yet. The efficiency has to come up before I move him inside the ten.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 23,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Yes. A man who just won Finals MVP belongs in the top ten, and nobody in the building thinks otherwise.",
+      "delivery": "quiet",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 24,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Yes. Nobody else does what he does for his team, and I'd take him over almost every guard in the league.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 25,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "On the scorecard, tonight goes to Lonnie. He kept asking who was ahead of Brunson, and no one named anyone past Luka, Jokic and Shai, while he leaned on a Knicks team that is plus 4.9 a game with him at the point.",
+      "delivery": "calm",
+      "facts": [
+        "F14",
+        "F1"
+      ],
+      "argument": null,
+      "score": {
+        "royce": 60,
+        "deacon": 59,
+        "lonnie": 63
+      }
+    },
+    {
+      "line": 26,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "That's the board. Thanks for the call, Terrence.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null
+    }
+  ],
+  "meta": {
+    "step": 2,
+    "model": "claude-sonnet-5-5",
+    "created": "2026-11-06T18:14:53",
+    "generation_seconds": 83.2,
+    "timings": {
+      "topic_check": 0.9,
+      "research": 9.4,
+      "verify": 0.0,
+      "write": 24.9,
+      "line_check": 32.5,
+      "judge": 10.4,
+      "close": 4.9
+    },
+    "stats_found": 45,
+    "stats_verified": 45,
+    "stats_dropped": 0,
+    "facts_used": 19,
+    "lines_checked": 26,
+    "lines_rewritten": 11,
+    "lines_cut": 0,
+    "writer_input_tokens": 8111,
+    "writer_cache_read_tokens": 0,
+    "writer_output_tokens": 3009
+  }
+}

@@ -1,0 +1,838 @@
+{
+  "topic": "Who wins Bengals at Falcons on Sunday, Nov. 8?",
+  "format": "prediction",
+  "caller": {
+    "type": "settler",
+    "name": "Pat",
+    "city": "Columbus"
+  },
+  "players": [],
+  "word_count": 550,
+  "estimated_minutes": 3.7,
+  "warnings": [],
+  "sources": [
+    "Advanced stats: nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+    "Advanced stats: nflverse, checked against muffed.ai (Data via nflverse)",
+    "NFL stats: Sleeper",
+    "NFL stats: nflverse, checked against Sleeper"
+  ],
+  "receipts": [
+    {
+      "subject": "Cincinnati Bengals at Atlanta Falcons",
+      "label": "the game",
+      "say": "Cincinnati Bengals at Atlanta Falcons, Week 9, Sunday, November 8, 2026, 9:30 a.m. ET, at Bernabeu (a neutral site)",
+      "scope": "2026 Week 9",
+      "source": "nflverse and Sleeper schedules",
+      "checked": "Sleeper schedule",
+      "status": "verified"
+    },
+    {
+      "subject": "Cincinnati Bengals",
+      "label": "regular-season record",
+      "say": "5-2",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Cincinnati Bengals",
+      "label": "points scored per game",
+      "say": "29.4",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Cincinnati Bengals",
+      "label": "offensive EPA per play",
+      "say": "+0.115",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Cincinnati Bengals",
+      "label": "defensive EPA allowed per play",
+      "say": "-0.008",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Cincinnati Bengals",
+      "label": "takeaways",
+      "say": "12",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Cincinnati Bengals",
+      "label": "injured starters",
+      "say": "starters only (backups aren't covered): Injured reserve (out): Jalen Davis (CB, hamstring)",
+      "scope": "today",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Atlanta Falcons",
+      "label": "points scored per game",
+      "say": "21.4",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Atlanta Falcons",
+      "label": "offensive EPA per play",
+      "say": "-0.095",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Atlanta Falcons",
+      "label": "defensive EPA allowed per play",
+      "say": "-0.035",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Atlanta Falcons",
+      "label": "takeaways",
+      "say": "11",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Joe Burrow",
+      "label": "games played by season",
+      "say": "2021: 16 of 17; 2022: 16 of 16; 2023: 10 of 17; 2024: 17 of 17; 2025: 8 of 17; 2026: 7 of 7 so far, through Week 9. In his last 5 full seasons he played every game in 2 and missed a quarter or more of his team's games in 2",
+      "scope": "last 5 full seasons and this one",
+      "source": "Sleeper",
+      "checked": "nflverse games",
+      "status": "verified"
+    },
+    {
+      "subject": "Joe Burrow",
+      "label": "EPA per dropback",
+      "say": "+0.23",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Michael Penix Jr.",
+      "label": "EPA per dropback",
+      "say": "+0.02",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Joe Burrow",
+      "label": "passing touchdowns",
+      "say": "20",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "Sleeper",
+      "status": "verified"
+    },
+    {
+      "subject": "Ja'Marr Chase",
+      "label": "receiving yards",
+      "say": "492",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "Sleeper",
+      "status": "verified"
+    },
+    {
+      "subject": "Bijan Robinson",
+      "label": "rushing yards",
+      "say": "780",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "Sleeper",
+      "status": "verified"
+    },
+    {
+      "subject": "Bijan Robinson",
+      "label": "yards per carry",
+      "say": "5.2",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "Sleeper (both parts)",
+      "status": "verified"
+    },
+    {
+      "subject": "Joe Burrow",
+      "label": "playoff record as a starting QB",
+      "say": "5-2 (playoffs after the 2021, 2022 seasons)",
+      "scope": "career playoffs",
+      "source": "nflverse",
+      "checked": "Sleeper (playoff starts)",
+      "status": "verified"
+    },
+    {
+      "subject": "Michael Penix Jr.",
+      "label": "record as a starting QB",
+      "say": "3-6",
+      "scope": "2025 regular season",
+      "source": "nflverse",
+      "checked": "Sleeper (games started, every season)",
+      "status": "verified"
+    },
+    {
+      "subject": "Michael Penix Jr.",
+      "label": "EPA per dropback",
+      "say": "+0.03",
+      "scope": "2025 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    }
+  ],
+  "winning_case": {
+    "host": "deacon",
+    "score": 71.3,
+    "argument": "Bengals, because their offense is fifth in the league in EPA per play, and Atlanta's is twenty-eighth.",
+    "stats": [
+      {
+        "subject": "Cincinnati Bengals",
+        "label": "offensive EPA per play",
+        "say": "+0.115",
+        "scope": "2026 regular season"
+      },
+      {
+        "subject": "Atlanta Falcons",
+        "label": "offensive EPA per play",
+        "say": "-0.095",
+        "scope": "2026 regular season"
+      },
+      {
+        "subject": "Michael Penix Jr.",
+        "label": "EPA per dropback",
+        "say": "+0.02",
+        "scope": "2026 regular season"
+      },
+      {
+        "subject": "Joe Burrow",
+        "label": "EPA per dropback",
+        "say": "+0.23",
+        "scope": "2026 regular season"
+      }
+    ]
+  },
+  "plan": {
+    "cases": {
+      "royce": {
+        "claim": "Bengals win, because Burrow is the one quarterback in this game who has proven he can finish.",
+        "supports": [
+          "Record and scoring: Bengals 5-2, 29.4 points a game, 2nd in the league (F2, F3, F32)",
+          "Big-game résumé: Burrow's playoff starts, 5-2 (F48), against Penix's 3-6 last season (F49)",
+          "Eye test image of Burrow's quick, calm release, tied to his 20 touchdowns (F38)"
+        ],
+        "answer": "Granted Atlanta's defense is better per play than Cincinnati's, but that defense needs an offense that can score, and Atlanta's scores 21.4 a game (F12)."
+      },
+      "deacon": {
+        "claim": "Bengals win, because their offense is far more efficient play by play than Atlanta's.",
+        "supports": [
+          "EPA: team offense +0.115 (5th) against Atlanta's -0.095 (28th) (F5, F14)",
+          "QB EPA per dropback: Burrow +0.23 against Penix +0.02 (F34, F35), and Penix's +0.03 last season (F51) says nothing has changed",
+          "Context: the game is at a neutral site, so no home edge (F1)"
+        ],
+        "answer": "Bijan Robinson is real, but one back does not fix an offense that ranks 28th even with him."
+      },
+      "lonnie": {
+        "claim": "Falcons win, because their defense and Bijan Robinson's running match up well against a middling Bengals defense missing a corner.",
+        "supports": [
+          "Role and fit: Bijan's 5.2 a carry and very high rush yards over expected (F42, style profile as read), 780 yards (F41)",
+          "Matchup: Atlanta's defense is 10th per play (F15) against a Cincinnati defense that is 15th and missing Jalen Davis (F6, F9)",
+          "Takeaways: Atlanta has 11, 9th in the league (F16)"
+        ],
+        "answer": "He concedes Atlanta's offense is bad and says Bijan keeps it on the field and the defense only has to make Burrow work."
+      }
+    },
+    "beats": [
+      "Opening picks: Royce and Deacon take Cincinnati, Lonnie takes Atlanta on defense and Bijan",
+      "Main clash: efficiency of the two offenses against Atlanta's defense and Bijan's run game",
+      "Trap: Lonnie is asked who gets the ball late and how Penix has actually played, and the QB gap decides",
+      "Final answers with each host's one reason"
+    ]
+  },
+  "scores": {
+    "royce": 66.2,
+    "deacon": 71.3,
+    "lonnie": 59.0
+  },
+  "winner": "deacon",
+  "tie": false,
+  "lines": [
+    {
+      "line": 1,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "You're on the Sideline. Go ahead, Pat from Columbus.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "You're on the Sideline. Go ahead, Pat from Columbus.",
+          "audio": "1-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 2,
+      "speaker": "caller",
+      "speaker_name": "Pat from Columbus",
+      "text": "My brother and I have argued about Bengals at Falcons all week. Who wins on Sunday? Loser buys dinner.",
+      "delivery": "curious",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "My brother and I have argued about Bengals at Falcons all week. Who wins on Sunday? Loser buys dinner.",
+          "audio": "2-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 3,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Bengals. They're five and two, and that offense is putting up 29.4 a game, second in the league. To my eye, Burrow plays quarterback like a surgeon who never hurries: the ball's gone before the defense finishes its thought. And he has 20 touchdown passes already.",
+      "delivery": "confident",
+      "facts": [
+        "F2",
+        "F3",
+        "F38"
+      ],
+      "argument": 1,
+      "score": {
+        "royce": 71
+      },
+      "stat": {
+        "value": "5-2",
+        "label": "Cincinnati Bengals · regular-season record",
+        "definition": "Wins and losses in regular-season games.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      },
+      "cards": [
+        {
+          "text": "Bengals. They're five and two, and that offense is putting up 29.4 a game, second in the league.",
+          "audio": "3-0.mp3"
+        },
+        {
+          "text": "To my eye, Burrow plays quarterback like a surgeon who never hurries: the ball's gone before the defense finishes its thought. And he has 20 touchdown passes already.",
+          "audio": "3-1.mp3"
+        }
+      ]
+    },
+    {
+      "line": 4,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Falcons. And you can laugh, Royce, but scoring is only half the game. Atlanta's defense is tenth in the league per play, and Bijan Robinson is averaging 5.2 a carry. Cincinnati's down Jalen Davis at corner as of today.",
+      "delivery": "calm",
+      "facts": [
+        "F15",
+        "F42",
+        "F9"
+      ],
+      "argument": 2,
+      "score": {
+        "lonnie": 54
+      },
+      "stat": {
+        "value": "-0.035",
+        "label": "Atlanta Falcons · defensive EPA allowed per play",
+        "definition": "Expected points added per opponent pass or run play. For a defense, lower (below zero) is better.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      },
+      "cards": [
+        {
+          "text": "Falcons. And you can laugh, Royce, but scoring is only half the game. Atlanta's defense is tenth in the league per play, and Bijan Robinson is averaging 5.2 a carry.",
+          "audio": "4-0.mp3"
+        },
+        {
+          "text": "Cincinnati's down Jalen Davis at corner as of today.",
+          "audio": "4-1.mp3"
+        }
+      ]
+    },
+    {
+      "line": 5,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Nah, Lonnie. Look at the other sideline. EPA, basically how many points each play is worth: Cincinnati's offense is plus 0.115, fifth in the league. Atlanta's is minus 0.095, twenty-eighth. Burrow's plus 0.23 a dropback, Penix is plus 0.02. That defense of yours has to hold up all day, 'cause the offense ain't helping it.",
+      "delivery": "building",
+      "facts": [
+        "F5",
+        "F14",
+        "F34",
+        "F35"
+      ],
+      "argument": 3,
+      "score": {
+        "deacon": 87
+      },
+      "stat": {
+        "value": "+0.115",
+        "label": "Cincinnati Bengals · offensive EPA per play",
+        "definition": "Expected points added per pass or run play on offense: how much each play raised or lowered the points the team should expect on that drive. Above zero is better than average.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      },
+      "cards": [
+        {
+          "text": "Nah, Lonnie. Look at the other sideline. EPA, basically how many points each play is worth: Cincinnati's offense is plus 0.115, fifth in the league.",
+          "audio": "5-0.mp3"
+        },
+        {
+          "text": "Atlanta's is minus 0.095, twenty-eighth. Burrow's plus 0.23 a dropback, Penix is plus 0.02.",
+          "audio": "5-1.mp3"
+        },
+        {
+          "text": "That defense of yours has to hold up all day, 'cause the offense ain't helping it.",
+          "audio": "5-2.mp3"
+        }
+      ]
+    },
+    {
+      "line": 6,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Okay, but who stops Bijan? Cincinnati's defense is fifteenth per play. Middle of the pack, and short a corner. Deac, what happens to your efficiency number if Atlanta just keeps handing him the ball?",
+      "delivery": "curious",
+      "facts": [
+        "F6",
+        "F9"
+      ],
+      "argument": 2,
+      "score": {
+        "lonnie": 58
+      },
+      "stat": {
+        "value": "-0.008",
+        "label": "Cincinnati Bengals · defensive EPA allowed per play",
+        "definition": "Expected points added per opponent pass or run play. For a defense, lower (below zero) is better.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      },
+      "cards": [
+        {
+          "text": "Okay, but who stops Bijan? Cincinnati's defense is fifteenth per play. Middle of the pack, and short a corner.",
+          "audio": "6-0.mp3"
+        },
+        {
+          "text": "Deac, what happens to your efficiency number if Atlanta just keeps handing him the ball?",
+          "audio": "6-1.mp3"
+        }
+      ]
+    },
+    {
+      "line": 7,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "What happens is they're scoring 21.4 a game, twenty-second in the league. Bijan can run all he wants. Then it's the fourth quarter, tied, and somebody has to throw it. Penix was 3 and 6 as a starter last season. Burrow's won five of his seven playoff starts. Who do you want?",
+      "delivery": "cold",
+      "facts": [
+        "F12",
+        "F49",
+        "F48"
+      ],
+      "argument": 4,
+      "score": {
+        "royce": 72
+      },
+      "stat": {
+        "value": "21.4",
+        "label": "Atlanta Falcons · points scored per game",
+        "definition": "Points the team scored per regular-season game.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      },
+      "cards": [
+        {
+          "text": "What happens is they're scoring 21.4 a game, twenty-second in the league. Bijan can run all he wants. Then it's the fourth quarter, tied, and somebody has to throw it.",
+          "audio": "7-0.mp3"
+        },
+        {
+          "text": "Penix was 3 and 6 as a starter last season. Burrow's won five of his seven playoff starts. Who do you want?",
+          "audio": "7-1.mp3"
+        }
+      ]
+    },
+    {
+      "line": 8,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "And Penix's EPA last season was plus 0.03. This season, plus 0.02. Nothing changed, Lonnie. That's not a kid getting better, that's who he's been.",
+      "delivery": "emphatic",
+      "facts": [
+        "F51",
+        "F35"
+      ],
+      "argument": 5,
+      "score": {
+        "deacon": 79
+      },
+      "stat": {
+        "value": "+0.03",
+        "label": "Michael Penix Jr. · EPA per dropback",
+        "definition": "Expected points added per dropback: how much each pass attempt, sack, or scramble raised or lowered the points his team should expect on that drive.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2025 regular season · final"
+      },
+      "cards": [
+        {
+          "text": "And Penix's EPA last season was plus 0.03. This season, plus 0.02. Nothing changed, Lonnie. That's not a kid getting better, that's who he's been.",
+          "audio": "8-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 9,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Fine. Their offense is bad. I'll give you that. But then it comes down to the ball. Atlanta has 11 takeaways, ninth in the league. A bad offense that gets extra possessions is still in the game.",
+      "delivery": "conceding",
+      "facts": [
+        "F16"
+      ],
+      "argument": 6,
+      "score": {
+        "lonnie": 60
+      },
+      "stat": {
+        "value": "11",
+        "label": "Atlanta Falcons · takeaways",
+        "definition": "Interceptions plus fumbles recovered from the other team.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      },
+      "cards": [
+        {
+          "text": "Fine. Their offense is bad. I'll give you that. But then it comes down to the ball. Atlanta has 11 takeaways, ninth in the league.",
+          "audio": "9-0.mp3"
+        },
+        {
+          "text": "A bad offense that gets extra possessions is still in the game.",
+          "audio": "9-1.mp3"
+        }
+      ]
+    },
+    {
+      "line": 10,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Takeaways? Cincinnati's got 12, fifth in the league. You just picked the wrong ball-hawking team.",
+      "delivery": "sarcastic",
+      "facts": [
+        "F7"
+      ],
+      "argument": 7,
+      "score": {
+        "royce": 74
+      },
+      "stat": {
+        "value": "12",
+        "label": "Cincinnati Bengals · takeaways",
+        "definition": "Interceptions plus fumbles recovered from the other team.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      },
+      "cards": [
+        {
+          "text": "Takeaways? Cincinnati's got 12, fifth in the league. You just picked the wrong ball-hawking team.",
+          "audio": "10-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 11,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "He walked right into that one.",
+      "delivery": "laughing",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "He walked right into that one.",
+          "audio": "11-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 12,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "Alright, hold it there. Lonnie, what's Atlanta's actual path to winning this?",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "Alright, hold it there. Lonnie, what's Atlanta's actual path to winning this?",
+          "audio": "12-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 13,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Short fields and Bijan. Defense gets a turnover, they run it, they keep Burrow on the sideline. It's narrow. But it's a plan, and it's built on what Bijan does, not on hoping Penix turns into somebody else.",
+      "delivery": "calm",
+      "facts": [
+        "F41"
+      ],
+      "argument": 2,
+      "score": {
+        "lonnie": 59
+      },
+      "stat": {
+        "value": "780",
+        "label": "Bijan Robinson · rushing yards",
+        "definition": "Yards gained running the ball.",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "2026 regular season · through Week 9"
+      },
+      "cards": [
+        {
+          "text": "Short fields and Bijan. Defense gets a turnover, they run it, they keep Burrow on the sideline. It's narrow.",
+          "audio": "13-0.mp3"
+        },
+        {
+          "text": "But it's a plan, and it's built on what Bijan does, not on hoping Penix turns into somebody else.",
+          "audio": "13-1.mp3"
+        }
+      ]
+    },
+    {
+      "line": 14,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "And the game's at Bernabeu. Neutral site. Atlanta doesn't even get a home crowd to lean on. Add that Burrow's played all seven games this year, and Chase has 492 yards. I'm sorry, that's not close.",
+      "delivery": "emphatic",
+      "facts": [
+        "F1",
+        "F21",
+        "F40"
+      ],
+      "argument": 3,
+      "score": {
+        "deacon": 70
+      },
+      "stat": {
+        "value": "Cincinnati Bengals at Atlanta Falcons, Week 9, Sunday, November 8, 2026, 9:30 a.m. ET, at Bernabeu (a neutral site)",
+        "label": "Cincinnati Bengals at Atlanta Falcons · the game",
+        "definition": "Date, place, and home team, confirmed on two schedules (nflverse and Sleeper).",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "2026 Week 9 · today"
+      },
+      "cards": [
+        {
+          "text": "And the game's at Bernabeu. Neutral site. Atlanta doesn't even get a home crowd to lean on. Add that Burrow's played all seven games this year, and Chase has 492 yards.",
+          "audio": "14-0.mp3"
+        },
+        {
+          "text": "I'm sorry, that's not close.",
+          "audio": "14-1.mp3"
+        }
+      ]
+    },
+    {
+      "line": 15,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Here's the gap: Atlanta leans on a running back, and Cincinnati's offense runs through a quarterback who has the football on every snap. That's the difference.",
+      "delivery": "quiet",
+      "facts": [],
+      "argument": 4,
+      "score": {
+        "royce": 65
+      },
+      "cards": [
+        {
+          "text": "Here's the gap: Atlanta leans on a running back, and Cincinnati's offense runs through a quarterback who has the football on every snap. That's the difference.",
+          "audio": "15-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 16,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "One sentence each. Final answers. Royce.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "One sentence each. Final answers. Royce.",
+          "audio": "16-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 17,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Bengals, because when it gets tight, I'd rather have the quarterback who's been there.",
+      "delivery": "quiet",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "Bengals, because when it gets tight, I'd rather have the quarterback who's been there.",
+          "audio": "17-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 18,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Bengals, because their offense is fifth in the league in EPA per play, and Atlanta's is twenty-eighth.",
+      "delivery": "confident",
+      "facts": [
+        "F5",
+        "F14"
+      ],
+      "argument": null,
+      "stat": {
+        "value": "-0.095",
+        "label": "Atlanta Falcons · offensive EPA per play",
+        "definition": "Expected points added per pass or run play on offense: how much each play raised or lowered the points the team should expect on that drive. Above zero is better than average.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      },
+      "cards": [
+        {
+          "text": "Bengals, because their offense is fifth in the league in EPA per play, and Atlanta's is twenty-eighth.",
+          "audio": "18-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 19,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Falcons, but only if the defense steals the ball and Bijan keeps it from becoming a Burrow game.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "Falcons, but only if the defense steals the ball and Bijan keeps it from becoming a Burrow game.",
+          "audio": "19-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 20,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "On the scorecard, tonight goes to Deacon. His case was that Cincinnati's offense is simply better on every play, and Burrow's per-dropback number is well ahead of Penix's, so Atlanta's defense would have to carry the whole game.",
+      "delivery": "calm",
+      "facts": [
+        "F5",
+        "F14",
+        "F34",
+        "F35"
+      ],
+      "argument": null,
+      "score": {
+        "royce": 66,
+        "deacon": 71,
+        "lonnie": 59
+      },
+      "stat": {
+        "value": "+0.23",
+        "label": "Joe Burrow · EPA per dropback",
+        "definition": "Expected points added per dropback: how much each pass attempt, sack, or scramble raised or lowered the points his team should expect on that drive.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      },
+      "cards": [
+        {
+          "text": "On the scorecard, tonight goes to Deacon.",
+          "audio": "20-0.mp3"
+        },
+        {
+          "text": "His case was that Cincinnati's offense is simply better on every play, and Burrow's per-dropback number is well ahead of Penix's, so Atlanta's defense would have to carry the whole game.",
+          "audio": "20-1.mp3"
+        }
+      ]
+    },
+    {
+      "line": 21,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "That's the board. Thanks for the call, Pat.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "That's the board. Thanks for the call, Pat.",
+          "audio": "21-0.mp3"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "step": 2,
+    "model": "claude-sonnet-5-5",
+    "created": "2026-11-07T13:33:26",
+    "generation_seconds": 131.0,
+    "timings": {
+      "topic_check": 1.2,
+      "research": 30.3,
+      "verify": 13.7,
+      "write": 48.0,
+      "line_check": 19.7,
+      "judge": 8.4,
+      "close": 9.6,
+      "voices": 6.8
+    },
+    "stats_found": 66,
+    "stats_verified": 53,
+    "stats_dropped": 8,
+    "facts_used": 21,
+    "lines_checked": 21,
+    "lines_rewritten": 3,
+    "lines_cut": 0,
+    "writer_input_tokens": 10264,
+    "writer_cache_read_tokens": 0,
+    "writer_output_tokens": 6011
+  },
+  "voices": {
+    "voiced_cards": 31,
+    "cards": 31,
+    "characters": 3117,
+    "failed": [],
+    "used_this_month": 12117
+  }
+}

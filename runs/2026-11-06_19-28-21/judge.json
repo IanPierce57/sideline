@@ -1,0 +1,269 @@
+{
+  "arguments": {
+    "1": {
+      "host": "lonnie",
+      "score": 92.4,
+      "base": 92.4,
+      "dropped": false,
+      "lines": [
+        3
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Verified current IR status and games-played history bear directly on who you'd want right now; availability is a real but not the only factor. / Verified IR status plus games-played across five seasons directly support availability, though 'right now' preference also depends on per-play quality. / Cites three verified facts on current IR status and five-season games played, tying availability directly to who you'd rather have.",
+      "ratings": {
+        "evidence": 5.0,
+        "reasoning": 4.0,
+        "rebuttal": null,
+        "impact": 4.67,
+        "clarity": 5.0
+      }
+    },
+    "2": {
+      "host": "deacon",
+      "score": 81.7,
+      "base": 81.7,
+      "dropped": false,
+      "lines": [
+        4
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        1
+      ],
+      "note": "Concedes availability, reframes to per-play performance with two verified metrics, though samples are small (112 dropbacks). / Concedes availability, then reframes to when-playing efficiency with two verified metrics ranked first, though on a small sample. / Concedes availability, then argues per-play efficiency with two verified metrics, though the 112-dropback sample is small.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 3.67,
+        "rebuttal": 4.0,
+        "impact": 4.67,
+        "clarity": 5.0
+      }
+    },
+    "3": {
+      "host": "lonnie",
+      "score": 79.7,
+      "base": 79.7,
+      "dropped": false,
+      "lines": [
+        5
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        2
+      ],
+      "note": "Uses verified EPA ranks and dropback counts to challenge Lamar's smaller sample, though Allen still ranks below him. / Uses verified EPA ranks and dropback counts to challenge sample size, but Allen is still second, so it only partly undercuts the claim. / Uses verified EPA rank and dropback counts to show Allen is nearly equal on double the sample, which cuts into Lamar's edge.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 3.67,
+        "rebuttal": 4.0,
+        "impact": 4.0,
+        "clarity": 4.67
+      }
+    },
+    "4": {
+      "host": "royce",
+      "score": 50.3,
+      "base": 50.3,
+      "dropped": false,
+      "lines": [
+        6
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        3
+      ],
+      "note": "Fair point about twice the dropbacks, but the team record is a team stat and the freight-train line is opinion. / Sample-size point is fair but the freight-train opinion is unsupported and the team record is a weak proxy for the QB. / Mostly eye-test opinion, and Buffalo's 6-1 record is team-level evidence only weakly tied to Allen.",
+      "ratings": {
+        "evidence": 2.0,
+        "reasoning": 2.0,
+        "rebuttal": 3.0,
+        "impact": 3.0,
+        "clarity": 3.67
+      }
+    },
+    "5": {
+      "host": "deacon",
+      "score": 69.3,
+      "base": 69.3,
+      "dropped": false,
+      "lines": [
+        7
+      ],
+      "rebuttal": 3.6666666666666665,
+      "answers": [
+        4
+      ],
+      "note": "Correctly notes team record isn't his own and offers verified interception numbers, though interceptions on different sample sizes are only partial. / Interception gap is verified but small-sample, and it dismisses the team-record point without addressing the efficiency picture. / Correctly notes that a team record isn't the quarterback's own number and offers the interception comparison, though the sample sizes differ and 5 vs 1 is limited.",
+      "ratings": {
+        "evidence": 3.33,
+        "reasoning": 3.0,
+        "rebuttal": 3.67,
+        "impact": 3.0,
+        "clarity": 5.0
+      }
+    },
+    "6": {
+      "host": "royce",
+      "score": 77.3,
+      "base": 77.3,
+      "dropped": false,
+      "lines": [
+        8,
+        9
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        5
+      ],
+      "note": "Verified playoff records favor Allen on a larger sample, but playoff record is team-influenced and Lamar's sample is small. / Verified rushing TDs give a real counter to the interception point and show Allen's scoring value, though sample sizes differ. / Offsets interceptions with 9 vs 1 rushing touchdowns, but doesn't weigh the two against each other or account for Lamar's fewer games.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 3.33,
+        "rebuttal": 4.0,
+        "impact": 4.0,
+        "clarity": 4.33
+      }
+    },
+    "7": {
+      "host": "deacon",
+      "score": 61.3,
+      "base": 61.3,
+      "dropped": false,
+      "lines": [
+        10
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        6
+      ],
+      "note": "Concedes last year, cites awards, and calls the playoff gap a coin flip, but 8-7 vs 3-5 is a bigger gap than that implies. / Acknowledges last season's weaker EPA and cites MVP and All-Pro honors, but past awards and the playoff dismissal only partly answer the playoff point. / Cites 8-7 vs 3-5 playoff records, but the sample is small and no link to current quality is drawn.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.0,
+        "rebuttal": 3.0,
+        "impact": 3.0,
+        "clarity": 3.67
+      }
+    },
+    "8": {
+      "host": "lonnie",
+      "score": 78.3,
+      "base": 78.3,
+      "dropped": false,
+      "lines": [
+        11
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        2,
+        7
+      ],
+      "note": "Presses that the 'when he plays' premise fails given verified IR status, tying directly to the question. / Pushes the IR point against the 'when he plays' framing with verified status and injury, though it largely repeats the earlier availability claim. / Concedes last season was ordinary and cites MVPs and All-Pro honors, and calls Allen's playoff record a coin flip, though the past awards are not about right now.",
+      "ratings": {
+        "evidence": 3.67,
+        "reasoning": 3.67,
+        "rebuttal": 4.0,
+        "impact": 4.33,
+        "clarity": 4.67
+      }
+    },
+    "9": {
+      "host": "royce",
+      "score": 75.0,
+      "base": 70.0,
+      "dropped": true,
+      "lines": [
+        12
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        2
+      ],
+      "note": "Cites verified MVPs and record, but concedes them and dismisses them as the past without much argument that they don't matter. / Lamar's verified résumé is conceded, but the 'right now' framing is asserted without new evidence and it adds little against this season's numbers. / Presses the 'when he plays' premise with the verified IR and ankle sprain, directly challenging Host 1's framing.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.33,
+        "rebuttal": 4.0,
+        "impact": 3.33,
+        "clarity": 4.33
+      }
+    },
+    "10": {
+      "host": "deacon",
+      "score": 55.5,
+      "base": 55.5,
+      "dropped": false,
+      "lines": [
+        13
+      ],
+      "rebuttal": 2.5,
+      "answers": [
+        8
+      ],
+      "note": "Concedes the availability point with only the IR fact; it concedes rather than rebuts and adds a conditional. / Concedes the IR point with one verified fact, but it is mostly a concession with a conditional hedge. / Cites 2 MVPs and 79-33, but then says it's the past, which undercuts its own relevance to 'right now'.",
+      "ratings": {
+        "evidence": 2.33,
+        "reasoning": 3.0,
+        "rebuttal": 2.5,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    }
+  },
+  "hosts": {
+    "royce": {
+      "score": 67.5,
+      "arguments": 3,
+      "rebuttal": 3.67
+    },
+    "deacon": {
+      "score": 67.0,
+      "arguments": 4,
+      "rebuttal": 3.29
+    },
+    "lonnie": {
+      "score": 83.5,
+      "arguments": 3,
+      "rebuttal": 4.0
+    }
+  },
+  "ranked": [
+    "lonnie",
+    "royce",
+    "deacon"
+  ],
+  "winner": "lonnie",
+  "tie": false,
+  "tiebreak": false,
+  "close_call": false,
+  "order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "blind_labels": [
+    {
+      "royce": "Host 1",
+      "deacon": "Host 2",
+      "lonnie": "Host 3"
+    },
+    {
+      "lonnie": "Host 1",
+      "royce": "Host 2",
+      "deacon": "Host 3"
+    },
+    {
+      "deacon": "Host 1",
+      "royce": "Host 2",
+      "lonnie": "Host 3"
+    }
+  ]
+}

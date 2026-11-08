@@ -1,0 +1,613 @@
+{
+  "topic": "Is Victor Wembanyama the best player in the NBA right now?",
+  "format": "debate",
+  "caller": {
+    "type": "skeptic",
+    "name": "Ray",
+    "city": "Sacramento"
+  },
+  "players": [
+    "Victor Wembanyama"
+  ],
+  "word_count": 519,
+  "estimated_minutes": 3.5,
+  "warnings": [],
+  "sources": [
+    "NBA stats: Sleeper",
+    "NBA stats: nflverse, checked against Sleeper"
+  ],
+  "receipts": [
+    {
+      "subject": "Victor Wembanyama",
+      "label": "NBA All-Star selection",
+      "say": "2 NBA All-Star selections (2025, 2026)",
+      "scope": "career",
+      "source": "Wikipedia",
+      "checked": "Wikipedia (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Victor Wembanyama",
+      "label": "NBA Defensive Player of the Year",
+      "say": "NBA Defensive Player of the Year (2026)",
+      "scope": "career",
+      "source": "Wikipedia",
+      "checked": "Wikipedia (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Shai Gilgeous-Alexander",
+      "label": "NBA champion",
+      "say": "NBA champion (2025)",
+      "scope": "career",
+      "source": "Wikipedia",
+      "checked": "Wikipedia (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Shai Gilgeous-Alexander",
+      "label": "NBA Finals MVP",
+      "say": "NBA Finals MVP (2025)",
+      "scope": "career",
+      "source": "Wikipedia",
+      "checked": "Wikidata",
+      "status": "verified"
+    },
+    {
+      "subject": "Shai Gilgeous-Alexander",
+      "label": "NBA MVP",
+      "say": "2-time NBA MVP (2025, 2026)",
+      "scope": "career",
+      "source": "Wikipedia",
+      "checked": "Wikidata",
+      "status": "verified"
+    },
+    {
+      "subject": "Victor Wembanyama",
+      "label": "points per game",
+      "say": "29.0",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Shai Gilgeous-Alexander",
+      "label": "points per game",
+      "say": "30.1",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Luka Dončić",
+      "label": "points per game",
+      "say": "38.5",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Victor Wembanyama",
+      "label": "true shooting percentage",
+      "say": "57.0%",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Shai Gilgeous-Alexander",
+      "label": "true shooting percentage",
+      "say": "55.8%",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Luka Dončić",
+      "label": "true shooting percentage",
+      "say": "68.5%",
+      "scope": "2026-27 regular season",
+      "source": "Sleeper",
+      "checked": "Sleeper (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Victor Wembanyama",
+      "label": "points per game",
+      "say": "25.0",
+      "scope": "2025-26 regular season",
+      "source": "Sleeper",
+      "checked": "Wikipedia (career statistics table)",
+      "status": "verified"
+    },
+    {
+      "subject": "Shai Gilgeous-Alexander",
+      "label": "points per game",
+      "say": "31.1",
+      "scope": "2025-26 regular season",
+      "source": "Sleeper",
+      "checked": "Wikipedia (career statistics table)",
+      "status": "verified"
+    },
+    {
+      "subject": "Luka Dončić",
+      "label": "points per game",
+      "say": "33.5",
+      "scope": "2025-26 regular season",
+      "source": "Sleeper",
+      "checked": "Wikipedia (career statistics table)",
+      "status": "verified"
+    }
+  ],
+  "winning_case": {
+    "host": "royce",
+    "score": 69.0,
+    "argument": "Shai, because when the whole league voted, his name came out of the envelope.",
+    "stats": [
+      {
+        "subject": "Shai Gilgeous-Alexander",
+        "label": "NBA MVP",
+        "say": "2-time NBA MVP (2025, 2026)",
+        "scope": "career"
+      },
+      {
+        "subject": "Luka Dončić",
+        "label": "points per game",
+        "say": "33.5",
+        "scope": "2025-26 regular season"
+      },
+      {
+        "subject": "Shai Gilgeous-Alexander",
+        "label": "points per game",
+        "say": "30.1",
+        "scope": "2026-27 regular season"
+      },
+      {
+        "subject": "Shai Gilgeous-Alexander",
+        "label": "NBA champion",
+        "say": "NBA champion (2025)",
+        "scope": "career"
+      }
+    ]
+  },
+  "plan": {
+    "cases": {
+      "royce": {
+        "claim": "Shai Gilgeous-Alexander is the best player in the NBA right now, because the voters and the Finals already said so.",
+        "supports": [
+          "Results and honors: 2-time MVP (2025, 2026), 2025 champion and Finals MVP (F22, F20, F21)",
+          "Consistency: 30.1 this season after 31.1 last season, a repeat of who he is (F27, F35)",
+          "Image: scores like a man with a key to every room, landed on the back-to-back MVPs"
+        ],
+        "answer": "His efficiency is the lowest of the four, which he concedes narrowly, then says MVP voters judged whole seasons and efficiency is one slice."
+      },
+      "deacon": {
+        "claim": "Luka Doncic is the best player in the NBA right now on scoring volume and efficiency together.",
+        "supports": [
+          "Scoped stack: 38.5 points on 68.5% true shooting vs Wembanyama's 29.0 on 57.0% (F28, F32, F25, F29)",
+          "Like-for-like check: Shai's 55.8% true shooting is the lowest of the four (F31)",
+          "Tape read: a creator touches every offensive trip, while a rim protector only affects the other team's trips"
+        ],
+        "answer": "Eight games is small, and he concedes it cuts Luka too: if the 68.5% comes down by December he is wrong. Luka's resume of 6 All-Star picks backs that he is not a fluke (F24)."
+      },
+      "lonnie": {
+        "claim": "Wembanyama is the best player in the league right now because he does the most on both ends.",
+        "supports": [
+          "Honor: 2026 Defensive Player of the Year, 2 All-Star picks (F15, F14)",
+          "Rate stat: scoring up from 25.0 last season to 29.0 this season, at 57.0% true shooting, which is better than Shai's (F33, F25, F29, F31)",
+          "Availability: 8 of 8 this season, and Luka has missed time too, so durability doesn't separate them (F3, F12)"
+        ],
+        "answer": "The defensive award is one end, so he points out the electorate Royce trusts gave Wembanyama that award and the All-Star picks, and that his scoring leap is the sample question Deacon applies unevenly."
+      }
+    },
+    "beats": [
+      "Opening positions: Luka on efficiency, Shai on MVP voters, Wemby on two-way impact",
+      "Main clash: does an efficiency number or an honor decide best player, and is DPOY half a player",
+      "Trap: Royce trusts voters for Shai but not for Victor; Deacon asks for proof on Wemby's jump but not Luka's",
+      "Decisive: Shai's efficiency is last of the four, so Royce narrows to honors, and Deacon concedes the sample cuts both ways"
+    ]
+  },
+  "scores": {
+    "royce": 69.0,
+    "deacon": 60.0,
+    "lonnie": 64.4
+  },
+  "winner": "royce",
+  "tie": false,
+  "lines": [
+    {
+      "line": 1,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "You're on the Sideline. Go ahead, Ray from Sacramento.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 2,
+      "speaker": "caller",
+      "speaker_name": "Ray from Sacramento",
+      "text": "Everybody's crowning Wembanyama already, and I don't buy it. Convince me he's actually the best player in the league right now.",
+      "delivery": "curious",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 3,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Nope. Best player right now is Luka, and I don't think it's close. True shooting, that's scoring efficiency counting threes and free throws, and he's at 68.5 while scoring 38.5 a night. Victor's at 57.0 on 29.0.",
+      "delivery": "confident",
+      "facts": [
+        "F28",
+        "F32",
+        "F25",
+        "F29"
+      ],
+      "argument": 1,
+      "score": {
+        "deacon": 73
+      },
+      "stat": {
+        "value": "38.5",
+        "label": "Luka Dončić · points per game",
+        "definition": "Points scored per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 4,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Eight games, Deacon. Luka scored 33.5 last year, and you're pricing a hot week like a career. Best player right now is the one the voters already named: Shai, back-to-back MVP, plus a ring and a Finals MVP in 2025. And he's at 30.1 this season.",
+      "delivery": "building",
+      "facts": [
+        "F36",
+        "F22",
+        "F20",
+        "F21",
+        "F27"
+      ],
+      "argument": 2,
+      "score": {
+        "royce": 75
+      },
+      "stat": {
+        "value": "33.5",
+        "label": "Luka Dončić · points per game",
+        "definition": "Points scored per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2025-26 regular season · final"
+      }
+    },
+    {
+      "line": 5,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Can I jump in? You two picked scorers, and the question's who's best, period. Victor's the Defensive Player of the Year, and he's scoring 29.0 now after 25.0 last season. Who else makes you worry about both ends?",
+      "delivery": "curious",
+      "facts": [
+        "F15",
+        "F25",
+        "F33"
+      ],
+      "argument": 3,
+      "score": {
+        "lonnie": 62
+      },
+      "stat": {
+        "value": "NBA Defensive Player of the Year (2026)",
+        "label": "Victor Wembanyama · NBA Defensive Player of the Year",
+        "definition": "From his Wikipedia page: NBA Defensive Player of the Year (2026)",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "career · today"
+      }
+    },
+    {
+      "line": 6,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Defense is real, Lonnie. It's also one award for one end. The award that asks who's best overall went to Shai the very same season.",
+      "delivery": "cold",
+      "facts": [
+        "F22",
+        "F15"
+      ],
+      "argument": 4,
+      "score": {
+        "royce": 72
+      },
+      "stat": {
+        "value": "2-time NBA MVP (2025, 2026)",
+        "label": "Shai Gilgeous-Alexander · NBA MVP",
+        "definition": "From his Wikipedia page: 2× NBA Most Valuable Player (2025, 2026)",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "career · today"
+      }
+    },
+    {
+      "line": 7,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "The same Shai who's at 55.8 true shooting this season? Lowest of the four guys we're talking about. And Royce, you just called eight games a hot week. Those are Shai's eight games too.",
+      "delivery": "heated",
+      "facts": [
+        "F31"
+      ],
+      "argument": 5,
+      "score": {
+        "deacon": 70
+      },
+      "stat": {
+        "value": "55.8%",
+        "label": "Shai Gilgeous-Alexander · true shooting percentage",
+        "definition": "Scoring efficiency counting threes and free throws: points / (2 x (shots + 0.44 x free throws)), in percent.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 8,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Victor's 57.0 beats Shai's, by the way. So Deac, does your number say anything about defense? Anything?",
+      "delivery": "curious",
+      "facts": [
+        "F29",
+        "F31"
+      ],
+      "argument": 6,
+      "score": {
+        "lonnie": 62
+      },
+      "stat": {
+        "value": "57.0%",
+        "label": "Victor Wembanyama · true shooting percentage",
+        "definition": "Scoring efficiency counting threes and free throws: points / (2 x (shots + 0.44 x free throws)), in percent.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 9,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "I'll grant the defense award. I played linebacker, I know what erasing mistakes is worth. But a rim protector touches their trips. Luka touches ours, every trip.",
+      "delivery": "confident",
+      "facts": [],
+      "argument": 7,
+      "score": {
+        "deacon": 61
+      }
+    },
+    {
+      "line": 10,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Fine, Shai's the low man in efficiency, that's fair. But he's the same guy as last year, 31.1 then, 30.1 now, and when a whole season got voted on, they picked him. He scores like a man with a key to every room.",
+      "delivery": "calm",
+      "facts": [
+        "F35",
+        "F27",
+        "F22"
+      ],
+      "argument": 8,
+      "score": {
+        "royce": 69
+      },
+      "stat": {
+        "value": "31.1",
+        "label": "Shai Gilgeous-Alexander · points per game",
+        "definition": "Points scored per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2025-26 regular season · final"
+      }
+    },
+    {
+      "line": 11,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "So voters decide it? Then the same voters gave Victor the defense award and 2 NBA All-Star selections, in 2025 and 2026. Why does their vote only count on Shai's side?",
+      "delivery": "cold",
+      "facts": [
+        "F15",
+        "F14"
+      ],
+      "argument": 3,
+      "score": {
+        "lonnie": 64
+      },
+      "stat": {
+        "value": "2 NBA All-Star selections (2025, 2026)",
+        "label": "Victor Wembanyama · NBA All-Star selection",
+        "definition": "From his Wikipedia page: 2× NBA All-Star (2025, 2026)",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "career · today"
+      }
+    },
+    {
+      "line": 12,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Because a vote isn't a rate. And honestly, Victor going from 25.0 to 29.0 in eight games is a leap, and leaps early are the ones I wait on.",
+      "delivery": "confident",
+      "facts": [
+        "F33",
+        "F25"
+      ],
+      "argument": 1,
+      "score": {
+        "deacon": 61
+      },
+      "stat": {
+        "value": "25.0",
+        "label": "Victor Wembanyama · points per game",
+        "definition": "Points scored per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2025-26 regular season · final"
+      }
+    },
+    {
+      "line": 13,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Wait on Victor, but not on Luka?",
+      "delivery": "curious",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 14,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Ha. Luka's jump from last year is bigger, Deacon.",
+      "delivery": "laughing",
+      "facts": [
+        "F36",
+        "F28"
+      ],
+      "argument": null
+    },
+    {
+      "line": 15,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Okay. That cuts my guy too. If that efficiency comes down by December, I'm wrong, and I'll say it right here.",
+      "delivery": "conceding",
+      "facts": [
+        "F32"
+      ],
+      "argument": 1,
+      "score": {
+        "deacon": 59
+      },
+      "stat": {
+        "value": "68.5%",
+        "label": "Luka Dončić · true shooting percentage",
+        "definition": "Scoring efficiency counting threes and free throws: points / (2 x (shots + 0.44 x free throws)), in percent.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 16,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "Alright, hold it there. We've covered scoring, efficiency and awards. Let's wrap it up.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 17,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "One sentence each. Final answers: who's the best player in the NBA right now? Royce, you first.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 18,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Shai, because when the whole league voted, his name came out of the envelope.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 19,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Victor, because he's the one who's scoring 29.0 a night and he's the Defensive Player of the Year. That's both ends to me.",
+      "delivery": "calm",
+      "facts": [
+        "F25",
+        "F15"
+      ],
+      "argument": null,
+      "stat": {
+        "value": "29.0",
+        "label": "Victor Wembanyama · points per game",
+        "definition": "Points scored per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 20,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Luka, because he's scoring more and wasting less, and I'll tell you if that changes.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 21,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "On the scorecard, tonight goes to Royce. He kept coming back to the full-season MVP vote, and Shai is a 2-time NBA MVP (2025, 2026), which held up better than eight games of this season.",
+      "delivery": "calm",
+      "facts": [
+        "F22",
+        "F27"
+      ],
+      "argument": null,
+      "score": {
+        "royce": 69,
+        "deacon": 60,
+        "lonnie": 64
+      },
+      "stat": {
+        "value": "30.1",
+        "label": "Shai Gilgeous-Alexander · points per game",
+        "definition": "Points scored per game, on average.",
+        "source": "Sleeper",
+        "asOf": "2026-27 regular season · season in progress"
+      }
+    },
+    {
+      "line": 22,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "That's the board. Thanks for the call, Ray.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null
+    }
+  ],
+  "meta": {
+    "step": 2,
+    "model": "claude-sonnet-5-5",
+    "created": "2026-11-06T18:45:30",
+    "generation_seconds": 138.0,
+    "timings": {
+      "topic_check": 1.2,
+      "research": 8.4,
+      "verify": 0.0,
+      "write": 81.6,
+      "line_check": 28.4,
+      "judge": 10.5,
+      "close": 7.7
+    },
+    "stats_found": 44,
+    "stats_verified": 44,
+    "stats_dropped": 0,
+    "facts_used": 14,
+    "lines_checked": 23,
+    "lines_rewritten": 3,
+    "lines_cut": 1,
+    "writer_input_tokens": 8048,
+    "writer_cache_read_tokens": 0,
+    "writer_output_tokens": 10103
+  }
+}

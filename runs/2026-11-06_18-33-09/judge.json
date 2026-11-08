@@ -1,0 +1,267 @@
+{
+  "arguments": {
+    "1": {
+      "host": "royce",
+      "score": 73.3,
+      "base": 73.3,
+      "dropped": false,
+      "lines": [
+        3
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Finals MVP, All-Star count and 71 games are verified and relevant, but F7 is Brown's 2025-26 games, and durability and honors only partly settle who's better right now. / Finals MVP, All-Star count and 71 games are verified and relevant to who's better, but the 71 games is last season and Tatum's 2024 title is shared, so the case leans on past honors. / Finals MVP, All-Star count and 71 games are verified and relevant to who's better, but last season's games and past honors are only partly about right now, and the 71-game fact is not tied to the claim.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 3.0,
+        "rebuttal": null,
+        "impact": 4.0,
+        "clarity": 4.0
+      }
+    },
+    "2": {
+      "host": "lonnie",
+      "score": 76.3,
+      "base": 76.3,
+      "dropped": false,
+      "lines": [
+        4
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        1
+      ],
+      "note": "Correctly notes Tatum shares the ring and cites the assist gap this season, but 'offense runs through him' is an inference from a 7-game sample. / Notes the shared ring and shifts to 'right now' with the 7.9 vs 3.9 assist gap, though the 'offense runs through him' claim is partly eyeballed. / Notes the shared ring and uses 'right now' to turn to this season's assists gap (7.9 vs 3.9), though 'offense runs through him' is an inference from assists alone.",
+      "ratings": {
+        "evidence": 3.67,
+        "reasoning": 3.67,
+        "rebuttal": 4.0,
+        "impact": 4.0,
+        "clarity": 4.0
+      }
+    },
+    "3": {
+      "host": "deacon",
+      "score": 64.7,
+      "base": 64.7,
+      "dropped": false,
+      "lines": [
+        5
+      ],
+      "rebuttal": 2.0,
+      "answers": [
+        1,
+        2
+      ],
+      "note": "Adds the scoring gap and efficiency tradeoff with a fair small-sample caveat, but mostly agrees with Host 2 rather than answering Host 3. / Backs Tatum with scoring numbers and concedes Brown's efficiency edge, but hedges on small samples and doesn't really rebut Host 3's honors case. / Backs Host 3 with the scoring gap and concedes Brown's efficiency edge using accurate figures, but it mostly agrees with Host 3 rather than answering Host 1 and the small-sample hedge muddies the claim.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 3.33,
+        "rebuttal": 2.0,
+        "impact": 3.67,
+        "clarity": 3.33
+      }
+    },
+    "4": {
+      "host": "royce",
+      "score": 54.3,
+      "base": 54.3,
+      "dropped": false,
+      "lines": [
+        6
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        2,
+        3
+      ],
+      "note": "The 'more shots' claim isn't supported by the facts and the 16-game figure is last season, but it does challenge the scoring lead and raises availability. / 'More shots' is unsupported by the facts, and the 16 games applies to last season, not 'right now', though it does challenge Tatum's availability. / Says Tatum's scoring is just more shots, which the cited stats don't show, then leans on last season's 16 games, which is out of date for 'right now'.",
+      "ratings": {
+        "evidence": 2.67,
+        "reasoning": 2.0,
+        "rebuttal": 3.0,
+        "impact": 3.0,
+        "clarity": 3.67
+      }
+    },
+    "5": {
+      "host": "lonnie",
+      "score": 85.0,
+      "base": 85.0,
+      "dropped": false,
+      "lines": [
+        7
+      ],
+      "rebuttal": 4.333333333333333,
+      "answers": [
+        4
+      ],
+      "note": "Directly answers the 16-games point by noting it is last season and that he has played 7 of 8 this season, with a fair concession about the Achilles. / Directly answers the 16-game point by noting it's last season and that Tatum has played 7 of 8 this year, though the '23 games since injury' figure is slightly loose. / Directly answers the 16-games point by showing it is last season's number and that 7 of 8 this season plus 23 games since the injury is the current picture.",
+      "ratings": {
+        "evidence": 4.33,
+        "reasoning": 4.0,
+        "rebuttal": 4.33,
+        "impact": 4.0,
+        "clarity": 4.67
+      }
+    },
+    "6": {
+      "host": "royce",
+      "score": 53.3,
+      "base": 53.3,
+      "dropped": false,
+      "lines": [
+        9
+      ],
+      "rebuttal": 2.0,
+      "answers": [
+        5
+      ],
+      "note": "Asks what beats Finals MVP, which is a relevant verified fact but the argument is a challenge more than a claim, and it ignores that the award is from 2024. / Asks Tatum's side to beat Finals MVP, which ignores that the question is about right now and doesn't engage the points already made. / Demands Tatum's answer to the Finals MVP, which is a fair challenge but sidesteps the 'right now' argument and cites only the one fact.",
+      "ratings": {
+        "evidence": 2.67,
+        "reasoning": 2.67,
+        "rebuttal": 2.0,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "7": {
+      "host": "deacon",
+      "score": 68.0,
+      "base": 68.0,
+      "dropped": false,
+      "lines": [
+        10
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        6
+      ],
+      "note": "Cites 6 vs 5 All-Stars verified, but this is a thin edge and doesn't beat Finals MVP head-on. / Six All-Stars to five is verified and answers the challenge partially, though it doesn't beat Finals MVP and is a thin edge. / Counters the Finals MVP with 6 All-Stars to 5, which is verified, but this is a thin edge and doesn't deal with the Finals MVP head-on.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 3.0,
+        "rebuttal": 3.0,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "8": {
+      "host": "royce",
+      "score": 77.7,
+      "base": 72.7,
+      "dropped": true,
+      "lines": [
+        11
+      ],
+      "rebuttal": 3.3333333333333335,
+      "answers": [
+        7
+      ],
+      "note": "Concedes the All-Star edge and pivots to this season's rebounds and efficiency, which are verified but small-sample and ignores the assist and scoring gaps. / Concedes the All-Star edge as past honors and points to this season's rebounds and efficiency, but ignores Tatum's far greater scoring and assist numbers, and the sample is seven or eight games. / Accepts the All-Star edge as past honors, then pivots to this season's rebounds and efficiency, which are accurate, though from small samples.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 3.33,
+        "rebuttal": 3.33,
+        "impact": 3.67,
+        "clarity": 4.0
+      }
+    },
+    "9": {
+      "host": "lonnie",
+      "score": 65.3,
+      "base": 65.3,
+      "dropped": false,
+      "lines": [
+        13
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Uses the verified scoring and assist numbers to argue Tatum's creation is irreplaceable, but the 'who creates' claim is a leap from a 7-game sample. / Uses 27 points and nearly 8 assists as unique creation value, but the sample is small and the 'who creates' question is hypothetical. / Uses 27 points and nearly 8 assists as value to the team, which are verified, but the claim that the team can't replace him is asserted without support and the steals/threes remark has no facts.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.0,
+        "rebuttal": null,
+        "impact": 4.0,
+        "clarity": 4.0
+      }
+    },
+    "10": {
+      "host": "royce",
+      "score": 49.0,
+      "base": 49.0,
+      "dropped": false,
+      "lines": [
+        14
+      ],
+      "rebuttal": 2.6666666666666665,
+      "answers": [
+        9
+      ],
+      "note": "Fairly flags the 7-game sample, though it misleadingly says Host 1 told them not to bet on eight and Brown's sample is similar at 8 games. / Sample-size warning is fair but uses Host 1's hedge against Host 2 while Brown's own numbers come from a similar sample, and it doesn't address the creation point. / The seven-game sample point is valid, but it distorts Host 2's hedge and ignores that Brown's own stats are from eight games.",
+      "ratings": {
+        "evidence": 2.0,
+        "reasoning": 2.33,
+        "rebuttal": 2.67,
+        "impact": 2.67,
+        "clarity": 3.33
+      }
+    }
+  },
+  "hosts": {
+    "royce": {
+      "score": 61.5,
+      "arguments": 5,
+      "rebuttal": 2.75
+    },
+    "deacon": {
+      "score": 66.3,
+      "arguments": 2,
+      "rebuttal": 2.5
+    },
+    "lonnie": {
+      "score": 75.5,
+      "arguments": 3,
+      "rebuttal": 4.17
+    }
+  },
+  "ranked": [
+    "lonnie",
+    "deacon",
+    "royce"
+  ],
+  "winner": "lonnie",
+  "tie": false,
+  "tiebreak": false,
+  "close_call": false,
+  "order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "blind_labels": [
+    {
+      "deacon": "Host 1",
+      "lonnie": "Host 2",
+      "royce": "Host 3"
+    },
+    {
+      "deacon": "Host 1",
+      "lonnie": "Host 2",
+      "royce": "Host 3"
+    },
+    {
+      "royce": "Host 1",
+      "deacon": "Host 2",
+      "lonnie": "Host 3"
+    }
+  ]
+}

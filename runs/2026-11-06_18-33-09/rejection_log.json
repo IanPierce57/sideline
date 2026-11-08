@@ -1,0 +1,51 @@
+{
+  "stats": [],
+  "lines": [
+    {
+      "line": 5,
+      "speaker": "deacon",
+      "said": "Listen, Lonnie's right, and scoring says the same: 27.0 to 21.8. Now, Brown's the more efficient scorer, 56.8 true shooting to 55.1. That's scoring efficiency counting threes and free throws. I'll give him that. But that's a point and a half of efficiency for five points a night. And it's seven, eight games. I'd hold all of it loosely.",
+      "problem": "says five, which doesn't match any fact this line cites",
+      "action": "rewritten",
+      "now": "Listen, Lonnie's right, and scoring says the same: 27.0 to 21.8. Now, Brown's the more efficient scorer, 56.8 true shooting to 55.1. That's scoring efficiency counting threes and free throws. I'll give him that. But that's a small efficiency edge for a big gap in scoring. And it's seven, eight games. I'd hold all of it loosely."
+    },
+    {
+      "line": 6,
+      "speaker": "royce",
+      "said": "You just gave me the efficiency, Deacon. Five points a night is just more shots. And Tatum played 16 games last season. You can't build the best player on a guy you're waiting on.",
+      "problem": "says five points (no cited fact has 5 points), which doesn't match any fact this line cites",
+      "action": "rewritten",
+      "now": "You just gave me the efficiency, Deacon. That gap in scoring is just more shots. And Tatum played 16 games last season. You can't build the best player on a guy you're waiting on."
+    },
+    {
+      "line": 11,
+      "speaker": "royce",
+      "said": "Sure. Fine. Six to five. That's the trophy case, Deacon, not tonight. And tonight Brown's pulling down 6.9 boards to his 6.0, and still scoring cleaner. To my eye, that's the more complete night.",
+      "problem": "uses the stock phrase 'to my eye, sure. fine' after the segment's limit of 2; say it fresh, in other words, or drop it",
+      "action": "rewritten",
+      "now": "Right, six to five. That's the trophy case, Deacon, not tonight. And tonight Brown's pulling down 6.9 boards to his 6.0, and still scoring cleaner. That's the more complete night."
+    },
+    {
+      "line": 15,
+      "speaker": "deacon",
+      "said": "Hah. Okay, that's fair, mine too. If those assists hold up once he's twenty games in, I'm right. If they drop to Brown's level, I'm wrong, and I'll say it right here.",
+      "problem": "says twenty, which doesn't match any fact this line cites; uses the stock phrase 'hah' after the segment's limit of 2; say it fresh, in other words, or drop it",
+      "action": "rewritten",
+      "now": "Okay, that's fair, mine too. If those assists hold up once he's played a lot more games, I'm right. If they drop to Brown's level, I'm wrong, and I'll say it right here."
+    },
+    {
+      "line": 18,
+      "speaker": "royce",
+      "said": "Brown, because the best player is the one who owns the biggest stage and shows up every night.",
+      "problem": "Brown shows up every night: Brown has played 8 of 9 this season and played every game in 0 of his last 5 full seasons. (contradicted)",
+      "action": "rewritten",
+      "now": "Brown, because the best player is the one who owns the biggest stage, and he's the Finals MVP."
+    }
+  ],
+  "close": [
+    {
+      "line": 22,
+      "problem": "The caller is named Dana / Thanks for the call, Dana: No fact or earlier script line establishes the caller's name; it is a real-world claim with no backing. (unsupported)"
+    }
+  ]
+}

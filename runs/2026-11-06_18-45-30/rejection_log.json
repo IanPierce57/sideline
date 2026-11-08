@@ -1,0 +1,80 @@
+{
+  "stats": [
+    {
+      "subject": "Nikola Jokić",
+      "stat": "games played by season",
+      "scope": "last 5 full seasons and this one",
+      "what_we_found": "2021–22: 74 of 82; 2022–23: 69 of 82; 2023–24: 78 of 82; 2024–25: 70 of 82; 2025–26: 65 of 82; 2026–27: 7 of 7 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 0",
+      "reason": "kept, but the sources disagreed: games played differ: 2023–24: Sleeper 78, Wikipedia 79; using Sleeper's"
+    },
+    {
+      "subject": "Shai Gilgeous-Alexander",
+      "stat": "games played by season",
+      "scope": "last 5 full seasons and this one",
+      "what_we_found": "2021–22: 56 of 82; 2022–23: 68 of 82; 2023–24: 74 of 82; 2024–25: 76 of 82; 2025–26: 68 of 82; 2026–27: 8 of 8 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
+      "reason": "kept, but the sources disagreed: games played differ: 2023–24: Sleeper 74, Wikipedia 75; using Sleeper's"
+    },
+    {
+      "subject": "Luka Dončić",
+      "stat": "games played by season",
+      "scope": "last 5 full seasons and this one",
+      "what_we_found": "2021–22: 65 of 82; 2022–23: 66 of 82; 2023–24: 70 of 82; 2024–25: 50 of 82; 2025–26: 64 of 82; 2026–27: 8 of 9 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
+      "reason": "kept, but the sources disagreed: games played differ: 2024–25: Sleeper 50, Wikipedia 22; using Sleeper's"
+    }
+  ],
+  "lines": [
+    {
+      "line": 10,
+      "speaker": "royce",
+      "said": "Fine, Shai's the low man in efficiency. I'll give you that. But he's the same guy as last year, 31.1 then, 30.1 now, and when a whole season got voted on, they picked him. To my eye, he scores like a man with a key to every room.",
+      "problem": "uses the stock phrase \"to my eye, i'll give you that\" after the segment's limit of 2; say it fresh, in other words, or drop it",
+      "action": "rewritten",
+      "now": "Fine, Shai's the low man in efficiency, that's fair. But he's the same guy as last year, 31.1 then, 30.1 now, and when a whole season got voted on, they picked him. He scores like a man with a key to every room."
+    },
+    {
+      "line": 11,
+      "speaker": "lonnie",
+      "said": "So voters decide it? Then the same voters gave Victor the defense award and two All-Star picks. Why does their vote only count on Shai's side?",
+      "problem": "says two picks (no cited fact has 2 picks), which doesn't match any fact this line cites",
+      "action": "rewritten",
+      "now": "So voters decide it? Then the same voters gave Victor the defense award and 2 NBA All-Star selections, in 2025 and 2026. Why does their vote only count on Shai's side?"
+    },
+    {
+      "line": 17,
+      "speaker": "lonnie",
+      "said": "Nothing separates them, honestly. Victor played 46 of 82 two seasons ago, and Luka played 50. But Victor's 8 for 8 this year, and a guy who scores 29.0 and wins the defense award is the one I'd call best.",
+      "problem": "says 29.0 wins (no cited fact has 29 wins), two, which doesn't match any fact this line cites",
+      "action": "cut"
+    },
+    {
+      "line": 20,
+      "speaker": "lonnie",
+      "said": "Victor, because he's the only one of these four whose game shows up on both ends.",
+      "problem": "Victor is the only one of these four whose game shows up on both ends: No fact ranks this, and the profiles make it an unbelievable opinion, since the others also produce on defense. (unsupported)",
+      "action": "rewritten",
+      "now": "Victor, because he's the one who's scoring 29.0 a night and he's the Defensive Player of the Year. That's both ends to me."
+    },
+    {
+      "line": 16,
+      "speaker": "hal",
+      "said": "Alright, hold it there. Nobody's said what separates them on durability. Lonnie?",
+      "problem": "smoothed after a nearby cut",
+      "action": "smoothed",
+      "now": "Alright, hold it there. We've covered scoring, efficiency and awards. Let's wrap it up."
+    },
+    {
+      "line": 18,
+      "speaker": "hal",
+      "said": "One sentence each. Final answers: who's the best player in the NBA right now?",
+      "problem": "smoothed after a nearby cut",
+      "action": "smoothed",
+      "now": "One sentence each. Final answers: who's the best player in the NBA right now? Royce, you first."
+    }
+  ],
+  "close": [
+    {
+      "line": 21,
+      "problem": "says eight, which doesn't match any fact this line cites"
+    }
+  ]
+}

@@ -1,0 +1,373 @@
+{
+  "arguments": {
+    "1": {
+      "host": "deacon",
+      "score": 67.6,
+      "base": 67.6,
+      "dropped": false,
+      "lines": [
+        3
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Verified efficiency numbers compare him to Luka and Shai, but only eight games, and FG% as 'a lot of shots' is a stretch, so it doesn't establish he's outside top-10. / Cites verified efficiency numbers for Brunson, Luka and Shai that bear on the claim, but they come from only 8 games and the host doesn't flag that. / Uses verified efficiency numbers for Brunson, Luka and Shai, but they come from only 8 games and the claim is that he is just outside the top 10.",
+      "ratings": {
+        "evidence": 3.67,
+        "reasoning": 2.67,
+        "rebuttal": null,
+        "impact": 3.67,
+        "clarity": 4.0
+      }
+    },
+    "2": {
+      "host": "lonnie",
+      "score": 67.3,
+      "base": 62.3,
+      "dropped": true,
+      "lines": [
+        4
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        1
+      ],
+      "note": "Correctly attacks the eight-game sample, but the 'does both' claim is thinly backed by his stat line. / Correctly attacks the 8-game sample, a strong point against argument 1, but the follow-up about scoring and creating is vague. / Correctly attacks the 8-game sample, but the role claim about scoring and creating is thinly backed.",
+      "ratings": {
+        "evidence": 2.33,
+        "reasoning": 3.0,
+        "rebuttal": 4.0,
+        "impact": 3.0,
+        "clarity": 3.67
+      }
+    },
+    "3": {
+      "host": "royce",
+      "score": 66.0,
+      "base": 66.0,
+      "dropped": false,
+      "lines": [
+        5
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        1
+      ],
+      "note": "Finals MVP, title and All-Stars are verified and relevant, though they lean on last season and the 'bigger defenders' claim is unsupported. / Uses Finals MVP, title, All-Stars and 25.6 ppg to answer the slump framing, but the awards cover past seasons, and 'bigger defenders' is unsupported. / Finals MVP, title and All-Stars are relevant verified facts, but they are mostly last season's results and the 'bigger defenders' claim has no support.",
+      "ratings": {
+        "evidence": 3.67,
+        "reasoning": 3.0,
+        "rebuttal": 3.0,
+        "impact": 4.0,
+        "clarity": 3.0
+      }
+    },
+    "4": {
+      "host": "lonnie",
+      "score": 44.7,
+      "base": 44.7,
+      "dropped": false,
+      "lines": [
+        6
+      ],
+      "rebuttal": 2.3333333333333335,
+      "answers": [
+        1
+      ],
+      "note": "Asking who is ahead of him reframes the question usefully but offers no facts and mostly sidesteps the efficiency point. / Challenges Host 2 to name who is ahead; a pointed question that targets the top-10 threshold, but it has no facts and counts names rather than proving anything. / Asks the opponent to name who is ahead, but gives no facts and does not engage the efficiency numbers.",
+      "ratings": {
+        "evidence": 1.0,
+        "reasoning": 2.33,
+        "rebuttal": 2.33,
+        "impact": 3.67,
+        "clarity": 4.0
+      }
+    },
+    "5": {
+      "host": "deacon",
+      "score": 69.0,
+      "base": 69.0,
+      "dropped": false,
+      "lines": [
+        7
+      ],
+      "rebuttal": 3.6666666666666665,
+      "answers": [
+        3
+      ],
+      "note": "Points out the Finals MVP was last season and a team outcome, a fair but modest dent; it ignores the three All-Star selections. / Correctly notes the Finals MVP is last season's and the question is about right now, a fair answer to the award-based case. / Points out the Finals MVP is from last season and the question says right now, which is a fair challenge, though 'he had help' is unsupported.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.33,
+        "rebuttal": 3.67,
+        "impact": 3.67,
+        "clarity": 4.33
+      }
+    },
+    "6": {
+      "host": "royce",
+      "score": 59.3,
+      "base": 59.3,
+      "dropped": false,
+      "lines": [
+        8
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        5
+      ],
+      "note": "Voters choosing him from the roster answers the team-outcome point, and the small-sample point is fair, but the question to Host 3 doesn't settle things. / Defends the MVP by citing the voters and turns the small-sample point against Host 2, but it doesn't really answer the 'last season' point. / Says voters picked him from the whole roster, which partly answers the team-outcome point, then shifts to the sample size.",
+      "ratings": {
+        "evidence": 2.67,
+        "reasoning": 3.0,
+        "rebuttal": 3.0,
+        "impact": 3.0,
+        "clarity": 3.67
+      }
+    },
+    "7": {
+      "host": "deacon",
+      "score": 52.0,
+      "base": 52.0,
+      "dropped": false,
+      "lines": [
+        9
+      ],
+      "rebuttal": 2.0,
+      "answers": [
+        6
+      ],
+      "note": "Games-played record is verified, but missing 17 games in one season is a weak argument against top-10 and he never missed a quarter. / Shifts to games played, which is verified, but 'never played every game' is a weak standard because no one in the comparison did either. / The games-played fact is real, but F3 shows he missed no quarter of a season, so it does not show he fails a top-10 standard.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 2.0,
+        "rebuttal": 2.0,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "8": {
+      "host": "lonnie",
+      "score": 85.0,
+      "base": 85.0,
+      "dropped": false,
+      "lines": [
+        10
+      ],
+      "rebuttal": 4.333333333333333,
+      "answers": [
+        7
+      ],
+      "note": "Verified games played for Brunson and Luka's 50 of 82 answer the durability point directly, though the Luka comparison is a bit tangential. / Uses verified games-played and Luka's injury-year to show Brunson is no worse on availability than the players above him. / Uses verified games played to show he is durable and more available than Luka, which answers the missed-games point directly.",
+      "ratings": {
+        "evidence": 4.67,
+        "reasoning": 4.0,
+        "rebuttal": 4.33,
+        "impact": 3.33,
+        "clarity": 4.33
+      }
+    },
+    "9": {
+      "host": "deacon",
+      "score": 53.8,
+      "base": 48.8,
+      "dropped": true,
+      "lines": [
+        12
+      ],
+      "rebuttal": 1.5,
+      "answers": [
+        8
+      ],
+      "note": "Concession on durability is honest but adds no new case or rebuttal. / Concedes durability with the correct fact, but it's a concession that adds no new case. / A concession that adds no new point.",
+      "ratings": {
+        "evidence": 2.67,
+        "reasoning": 2.67,
+        "rebuttal": 1.5,
+        "impact": 2.0,
+        "clarity": 4.0
+      }
+    },
+    "10": {
+      "host": "deacon",
+      "score": 61.8,
+      "base": 61.8,
+      "dropped": false,
+      "lines": [
+        14
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Verified assist numbers vs Jokic and Luka, but the 'playmaker bar' is asserted and Jokic is a center. / Uses verified assist numbers to set a playmaker bar, but comparing him with a center and Luka overstates the standard. / Verified assist numbers are relevant, but the 'playmaker bar' is asserted and compares a guard to a center.",
+      "ratings": {
+        "evidence": 3.33,
+        "reasoning": 2.33,
+        "rebuttal": null,
+        "impact": 3.33,
+        "clarity": 4.0
+      }
+    },
+    "11": {
+      "host": "lonnie",
+      "score": 75.7,
+      "base": 70.7,
+      "dropped": true,
+      "lines": [
+        15
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        10
+      ],
+      "note": "Says assists are a top-three bar, not a top-10 bar, with 25.6 and 5.1 both verified, though no comparison of others who do both. / Argues that the assist bar is a top-three one, not a top-10 one, and points to his combined scoring and assists. / Questions whether the top-three bar applies to a top-10 standard and notes he scores 25.6 while also creating.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.33,
+        "rebuttal": 4.0,
+        "impact": 4.0,
+        "clarity": 4.0
+      }
+    },
+    "12": {
+      "host": "royce",
+      "score": 59.0,
+      "base": 54.0,
+      "dropped": true,
+      "lines": [
+        16
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        10
+      ],
+      "note": "Positional differences explain Jokic's assists but there's no data, and it ignores Luka's 8.0. / Notes position difference between Jokic and Brunson, a fair but partial answer since Luka is a guard. / Fair positional point against comparing Brunson's assists to a center's, but it ignores Luka's 8.0.",
+      "ratings": {
+        "evidence": 1.67,
+        "reasoning": 3.0,
+        "rebuttal": 3.0,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "13": {
+      "host": "royce",
+      "score": 57.0,
+      "base": 52.0,
+      "dropped": true,
+      "lines": [
+        18
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        4
+      ],
+      "note": "Names three ahead and concludes top-10 by counting, which is a clear logic but is opinion only and ignores others like Shai's peers. / Names three players ahead and infers he's fourth or fifth with no evidence, and the claim is asserted rather than shown. / Names three players ahead of him, so fourth or fifth means top 10, which answers the question but with no facts.",
+      "ratings": {
+        "evidence": 1.0,
+        "reasoning": 3.0,
+        "rebuttal": 3.0,
+        "impact": 4.0,
+        "clarity": 4.0
+      }
+    },
+    "14": {
+      "host": "lonnie",
+      "score": 42.7,
+      "base": 42.7,
+      "dropped": false,
+      "lines": [
+        19
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Team record and point differential are team facts, not his own, and early-season; the 'nobody named anyone else' point repeats earlier ones. / Uses team results to argue for the player, which says little about him, and repeats the 'nobody ahead' point. / Team record and point differential say little about Brunson himself.",
+      "ratings": {
+        "evidence": 2.0,
+        "reasoning": 2.0,
+        "rebuttal": null,
+        "impact": 2.0,
+        "clarity": 3.0
+      }
+    },
+    "15": {
+      "host": "deacon",
+      "score": 48.7,
+      "base": 48.7,
+      "dropped": false,
+      "lines": [
+        20
+      ],
+      "rebuttal": 2.6666666666666665,
+      "answers": [
+        14
+      ],
+      "note": "Uses the 4-4 team record, which is about the team rather than him, and the efficiency check is a fair condition but doesn't answer the point head-on. / Answers the team-results point with the 4-4 record, which is also a team fact, but the efficiency benchmark is a clear standard. / Counters with the 4-4 record, though a team record also says little about the player, and adds a clear test of efficiency by Christmas.",
+      "ratings": {
+        "evidence": 2.0,
+        "reasoning": 2.0,
+        "rebuttal": 2.67,
+        "impact": 2.67,
+        "clarity": 4.0
+      }
+    }
+  },
+  "hosts": {
+    "royce": {
+      "score": 60.3,
+      "arguments": 4,
+      "rebuttal": 3.0
+    },
+    "deacon": {
+      "score": 58.8,
+      "arguments": 6,
+      "rebuttal": 2.46
+    },
+    "lonnie": {
+      "score": 63.1,
+      "arguments": 5,
+      "rebuttal": 3.67
+    }
+  },
+  "ranked": [
+    "lonnie",
+    "royce",
+    "deacon"
+  ],
+  "winner": "lonnie",
+  "tie": false,
+  "tiebreak": false,
+  "close_call": false,
+  "order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "blind_labels": [
+    {
+      "lonnie": "Host 1",
+      "royce": "Host 2",
+      "deacon": "Host 3"
+    },
+    {
+      "lonnie": "Host 1",
+      "deacon": "Host 2",
+      "royce": "Host 3"
+    },
+    {
+      "lonnie": "Host 1",
+      "deacon": "Host 2",
+      "royce": "Host 3"
+    }
+  ]
+}

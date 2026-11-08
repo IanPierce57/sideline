@@ -1,0 +1,123 @@
+{
+  "stats": [
+    {
+      "subject": "Jalen Brunson",
+      "stat": "games played by season",
+      "scope": "last 5 full seasons and this one",
+      "what_we_found": "2021–22: 79 of 82; 2022–23: 68 of 82; 2023–24: 76 of 82; 2024–25: 65 of 82; 2025–26: 74 of 82; 2026–27: 8 of 8 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 0",
+      "reason": "kept, but the sources disagreed: games played differ: 2023–24: Sleeper 76, Wikipedia 77; using Sleeper's"
+    },
+    {
+      "subject": "Shai Gilgeous-Alexander",
+      "stat": "games played by season",
+      "scope": "last 5 full seasons and this one",
+      "what_we_found": "2021–22: 56 of 82; 2022–23: 68 of 82; 2023–24: 74 of 82; 2024–25: 76 of 82; 2025–26: 68 of 82; 2026–27: 8 of 8 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
+      "reason": "kept, but the sources disagreed: games played differ: 2023–24: Sleeper 74, Wikipedia 75; using Sleeper's"
+    },
+    {
+      "subject": "Nikola Jokić",
+      "stat": "games played by season",
+      "scope": "last 5 full seasons and this one",
+      "what_we_found": "2021–22: 74 of 82; 2022–23: 69 of 82; 2023–24: 78 of 82; 2024–25: 70 of 82; 2025–26: 65 of 82; 2026–27: 7 of 7 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 0",
+      "reason": "kept, but the sources disagreed: games played differ: 2023–24: Sleeper 78, Wikipedia 79; using Sleeper's"
+    },
+    {
+      "subject": "Luka Dončić",
+      "stat": "games played by season",
+      "scope": "last 5 full seasons and this one",
+      "what_we_found": "2021–22: 65 of 82; 2022–23: 66 of 82; 2023–24: 70 of 82; 2024–25: 50 of 82; 2025–26: 64 of 82; 2026–27: 8 of 9 so far. In his last 5 full seasons he played every game in 0 and missed a quarter or more of his team's games in 1",
+      "reason": "kept, but the sources disagreed: games played differ: 2024–25: Sleeper 50, Wikipedia 22; using Sleeper's"
+    }
+  ],
+  "lines": [
+    {
+      "line": 3,
+      "speaker": "deacon",
+      "said": "Listen here, I'll tell you where I land. Top-15, not top-10. Right now he's at 53.8 true shooting, that's scoring efficiency counting threes and free throws, and Luka's at 68.5. Shai's at 55.8. He's shooting 41 from the field. That's a lot of shots for that kind of return.",
+      "problem": "says 15,, 41, which doesn't match any fact this line cites",
+      "action": "rewritten",
+      "now": "Listen here, I'll tell you where I land. Not top-10, he's just outside it. Right now he's at 53.8 true shooting, that's scoring efficiency counting threes and free throws, and Luka's at 68.5. Shai's at 55.8. He's shooting 41.4 from the field. That's a lot of shots for that kind of return."
+    },
+    {
+      "line": 4,
+      "speaker": "lonnie",
+      "said": "Eight games, Deac. Eight. You're grading a whole season off a week and a half. What does the guy actually do for that team? He scores, he creates, he shoots a lot of threes. That's a lead guard, and there aren't many who do all three.",
+      "problem": "Brunson shoots a lot of threes: No fact gives his three-point attempts. Only the style profile, which is unverified, says his threes made are high. (unsupported)",
+      "action": "rewritten",
+      "now": "Eight games, Deac. Eight. You're grading a whole season off a week and a half. What does the guy actually do for that team? He scores, he creates, he runs the point. That's a lead guard, and there aren't many who do both."
+    },
+    {
+      "line": 5,
+      "speaker": "royce",
+      "said": "And you want to talk about right now? Right now he's the Finals MVP. Champion. Three straight All-Star teams. To my eye, he's a guy who keeps getting where he wants to go against bigger defenders, and that's 25 and change a night. That's not a slump, that's a man who just won the whole thing.",
+      "problem": "says 25, which doesn't match any fact this line cites",
+      "action": "rewritten",
+      "now": "And you want to talk about right now? Right now he's the Finals MVP. Champion. Three straight All-Star teams. To my eye, he's a guy who keeps getting where he wants to go against bigger defenders, and that's 25.6 a night. That's not a slump, that's a man who just won the whole thing."
+    },
+    {
+      "line": 6,
+      "speaker": "lonnie",
+      "said": "Here's my thing, Deacon. You want him out of the top ten. Name who's ahead of him. Because I count Luka, Jokic, Shai. Who else?",
+      "problem": "uses the stock phrase \"here's my thing\" after the segment's limit of 2; say it fresh, in other words, or drop it",
+      "action": "rewritten",
+      "now": "Okay, Deacon. You want him out of the top ten. Name who's ahead of him. Because I count Luka, Jokic, Shai. Who else?"
+    },
+    {
+      "line": 8,
+      "speaker": "royce",
+      "said": "Team outcome. Sure. Fine. But voters picked him out of the whole roster, Deacon. And you just said eight games is enough to drop him. Is it?",
+      "problem": "Deacon just said eight games is enough to drop Brunson: Deacon never said that. Lonnie was the one who raised the eight-game sample, and Deacon only cited the stats. (contradicted); uses the stock phrase 'sure. fine' after the segment's limit of 2; say it fresh, in other words, or drop it",
+      "action": "rewritten",
+      "now": "Team outcome. Okay, I hear you. But voters picked him out of the whole roster, Deacon. And Lonnie just pointed out eight games is a small sample. Is it enough to drop him?"
+    },
+    {
+      "line": 9,
+      "speaker": "deacon",
+      "said": "No. Hah. Fair, it's eight games, for me too. So I'll go bigger. In five full seasons he hasn't played every game once. 65 of 82 in 2024-25. A top-10 guy is out there.",
+      "problem": "uses the stock phrase 'hah' after the segment's limit of 2; say it fresh, in other words, or drop it",
+      "action": "rewritten",
+      "now": "No. Fair, it's eight games, for me too. So I'll go bigger. In five full seasons he hasn't played every game once. 65 of 82 in 2024-25. A top-10 guy is out there."
+    },
+    {
+      "line": 14,
+      "speaker": "deacon",
+      "said": "The case is Jokic at 9.3 assists. Luka at 8. He's at 5.1. If you're top-10, you create more than that. That's the playmaker bar.",
+      "problem": "this host says 10 for the third time. REMOVE that number from this line: refer to it in words ('that number', 'his record') and use the turn to add a different support for his case",
+      "action": "rewritten",
+      "now": "The case is Jokic at 9.3 assists. Luka at 8. He's at 5.1. If you're elite, you create more than that. That's the playmaker bar."
+    },
+    {
+      "line": 15,
+      "speaker": "lonnie",
+      "said": "That's the bar for top-three. Is it the bar for ten? 5.1 is high among rotation players, and he's scoring very high on top of it. Who else in the league does both?",
+      "problem": "5.1 assists is high among rotation players and he scores very high on top of it: No verified fact ranks him among rotation players. Only the unverified style profile says so. (unsupported)",
+      "action": "rewritten",
+      "now": "That's the bar for top-three. Is it the bar for ten? He's at 5.1 assists and scoring 25.6 on top of it. Who else in the league does both?"
+    },
+    {
+      "line": 16,
+      "speaker": "royce",
+      "said": "Hang on. Hang on. Deacon, you're comparing him to Jokic, a center. Of course Jokic has more assists. That's a different job.",
+      "problem": "uses the stock phrase 'hang on. hang on' after the segment's limit of 2; say it fresh, in other words, or drop it",
+      "action": "rewritten",
+      "now": "Wait a second. Deacon, you're comparing him to Jokic, a center. Of course Jokic has more assists. That's a different job."
+    },
+    {
+      "line": 19,
+      "speaker": "lonnie",
+      "said": "And the Knicks are plus 4.9 a game, tied for fifth in the East. He's the one running that offense, so that tells you something. I'd say top-10. Deacon's my doubt: he's got no one he'd put ahead besides those three.",
+      "problem": "Brunson is the one running the Knicks offense: F1 lists him as the point guard but gives nothing about running the offense. (unsupported); Deacon has no one he'd put ahead of Brunson besides those three: Deacon never named anyone ahead of Brunson. Lonnie named Luka, Jokic and Shai, and Royce named the same three. (contradicted)",
+      "action": "rewritten",
+      "now": "And the Knicks are plus 4.9 a game, tied for fifth in the East. He's the point guard on that team, so that tells you something. I'd say top-10. Nobody has named anyone ahead of him besides those three."
+    },
+    {
+      "line": 20,
+      "speaker": "deacon",
+      "said": "A 4-4 team. That's the record, Lonnie. And what would change it? If he's still at 53.8 in 30 games, I'm right. If he's at 58 by Christmas, I'm wrong.",
+      "problem": "says 30, 58, which doesn't match any fact this line cites",
+      "action": "rewritten",
+      "now": "A 4-4 team. That's the record, Lonnie. And what would change it? If his efficiency is still sitting where it is now a month from now, I'm right. If it climbs well past that by Christmas, I'm wrong."
+    }
+  ],
+  "close": []
+}

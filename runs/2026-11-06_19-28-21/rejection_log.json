@@ -1,0 +1,92 @@
+{
+  "stats": [
+    {
+      "subject": "Josh Allen",
+      "stat": "games played by season",
+      "scope": "last 5 full seasons and this one",
+      "what_we_found": "2021: 17 of 17; 2022: 16 of 16; 2023: 17 of 17; 2024: 17 of 17; 2025: 17 of 17; 2026: 7 of 7 so far, through Week 8. In his last 5 full seasons he played every game in 5 and missed a quarter or more of his team's games in 0",
+      "reason": "kept, but the sources disagreed: games played differ: 2024: Sleeper 17, nflverse 16; 2025: Sleeper 17, nflverse 16; using Sleeper's"
+    },
+    {
+      "subject": "Josh Allen",
+      "stat": "record as a starting QB",
+      "scope": "career regular season, 2018-2026",
+      "what_we_found": "93-38",
+      "reason": "starts don't match Sleeper (2019: 15 vs 16; 2024: 16 vs 17; 2025: 16 vs 17)"
+    },
+    {
+      "subject": "Baltimore Ravens",
+      "stat": "regular-season record",
+      "scope": "2026 regular season",
+      "what_we_found": "4-4",
+      "reason": "ours {'wins': 4, 'losses': 4, 'ties': 0} vs muffed.ai {'wins': 4, 'losses': 5, 'ties': 0}"
+    },
+    {
+      "subject": "Josh Allen",
+      "stat": "record as a starting QB",
+      "scope": "2024 regular season",
+      "what_we_found": "13-3",
+      "reason": "starts don't match Sleeper (2024: 16 vs 17)"
+    },
+    {
+      "subject": "Lamar Jackson",
+      "stat": "adjusted net yards per attempt (ANY/A)",
+      "scope": "2026 regular season",
+      "what_we_found": "9.40",
+      "reason": "muffed.ai doesn't publish this for him that season (often a too-small sample), so it can't be cross-referenced"
+    },
+    {
+      "subject": "Baltimore Ravens",
+      "stat": "points scored per game",
+      "scope": "2026 regular season",
+      "what_we_found": "22.4",
+      "reason": "ours 22.3750 vs muffed.ai 21.0000: the numbers don't match, so it's left out"
+    },
+    {
+      "subject": "Baltimore Ravens",
+      "stat": "offensive EPA per play",
+      "scope": "2026 regular season",
+      "what_we_found": "+0.023",
+      "reason": "ours 0.0229 vs muffed.ai -0.0148: the numbers don't match, so it's left out"
+    }
+  ],
+  "lines": [
+    {
+      "line": 8,
+      "speaker": "royce",
+      "said": "Five picks, sure. I'll give you that. He also has nine rushing touchdowns, and Lamar has one. Allen's carrying that offense in the end zone, and you're counting his mistakes but not his points.",
+      "problem": "says five picks (no cited fact has 5 picks), which doesn't match any fact this line cites; uses the stock phrase \"i'll give you that\" after the segment's limit of 2; say it fresh, in other words, or drop it",
+      "action": "rewritten",
+      "now": "Sure, he's thrown interceptions. He also has 9 rushing touchdowns, and Lamar has 1. Allen's carrying that offense in the end zone, and you're counting his mistakes but not his points."
+    },
+    {
+      "line": 9,
+      "speaker": "lonnie",
+      "said": "Deac, last season. Allen's EPA ranked eighth, Lamar's ranked eighteenth. So which Lamar are you paying for? The one from last year or the one from five games?",
+      "problem": "says one, five, which doesn't match any fact this line cites",
+      "action": "cut"
+    },
+    {
+      "line": 11,
+      "speaker": "deacon",
+      "said": "Last season was ordinary, okay. I'm not hiding it. But a two-time MVP and three-time first-team All-Pro doesn't forget how. And 8-7 is a coin flip, man. That's not an answer, that's a shrug.",
+      "problem": "says 8, 7, which doesn't match any fact this line cites",
+      "action": "rewritten",
+      "now": "Last season was ordinary, okay. I'm not hiding it. But a 2-time MVP and 3-time first-team All-Pro doesn't forget how. And a playoff record that close to even is a coin flip, man. That's not an answer, that's a shrug."
+    },
+    {
+      "line": 10,
+      "speaker": "royce",
+      "said": "And January settles it. Allen is 8-7 in the playoffs over fifteen starts. Lamar is 3-5. Be honest. When it's on the line, which one has answered?",
+      "problem": "smoothed after a nearby cut",
+      "action": "smoothed",
+      "now": "And January settles it. Allen is 8-7 in the playoffs over 15 starts. Lamar is 3-5. Be honest. When it's on the line, which one has answered?"
+    }
+  ],
+  "close": [
+    {
+      "line": 19,
+      "problem": "Dan was the caller who called in: The caller's name is not in the fact pack and the script gives no earlier mention of the caller. (unsupported)"
+    }
+  ]
+}

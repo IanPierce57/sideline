@@ -1,0 +1,288 @@
+{
+  "arguments": {
+    "1": {
+      "host": "royce",
+      "score": 70.7,
+      "base": 70.7,
+      "dropped": false,
+      "lines": [
+        3
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Record, scoring rank and Burrow's touchdowns are verified and favor Cincinnati, but nothing compares them to Atlanta and the surgeon line is just opinion. / Cites record, scoring rank and TDs that favor Cincinnati; the surgeon line is opinion and record alone is a loose predictor. / Uses record, scoring rank and Burrow's TDs to pick Bengals, but record and TD count are fairly thin evidence and the surgeon line is opinion.",
+      "ratings": {
+        "evidence": 3.67,
+        "reasoning": 3.0,
+        "rebuttal": null,
+        "impact": 4.0,
+        "clarity": 4.0
+      }
+    },
+    "2": {
+      "host": "lonnie",
+      "score": 54.0,
+      "base": 54.0,
+      "dropped": false,
+      "lines": [
+        4
+      ],
+      "rebuttal": 2.3333333333333335,
+      "answers": [
+        1
+      ],
+      "note": "Atlanta's defense rank, Bijan's yards per carry and the Davis injury are verified, but they only partly answer Cincinnati's scoring and the link to a Falcons win is left implied. / Defense rank, Bijan's yards per carry and a missing corner are relevant but do not offset Cincinnati's offensive edge. / Cites Atlanta's defense and Bijan's yards per carry, but does not really counter Cincinnati's offense and the Davis injury is minor.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 2.33,
+        "rebuttal": 2.33,
+        "impact": 3.0,
+        "clarity": 3.33
+      }
+    },
+    "3": {
+      "host": "deacon",
+      "score": 87.3,
+      "base": 87.3,
+      "dropped": false,
+      "lines": [
+        5
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        2
+      ],
+      "note": "Offensive EPA and QB EPA gaps are verified, like-for-like and answer the 'scoring is half' point by showing Atlanta's offense is the weak side. / Per-play efficiency gaps for both offenses and QBs show why Atlanta's defense can't carry the game; directly ties to who wins. / EPA comparisons on both offenses and both QBs directly show Atlanta's offense is the weak side, answering the defense and Bijan point.",
+      "ratings": {
+        "evidence": 5.0,
+        "reasoning": 4.0,
+        "rebuttal": 4.0,
+        "impact": 4.67,
+        "clarity": 4.0
+      }
+    },
+    "4": {
+      "host": "lonnie",
+      "score": 62.0,
+      "base": 62.0,
+      "dropped": false,
+      "lines": [
+        6
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        3
+      ],
+      "note": "Cincinnati's mediocre defense and missing corner are verified, but the argument never shows Bijan's running offsets the EPA gap. / Points to a middling Cincinnati defense missing a corner, a real counter, but it only partly answers the EPA gap. / Notes Cincinnati's mid defense and missing corner against Bijan, but only asks a question instead of rebutting the EPA gap.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.0,
+        "rebuttal": 3.0,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "5": {
+      "host": "royce",
+      "score": 73.3,
+      "base": 73.3,
+      "dropped": false,
+      "lines": [
+        7
+      ],
+      "rebuttal": 3.6666666666666665,
+      "answers": [
+        4
+      ],
+      "note": "Atlanta's scoring rank, Penix's 3-6 last year and Burrow's playoff record are verified, but last season's record and playoff starts are only loosely tied to this game. / Atlanta's 22nd-ranked scoring and the QB records answer the Bijan point, though last season's and playoff records are loosely relevant. / Uses Atlanta's scoring rank and QB records, though last season's Penix record and Burrow's playoff history are somewhat off-point for this game.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 3.0,
+        "rebuttal": 3.67,
+        "impact": 4.0,
+        "clarity": 4.0
+      }
+    },
+    "6": {
+      "host": "deacon",
+      "score": 71.0,
+      "base": 71.0,
+      "dropped": false,
+      "lines": [
+        8
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        5
+      ],
+      "note": "The two EPA figures are verified and the comparison is like for like, but both are small samples and it only backs up the point on Penix, not the game. / Same-measure EPA across two seasons shows Penix hasn't improved, but it is aimed at the QB rather than the game outcome. / Compares Penix's EPA per dropback across two seasons to show no improvement, a fair like-for-like comparison, though it's aimed at one player.",
+      "ratings": {
+        "evidence": 3.67,
+        "reasoning": 4.0,
+        "rebuttal": 3.0,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "7": {
+      "host": "lonnie",
+      "score": 62.7,
+      "base": 62.7,
+      "dropped": false,
+      "lines": [
+        9
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        3,
+        6
+      ],
+      "note": "Concedes the offense and offers Atlanta's takeaway rank, which is verified, but doesn't show takeaways outweigh the offensive gap. / Concedes the offense and pivots to takeaways as an Atlanta path; reasonable but one stat with little weight. / Concedes the offense and pivots to takeaways as a path, but the ninth-rank figure alone doesn't prove it wins.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.0,
+        "rebuttal": 3.0,
+        "impact": 3.33,
+        "clarity": 4.0
+      }
+    },
+    "8": {
+      "host": "royce",
+      "score": 83.0,
+      "base": 78.0,
+      "dropped": true,
+      "lines": [
+        10
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        7
+      ],
+      "note": "Cincinnati's 12 takeaways, ranked fifth, directly cancel Atlanta's takeaway edge. / Cincinnati has more takeaways at a higher rank, which neutralizes the turnover edge directly. / Cincinnati has more takeaways (12 vs 11) and a higher rank, which directly neutralizes the takeaway argument.",
+      "ratings": {
+        "evidence": 3.67,
+        "reasoning": 4.0,
+        "rebuttal": 4.0,
+        "impact": 3.0,
+        "clarity": 5.0
+      }
+    },
+    "9": {
+      "host": "lonnie",
+      "score": 57.3,
+      "base": 57.3,
+      "dropped": false,
+      "lines": [
+        13
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Gives a concrete Falcons path built on Bijan's 780 yards, but the turnover half is unsupported and Cincinnati's equal takeaway rank undercuts it. / Lays out a plausible Atlanta path built on Bijan, though the cited rushing total alone doesn't prove it works. / Lays out Atlanta's plan around Bijan's rushing yards, but only one fact and the plan is acknowledged as narrow.",
+      "ratings": {
+        "evidence": 2.0,
+        "reasoning": 3.0,
+        "rebuttal": null,
+        "impact": 4.0,
+        "clarity": 4.0
+      }
+    },
+    "10": {
+      "host": "deacon",
+      "score": 55.7,
+      "base": 50.7,
+      "dropped": true,
+      "lines": [
+        14
+      ],
+      "rebuttal": 2.0,
+      "answers": [
+        9
+      ],
+      "note": "Facts on Burrow's availability and Chase's yards are verified, but the neutral-site point doesn't follow from the Falcons' plan and 'not close' overstates it. / Neutral site is a fact but the argument treats it as taking away a home crowd while Burrow's games played and Chase's yards are thin; crowded and only loosely answers the plan. / Neutral-site point is verified but cuts against any home edge only vaguely, and availability and Chase yards are loosely tied to a conclusion.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 2.0,
+        "rebuttal": 2.0,
+        "impact": 3.33,
+        "clarity": 3.0
+      }
+    },
+    "11": {
+      "host": "royce",
+      "score": 38.0,
+      "base": 38.0,
+      "dropped": false,
+      "lines": [
+        15
+      ],
+      "rebuttal": 2.0,
+      "answers": [
+        9
+      ],
+      "note": "Offers an assertion about a quarterback touching the ball every snap with no facts, and it doesn't engage Bijan's production. / A quarterback-versus-running-back framing with no facts and it doesn't engage the short-field plan. / Asserts a running back versus quarterback difference without facts and doesn't engage the specific short-field plan.",
+      "ratings": {
+        "evidence": 1.0,
+        "reasoning": 2.0,
+        "rebuttal": 2.0,
+        "impact": 3.0,
+        "clarity": 3.0
+      }
+    }
+  },
+  "hosts": {
+    "royce": {
+      "score": 66.2,
+      "arguments": 4,
+      "rebuttal": 3.22
+    },
+    "deacon": {
+      "score": 71.3,
+      "arguments": 3,
+      "rebuttal": 3.0
+    },
+    "lonnie": {
+      "score": 59.0,
+      "arguments": 4,
+      "rebuttal": 2.78
+    }
+  },
+  "ranked": [
+    "deacon",
+    "royce",
+    "lonnie"
+  ],
+  "winner": "deacon",
+  "tie": false,
+  "tiebreak": false,
+  "close_call": false,
+  "order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "blind_labels": [
+    {
+      "lonnie": "Host 1",
+      "deacon": "Host 2",
+      "royce": "Host 3"
+    },
+    {
+      "deacon": "Host 1",
+      "royce": "Host 2",
+      "lonnie": "Host 3"
+    },
+    {
+      "deacon": "Host 1",
+      "royce": "Host 2",
+      "lonnie": "Host 3"
+    }
+  ]
+}

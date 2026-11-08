@@ -1,0 +1,677 @@
+{
+  "topic": "best team in the nfl",
+  "format": "debate",
+  "caller": {
+    "type": "settler",
+    "name": "Dwayne",
+    "city": "Omaha"
+  },
+  "players": [],
+  "word_count": 572,
+  "estimated_minutes": 3.8,
+  "warnings": [],
+  "sources": [
+    "Advanced stats: nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+    "Advanced stats: nflverse, checked against muffed.ai (Data via nflverse)",
+    "NFL stats: nflverse, checked against Sleeper"
+  ],
+  "receipts": [
+    {
+      "subject": "Kansas City Chiefs",
+      "label": "regular-season record",
+      "say": "5-2",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Buffalo Bills",
+      "label": "regular-season record",
+      "say": "6-1",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Detroit Lions",
+      "label": "regular-season record",
+      "say": "5-2",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Denver Broncos",
+      "label": "regular-season record",
+      "say": "6-2",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Buffalo Bills",
+      "label": "points scored per game",
+      "say": "33.3",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Buffalo Bills",
+      "label": "points allowed per game",
+      "say": "25.9",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Buffalo Bills",
+      "label": "offensive EPA per play",
+      "say": "+0.173",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Buffalo Bills",
+      "label": "defensive EPA allowed per play",
+      "say": "+0.063",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Denver Broncos",
+      "label": "points scored per game",
+      "say": "21.5",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Denver Broncos",
+      "label": "points allowed per game",
+      "say": "20.6",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Denver Broncos",
+      "label": "offensive EPA per play",
+      "say": "-0.022",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Denver Broncos",
+      "label": "takeaways",
+      "say": "11",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Denver Broncos",
+      "label": "head coach",
+      "say": "Sean Payton",
+      "scope": "today",
+      "source": "nflverse",
+      "checked": "Wikipedia (team page)",
+      "status": "verified"
+    },
+    {
+      "subject": "Kansas City Chiefs",
+      "label": "points scored per game",
+      "say": "23.9",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Kansas City Chiefs",
+      "label": "points allowed per game",
+      "say": "18.7",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Kansas City Chiefs",
+      "label": "offensive EPA per play",
+      "say": "+0.126",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Kansas City Chiefs",
+      "label": "defensive EPA allowed per play",
+      "say": "-0.034",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Kansas City Chiefs",
+      "label": "takeaways",
+      "say": "11",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    }
+  ],
+  "winning_case": {
+    "host": "deacon",
+    "score": 65.6,
+    "argument": "Kansas City, because it's the one that's strong on both sides of the ball: fourth in offensive EPA and fourth in points allowed.",
+    "stats": [
+      {
+        "subject": "Kansas City Chiefs",
+        "label": "offensive EPA per play",
+        "say": "+0.126",
+        "scope": "2026 regular season"
+      },
+      {
+        "subject": "Kansas City Chiefs",
+        "label": "points allowed per game",
+        "say": "18.7",
+        "scope": "2026 regular season"
+      },
+      {
+        "subject": "Buffalo Bills",
+        "label": "defensive EPA allowed per play",
+        "say": "+0.063",
+        "scope": "2026 regular season"
+      },
+      {
+        "subject": "Buffalo Bills",
+        "label": "offensive EPA per play",
+        "say": "+0.173",
+        "scope": "2026 regular season"
+      }
+    ]
+  },
+  "plan": {
+    "cases": {
+      "royce": {
+        "claim": "Buffalo is the best team in the NFL because it wins and scores like nobody else.",
+        "supports": [
+          "Record: Bills 6-1, best record among the teams in the pack (F3)",
+          "Points: 33.3 a game, first in the league (F8)",
+          "Turn Deacon's EPA: the offense is second in the league (F10)"
+        ],
+        "answer": "Concede the defense is ordinary, then argue the team that outscores everyone is the one nobody wants to face in January."
+      },
+      "deacon": {
+        "claim": "Kansas City is the best team: balanced and efficient on both sides of the ball, with the rank to show it.",
+        "supports": [
+          "Offensive EPA +0.126, 4th, defined as points added per play (F21)",
+          "Points allowed 18.7, 4th (F20)",
+          "Coach Andy Reid and the 5-2 record agree with the numbers (F24, F1)"
+        ],
+        "answer": "Bills' record is real, but their defense is 23rd in EPA allowed, so the record is carrying a leaky unit."
+      },
+      "lonnie": {
+        "claim": "Denver is the best team, because it wins without a hole, built by Sean Payton's staff for the long haul.",
+        "supports": [
+          "6-2 record, tied for most wins in the pack (F7)",
+          "Defense roughly top half on both points and EPA (F14, F16)",
+          "Takeaways 11, 9th: it wins the possession game (F17)"
+        ],
+        "answer": "Concede the offense is below average (20th in EPA) and argue winning with that profile shows the defense and ball security do the work."
+      }
+    },
+    "beats": [
+      "Opening positions: Buffalo on results, Kansas City on balance, Denver on win-column plus no holes",
+      "Main clash: Buffalo's offense vs its defense; Royce turns Deacon's EPA, Deacon hits the 23rd-ranked defense",
+      "Trap: Lonnie asks Deacon whether EPA decides it, then points out Denver's offense is 20th yet 6-2, cornering Lonnie's own case",
+      "Decisive: Denver's below-average offense (20th) is the weakest foundation; Buffalo and KC hold up; final answers"
+    ]
+  },
+  "scores": {
+    "royce": 59.6,
+    "deacon": 65.6,
+    "lonnie": 57.2
+  },
+  "winner": "deacon",
+  "tie": false,
+  "lines": [
+    {
+      "line": 1,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "You're on the Sideline. Go ahead, Dwayne from Omaha.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 2,
+      "speaker": "caller",
+      "speaker_name": "Dwayne from Omaha",
+      "text": "My brother and I have argued about this all week. Who's the best team in the NFL right now? Loser buys the wings.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 3,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Buffalo. Easy. They're 6 and 1, and nobody scores like them: 33.3 a game, first in the league. A team that puts up points like that, you can't sit on a lead against it. That's the best team in football.",
+      "delivery": "confident",
+      "facts": [
+        "F3",
+        "F8"
+      ],
+      "argument": 1,
+      "score": {
+        "royce": 68
+      },
+      "stat": {
+        "value": "6-1",
+        "label": "Buffalo Bills · regular-season record",
+        "definition": "Wins and losses in regular-season games.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 4,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Can I jump in? Scoring's half of it, Royce. Denver is 6 and 2, as many wins as Buffalo has, and more than Kansas City or Detroit. And what's their profile? A defense that's solid in the middle of the pack and takes the ball away. No hole big enough to lose you a game.",
+      "delivery": "calm",
+      "facts": [
+        "F7",
+        "F3",
+        "F1",
+        "F4",
+        "F14",
+        "F17"
+      ],
+      "argument": 2,
+      "score": {
+        "lonnie": 56
+      },
+      "stat": {
+        "value": "6-2",
+        "label": "Denver Broncos · regular-season record",
+        "definition": "Wins and losses in regular-season games.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 5,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Hold on. Denver scores 21.5 a night. That's a good team, sure, but nobody builds a banner out of 'solid.' You want a team that scares people.",
+      "delivery": "confident",
+      "facts": [
+        "F13"
+      ],
+      "argument": 1,
+      "score": {
+        "royce": 58
+      },
+      "stat": {
+        "value": "21.5",
+        "label": "Denver Broncos · points scored per game",
+        "definition": "Points the team scored per regular-season game.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 6,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Listen here. Scaring people's fine, but Buffalo's defense is 23rd in EPA allowed. That's how many points the opponent's average play adds. Kansas City's offense is 4th in EPA and it gives up 18.7 a game, fourth in the league. Both sides. That's your best team.",
+      "delivery": "building",
+      "facts": [
+        "F11",
+        "F21",
+        "F20"
+      ],
+      "argument": 3,
+      "score": {
+        "deacon": 81
+      },
+      "stat": {
+        "value": "+0.063",
+        "label": "Buffalo Bills · defensive EPA allowed per play",
+        "definition": "Expected points added per opponent pass or run play. For a defense, lower (below zero) is better.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 7,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Okay, so Deac, EPA is your standard? Is that what decides it?",
+      "delivery": "curious",
+      "facts": [],
+      "argument": 4,
+      "score": {
+        "lonnie": 44
+      }
+    },
+    {
+      "line": 8,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "It's the best one we've got for how good a team really is, yeah. Why?",
+      "delivery": "calm",
+      "facts": [],
+      "argument": 3,
+      "score": {
+        "deacon": 59
+      }
+    },
+    {
+      "line": 9,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Because I'm about to use it. Buffalo's offense is second in the league in EPA. Your own number, Deacon. And 25.9 allowed a game is not a disaster when you're scoring 33.3.",
+      "delivery": "sarcastic",
+      "facts": [
+        "F10",
+        "F9",
+        "F8"
+      ],
+      "argument": 5,
+      "score": {
+        "royce": 65
+      },
+      "stat": {
+        "value": "+0.173",
+        "label": "Buffalo Bills · offensive EPA per play",
+        "definition": "Expected points added per pass or run play on offense: how much each play raised or lowered the points the team should expect on that drive. Above zero is better than average.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 10,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Second on offense, 23rd on defense. Add it up, Royce. That's a team that wins shootouts, and shootouts are coin flips.",
+      "delivery": "building",
+      "facts": [
+        "F10",
+        "F11"
+      ],
+      "argument": 3,
+      "score": {
+        "deacon": 61
+      }
+    },
+    {
+      "line": 11,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Here's the thing I'd ask Deac, though. Kansas City's points scored is 11th. Eleventh. And their defense EPA is 11th too. Where's the best team in that?",
+      "delivery": "curious",
+      "facts": [
+        "F19",
+        "F22"
+      ],
+      "argument": 4,
+      "score": {
+        "lonnie": 52
+      },
+      "stat": {
+        "value": "23.9",
+        "label": "Kansas City Chiefs · points scored per game",
+        "definition": "Points the team scored per regular-season game.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 12,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Fourth in offense per play, fourth in points allowed. Two top-five marks. That's the balance, and it's 5-2.",
+      "delivery": "confident",
+      "facts": [
+        "F21",
+        "F20",
+        "F1"
+      ],
+      "argument": 3,
+      "score": {
+        "deacon": 66
+      },
+      "stat": {
+        "value": "+0.126",
+        "label": "Kansas City Chiefs · offensive EPA per play",
+        "definition": "Expected points added per pass or run play on offense: how much each play raised or lowered the points the team should expect on that drive. Above zero is better than average.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 13,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Two losses though. And Buffalo has one. That's the whole difference.",
+      "delivery": "dismissive",
+      "facts": [
+        "F1",
+        "F3"
+      ],
+      "argument": 1,
+      "score": {
+        "royce": 63
+      },
+      "stat": {
+        "value": "5-2",
+        "label": "Kansas City Chiefs · regular-season record",
+        "definition": "Wins and losses in regular-season games.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 14,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Fair, but now I'll test my own guy. Denver's offense is 20th in EPA per play. Under average. Honestly, that's the hole in my case.",
+      "delivery": "conceding",
+      "facts": [
+        "F15"
+      ],
+      "argument": 2,
+      "score": {
+        "lonnie": 55
+      },
+      "stat": {
+        "value": "-0.022",
+        "label": "Denver Broncos · offensive EPA per play",
+        "definition": "Expected points added per pass or run play on offense: how much each play raised or lowered the points the team should expect on that drive. Above zero is better than average.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 15,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "There it is. Twenty-first-century football says you can't be great with a bottom-half offense. Six and two on that offense? That's a lucky team, Lonnie.",
+      "delivery": "building",
+      "facts": [
+        "F15",
+        "F7"
+      ],
+      "argument": 6,
+      "score": {
+        "deacon": 65
+      }
+    },
+    {
+      "line": 16,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Lucky or not, they take the ball away. Eleven takeaways, same as Kansas City, and way more than Detroit or Philly. That's how a bottom-half offense wins. And Sean Payton's got them playing that way.",
+      "delivery": "calm",
+      "facts": [
+        "F17",
+        "F23",
+        "F18"
+      ],
+      "argument": 2,
+      "score": {
+        "lonnie": 57
+      },
+      "stat": {
+        "value": "11",
+        "label": "Denver Broncos · takeaways",
+        "definition": "Interceptions plus fumbles recovered from the other team.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 17,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Takeaways are the first thing to go, Lonnie. Ask any coach. Points are what stick. Buffalo's got those.",
+      "delivery": "emphatic",
+      "facts": [],
+      "argument": 7,
+      "score": {
+        "royce": 59
+      }
+    },
+    {
+      "line": 18,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "Alright, hold it there. We've got Buffalo on points, Kansas City on balance, Denver on wins. Where do you land? One sentence each. Final answers.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 19,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Buffalo, because the team that scores the most and loses only once is the one you remember in January.",
+      "delivery": "confident",
+      "facts": [
+        "F8",
+        "F3"
+      ],
+      "argument": null,
+      "stat": {
+        "value": "33.3",
+        "label": "Buffalo Bills · points scored per game",
+        "definition": "Points the team scored per regular-season game.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 20,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Kansas City, because it's the one that's strong on both sides of the ball: fourth in offensive EPA and fourth in points allowed.",
+      "delivery": "confident",
+      "facts": [
+        "F21",
+        "F20"
+      ],
+      "argument": null,
+      "stat": {
+        "value": "18.7",
+        "label": "Kansas City Chiefs · points allowed per game",
+        "definition": "Points opponents scored per regular-season game.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 21,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Denver, because it wins with no real weakness, and I'd take that over a flashy offense with a leaky defense.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null
+    },
+    {
+      "line": 22,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "On the scorecard, tonight goes to Deacon. He showed Kansas City is good on both sides of the ball, fourth in offensive EPA per play and fourth in points allowed, while Buffalo's defense ranks 23rd in EPA allowed.",
+      "delivery": "calm",
+      "facts": [
+        "F21",
+        "F20",
+        "F11"
+      ],
+      "argument": null,
+      "score": {
+        "royce": 60,
+        "deacon": 66,
+        "lonnie": 57
+      }
+    },
+    {
+      "line": 23,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "That's the board. Thanks for the call, Dwayne.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null
+    }
+  ],
+  "meta": {
+    "step": 2,
+    "model": "claude-sonnet-5-5",
+    "created": "2026-11-06T18:49:32",
+    "generation_seconds": 90.6,
+    "timings": {
+      "topic_check": 1.0,
+      "research": 7.8,
+      "verify": 12.5,
+      "write": 20.6,
+      "line_check": 32.4,
+      "judge": 11.5,
+      "close": 4.8
+    },
+    "stats_found": 55,
+    "stats_verified": 53,
+    "stats_dropped": 2,
+    "facts_used": 18,
+    "lines_checked": 23,
+    "lines_rewritten": 5,
+    "lines_cut": 0,
+    "writer_input_tokens": 8849,
+    "writer_cache_read_tokens": 0,
+    "writer_output_tokens": 2556
+  }
+}

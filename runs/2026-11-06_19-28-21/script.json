@@ -1,0 +1,753 @@
+{
+  "topic": "Who would you rather have right now: Josh Allen or Lamar Jackson?",
+  "format": "debate",
+  "caller": {
+    "type": "settler",
+    "name": "Dan",
+    "city": "Scranton"
+  },
+  "players": [
+    "Josh Allen",
+    "Lamar Jackson"
+  ],
+  "word_count": 490,
+  "estimated_minutes": 3.3,
+  "warnings": [],
+  "sources": [
+    "Advanced stats: nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+    "Current rosters: Sleeper, checked against nflverse",
+    "NFL stats: Sleeper",
+    "NFL stats: nflverse, checked against Sleeper"
+  ],
+  "receipts": [
+    {
+      "subject": "Josh Allen",
+      "label": "games played by season",
+      "say": "2021: 17 of 17; 2022: 16 of 16; 2023: 17 of 17; 2024: 17 of 17; 2025: 17 of 17; 2026: 7 of 7 so far, through Week 8. In his last 5 full seasons he played every game in 5 and missed a quarter or more of his team's games in 0",
+      "scope": "last 5 full seasons and this one",
+      "source": "Sleeper",
+      "checked": "nflverse games",
+      "status": "verified_sleeper_used"
+    },
+    {
+      "subject": "Lamar Jackson",
+      "label": "current team",
+      "say": "Baltimore Ravens (quarterback), on injured reserve (out) today",
+      "scope": "today",
+      "source": "Sleeper",
+      "checked": "nflverse roster",
+      "status": "verified"
+    },
+    {
+      "subject": "Lamar Jackson",
+      "label": "games played by season",
+      "say": "2021: 12 of 17; 2022: 12 of 17; 2023: 16 of 17; 2024: 17 of 17; 2025: 13 of 17; 2026: 5 of 8 so far, through Week 8. In his last 5 full seasons he played every game in 1 and missed a quarter or more of his team's games in 2",
+      "scope": "last 5 full seasons and this one",
+      "source": "Sleeper",
+      "checked": "nflverse games",
+      "status": "verified"
+    },
+    {
+      "subject": "Lamar Jackson",
+      "label": "injury history",
+      "say": "ankle sprain in the 2026 season (he's played 5 of 8 games so far this season, through Week 8); ankle injury in the 2021 season (he played 12 of 17 games that season)",
+      "scope": "the last 6 seasons",
+      "source": "Wikipedia, confirmed by games played",
+      "checked": "games played those seasons (Sleeper)",
+      "status": "verified"
+    },
+    {
+      "subject": "Lamar Jackson",
+      "label": "NFL MVP",
+      "say": "2-time NFL MVP (2019, 2023)",
+      "scope": "career",
+      "source": "Wikipedia",
+      "checked": "Wikipedia (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Lamar Jackson",
+      "label": "First-team All-Pro",
+      "say": "3-time First-team All-Pro (2019, 2023, 2024)",
+      "scope": "career",
+      "source": "Wikipedia",
+      "checked": "Wikipedia (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Josh Allen",
+      "label": "EPA per dropback",
+      "say": "+0.29",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Lamar Jackson",
+      "label": "EPA per dropback",
+      "say": "+0.37",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Lamar Jackson",
+      "label": "record as a starting QB",
+      "say": "79-33",
+      "scope": "career regular season, 2018-2026",
+      "source": "nflverse",
+      "checked": "Sleeper (games started, every season)",
+      "status": "verified"
+    },
+    {
+      "subject": "Josh Allen",
+      "label": "playoff record as a starting QB",
+      "say": "8-7 (playoffs after the 2019, 2020, 2021, 2022, 2023, 2024, 2025 seasons)",
+      "scope": "career playoffs",
+      "source": "nflverse",
+      "checked": "Sleeper (playoff starts)",
+      "status": "verified"
+    },
+    {
+      "subject": "Lamar Jackson",
+      "label": "playoff record as a starting QB",
+      "say": "3-5 (playoffs after the 2018, 2019, 2020, 2023, 2024 seasons)",
+      "scope": "career playoffs",
+      "source": "nflverse",
+      "checked": "Sleeper (playoff starts)",
+      "status": "verified"
+    },
+    {
+      "subject": "Josh Allen",
+      "label": "interceptions thrown",
+      "say": "5",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "Sleeper",
+      "status": "verified"
+    },
+    {
+      "subject": "Lamar Jackson",
+      "label": "interceptions thrown",
+      "say": "1",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "Sleeper",
+      "status": "verified"
+    },
+    {
+      "subject": "Lamar Jackson",
+      "label": "EPA per dropback",
+      "say": "+0.06",
+      "scope": "2025 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Josh Allen",
+      "label": "record as a starting QB",
+      "say": "6-1",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "Sleeper (games started, every season)",
+      "status": "verified"
+    },
+    {
+      "subject": "Lamar Jackson",
+      "label": "dropback success rate",
+      "say": "57.1%",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Josh Allen",
+      "label": "rushing touchdowns",
+      "say": "9",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "Sleeper",
+      "status": "verified"
+    },
+    {
+      "subject": "Lamar Jackson",
+      "label": "rushing touchdowns",
+      "say": "1",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "Sleeper",
+      "status": "verified"
+    }
+  ],
+  "winning_case": {
+    "host": "lonnie",
+    "score": 83.5,
+    "argument": "Allen, because the best quarterback is the one who's on the field every week.",
+    "stats": [
+      {
+        "subject": "Josh Allen",
+        "label": "EPA per dropback",
+        "say": "+0.29",
+        "scope": "2026 regular season"
+      },
+      {
+        "subject": "Lamar Jackson",
+        "label": "EPA per dropback",
+        "say": "+0.37",
+        "scope": "2026 regular season"
+      }
+    ]
+  },
+  "plan": {
+    "cases": {
+      "royce": {
+        "claim": "Take Allen, because he has answered the question in January and is carrying the Bills now.",
+        "supports": [
+          "Playoff record as a starter, 8-7 over 15 starts against Lamar's 3-5 over 8 (F22, F23)",
+          "Team result and the player's own production this season: 6-1 as a starter and 9 rushing touchdowns against Lamar's 1 (F29, F34, F35)",
+          "The read of how Allen plays: a runner who also throws it deep, tied to his rushing yards (F17)"
+        ],
+        "answer": "Concedes Lamar's two MVPs and 79-33 record, then argues the question is who you want in January and right now, and the playoff record answers it (F10, F21)."
+      },
+      "deacon": {
+        "claim": "Take Lamar, because when he plays he leads every efficiency number this season.",
+        "supports": [
+          "EPA per dropback and success rate, both first among qualifying quarterbacks (F20, F32)",
+          "Honors voted on over years: 2 MVPs and 3 first-team All-Pros (F10, F11)",
+          "Turning Allen's interceptions: 5 against Lamar's 1 (F24, F25)"
+        ],
+        "answer": "Concedes Lamar's 112 dropbacks are fewer and last season's EPA was ordinary, and says his résumé shows what a healthy Lamar is. Ends by conceding he can't take a quarterback who is on injured reserve (F27, F4)."
+      },
+      "lonnie": {
+        "claim": "Take Allen, because he's on the field every week and gives the Bills a runner and a passer in one.",
+        "supports": [
+          "Availability: Allen has played every game in 5 of his last 5 full seasons, while Lamar missed a quarter or more in 2 and is on injured reserve today (F3, F6, F4)",
+          "Efficiency on the bigger body of work: Allen's EPA ranks second on 241 dropbacks, and last season he ranked 8th to Lamar's 18th (F19, F26, F27)",
+          "Role: Allen's running is part of the offense, with 270 rushing yards and 9 touchdowns (F17, F34)"
+        ],
+        "answer": "Concedes Lamar leads this season's rate stats and says a rate stat is worth something only when the player is on the field. Names what would flip him: a healthy Lamar holding that EPA over a longer run."
+      }
+    },
+    "beats": [
+      "Opening positions: Lonnie says Allen on availability, Deacon says Lamar on this season's rates, and Lonnie answers with the dropback counts.",
+      "Main clash: Royce's picture of Allen and the 6-1 record against Deacon's interceptions turn, and Royce answers with the rushing touchdowns.",
+      "Exposed weakness: Lonnie's last-season question puts Deacon's case on a one-season rate that is up from 2025, and Royce brings the playoff record.",
+      "Decisive exchange: Lonnie asks who plays Sunday, and Deacon has to concede that his case only works if Lamar is on the field."
+    ]
+  },
+  "scores": {
+    "royce": 67.5,
+    "deacon": 67.0,
+    "lonnie": 83.5
+  },
+  "winner": "lonnie",
+  "tie": false,
+  "lines": [
+    {
+      "line": 1,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "You're on the Sideline. Go ahead, Dan from Scranton.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "You're on the Sideline. Go ahead, Dan from Scranton.",
+          "audio": "1-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 2,
+      "speaker": "caller",
+      "speaker_name": "Dan from Scranton",
+      "text": "My brother and I have been fighting about this since the bye weeks. Josh Allen or Lamar Jackson, who do you want right now? Loser buys the wings.",
+      "delivery": "curious",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "My brother and I have been fighting about this since the bye weeks. Josh Allen or Lamar Jackson, who do you want right now? Loser buys the wings.",
+          "audio": "2-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 3,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Allen. Start with who's actually going to be out there. Lamar's on injured reserve today, and Allen has played every game in each of his last five full seasons. Lamar missed a quarter or more of his team's games in two of those.",
+      "delivery": "calm",
+      "facts": [
+        "F4",
+        "F3",
+        "F6"
+      ],
+      "argument": 1,
+      "score": {
+        "lonnie": 92
+      },
+      "stat": {
+        "value": "2021: 17 of 17; 2022: 16 of 16; 2023: 17 of 17; 2024: 17 of 17; 2025: 17 of 17; 2026: 7 of 7 so far, through Week 8. In his last 5 full seasons he played every game in 5 and missed a quarter or more of his team's games in 0",
+        "label": "Josh Allen · games played by season",
+        "definition": "Games he played each regular season, out of his team's games. Missing games can be injury, rest, suspension, or not being on a roster yet; this doesn't say which.",
+        "source": "Sleeper",
+        "asOf": "last 5 full seasons and this one · today"
+      },
+      "cards": [
+        {
+          "text": "Allen. Start with who's actually going to be out there. Lamar's on injured reserve today, and Allen has played every game in each of his last five full seasons.",
+          "audio": "3-0.mp3"
+        },
+        {
+          "text": "Lamar missed a quarter or more of his team's games in two of those.",
+          "audio": "3-1.mp3"
+        }
+      ]
+    },
+    {
+      "line": 4,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Availability counts, I'll give you that. But 'rather have' means when they're playing, so look at that. EPA per dropback, the points each pass play adds to what the offense expects to score: Lamar's at plus 0.37, first among qualifying quarterbacks. Success rate, 57.1 percent, also first. Two different metrics, same answer.",
+      "delivery": "confident",
+      "facts": [
+        "F20",
+        "F32"
+      ],
+      "argument": 2,
+      "score": {
+        "deacon": 82
+      },
+      "stat": {
+        "value": "+0.37",
+        "label": "Lamar Jackson · EPA per dropback",
+        "definition": "Expected points added per dropback: how much each pass attempt, sack, or scramble raised or lowered the points his team should expect on that drive.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      },
+      "cards": [
+        {
+          "text": "Availability counts, I'll give you that. But 'rather have' means when they're playing, so look at that.",
+          "audio": "4-0.mp3"
+        },
+        {
+          "text": "EPA per dropback, the points each pass play adds to what the offense expects to score: Lamar's at plus 0.37, first among qualifying quarterbacks.",
+          "audio": "4-1.mp3"
+        },
+        {
+          "text": "Success rate, 57.1 percent, also first. Two different metrics, same answer.",
+          "audio": "4-2.mp3"
+        }
+      ]
+    },
+    {
+      "line": 5,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Allen's second in that same EPA, Deac, and he's doing it on 241 dropbacks. Lamar's is on 112. So which one's holding up when defenses have to play him every week?",
+      "delivery": "curious",
+      "facts": [
+        "F19",
+        "F20"
+      ],
+      "argument": 3,
+      "score": {
+        "lonnie": 86
+      },
+      "stat": {
+        "value": "+0.29",
+        "label": "Josh Allen · EPA per dropback",
+        "definition": "Expected points added per dropback: how much each pass attempt, sack, or scramble raised or lowered the points his team should expect on that drive.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2026 regular season · through Week 9"
+      },
+      "cards": [
+        {
+          "text": "Allen's second in that same EPA, Deac, and he's doing it on 241 dropbacks. Lamar's is on 112. So which one's holding up when defenses have to play him every week?",
+          "audio": "5-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 6,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Twice the dropbacks and he's still right there. Come on. To my eye, Allen plays quarterback like a freight train that can also throw it through a keyhole, and Buffalo is 6-1 with him as the starter.",
+      "delivery": "building",
+      "facts": [
+        "F29"
+      ],
+      "argument": 4,
+      "score": {
+        "royce": 50
+      },
+      "stat": {
+        "value": "6-1",
+        "label": "Josh Allen · record as a starting QB",
+        "definition": "Regular-season wins and losses in games he started at quarterback.",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "2026 regular season · through Week 8"
+      },
+      "cards": [
+        {
+          "text": "Twice the dropbacks and he's still right there. Come on.",
+          "audio": "6-0.mp3"
+        },
+        {
+          "text": "To my eye, Allen plays quarterback like a freight train that can also throw it through a keyhole, and Buffalo is 6-1 with him as the starter.",
+          "audio": "6-1.mp3"
+        }
+      ]
+    },
+    {
+      "line": 7,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "That's a team record, Royce. Here's his own number: five interceptions this season. Lamar's thrown one. Who's the careless one?",
+      "delivery": "heated",
+      "facts": [
+        "F24",
+        "F25"
+      ],
+      "argument": 5,
+      "score": {
+        "deacon": 76
+      },
+      "stat": {
+        "value": "5",
+        "label": "Josh Allen · interceptions thrown",
+        "definition": "Passes intercepted by the defense.",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "2026 regular season · through Week 8"
+      },
+      "cards": [
+        {
+          "text": "That's a team record, Royce. Here's his own number: five interceptions this season. Lamar's thrown one. Who's the careless one?",
+          "audio": "7-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 8,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Sure, he's thrown interceptions. He also has 9 rushing touchdowns, and Lamar has 1. Allen's carrying that offense in the end zone, and you're counting his mistakes but not his points.",
+      "delivery": "confident",
+      "facts": [
+        "F24",
+        "F25",
+        "F34",
+        "F35"
+      ],
+      "argument": 6,
+      "stat": {
+        "value": "1",
+        "label": "Lamar Jackson · interceptions thrown",
+        "definition": "Passes intercepted by the defense.",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "2026 regular season · through Week 8"
+      },
+      "cards": [
+        {
+          "text": "Sure, he's thrown interceptions. He also has 9 rushing touchdowns, and Lamar has 1.",
+          "audio": "8-0.mp3"
+        },
+        {
+          "text": "Allen's carrying that offense in the end zone, and you're counting his mistakes but not his points.",
+          "audio": "8-1.mp3"
+        }
+      ]
+    },
+    {
+      "line": 9,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "And January settles it. Allen is 8-7 in the playoffs over 15 starts. Lamar is 3-5. Be honest. When it's on the line, which one has answered?",
+      "delivery": "emphatic",
+      "facts": [
+        "F22",
+        "F23"
+      ],
+      "argument": 4,
+      "score": {
+        "royce": 64
+      },
+      "stat": {
+        "value": "8-7 (playoffs after the 2019, 2020, 2021, 2022, 2023, 2024, 2025 seasons)",
+        "label": "Josh Allen · playoff record as a starting QB",
+        "definition": "Playoff wins and losses in games he started at quarterback.",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "career playoffs · final"
+      },
+      "cards": [
+        {
+          "text": "And January settles it. Allen is 8-7 in the playoffs over 15 starts. Lamar is 3-5. Be honest. When it's on the line, which one has answered?",
+          "audio": "9-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 10,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Last season was ordinary, okay. I'm not hiding it. But a 2-time MVP and 3-time first-team All-Pro doesn't forget how. And a playoff record that close to even is a coin flip, man. That's not an answer, that's a shrug.",
+      "delivery": "heated",
+      "facts": [
+        "F27",
+        "F10",
+        "F11",
+        "F22"
+      ],
+      "argument": 8,
+      "score": {
+        "deacon": 71
+      },
+      "stat": {
+        "value": "+0.06",
+        "label": "Lamar Jackson · EPA per dropback",
+        "definition": "Expected points added per dropback: how much each pass attempt, sack, or scramble raised or lowered the points his team should expect on that drive.",
+        "source": "nflverse, checked against muffed.ai (Data via nflverse · NFL Next Gen Stats via nflverse · FTN Data via nflverse)",
+        "asOf": "2025 regular season · final"
+      },
+      "cards": [
+        {
+          "text": "Last season was ordinary, okay. I'm not hiding it. But a 2-time MVP and 3-time first-team All-Pro doesn't forget how.",
+          "audio": "10-0.mp3"
+        },
+        {
+          "text": "And a playoff record that close to even is a coin flip, man. That's not an answer, that's a shrug.",
+          "audio": "10-1.mp3"
+        }
+      ]
+    },
+    {
+      "line": 11,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "You keep saying 'when he plays,' Deac. He's on injured reserve today with an ankle sprain this season. So who plays Sunday?",
+      "delivery": "cold",
+      "facts": [
+        "F4",
+        "F7"
+      ],
+      "argument": 1,
+      "score": {
+        "lonnie": 83
+      },
+      "stat": {
+        "value": "ankle sprain in the 2026 season (he's played 5 of 8 games so far this season, through Week 8); ankle injury in the 2021 season (he played 12 of 17 games that season)",
+        "label": "Lamar Jackson · injury history",
+        "definition": "Injuries his Wikipedia article reports, kept only when his games played show real time missed. Games played are for the whole regular season, not a count of games that injury cost him.",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "the last 6 seasons · today"
+      },
+      "cards": [
+        {
+          "text": "You keep saying 'when he plays,' Deac. He's on injured reserve today with an ankle sprain this season. So who plays Sunday?",
+          "audio": "11-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 12,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Two MVPs against one, 79-33 as a starter. That's Lamar's résumé and it's a great one. But that's the past. We were asked about right now.",
+      "delivery": "conceding",
+      "facts": [
+        "F10",
+        "F21"
+      ],
+      "argument": 6,
+      "score": {
+        "royce": 66
+      },
+      "stat": {
+        "value": "2-time NFL MVP (2019, 2023)",
+        "label": "Lamar Jackson · NFL MVP",
+        "definition": "From his Wikipedia page: 2× NFL Most Valuable Player (2019, 2023)",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "career · today"
+      },
+      "cards": [
+        {
+          "text": "Two MVPs against one, 79-33 as a starter. That's Lamar's résumé and it's a great one. But that's the past. We were asked about right now.",
+          "audio": "12-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 13,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Fine. Per snap, I take Lamar. But you can't take a snap from a guy on injured reserve, and I'll say that plainly. If he stays healthy and the efficiency holds up, I'm right.",
+      "delivery": "conceding",
+      "facts": [
+        "F4"
+      ],
+      "argument": 2,
+      "score": {
+        "deacon": 67
+      },
+      "cards": [
+        {
+          "text": "Fine. Per snap, I take Lamar. But you can't take a snap from a guy on injured reserve, and I'll say that plainly.",
+          "audio": "13-0.mp3"
+        },
+        {
+          "text": "If he stays healthy and the efficiency holds up, I'm right.",
+          "audio": "13-1.mp3"
+        }
+      ]
+    },
+    {
+      "line": 14,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "Final answers, one sentence each. Lonnie.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "Final answers, one sentence each. Lonnie.",
+          "audio": "14-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 15,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Allen, because the best quarterback is the one who's on the field every week.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "Allen, because the best quarterback is the one who's on the field every week.",
+          "audio": "15-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 16,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Lamar, because when he's playing, nobody's more efficient. It just comes with an asterisk.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "Lamar, because when he's playing, nobody's more efficient. It just comes with an asterisk.",
+          "audio": "16-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 17,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Allen, because he's been in the big games and he's still standing in them.",
+      "delivery": "quiet",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "Allen, because he's been in the big games and he's still standing in them.",
+          "audio": "17-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 18,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "On the scorecard, tonight goes to Lonnie. His case was about who's actually available: Lamar is on injured reserve today, while Allen has played every game in each of his last five full seasons.",
+      "delivery": "calm",
+      "facts": [
+        "F4",
+        "F3",
+        "F6"
+      ],
+      "argument": null,
+      "score": {
+        "royce": 68,
+        "deacon": 67,
+        "lonnie": 84
+      },
+      "stat": {
+        "value": "2021: 12 of 17; 2022: 12 of 17; 2023: 16 of 17; 2024: 17 of 17; 2025: 13 of 17; 2026: 5 of 8 so far, through Week 8. In his last 5 full seasons he played every game in 1 and missed a quarter or more of his team's games in 2",
+        "label": "Lamar Jackson · games played by season",
+        "definition": "Games he played each regular season, out of his team's games. Missing games can be injury, rest, suspension, or not being on a roster yet; this doesn't say which.",
+        "source": "Sleeper",
+        "asOf": "last 5 full seasons and this one · today"
+      },
+      "cards": [
+        {
+          "text": "On the scorecard, tonight goes to Lonnie.",
+          "audio": "18-0.mp3"
+        },
+        {
+          "text": "His case was about who's actually available: Lamar is on injured reserve today, while Allen has played every game in each of his last five full seasons.",
+          "audio": "18-1.mp3"
+        }
+      ]
+    },
+    {
+      "line": 19,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "That's the board. Thanks for the call, Dan.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "That's the board. Thanks for the call, Dan.",
+          "audio": "19-0.mp3"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "step": 2,
+    "model": "claude-sonnet-5-5",
+    "created": "2026-11-06T19:28:21",
+    "generation_seconds": 118.4,
+    "timings": {
+      "topic_check": 1.7,
+      "research": 5.6,
+      "verify": 19.0,
+      "write": 52.0,
+      "line_check": 23.1,
+      "judge": 8.2,
+      "close": 8.8,
+      "voices": 5.7
+    },
+    "stats_found": 47,
+    "stats_verified": 36,
+    "stats_dropped": 6,
+    "facts_used": 18,
+    "lines_checked": 20,
+    "lines_rewritten": 2,
+    "lines_cut": 1,
+    "writer_input_tokens": 6831,
+    "writer_cache_read_tokens": 0,
+    "writer_output_tokens": 6529
+  },
+  "voices": {
+    "voiced_cards": 27,
+    "cards": 27,
+    "characters": 2735,
+    "failed": [],
+    "used_this_month": 9000
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "stats": [
+    {
+      "subject": "Baltimore Ravens",
+      "stat": "regular-season record",
+      "scope": "2026 regular season",
+      "what_we_found": "4-4",
+      "reason": "ours {'wins': 4, 'losses': 4, 'ties': 0} vs muffed.ai {'wins': 4, 'losses': 5, 'ties': 0}"
+    },
+    {
+      "subject": "Buffalo Bills",
+      "stat": "head coach",
+      "scope": "today",
+      "what_we_found": "Sean McDermott",
+      "reason": "nflverse says Sean McDermott, Wikipedia says Joe Brady"
+    }
+  ],
+  "lines": [
+    {
+      "line": 4,
+      "speaker": "lonnie",
+      "said": "Can I jump in? Scoring's half of it, Royce. Denver is 6 and 2, more wins than anybody else in this conversation. And what's their profile? A defense that's solid in the middle of the pack and takes the ball away. No hole big enough to lose you a game.",
+      "problem": "Denver has more wins than anybody else in this conversation.: Buffalo also has 6 wins (6-1), so Denver is tied with Buffalo, not ahead. KC and Detroit have 5. (contradicted)",
+      "action": "rewritten",
+      "now": "Can I jump in? Scoring's half of it, Royce. Denver is 6 and 2, as many wins as Buffalo has, and more than Kansas City or Detroit. And what's their profile? A defense that's solid in the middle of the pack and takes the ball away. No hole big enough to lose you a game."
+    },
+    {
+      "line": 9,
+      "speaker": "royce",
+      "said": "Because I'm about to use it. Buffalo's offense is second in the league in EPA. Your own number, Deacon. And 25.9 allowed a game is not a disaster when you're scoring 33.",
+      "problem": "says 33, which doesn't match any fact this line cites",
+      "action": "rewritten",
+      "now": "Because I'm about to use it. Buffalo's offense is second in the league in EPA. Your own number, Deacon. And 25.9 allowed a game is not a disaster when you're scoring 33.3."
+    },
+    {
+      "line": 15,
+      "speaker": "deacon",
+      "said": "Hah. There it is. Twenty-first-century football says you can't be great with a bottom-half offense. Six and two on that offense? That's a lucky team, Lonnie.",
+      "problem": "uses the stock phrase 'hah' after the segment's limit of 2; say it fresh, in other words, or drop it",
+      "action": "rewritten",
+      "now": "There it is. Twenty-first-century football says you can't be great with a bottom-half offense. Six and two on that offense? That's a lucky team, Lonnie."
+    },
+    {
+      "line": 19,
+      "speaker": "royce",
+      "said": "Buffalo, because the team that scores the most and loses the least is the one you remember in January.",
+      "problem": "Buffalo loses the least.: Buffalo has one loss, but the fact pack has no league-wide loss counts, so 'the least' can't be verified. (unsupported)",
+      "action": "rewritten",
+      "now": "Buffalo, because the team that scores the most and loses only once is the one you remember in January."
+    },
+    {
+      "line": 20,
+      "speaker": "deacon",
+      "said": "Kansas City, because it's the only one that's top five on both sides of the ball.",
+      "problem": "Kansas City is the only one of these teams that is top five on both sides of the ball.: KC is 4th in offensive EPA and 4th in points allowed, but 11th in defensive EPA. The 'only one' superlative is not established by the facts. (unsupported)",
+      "action": "rewritten",
+      "now": "Kansas City, because it's the one that's strong on both sides of the ball: fourth in offensive EPA and fourth in points allowed."
+    }
+  ],
+  "close": []
+}

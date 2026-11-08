@@ -1,0 +1,379 @@
+{
+  "arguments": {
+    "1": {
+      "host": "lonnie",
+      "score": 44.4,
+      "base": 44.4,
+      "dropped": false,
+      "lines": [
+        3
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Team scoring rank (F15) is a team stat that doesn't isolate him; 'fits what they want' is just a read. / Cites a verified team scoring rank (F15), but that is a team stat that says little about him, and 'fits what they want' is just opinion. / Cites a verified team scoring rank (F15), which is a team stat and not about him, and the 'fits what they want' claim is only a vague impression.",
+      "ratings": {
+        "evidence": 2.0,
+        "reasoning": 2.0,
+        "rebuttal": null,
+        "impact": 2.67,
+        "clarity": 3.0
+      }
+    },
+    "2": {
+      "host": "deacon",
+      "score": 82.3,
+      "base": 82.3,
+      "dropped": false,
+      "lines": [
+        4
+      ],
+      "rebuttal": 4.333333333333333,
+      "answers": [
+        1
+      ],
+      "note": "Correctly says team scoring isn't him, then uses his own EPA rank (F10) of 17 of 35 to argue he's average, not franchise. / Correctly says team scoring isn't his individual value and uses his own EPA per dropback (F10, middle of the pack) to argue that is not franchise level. / Correctly says team scoring isn't the QB and offers his own EPA per dropback (+0.05, 17th of 35) as the right measure, tied to 'middle isn't franchise'.",
+      "ratings": {
+        "evidence": 3.67,
+        "reasoning": 4.0,
+        "rebuttal": 4.33,
+        "impact": 4.33,
+        "clarity": 5.0
+      }
+    },
+    "3": {
+      "host": "royce",
+      "score": 57.0,
+      "base": 52.0,
+      "dropped": true,
+      "lines": [
+        5
+      ],
+      "rebuttal": 2.0,
+      "answers": [
+        1
+      ],
+      "note": "Draft slot, 3-4 record and one playoff loss are real facts, but record and pick price are team and front-office measures and the 'price' standard is asserted. / Draft slot, 3-4 record, and 0-1 playoffs are verified (F4, F5, F12), but record and draft price are weak proof of his own quality and mostly judge the front office's pick. / Draft slot, 3-4 record and a one-game playoff sample are verified but mostly price and team results, and the draft pick doesn't answer the scoring point.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 2.0,
+        "rebuttal": 2.0,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "4": {
+      "host": "deacon",
+      "score": 61.8,
+      "base": 61.8,
+      "dropped": false,
+      "lines": [
+        6
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Uses last year's EPA (F13) against this year's (F10) to show real improvement, a fair concession but it adds little toward the question. / Cites last season's EPA (F13) accurately and concedes improvement, but it only sets up the trend and doesn't push the question forward. / Uses last year's EPA (-0.01, 29th of 38) to concede improvement, a fair like-for-like comparison but it mostly concedes rather than advances the question.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.0,
+        "rebuttal": null,
+        "impact": 2.67,
+        "clarity": 4.0
+      }
+    },
+    "5": {
+      "host": "lonnie",
+      "score": 69.3,
+      "base": 69.3,
+      "dropped": false,
+      "lines": [
+        7
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        2,
+        4
+      ],
+      "note": "ANY/A rising from 5.49 to 6.23 (F21, F11) supports the trend and builds on Host 2's concession, but it compares a full season to seven games and the coach fact is filler. / Uses verified ANY/A improvement from 5.49 to 6.23 (F21, F11) to argue a positive trend, but the coach mention is a loose add-on and a trend isn't proof of franchise status. / ANY/A rising from 5.49 to 6.23 is verified and supports the trend, but the coach mention adds nothing and the trend alone doesn't prove franchise status.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 3.0,
+        "rebuttal": 3.0,
+        "impact": 4.0,
+        "clarity": 3.67
+      }
+    },
+    "6": {
+      "host": "deacon",
+      "score": 65.7,
+      "base": 60.7,
+      "dropped": true,
+      "lines": [
+        8
+      ],
+      "rebuttal": 3.3333333333333335,
+      "answers": [
+        5
+      ],
+      "note": "Points to the small sample behind the improvement, which is the key weakness of Host 1's trend claim, though F6 doesn't really show it. / Fairly points to the small sample of seven games; F6 passing yards is only loosely related to that point. / Sample-size caution on seven games is sound, but the cited passing yards fact doesn't really bear on it.",
+      "ratings": {
+        "evidence": 2.0,
+        "reasoning": 3.33,
+        "rebuttal": 3.33,
+        "impact": 3.33,
+        "clarity": 4.33
+      }
+    },
+    "7": {
+      "host": "royce",
+      "score": 56.0,
+      "base": 56.0,
+      "dropped": false,
+      "lines": [
+        9
+      ],
+      "rebuttal": 3.6666666666666665,
+      "answers": [
+        1,
+        5
+      ],
+      "note": "Asks Host 1 to separate him from the team, which is the central gap in the case, but offers no facts. / A good question separating him from the team, but it offers no evidence and only partly answers the opponent. / Asks pointedly for evidence about him versus the team, a good challenge, but offers no facts.",
+      "ratings": {
+        "evidence": 1.0,
+        "reasoning": 3.0,
+        "rebuttal": 3.67,
+        "impact": 3.67,
+        "clarity": 4.67
+      }
+    },
+    "8": {
+      "host": "lonnie",
+      "score": 52.0,
+      "base": 52.0,
+      "dropped": false,
+      "lines": [
+        10
+      ],
+      "rebuttal": 2.0,
+      "answers": [
+        7
+      ],
+      "note": "Availability and a 13-to-5 TD-to-INT ratio (F3, F7, F8) are about him, but they don't show he is the reason the offense works, so the question isn't really answered. / Availability and a 13-to-5 TD-INT ratio (F3, F7, F8) are verified, but being on the field doesn't show he's the reason the offense works, so it skirts the challenge. / Availability and 13 TD to 5 INT are verified but availability doesn't show he's the reason the offense works, so it only partly answers the question.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 2.0,
+        "rebuttal": 2.0,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "9": {
+      "host": "royce",
+      "score": 63.7,
+      "base": 63.7,
+      "dropped": false,
+      "lines": [
+        11
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        8
+      ],
+      "note": "Says availability isn't franchise level and ties the standard to winning, but the 3-4 record (F4) is a team result and mostly rests on opinion. / Rightly says availability isn't franchise quality, but leans on the 3-4 team record (F4) to say he doesn't win games. / Rightly says availability isn't franchise-level, though leaning on the 3-4 team record is weak evidence about him.",
+      "ratings": {
+        "evidence": 2.0,
+        "reasoning": 3.0,
+        "rebuttal": 4.0,
+        "impact": 4.0,
+        "clarity": 4.33
+      }
+    },
+    "10": {
+      "host": "deacon",
+      "score": 59.8,
+      "base": 59.8,
+      "dropped": false,
+      "lines": [
+        12
+      ],
+      "rebuttal": 2.5,
+      "answers": [
+        8
+      ],
+      "note": "Five picks and 58.7% completions (F8, F9) are his numbers, but five picks is not clearly bad and the number ignores his 13 TDs. / Five picks and 58.7% completions are verified (F8, F9), but the claim ignores his touchdown output and that his EPA is up. / Five picks and 58.7% completions are verified but pushing against the 13-to-5 TD/INT line is incomplete and it ignores the yardage efficiency.",
+      "ratings": {
+        "evidence": 3.33,
+        "reasoning": 2.67,
+        "rebuttal": 2.5,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "11": {
+      "host": "lonnie",
+      "score": 40.0,
+      "base": 40.0,
+      "dropped": false,
+      "lines": [
+        13
+      ],
+      "rebuttal": 2.0,
+      "answers": [
+        9,
+        10
+      ],
+      "note": "Dismisses the picks as a 'read' and shifts to 'whether you commit' instead of showing why the record measure fails. / Dismisses the interceptions as opinion and then changes the subject to commitment, which doesn't answer why the number isn't a problem. / Dismisses the interception point as his read and shifts to 'whether you commit', which swaps the question rather than answering it.",
+      "ratings": {
+        "evidence": 1.67,
+        "reasoning": 2.0,
+        "rebuttal": 2.0,
+        "impact": 2.0,
+        "clarity": 3.0
+      }
+    },
+    "12": {
+      "host": "royce",
+      "score": 57.3,
+      "base": 57.3,
+      "dropped": false,
+      "lines": [
+        14
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        8,
+        11
+      ],
+      "note": "A hypothetical on a second playoff loss, resting on the single playoff start (F5), that tests Host 1's commitment. / A pointed hypothetical built on the one playoff loss (F5) that tests whether Host 1's commitment is real. / A clear hypothetical that tests Host 3's commitment, but it leans on a one-game playoff sample.",
+      "ratings": {
+        "evidence": 2.0,
+        "reasoning": 3.0,
+        "rebuttal": 3.0,
+        "impact": 3.0,
+        "clarity": 4.67
+      }
+    },
+    "13": {
+      "host": "lonnie",
+      "score": 59.7,
+      "base": 59.7,
+      "dropped": false,
+      "lines": [
+        15
+      ],
+      "rebuttal": 3.3333333333333335,
+      "answers": [
+        12
+      ],
+      "note": "Answers directly and sets a condition tied to efficiency vs last year (F13), but one playoff game as a small sample is just asserted. / Answers directly and sets a condition tied to last year's efficiency (F13), but offers no reason why one playoff start doesn't matter beyond assertion. / Answers directly and sets a clear efficiency condition, but it dodges the substance of what the playoff loss implies.",
+      "ratings": {
+        "evidence": 2.33,
+        "reasoning": 3.0,
+        "rebuttal": 3.33,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "14": {
+      "host": "deacon",
+      "score": 70.0,
+      "base": 70.0,
+      "dropped": false,
+      "lines": [
+        16
+      ],
+      "rebuttal": 4.333333333333333,
+      "answers": [
+        13
+      ],
+      "note": "Turns Host 1's own condition into 'not yet', directly hitting the concession, though F10 isn't really needed. / Correctly points out that Host 1's own condition means the yes is conditional, which supports 'not yet'. / Points out that Host 3's own condition makes it a not-yet, a sharp reading of the admission.",
+      "ratings": {
+        "evidence": 2.0,
+        "reasoning": 3.67,
+        "rebuttal": 4.33,
+        "impact": 4.0,
+        "clarity": 5.0
+      }
+    },
+    "15": {
+      "host": "lonnie",
+      "score": 42.7,
+      "base": 42.7,
+      "dropped": false,
+      "lines": [
+        17
+      ],
+      "rebuttal": 2.6666666666666665,
+      "answers": [
+        14
+      ],
+      "note": "Claims every verdict is conditional, a fair reply but it's unsupported and doesn't resolve whether he's already a franchise QB. / Replies that every yes is conditional, which has some force but is only an assertion and adds no facts. / Says every answer carries a condition but gives no support and sidesteps the point about the number flipping him.",
+      "ratings": {
+        "evidence": 1.0,
+        "reasoning": 2.0,
+        "rebuttal": 2.67,
+        "impact": 2.67,
+        "clarity": 4.0
+      }
+    }
+  },
+  "hosts": {
+    "royce": {
+      "score": 58.5,
+      "arguments": 4,
+      "rebuttal": 3.17
+    },
+    "deacon": {
+      "score": 67.9,
+      "arguments": 5,
+      "rebuttal": 3.62
+    },
+    "lonnie": {
+      "score": 51.3,
+      "arguments": 6,
+      "rebuttal": 2.6
+    }
+  },
+  "ranked": [
+    "deacon",
+    "royce",
+    "lonnie"
+  ],
+  "winner": "deacon",
+  "tie": false,
+  "tiebreak": false,
+  "close_call": false,
+  "order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "blind_labels": [
+    {
+      "lonnie": "Host 1",
+      "deacon": "Host 2",
+      "royce": "Host 3"
+    },
+    {
+      "lonnie": "Host 1",
+      "royce": "Host 2",
+      "deacon": "Host 3"
+    },
+    {
+      "royce": "Host 1",
+      "deacon": "Host 2",
+      "lonnie": "Host 3"
+    }
+  ]
+}

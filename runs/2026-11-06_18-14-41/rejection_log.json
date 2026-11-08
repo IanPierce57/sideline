@@ -1,0 +1,78 @@
+{
+  "stats": [
+    {
+      "subject": "Bryce Young",
+      "stat": "career honors",
+      "scope": "career",
+      "what_we_found": null,
+      "reason": "no honors listed"
+    },
+    {
+      "subject": "Bryce Young",
+      "stat": "record as a starting QB",
+      "scope": "career regular season, 2023-2026",
+      "what_we_found": "16-32",
+      "reason": "starts don't match Sleeper (2024: 8 vs 12; 2025: 17 vs 16)"
+    },
+    {
+      "subject": "Bryce Young",
+      "stat": "CPOE (nflverse model)",
+      "scope": "2026 regular season",
+      "what_we_found": "-0.2",
+      "reason": "ours -0.2494 vs muffed.ai -0.3170: the numbers don't match, so it's left out"
+    },
+    {
+      "subject": "Bryce Young",
+      "stat": "record as a starting QB",
+      "scope": "2025 regular season",
+      "what_we_found": "8-9",
+      "reason": "starts don't match Sleeper (2025: 17 vs 16)"
+    },
+    {
+      "subject": "Bryce Young",
+      "stat": "CPOE (Next Gen Stats model)",
+      "scope": "2026 regular season",
+      "what_we_found": "-0.0",
+      "reason": "Next Gen Stats only publish season averages, so this can't be compared through Week 9 while the sources are a week apart"
+    },
+    {
+      "subject": "Bryce Young",
+      "stat": "dropback success rate",
+      "scope": "2026 regular season",
+      "what_we_found": "42.6%",
+      "reason": "ours 42.6174 vs muffed.ai 42.6200: the numbers don't match, so it's left out"
+    }
+  ],
+  "lines": [
+    {
+      "line": 3,
+      "speaker": "lonnie",
+      "said": "I'll convince you. Yes. Look at how they use him. He throws it downfield more than most quarterbacks, and he doesn't force it into tight windows. That's a guy who fits what they want, and the offense backs it up: ninth in the league in scoring.",
+      "problem": "He throws it downfield more than most quarterbacks: How a player plays can't be stated as fact from the style profile. No fact backs it. (unsupported); He doesn't force it into tight windows: This comes only from the style profile, and no fact states it. (unsupported)",
+      "action": "rewritten",
+      "now": "I'll convince you. Yes. Look at how they use him. To my eye he's a guy who fits what they want, and the offense backs it up: ninth in the league in scoring."
+    },
+    {
+      "line": 7,
+      "speaker": "lonnie",
+      "said": "Thank you. So that's the trend, and a franchise quarterback is a trend plus a roster you can build on. Last season his yards per dropback, adjusted for touchdowns and picks, was 5.49. This year it's 6.23. Same coach, same system, he gets better.",
+      "problem": "Same coach, same system as last season: The facts only say Canales is the coach today. Nothing covers last season's coach or the system. (unsupported)",
+      "action": "rewritten",
+      "now": "Thank you. So that's the trend, and a franchise quarterback is a trend plus a roster you can build on. Last season his yards per dropback, adjusted for touchdowns and picks, was 5.49. This year it's 6.23. Canales is the coach today, and he's getting better."
+    },
+    {
+      "line": 13,
+      "speaker": "lonnie",
+      "said": "Five picks is about average for how often he throws, and he's not a gunslinger into coverage. Anyway, you're both grading him on a record. The question is whether you commit.",
+      "problem": "Five picks is about average for how often he throws: The only basis is the style profile, and no fact ranks his interception rate. (unsupported); He's not a gunslinger into coverage: This is how he plays, stated as fact from the style profile. No fact backs it. (unsupported)",
+      "action": "rewritten",
+      "now": "Five picks in seven games doesn't tell me he's a gunslinger, that's my read. Anyway, you're both grading him on a record. The question is whether you commit."
+    }
+  ],
+  "close": [
+    {
+      "line": 23,
+      "problem": "Ray was the caller who called in: No fact or earlier script line identifies the caller as Ray. (unsupported)"
+    }
+  ]
+}

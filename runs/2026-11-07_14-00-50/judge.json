@@ -1,0 +1,414 @@
+{
+  "arguments": {
+    "1": {
+      "host": "lonnie",
+      "score": 62.7,
+      "base": 62.7,
+      "dropped": false,
+      "lines": [
+        3
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Verified current per-game stats and team record are relevant, but only 8 games and the team record isn't about him alone; no comparison to top-10 peers. / Cites this season's stat line and Pistons record from verified facts, but only 8 games and team record is weak support for top-ten. / Verified per-game line and team record are relevant but come from only 8 games, and the record is a team result, so the link to top-10 is left to the listener.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.0,
+        "rebuttal": null,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "2": {
+      "host": "royce",
+      "score": 55.1,
+      "base": 55.1,
+      "dropped": false,
+      "lines": [
+        4
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Two All-Star nods are verified but don't establish top ten; team standing is off-subject and the boxing metaphor adds nothing. / Two All-Star nods are verified, but All-Star is a broad list and third in the East is team-level; the boxing metaphor adds nothing. / Two All-Star nods are verified, but they do not show a top-10 rank, and the team's standing is not tied to what he does.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 2.0,
+        "rebuttal": null,
+        "impact": 3.0,
+        "clarity": 3.67
+      }
+    },
+    "3": {
+      "host": "deacon",
+      "score": 64.3,
+      "base": 64.3,
+      "dropped": false,
+      "lines": [
+        5
+      ],
+      "rebuttal": 3.3333333333333335,
+      "answers": [
+        1,
+        2
+      ],
+      "note": "Correctly says All-Star is broad and top ten is narrow, with efficiency facts, but compares his 8 games to others' full last season. / Efficiency gap is verified and relevant, and it sizes up Host 1's All-Star point, but it compares Cade's 8 games to their full last season. / The efficiency gap is verified, but it sets his eight games and last season against rivals' full last season, an uneven comparison; the All-Star point is answered only partly.",
+      "ratings": {
+        "evidence": 3.33,
+        "reasoning": 2.33,
+        "rebuttal": 3.33,
+        "impact": 4.0,
+        "clarity": 4.0
+      }
+    },
+    "4": {
+      "host": "royce",
+      "score": 82.0,
+      "base": 82.0,
+      "dropped": false,
+      "lines": [
+        6
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        3
+      ],
+      "note": "Catches the apples-to-oranges comparison and gives same-season TS figures, though still only 8-9 games. / Correctly points out the scope mismatch and gives like-for-like this-season numbers, though still an 8-9 game sample. / It fixes the scope mismatch with same-season numbers from verified facts, though the eight-game sample is small.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 4.0,
+        "rebuttal": 4.0,
+        "impact": 4.0,
+        "clarity": 5.0
+      }
+    },
+    "5": {
+      "host": "lonnie",
+      "score": 44.0,
+      "base": 44.0,
+      "dropped": false,
+      "lines": [
+        7
+      ],
+      "rebuttal": 2.0,
+      "answers": [
+        3,
+        4
+      ],
+      "note": "A yes/no trap question that sets up the grace point but makes no claim itself. / A yes/no trap question that sets up a consistency point rather than making a claim. / It is a setup question that adds little itself and pressures the opponent.",
+      "ratings": {
+        "evidence": 2.0,
+        "reasoning": 2.0,
+        "rebuttal": 2.0,
+        "impact": 2.0,
+        "clarity": 4.0
+      }
+    },
+    "6": {
+      "host": "deacon",
+      "score": 56.7,
+      "base": 56.7,
+      "dropped": false,
+      "lines": [
+        8
+      ],
+      "rebuttal": 2.6666666666666665,
+      "answers": [
+        4,
+        5
+      ],
+      "note": "Admits discounting Shai's start on track record, which concedes the sample point but doesn't answer the same-season comparison. / Admits the discount for Shai and justifies it by track record, which is reasonable, but it is a partial answer. / It concedes the track-record argument and gives a reason for the double standard; the numbers are verified, but 'ordinary' is a loose reading of his year.",
+      "ratings": {
+        "evidence": 2.67,
+        "reasoning": 2.67,
+        "rebuttal": 2.67,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "7": {
+      "host": "royce",
+      "score": 63.7,
+      "base": 63.7,
+      "dropped": false,
+      "lines": [
+        9
+      ],
+      "rebuttal": 3.3333333333333335,
+      "answers": [
+        6
+      ],
+      "note": "Calls out the double standard and adds last season's 9.9 assists, which is a relevant verified fact. / Calls out the double standard and brings in last year's 9.9 assists, which is relevant but leaves the link to top-ten implicit. / It calls out the double standard and cites last season's 9.9 assists, but it sidesteps the track-record point.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.0,
+        "rebuttal": 3.33,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "8": {
+      "host": "deacon",
+      "score": 56.7,
+      "base": 56.7,
+      "dropped": false,
+      "lines": [
+        10
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        7
+      ],
+      "note": "Uses the drop to 7.6 assists and a 2.0 ratio against Jokic's 9.3, but the 'scorer's line' conclusion is loose and the ratio isn't compared. / Compares Cade's assists to Jokic's, but the 2.0 ratio has no comparison and 'scorer's line' doesn't follow from it. / The assist drop is verified, but the 'scorer's line' claim doesn't follow from comparing his assists to Jokic's.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 2.33,
+        "rebuttal": 3.0,
+        "impact": 3.0,
+        "clarity": 3.0
+      }
+    },
+    "9": {
+      "host": "lonnie",
+      "score": 78.7,
+      "base": 78.7,
+      "dropped": false,
+      "lines": [
+        11
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        8
+      ],
+      "note": "Concedes the assist drop, then applies Host 2's own small-sample rule and notes the scoring held at 24.0 vs 23.9. / Concedes the assist drop, applies Host 3's own small-sample rule, and notes scoring is unchanged, 24.0 vs 23.9. / It concedes the assist drop, applies the opponent's own sample-size rule and shows scoring is flat across seasons with verified numbers.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 4.0,
+        "rebuttal": 4.0,
+        "impact": 3.33,
+        "clarity": 4.0
+      }
+    },
+    "10": {
+      "host": "deacon",
+      "score": 51.3,
+      "base": 51.3,
+      "dropped": false,
+      "lines": [
+        14
+      ],
+      "rebuttal": 2.6666666666666665,
+      "answers": [
+        9
+      ],
+      "note": "Concedes the small-sample point and pivots to games played, but 'never played every game' is true of all the top players too. / Concedes the sample point but the games-played fact doesn't show 'never played every game' separates him, as no one has. / Availability is verified, but 'never played every game' is true of all the top players and doesn't separate him.",
+      "ratings": {
+        "evidence": 2.67,
+        "reasoning": 2.0,
+        "rebuttal": 2.67,
+        "impact": 3.0,
+        "clarity": 3.0
+      }
+    },
+    "11": {
+      "host": "royce",
+      "score": 82.3,
+      "base": 82.3,
+      "dropped": false,
+      "lines": [
+        15
+      ],
+      "rebuttal": 4.333333333333333,
+      "answers": [
+        10
+      ],
+      "note": "Uses verified games-played facts for four players to show durability doesn't separate Cade from the rest. / Uses verified games-played data for the others to show availability doesn't separate Cade from his peers. / It uses verified games played to show the rivals missed the same time, which neutralizes the durability point.",
+      "ratings": {
+        "evidence": 4.33,
+        "reasoning": 4.0,
+        "rebuttal": 4.33,
+        "impact": 3.0,
+        "clarity": 4.33
+      }
+    },
+    "12": {
+      "host": "deacon",
+      "score": 43.0,
+      "base": 38.0,
+      "dropped": true,
+      "lines": [
+        16
+      ],
+      "rebuttal": 2.0,
+      "answers": [
+        11
+      ],
+      "note": "Concedes durability, claims Host 1 abandoned efficiency (which is not quite true), and asks who he passes, with no new fact. / Concedes the games point and returns to ranking, but with no new fact and the claim of efficiency win is asserted. / It concedes the durability point, but 'gave up the efficiency fight' is not true and the bare claim about four players ahead has no support.",
+      "ratings": {
+        "evidence": 1.0,
+        "reasoning": 2.0,
+        "rebuttal": 2.0,
+        "impact": 3.0,
+        "clarity": 3.0
+      }
+    },
+    "13": {
+      "host": "lonnie",
+      "score": 40.0,
+      "base": 40.0,
+      "dropped": false,
+      "lines": [
+        17
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Presses Host 1 on who Cade beats; a fair question but has no evidence. / Fair question that All-Star doesn't rank ten spots, but it's a question with no evidence. / It is a pointed question about who Cade passes, with no facts offered.",
+      "ratings": {
+        "evidence": 1.0,
+        "reasoning": 2.0,
+        "rebuttal": null,
+        "impact": 3.0,
+        "clarity": 4.0
+      }
+    },
+    "14": {
+      "host": "royce",
+      "score": 61.7,
+      "base": 56.7,
+      "dropped": true,
+      "lines": [
+        18
+      ],
+      "rebuttal": 2.6666666666666665,
+      "answers": [
+        13
+      ],
+      "note": "Admits he doesn't place Cade above anyone, which concedes the point; the Wemby All-Star comparison is verified but thin. / Uses the verified All-Star parity with Wemby but dodges who he beats, saying only that ten spots is wide. / The shared All-Star years with Wemby are verified, but it dodges the question of who he passes.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 2.67,
+        "rebuttal": 2.67,
+        "impact": 2.33,
+        "clarity": 3.67
+      }
+    },
+    "15": {
+      "host": "lonnie",
+      "score": 49.4,
+      "base": 44.4,
+      "dropped": true,
+      "lines": [
+        20
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "A final-answer summary of earlier points, with no new facts. / Final answer ties offense and scoring to the question, but nothing new and no cited facts. / It is a one-line summary resting on earlier points with no new fact.",
+      "ratings": {
+        "evidence": 1.33,
+        "reasoning": 2.0,
+        "rebuttal": null,
+        "impact": 3.67,
+        "clarity": 4.0
+      }
+    },
+    "16": {
+      "host": "royce",
+      "score": 33.9,
+      "base": 28.9,
+      "dropped": true,
+      "lines": [
+        21
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Appeals to the eye test with nothing specific offered. / Only asserts that watching him proves it, with no evidence. / It appeals to watching him with no evidence.",
+      "ratings": {
+        "evidence": 1.0,
+        "reasoning": 1.0,
+        "rebuttal": null,
+        "impact": 2.0,
+        "clarity": 3.33
+      }
+    },
+    "17": {
+      "host": "deacon",
+      "score": 48.4,
+      "base": 48.4,
+      "dropped": false,
+      "lines": [
+        22
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Gives a specific range (11 to 15) and a condition to move up, but it's a summary with no new facts. / Gives a clear position of eleven through fifteen with specific conditions, but cites no new facts. / It states a clear verdict with a condition for moving up, but it gives no new facts.",
+      "ratings": {
+        "evidence": 1.33,
+        "reasoning": 2.33,
+        "rebuttal": null,
+        "impact": 4.0,
+        "clarity": 4.33
+      }
+    }
+  },
+  "hosts": {
+    "royce": {
+      "score": 63.1,
+      "arguments": 6,
+      "rebuttal": 3.58
+    },
+    "deacon": {
+      "score": 53.4,
+      "arguments": 6,
+      "rebuttal": 2.73
+    },
+    "lonnie": {
+      "score": 55.0,
+      "arguments": 5,
+      "rebuttal": 3.0
+    }
+  },
+  "ranked": [
+    "royce",
+    "lonnie",
+    "deacon"
+  ],
+  "winner": "royce",
+  "tie": false,
+  "tiebreak": false,
+  "close_call": false,
+  "order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17
+  ],
+  "blind_labels": [
+    {
+      "royce": "Host 1",
+      "deacon": "Host 2",
+      "lonnie": "Host 3"
+    },
+    {
+      "royce": "Host 1",
+      "lonnie": "Host 2",
+      "deacon": "Host 3"
+    },
+    {
+      "royce": "Host 1",
+      "deacon": "Host 2",
+      "lonnie": "Host 3"
+    }
+  ]
+}
