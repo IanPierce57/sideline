@@ -111,3 +111,4 @@ That sets up `.venv`, starts `server.py` on http://localhost:8000, and opens the
 - Models: `claude-sonnet-5-5` for writing, research, verifying, checking, judging, and the close; `claude-haiku-5-5` for small jobs like the topic check. Check Anthropic's docs before changing either.
 - Commit after each piece works, with a plain-English message.
 - Work on a branch, not `main`. Step 1 is on `step-1-scripts`.
+- GitHub (Nov 7): the project is public at https://github.com/IanPierce57/sideline (user's account IanPierce57; chose public, outputs included). `main` holds the final version. The GitHub tool is at `~/.local/bin/gh` (not on PATH). After committing on `step-1-scripts`, bring `main` up with `git fetch . step-1-scripts:main` and push both only when the user asks. Commits link to the account through its no-reply email (set in this repo's git config). `runs/` and `outputs/` are committed now (outputs); never commit `.env`.
