@@ -97,11 +97,20 @@ echo
 echo "Turning on Cloud Run and Cloud Build (the first time takes a minute)..."
 gcloud services enable run.googleapis.com cloudbuild.googleapis.com artifactregistry.googleapis.com --quiet
 
-# Let Google's build robot build and store the server (needed in newer projects)
+# Google's build robot needs permission to build and store the server (newer projects don't
+# give it by default). Granting it is yours to do, once; this only checks.
 NUMBER="$(gcloud projects describe "$PROJECT" --format='value(projectNumber)')"
-gcloud projects add-iam-policy-binding "$PROJECT" --condition=None --quiet \
-  --member="serviceAccount:${NUMBER}-compute@developer.gserviceaccount.com" \
-  --role="roles/run.builder" >/dev/null 2>&1 || true
+ROBOT="${NUMBER}-compute@developer.gserviceaccount.com"
+if ! gcloud projects get-iam-policy "$PROJECT" --flatten='bindings[].members' \
+     --filter="bindings.members:serviceAccount:$ROBOT" --format='value(bindings.role)' \
+     | grep -qE 'roles/(run\.builder|editor|cloudbuild\.builds\.builder)'; then
+  echo
+  echo "ONE MORE STEP: Google's build robot needs permission to build Sideline. Paste this"
+  echo "line, press Return, then run the setup again (cd ~/sideline && hosting/deploy-cloud-run.sh):"
+  echo
+  echo "  gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:$ROBOT --role=roles/run.builder --condition=None --quiet"
+  exit 1
+fi
 
 echo "Building and starting Sideline (about 5 minutes)..."
 # One copy at most (it keeps segments in progress in memory), 2 GB of memory, and the CPU stays

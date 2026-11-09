@@ -23,7 +23,8 @@ You need the Google Cloud project with billing that you use for the Sideline voi
    ```
 
 4. When it asks for your keys, open your `.env` file in TextEdit (`open -e .env` in the project folder on your Mac), press **Cmd+A** and **Cmd+C**, click back in the Cloud Shell terminal, press **Cmd+V**, then **Return**. The keys don't show on screen. It checks that they work and makes up an access code. If Cloud Shell asks to **Authorize**, click it.
-5. Wait about 5 minutes. At the end it prints the link (something like `https://sideline-....run.app`) and the access code to give your professor.
+5. The first time, it may stop and ask you to run one `gcloud projects add-iam-policy-binding ...` line it prints (that lets Google's build robot build the app). Paste it, press Return, then run `cd ~/sideline && hosting/deploy-cloud-run.sh` again. Your keys are remembered.
+6. Wait about 5 minutes. At the end it prints the link (something like `https://sideline-....run.app`) and the access code to give your professor.
 
 To update the online copy after changing the code, push to GitHub, then in Cloud Shell run:
 
