@@ -1,0 +1,13 @@
+# Left out of the online copy: keys, local packages and caches, git history, and files the
+# server doesn't need (the slides, video, screenshots, transcripts, original PDFs, tests).
+.env
+.venv/
+.cache/
+__pycache__/
+.git/
+.DS_Store
+docs/
+originals/
+outputs/
+tests/
+runs/last_*.json

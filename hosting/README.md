@@ -1,43 +1,38 @@
 # Putting Sideline online
 
-Sideline is a Python server plus a webpage, so to use it from anywhere it has to run on a server. It's hosted for free on **Hugging Face Spaces**: the Space builds from the [Dockerfile](Dockerfile) in this folder, which pulls the code from this GitHub repo.
+Sideline is a Python server plus a webpage, so to use it from anywhere it has to run on a server. It runs on **Google Cloud Run**, in the same Google Cloud account as the voices. Cloud Run builds it from the [Dockerfile](../Dockerfile) at the top of this repo, and shuts it down when nobody is using it, so a few test segments fit in Google's free monthly allowance.
 
-## How the hosted copy is protected
+## How the online copy is protected
 
-Every new segment costs about 60 cents in Claude API credits, so the hosted copy has limits that the version on your own computer doesn't:
+Every new segment costs about 60 cents in Claude API credits, so the online copy has limits that the version on your own computer doesn't:
 
 - **Access code:** making a new segment needs the access code. Replaying a saved segment (**Last segment**) works for anyone and costs nothing.
 - **15 new segments a day**, and **one at a time**. Questions the call screener turns away don't count.
-- The keys are stored as private **secrets** in the Space's settings. They never go in this repo.
-
-To change the limits, add a Space variable named `SIDELINE_DAILY_LIMIT` or `SIDELINE_MAX_AT_ONCE`.
+- The keys are stored in the Cloud Run service's settings. They never go in this repo.
 
 ## Setting it up (about 10 minutes)
 
-1. **Make a free account** at [huggingface.co/join](https://huggingface.co/join) and confirm your email.
-2. **Create the Space:** go to [huggingface.co/new-space](https://huggingface.co/new-space).
-   - Space name: `sideline`
-   - SDK: **Docker**, template **Blank**
-   - Hardware: **CPU basic (free)**
-   - Visibility: **Public**
-   - Click **Create Space**.
-3. **Add the Dockerfile:** in the new Space, open the **Files** tab, click **+ Add file → Create a new file**, name it `Dockerfile`, paste in everything from [Dockerfile](Dockerfile), and click **Commit new file to main**.
-4. **Add the secrets:** open **Settings**, scroll to **Variables and secrets**, and click **New secret** for each of these:
+You need the Google Cloud project with billing that you use for the Sideline voices, and your keys. It's best to make a new Claude key just for the website at [console.anthropic.com](https://console.anthropic.com) → **API Keys**, so you can delete it after grading.
 
-   | Name | Value |
-   | --- | --- |
-   | `ANTHROPIC_API_KEY` | A Claude API key. It's best to make a new one just for the website at [console.anthropic.com](https://console.anthropic.com) → **API Keys**, so you can delete it after grading. |
-   | `GOOGLE_TTS_KEY` | The Google Cloud Text-to-Speech key (for the voices). |
-   | `GNEWS_API_KEY` | The gnews.io key (for the news ticker). |
-   | `SIDELINE_ACCESS_CODE` | Any code you make up, for example three words. Give it only to the people you want making segments. |
+1. Open [console.cloud.google.com](https://console.cloud.google.com) and pick your Sideline project at the top.
+2. Click the **>_** button at the top right (**Activate Cloud Shell**). A terminal opens at the bottom of the page.
+3. Paste this line into it and press Return:
 
-5. **Wait for it to build.** The Space restarts after the secrets are added. The first build takes about 5 minutes; the status at the top changes from **Building** to **Running**.
-6. **Open it** at `https://<your-username>-sideline.hf.space`.
+   ```bash
+   git clone https://github.com/IanPierce57/sideline.git && sideline/hosting/deploy-cloud-run.sh
+   ```
+
+4. It asks for your Claude key, your Google voice key, and your GNews key (pasted keys don't show on screen), then for an access code that you make up. If Cloud Shell asks to **Authorize**, click it.
+5. Wait about 5 minutes. At the end it prints the link (something like `https://sideline-....run.app`) and the access code.
+
+To update the online copy after changing the code, push to GitHub, then in Cloud Shell run:
+
+```bash
+cd ~/sideline && git pull && hosting/deploy-cloud-run.sh
+```
 
 ## Good to know
 
-- **Free Spaces sleep** after 48 hours with no visitors. Opening the link wakes it up, which takes a minute or two.
-- **The first segment after a restart is slower** (about 3 minutes instead of 2) while it downloads the sports data.
-- **New code from GitHub:** choose **Factory rebuild** from the menu next to the Space's status. That builds it from scratch with the latest code from this repo.
-- **Segments made online stay online.** They're saved inside the Space (the newest 10) and are lost when it restarts. The 10 saved segments in this repo always come back.
-- **Turning it off after grading:** **Settings → Pause Space**, and delete the API key you made for it in the Anthropic console.
+- **The first visit after a quiet spell** takes a few extra seconds while it starts, and the first segment can take a minute longer while it downloads the sports data.
+- **Segments made online stay online.** They're saved inside the server (the newest 10) and are gone when it shuts down. The 10 saved segments in this repo are always there.
+- **Taking it offline:** in Cloud Shell, run `gcloud run services delete sideline --region us-east1`, then delete the Claude key you made for it.

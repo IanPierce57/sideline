@@ -1,0 +1,5 @@
+# What Google Cloud leaves out when it uploads the project to build it (same as .dockerignore).
+#!include:.gitignore
+#!include:.dockerignore
+.git
+.gitignore

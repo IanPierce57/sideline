@@ -11,7 +11,7 @@ Ian Pierce · Final project · November 2026
 - To make a new segment, type the **access code** (it's in my submission) in the box next to the question, then type a question and click **Ask the desk**. It takes about 2 minutes, and you're "on hold" with the hosts getting ready while it's made.
 - Without the code you can still watch saved segments: click **Last segment** under the TV.
 - Click anywhere on the page once so your browser allows sound.
-- If you see a "starting up" page, wait a minute or two. The free hosting goes to sleep when nobody has used it for a while.
+- If nobody has used it for a while, the page takes a few extra seconds to load, and the first segment can take a minute longer.
 
 ## Watch it
 
@@ -113,6 +113,6 @@ Free (no AI calls): `tests/accuracy.py` (do the data sources still agree?), `tes
 | `static/app.js` | Runs the show: pre-show, countdown, voices and subtitles, graphics, the end card. |
 | `start.sh`, `set_key.sh` | Start everything, and save a key without showing it. |
 | `export.py` | Writes the transcripts in `outputs/` and builds a zip of the project. |
-| `hosting/` | The setup for the live version. |
+| `Dockerfile`, `hosting/` | The setup for the live version (Google Cloud Run). |
 | `originals/` | The original planning documents (the brief and the character bibles). |
 | `CLAUDE.md` | Project notes for Claude Code (the AI coding tool). |
