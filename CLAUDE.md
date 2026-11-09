@@ -97,6 +97,10 @@ Sources (Nov 4): ESPN, nba_api (NBA.com stats), and NBA team websites are ruled 
 
 `.venv/bin/python export.py` writes `outputs/` (readable transcripts of the saved runs) and `~/Documents/Sideline-submission-<date>.zip` (code, docs, git history, runs with audio, transcripts; never `.env`, `.venv`, `.cache`; refuses if a key pattern is found). The professor asked for the full project: code and outputs.
 
+## Hosting and submission files (Nov 8)
+
+The live version runs on a free Hugging Face Docker Space built from `hosting/Dockerfile`, which clones GitHub `main` (push before rebuilding the Space). Steps are in `hosting/README.md`. Settings that are off on the user's Mac: `HOST`/`PORT`, `SIDELINE_ACCESS_CODE` (new segments need it; replays don't; the page shows a code box when `/api/config` says so), `SIDELINE_DAILY_LIMIT` (15 in the Dockerfile; turned-away questions don't count), `SIDELINE_MAX_AT_ONCE` (1). Keys are Space secrets, never in the repo. The slides are `docs/slides/Sideline-slides.pdf` (the deck itself is a Claude artifact); the 53-second clip is `docs/video/sideline-best-qb.mp4`. The README is the front page for the professor; class-facing text stays in the user's plain voice.
+
 ## How to run it
 
 ```bash

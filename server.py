@@ -7,10 +7,15 @@ It does three things:
   - GET  /api/job/<id>   the job's progress (for the pre-show control room), then its script
   - GET  /api/runs       lists saved scripts, and GET /api/runs/<name> loads one
 
-It only listens on your own computer (127.0.0.1), so nobody else can reach it.
+On your own computer it only listens to your computer (127.0.0.1), so nobody else can reach it.
+Hosted online (see hosting/README.md), the host sets HOST and PORT, and three settings protect
+your API credits: SIDELINE_ACCESS_CODE (new segments need this code; replays don't),
+SIDELINE_DAILY_LIMIT (new segments per day), and SIDELINE_MAX_AT_ONCE (segments in progress at once).
 """
 
+import hmac
 import json
+import os
 import re
 import threading
 import time
@@ -25,8 +30,15 @@ from generate import RUNS, TopicProblem, generate_script
 
 PROJECT = Path(__file__).parent
 STATIC = PROJECT / "static"
-PORT = 8000
+HOST = os.environ.get("HOST", "127.0.0.1")
+PORT = int(os.environ.get("PORT", "8000"))
 RUN_NAME = re.compile(r"^\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}$")
+
+# Hosted online (Nov 8, 2026): all three are off on your own computer (empty or 0 = off).
+ACCESS_CODE = os.environ.get("SIDELINE_ACCESS_CODE", "").strip()
+DAILY_LIMIT = int(os.environ.get("SIDELINE_DAILY_LIMIT", "0") or 0)
+MAX_AT_ONCE = int(os.environ.get("SIDELINE_MAX_AT_ONCE", "0") or 0)
+TODAY = {"date": "", "count": 0}       # new segments started today (for the daily limit)
 
 # Segments being made right now, by job ID. Each one runs in its own thread.
 JOBS = {}
@@ -127,6 +139,8 @@ def run_job(job_id: str, topic: str, chosen: list) -> None:
     except TopicProblem as problem:
         with JOBS_LOCK:
             job.update(state="topic", topic=problem.details)
+            if TODAY["date"] == time.strftime("%Y-%m-%d"):
+                TODAY["count"] = max(0, TODAY["count"] - 1)     # a turned-away question doesn't count
     except anthropic.AuthenticationError:
         with JOBS_LOCK:
             job.update(state="error", error="Your API key was rejected. Run set_key.sh again.")
@@ -185,6 +199,8 @@ class Handler(SimpleHTTPRequestHandler):
         from pipeline import voices
         if self.path == "/api/voices":
             return self.send_json(200, {"enabled": voices.enabled()})
+        if self.path == "/api/config":
+            return self.send_json(200, {"needs_code": bool(ACCESS_CODE)})
         audio = re.match(r"^/api/runs/([^/]+)/audio/(\d{1,3}-\d{1,2})\.mp3$", self.path)
         if audio:
             path = RUNS / audio.group(1) / "audio" / f"{audio.group(2)}.mp3"
@@ -227,6 +243,10 @@ class Handler(SimpleHTTPRequestHandler):
         body = json.loads(self.rfile.read(length) or b"{}")
         topic = str(body.get("topic", "")).strip()[:300]
         chosen = [str(k) for k in body.get("chosen", [])][:10]
+        if ACCESS_CODE and not hmac.compare_digest(str(body.get("code", "")).strip().encode(), ACCESS_CODE.encode()):
+            time.sleep(1)                       # slows down anyone guessing
+            return self.send_json(403, {"error": "That access code didn't work. Saved segments still replay "
+                                                 "without one: click Last segment.", "needs_code": True})
         if not topic:
             return self.send_json(400, {"error": "Type a topic first."})
         job_id = uuid.uuid4().hex[:12]
@@ -234,6 +254,16 @@ class Handler(SimpleHTTPRequestHandler):
             now = time.time()
             for old in [k for k, v in JOBS.items() if v.get("state") != "running" and now - v.get("at", now) > 3600]:
                 del JOBS[old]
+            day = time.strftime("%Y-%m-%d")
+            if TODAY["date"] != day:
+                TODAY.update(date=day, count=0)
+            if DAILY_LIMIT and TODAY["count"] >= DAILY_LIMIT:
+                return self.send_json(429, {"error": f"The desk has made its {DAILY_LIMIT} new segments for today. "
+                                                     "Come back tomorrow, or click Last segment to replay a saved one."})
+            if MAX_AT_ONCE and sum(v.get("state") == "running" for v in JOBS.values()) >= MAX_AT_ONCE:
+                return self.send_json(429, {"error": "The desk is busy making someone else's segment. "
+                                                     "Try again in about two minutes."})
+            TODAY["count"] += 1
             JOBS[job_id] = {"at": now, "state": "running", "step": {"step": "start", "text": "Picking up the call"},
                             "counts": {"found": 0, "verified": 0, "dropped": 0}, "recent": "", "players": []}
         threading.Thread(target=run_job, args=(job_id, topic, chosen), daemon=True).start()
@@ -265,8 +295,10 @@ def _warm_up() -> None:
 
 def main() -> None:
     threading.Thread(target=_warm_up, daemon=True).start()
-    server = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
+    server = ThreadingHTTPServer((HOST, PORT), Handler)
     print(f"Sideline is running at http://localhost:{PORT}")
+    if ACCESS_CODE:
+        print("  new segments need the access code; replays don't")
     print("Press Control-C here to stop it.")
     try:
         server.serve_forever()

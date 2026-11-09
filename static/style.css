@@ -251,6 +251,7 @@ body {
 .console-form input:focus { box-shadow: inset 3px 3px 0 var(--cream-line), 4px 4px 0 #050a1f, 0 0 0 3px var(--gold); }
 .console-form input::placeholder { color: #8b7f63; }
 .console-form .pixel-btn { font-size: 17px; padding: 12px 20px; }
+.console-form input.code-input { flex: 0 1 190px; }          /* only on the hosted copy (Nov 8, 2026) */
 
 .examples { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 8px 18px 4px 24px; }
 .examples-label { font-family: var(--pixel); font-size: 12px; color: var(--dim); }

@@ -977,7 +977,7 @@ async function askDesk(topic) {
     const start = await fetch("/api/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ topic, chosen: chosenPlayers }),
+      body: JSON.stringify({ topic, chosen: chosenPlayers, code: $("code").value.trim() }),
     });
     const started = await start.json();
     if (!start.ok) throw new Error(started.error || "Something went wrong.");
@@ -1049,6 +1049,13 @@ $("form").addEventListener("submit", (event) => {
   event.preventDefault();
   const topic = $("topic").value.trim();
   if (!topic) return;
+  const code = $("code").value.trim();
+  if (needsCode && !code) {
+    setStatus("Type the access code first. (Saved segments replay without one: click Last segment.)", true);
+    $("code").focus();
+    return;
+  }
+  if (needsCode) { try { localStorage.setItem("sideline-code", code); } catch (error) { /* private window */ } }
   chosenPlayers = [];
   ensureAudio();
   setStatus("You're on hold. The desk is getting ready (usually about two minutes).");
@@ -1255,7 +1262,23 @@ async function shotMode(kind) {
   typeText(cards[at].text, 0);
   setPlayButtons(true);
 }
+// Hosted online (Nov 8, 2026): new segments need the access code the owner hands out, so
+// nobody else spends the API credits. Replays don't. On your own computer there's no code.
+let needsCode = false;
+async function loadConfig() {
+  try {
+    needsCode = !!(await (await fetch("/api/config")).json()).needs_code;
+  } catch (error) {
+    needsCode = false;
+  }
+  $("code").hidden = !needsCode;
+  if (needsCode && !$("code").value) {
+    try { $("code").value = localStorage.getItem("sideline-code") || ""; } catch (error) { /* private window */ }
+  }
+}
+
 const SHOT = new URLSearchParams(location.search).get("shot");
+loadConfig();
 showIdle();
 loadUpcoming();
 loadLast();
