@@ -1,0 +1,881 @@
+{
+  "topic": "Who is the best quarterback in the NFL?",
+  "format": "debate",
+  "caller": {
+    "type": "stats_nerd",
+    "name": "Priya",
+    "city": "Columbus"
+  },
+  "players": [],
+  "word_count": 536,
+  "estimated_minutes": 3.6,
+  "warnings": [],
+  "sources": [
+    "Advanced stats: nflverse, checked against muffed.ai",
+    "Current rosters: Sleeper, checked against nflverse roster",
+    "Games played: Sleeper, checked against nflverse games",
+    "Honors: Wikipedia (trusted on its own)",
+    "Honors: Wikipedia, checked against nflverse (Super Bowl winners' rosters)",
+    "NFL stats: nflverse, checked against Sleeper",
+    "NFL stats: nflverse, checked against Sleeper (games started, every season)",
+    "NFL stats: nflverse, checked against Sleeper (playoff starts)"
+  ],
+  "receipts": [
+    {
+      "subject": "Patrick Mahomes",
+      "label": "games played by season",
+      "say": "2021: 17 of 17; 2022: 17 of 17; 2023: 16 of 17; 2024: 16 of 17; 2025: 14 of 17; 2026: 7 of 7 so far, through Week 9. In his last 5 full seasons he played every game in 2 and missed a quarter or more of his team's games in 0",
+      "scope": "last 5 full seasons and this one",
+      "source": "Sleeper",
+      "checked": "nflverse games",
+      "status": "verified"
+    },
+    {
+      "subject": "Lamar Jackson",
+      "label": "current team",
+      "say": "Baltimore Ravens (quarterback), on injured reserve (out) today",
+      "scope": "today",
+      "source": "Sleeper",
+      "checked": "nflverse roster",
+      "status": "verified"
+    },
+    {
+      "subject": "Joe Burrow",
+      "label": "games played by season",
+      "say": "2021: 16 of 17; 2022: 16 of 16; 2023: 10 of 17; 2024: 17 of 17; 2025: 8 of 17; 2026: 8 of 8 so far, through Week 9. In his last 5 full seasons he played every game in 2 and missed a quarter or more of his team's games in 2",
+      "scope": "last 5 full seasons and this one",
+      "source": "Sleeper",
+      "checked": "nflverse games",
+      "status": "verified_sleeper_used"
+    },
+    {
+      "subject": "Patrick Mahomes",
+      "label": "Super Bowl champion",
+      "say": "3-time Super Bowl champion",
+      "scope": "career",
+      "source": "Wikipedia",
+      "checked": "nflverse (Super Bowl winners' rosters)",
+      "status": "verified"
+    },
+    {
+      "subject": "Patrick Mahomes",
+      "label": "Super Bowl MVP",
+      "say": "3-time Super Bowl MVP",
+      "scope": "career",
+      "source": "Wikipedia",
+      "checked": "Wikipedia (trusted on its own)",
+      "status": "trusted"
+    },
+    {
+      "subject": "Patrick Mahomes",
+      "label": "playoff record as a starting QB",
+      "say": "17-4 (playoffs after the 2018, 2019, 2020, 2021, 2022, 2023, 2024 seasons)",
+      "scope": "career playoffs",
+      "source": "nflverse",
+      "checked": "Sleeper (playoff starts)",
+      "status": "verified"
+    },
+    {
+      "subject": "Josh Allen",
+      "label": "playoff record as a starting QB",
+      "say": "8-7 (playoffs after the 2019, 2020, 2021, 2022, 2023, 2024, 2025 seasons)",
+      "scope": "career playoffs",
+      "source": "nflverse",
+      "checked": "Sleeper (playoff starts)",
+      "status": "verified"
+    },
+    {
+      "subject": "Lamar Jackson",
+      "label": "playoff record as a starting QB",
+      "say": "3-5 (playoffs after the 2018, 2019, 2020, 2023, 2024 seasons)",
+      "scope": "career playoffs",
+      "source": "nflverse",
+      "checked": "Sleeper (playoff starts)",
+      "status": "verified"
+    },
+    {
+      "subject": "Joe Burrow",
+      "label": "playoff record as a starting QB",
+      "say": "5-2 (playoffs after the 2021, 2022 seasons)",
+      "scope": "career playoffs",
+      "source": "nflverse",
+      "checked": "Sleeper (playoff starts)",
+      "status": "verified"
+    },
+    {
+      "subject": "Patrick Mahomes",
+      "label": "EPA per dropback",
+      "say": "+0.15",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Josh Allen",
+      "label": "EPA per dropback",
+      "say": "+0.29",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Lamar Jackson",
+      "label": "EPA per dropback",
+      "say": "+0.37",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Joe Burrow",
+      "label": "EPA per dropback",
+      "say": "+0.23",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "muffed.ai",
+      "status": "verified"
+    },
+    {
+      "subject": "Josh Allen",
+      "label": "record as a starting QB",
+      "say": "6-1",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "Sleeper (games started, every season)",
+      "status": "verified"
+    },
+    {
+      "subject": "Joe Burrow",
+      "label": "record as a starting QB",
+      "say": "6-2",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "Sleeper (games started, every season)",
+      "status": "verified"
+    },
+    {
+      "subject": "Patrick Mahomes",
+      "label": "passing touchdowns",
+      "say": "14",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "Sleeper",
+      "status": "verified_sleeper_used"
+    },
+    {
+      "subject": "Joe Burrow",
+      "label": "passing touchdowns",
+      "say": "23",
+      "scope": "2026 regular season",
+      "source": "nflverse",
+      "checked": "Sleeper",
+      "status": "verified_sleeper_used"
+    }
+  ],
+  "winning_case": {
+    "host": "royce",
+    "score": 64.9,
+    "argument": "Mahomes, because when the season's on the line you hand it to the man who's already done it.",
+    "stats": [
+      {
+        "subject": "Patrick Mahomes",
+        "label": "Super Bowl MVP",
+        "say": "3-time Super Bowl MVP",
+        "scope": "career"
+      },
+      {
+        "subject": "Patrick Mahomes",
+        "label": "playoff record as a starting QB",
+        "say": "17-4 (playoffs after the 2018, 2019, 2020, 2021, 2022, 2023, 2024 seasons)",
+        "scope": "career playoffs"
+      },
+      {
+        "subject": "Patrick Mahomes",
+        "label": "Super Bowl champion",
+        "say": "3-time Super Bowl champion",
+        "scope": "career"
+      },
+      {
+        "subject": "Josh Allen",
+        "label": "playoff record as a starting QB",
+        "say": "8-7 (playoffs after the 2019, 2020, 2021, 2022, 2023, 2024, 2025 seasons)",
+        "scope": "career playoffs"
+      }
+    ]
+  },
+  "plan": {
+    "cases": {
+      "royce": {
+        "claim": "Patrick Mahomes is the best quarterback in the NFL, because best means who you hand January to.",
+        "supports": [
+          "Playoff record and titles: 17-4 as a starter, three Super Bowl wins, three Super Bowl MVPs (F27, F15, F16)",
+          "Durability across seasons: no missed quarter of his team's games in his last 5 full seasons, 7 of 7 this season (F3)",
+          "This season's touchdown total, 14, plus how he plays: patient, careful with the ball, read as his eye test (F38)"
+        ],
+        "answer": "The EPA rank is the objection. He grants it and says EPA prices a play, not a season, then backs Mahomes with the January record and the career résumé."
+      },
+      "deacon": {
+        "claim": "Josh Allen is the best quarterback right now, because he is the top efficiency player who is actually playing.",
+        "supports": [
+          "EPA per dropback: +0.29, 2nd of 35, on 241 dropbacks, against Mahomes at 10th (F32, F31)",
+          "Record and availability: 6-1 as a starter this season, every game played in each of his last 5 full seasons (F35, F6)",
+          "The tape read: he runs it and throws it deep, which explains why the points pile up, plus the 2024 MVP (F21)"
+        ],
+        "answer": "The objection is the 8-7 playoff record. He calls it a team result over a small number of starts, then points to the MVP and this season's efficiency."
+      },
+      "lonnie": {
+        "claim": "Joe Burrow is the best quarterback right now, because his offense runs through his arm and he has been on the field every week.",
+        "supports": [
+          "Volume and production: 23 touchdown passes and 290 dropbacks this season, EPA 7th of 35, ahead of Mahomes (F41, F34)",
+          "Role and fit: Cincinnati hands him the whole offense, and to his eye the ball comes out quick, a read tied to his 6-2 record (F37)",
+          "Playoff résumé: 5-2 as a starter, with 8 of 8 games played this season (F30, F13)"
+        ],
+        "answer": "The objection is availability, with 2 of his last 5 full seasons missing a quarter of the games. He concedes it plainly and answers with this season, played in full, and the narrow gap between 6-1 and 6-2."
+      }
+    },
+    "beats": [
+      "Opening positions: Royce says Mahomes on January, Deacon says Allen on EPA, and Lonnie asks why not Lamar, who is first in EPA.",
+      "The sample and availability clash: Lamar is on injured reserve with 112 dropbacks, Burrow's injury years get pressed, and Royce hits Allen's 8-7 playoff record.",
+      "The trap: Lonnie says 6-1 and 6-2 don't separate this season, and Royce concedes it leaves January; then Lonnie pins Royce on Mahomes ranking 10th in EPA this season.",
+      "Decisive exchange: Royce reframes EPA as measuring a play, not a game, and gets pressed hard on 'best right now'. Final answers."
+    ]
+  },
+  "scores": {
+    "royce": 64.9,
+    "deacon": 60.0,
+    "lonnie": 63.9
+  },
+  "winner": "royce",
+  "tie": false,
+  "lines": [
+    {
+      "line": 1,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "You're on the Sideline. Go ahead, Priya from Columbus.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "You're on the Sideline. Go ahead, Priya from Columbus.",
+          "audio": "1-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 2,
+      "speaker": "caller",
+      "speaker_name": "Priya from Columbus",
+      "text": "Everybody keeps throwing EPA around, and I want this settled properly. Who is the best quarterback in the NFL right now?",
+      "delivery": "curious",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "Everybody keeps throwing EPA around, and I want this settled properly. Who is the best quarterback in the NFL right now?",
+          "audio": "2-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 3,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Patrick Mahomes. Seventeen and four in the playoffs, three Super Bowl rings, three Super Bowl MVPs. To my eye he plays quarterback like a surgeon who never wastes a cut, patient, no panic, and the scoreboard says the same. Best means who you hand January to.",
+      "delivery": "confident",
+      "facts": [
+        "F27",
+        "F15",
+        "F16"
+      ],
+      "argument": 1,
+      "cards": [
+        {
+          "text": "Patrick Mahomes. Seventeen and four in the playoffs, three Super Bowl rings, three Super Bowl MVPs.",
+          "audio": "3-0.mp3"
+        },
+        {
+          "text": "To my eye he plays quarterback like a surgeon who never wastes a cut, patient, no panic, and the scoreboard says the same. Best means who you hand January to.",
+          "audio": "3-1.mp3"
+        }
+      ],
+      "score": {
+        "royce": 82
+      },
+      "stat": {
+        "value": "17-4 (playoffs after the 2018, 2019, 2020, 2021, 2022, 2023, 2024 seasons)",
+        "label": "Patrick Mahomes · playoff record as a starting QB",
+        "definition": "Playoff wins and losses in games he started at quarterback.",
+        "source": "nflverse, checked against Sleeper (playoff starts)",
+        "asOf": "career playoffs · final"
+      }
+    },
+    {
+      "line": 4,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Listen here. EPA, basically how many points each dropback is worth. Josh Allen is at plus 0.29 this season, second of 35. Six and one as a starter. And your guy's tenth, Royce. Tenth.",
+      "delivery": "building",
+      "facts": [
+        "F32",
+        "F35",
+        "F31"
+      ],
+      "argument": 2,
+      "cards": [
+        {
+          "text": "Listen here. EPA, basically how many points each dropback is worth. Josh Allen is at plus 0.29 this season, second of 35. Six and one as a starter.",
+          "audio": "4-0.mp3"
+        },
+        {
+          "text": "And your guy's tenth, Royce. Tenth.",
+          "audio": "4-1.mp3"
+        }
+      ],
+      "score": {
+        "deacon": 70
+      },
+      "stat": {
+        "value": "+0.29",
+        "label": "Josh Allen · EPA per dropback",
+        "definition": "Expected points added per dropback: how much each pass attempt, sack, or scramble raised or lowered the points his team should expect on that drive.",
+        "source": "nflverse, checked against muffed.ai",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 5,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Quick question, Deac. Lamar Jackson's first in that same EPA, ahead of your guy. Why isn't he your answer?",
+      "delivery": "curious",
+      "facts": [
+        "F33"
+      ],
+      "argument": 3,
+      "cards": [
+        {
+          "text": "Quick question, Deac. Lamar Jackson's first in that same EPA, ahead of your guy. Why isn't he your answer?",
+          "audio": "5-0.mp3"
+        }
+      ],
+      "score": {
+        "lonnie": 61
+      },
+      "stat": {
+        "value": "+0.37",
+        "label": "Lamar Jackson · EPA per dropback",
+        "definition": "Expected points added per dropback: how much each pass attempt, sack, or scramble raised or lowered the points his team should expect on that drive.",
+        "source": "nflverse, checked against muffed.ai",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 6,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Because he's on 112 dropbacks, and he's on injured reserve today. Allen's got 241 and he's played every game this year. The tape tells you why, too. He runs it, he throws it deep, and the points pile up. A guy on IR isn't the best quarterback right now. He's a guy on IR.",
+      "delivery": "emphatic",
+      "facts": [
+        "F33",
+        "F7",
+        "F32"
+      ],
+      "argument": 4,
+      "cards": [
+        {
+          "text": "Because he's on 112 dropbacks, and he's on injured reserve today. Allen's got 241 and he's played every game this year. The tape tells you why, too.",
+          "audio": "6-0.mp3"
+        },
+        {
+          "text": "He runs it, he throws it deep, and the points pile up. A guy on IR isn't the best quarterback right now. He's a guy on IR.",
+          "audio": "6-1.mp3"
+        }
+      ],
+      "score": {
+        "deacon": 74
+      }
+    },
+    {
+      "line": 7,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Six and one is a record. Eight and seven is Allen in the playoffs, and you skipped it. And Mahomes hasn't missed a quarter of his team's games in five full seasons. You want the best, that's the guy who's always there when it counts.",
+      "delivery": "cold",
+      "facts": [
+        "F28",
+        "F3"
+      ],
+      "argument": 5,
+      "cards": [
+        {
+          "text": "Six and one is a record. Eight and seven is Allen in the playoffs, and you skipped it. And Mahomes hasn't missed a quarter of his team's games in five full seasons.",
+          "audio": "7-0.mp3"
+        },
+        {
+          "text": "You want the best, that's the guy who's always there when it counts.",
+          "audio": "7-1.mp3"
+        }
+      ],
+      "score": {
+        "royce": 78
+      },
+      "stat": {
+        "value": "8-7 (playoffs after the 2019, 2020, 2021, 2022, 2023, 2024, 2025 seasons)",
+        "label": "Josh Allen · playoff record as a starting QB",
+        "definition": "Playoff wins and losses in games he started at quarterback.",
+        "source": "nflverse, checked against Sleeper (playoff starts)",
+        "asOf": "career playoffs · final"
+      }
+    },
+    {
+      "line": 8,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Here's mine, and nobody's said it yet. Joe Burrow. Twenty-three touchdown passes, and he's seventh in EPA, ahead of Mahomes. Cincinnati hands him the whole offense, and the ball comes out of his hands quick. That's a quarterback the offense runs through.",
+      "delivery": "calm",
+      "facts": [
+        "F41",
+        "F34"
+      ],
+      "argument": 6,
+      "cards": [
+        {
+          "text": "Here's mine, and nobody's said it yet. Joe Burrow. Twenty-three touchdown passes, and he's seventh in EPA, ahead of Mahomes.",
+          "audio": "8-0.mp3"
+        },
+        {
+          "text": "Cincinnati hands him the whole offense, and the ball comes out of his hands quick. That's a quarterback the offense runs through.",
+          "audio": "8-1.mp3"
+        }
+      ],
+      "score": {
+        "lonnie": 64
+      },
+      "stat": {
+        "value": "23",
+        "label": "Joe Burrow · passing touchdowns",
+        "definition": "Touchdown passes thrown.",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 9,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "He missed a quarter of his team's games in two of his last five full seasons. He played eight of seventeen last year. Best quarterback is the one who's out there, Lonnie.",
+      "delivery": "heated",
+      "facts": [
+        "F13"
+      ],
+      "argument": 7,
+      "cards": [
+        {
+          "text": "He missed a quarter of his team's games in two of his last five full seasons. He played eight of seventeen last year. Best quarterback is the one who's out there, Lonnie.",
+          "audio": "9-0.mp3"
+        }
+      ],
+      "score": {
+        "deacon": 76
+      },
+      "stat": {
+        "value": "2021: 16 of 17; 2022: 16 of 16; 2023: 10 of 17; 2024: 17 of 17; 2025: 8 of 17; 2026: 8 of 8 so far, through Week 9. In his last 5 full seasons he played every game in 2 and missed a quarter or more of his team's games in 2",
+        "label": "Joe Burrow · games played by season",
+        "definition": "Games he played each regular season, out of his team's games. Missing games can be injury, rest, suspension, or not being on a roster yet; this doesn't say which.",
+        "source": "Sleeper, checked against nflverse games",
+        "asOf": "last 5 full seasons and this one · today"
+      }
+    },
+    {
+      "line": 10,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "That's the knock, and I'll take it. But he's played all eight this year, and he's 6-2. Allen's 6-1. That's one game, Deac.",
+      "delivery": "conceding",
+      "facts": [
+        "F13",
+        "F37",
+        "F35"
+      ],
+      "argument": 6,
+      "cards": [
+        {
+          "text": "That's the knock, and I'll take it. But he's played all eight this year, and he's 6-2. Allen's 6-1. That's one game, Deac.",
+          "audio": "10-0.mp3"
+        }
+      ],
+      "score": {
+        "lonnie": 69
+      },
+      "stat": {
+        "value": "6-2",
+        "label": "Joe Burrow · record as a starting QB",
+        "definition": "Regular-season wins and losses in games he started at quarterback.",
+        "source": "nflverse, checked against Sleeper (games started, every season)",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 11,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Thank you, Lonnie. Six-one, six-two, this season doesn't separate them. So what does? January. Burrow's five and two, Lamar's three and five, and Mahomes has the Super Bowl MVPs.",
+      "delivery": "building",
+      "facts": [
+        "F30",
+        "F29",
+        "F16"
+      ],
+      "argument": 5,
+      "cards": [
+        {
+          "text": "Thank you, Lonnie. Six-one, six-two, this season doesn't separate them. So what does? January.",
+          "audio": "11-0.mp3"
+        },
+        {
+          "text": "Burrow's five and two, Lamar's three and five, and Mahomes has the Super Bowl MVPs.",
+          "audio": "11-1.mp3"
+        }
+      ],
+      "score": {
+        "royce": 76
+      },
+      "stat": {
+        "value": "5-2 (playoffs after the 2021, 2022 seasons)",
+        "label": "Joe Burrow · playoff record as a starting QB",
+        "definition": "Playoff wins and losses in games he started at quarterback.",
+        "source": "nflverse, checked against Sleeper (playoff starts)",
+        "asOf": "career playoffs · final"
+      }
+    },
+    {
+      "line": 12,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Okay, but the caller asked who's best right now. Mahomes sits behind Burrow and Allen and Lamar in EPA this season. What's he doing this year that says best?",
+      "delivery": "curious",
+      "facts": [
+        "F31",
+        "F34"
+      ],
+      "argument": 8,
+      "cards": [
+        {
+          "text": "Okay, but the caller asked who's best right now. Mahomes sits behind Burrow and Allen and Lamar in EPA this season. What's he doing this year that says best?",
+          "audio": "12-0.mp3"
+        }
+      ],
+      "score": {
+        "lonnie": 71
+      },
+      "stat": {
+        "value": "+0.15",
+        "label": "Patrick Mahomes · EPA per dropback",
+        "definition": "Expected points added per dropback: how much each pass attempt, sack, or scramble raised or lowered the points his team should expect on that drive.",
+        "source": "nflverse, checked against muffed.ai",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 13,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "That's your guy's number, Royce.",
+      "delivery": "dismissive",
+      "facts": [],
+      "argument": 2,
+      "cards": [
+        {
+          "text": "That's your guy's number, Royce.",
+          "audio": "13-0.mp3"
+        }
+      ],
+      "score": {
+        "deacon": 63
+      }
+    },
+    {
+      "line": 14,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "EPA tells you what a play was worth. It doesn't tell you what the game was worth. He's thrown fourteen touchdowns, he's played every game, and he wins short and patient, like he always has.",
+      "delivery": "cold",
+      "facts": [
+        "F38",
+        "F3"
+      ],
+      "argument": 9,
+      "cards": [
+        {
+          "text": "EPA tells you what a play was worth. It doesn't tell you what the game was worth.",
+          "audio": "14-0.mp3"
+        },
+        {
+          "text": "He's thrown fourteen touchdowns, he's played every game, and he wins short and patient, like he always has.",
+          "audio": "14-1.mp3"
+        }
+      ],
+      "score": {
+        "royce": 71
+      },
+      "stat": {
+        "value": "14",
+        "label": "Patrick Mahomes · passing touchdowns",
+        "definition": "Touchdown passes thrown.",
+        "source": "nflverse, checked against Sleeper",
+        "asOf": "2026 regular season · through Week 9"
+      }
+    },
+    {
+      "line": 15,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Burrow's got twenty-three, Royce.",
+      "delivery": "calm",
+      "facts": [
+        "F41"
+      ],
+      "argument": 6,
+      "cards": [
+        {
+          "text": "Burrow's got twenty-three, Royce.",
+          "audio": "15-0.mp3"
+        }
+      ],
+      "score": {
+        "lonnie": 70
+      }
+    },
+    {
+      "line": 16,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "And Allen's out-pointing both of them per dropback. Different metric, same answer. That's the case.",
+      "delivery": "fired_up",
+      "facts": [
+        "F32"
+      ],
+      "argument": 2,
+      "cards": [
+        {
+          "text": "And Allen's out-pointing both of them per dropback. Different metric, same answer. That's the case.",
+          "audio": "16-0.mp3"
+        }
+      ],
+      "score": {
+        "deacon": 63
+      }
+    },
+    {
+      "line": 17,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "Alright, hold it there. One sentence each. Final answers.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "Alright, hold it there. One sentence each. Final answers.",
+          "audio": "17-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 18,
+      "speaker": "royce",
+      "speaker_name": "Royce",
+      "text": "Mahomes, because when the season's on the line you hand it to the man who's already done it.",
+      "delivery": "quiet",
+      "facts": [],
+      "argument": 1,
+      "cards": [
+        {
+          "text": "Mahomes, because when the season's on the line you hand it to the man who's already done it.",
+          "audio": "18-0.mp3"
+        }
+      ],
+      "score": {
+        "royce": 64
+      }
+    },
+    {
+      "line": 19,
+      "speaker": "deacon",
+      "speaker_name": "Deacon",
+      "text": "Allen, because the points say so and he's out there every single week.",
+      "delivery": "confident",
+      "facts": [],
+      "argument": 2,
+      "cards": [
+        {
+          "text": "Allen, because the points say so and he's out there every single week.",
+          "audio": "19-0.mp3"
+        }
+      ],
+      "score": {
+        "deacon": 58
+      }
+    },
+    {
+      "line": 20,
+      "speaker": "lonnie",
+      "speaker_name": "Lonnie",
+      "text": "Burrow, because the whole offense runs through his arm and he's been on the field this year.",
+      "delivery": "calm",
+      "facts": [],
+      "argument": 6,
+      "cards": [
+        {
+          "text": "Burrow, because the whole offense runs through his arm and he's been on the field this year.",
+          "audio": "20-0.mp3"
+        }
+      ],
+      "score": {
+        "lonnie": 64
+      }
+    },
+    {
+      "line": 21,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "On the scorecard, tonight goes to Royce, by a hair. His case was January: Mahomes is seventeen and four in the playoffs, and he has three Super Bowl MVPs.",
+      "delivery": "calm",
+      "facts": [
+        "F27",
+        "F16"
+      ],
+      "argument": null,
+      "score": {
+        "royce": 65,
+        "deacon": 60,
+        "lonnie": 64
+      },
+      "stat": {
+        "value": "3-time Super Bowl MVP",
+        "label": "Patrick Mahomes · Super Bowl MVP",
+        "definition": "From his Wikipedia page: 3× Super Bowl MVP (LIV, LVII, LVIII)",
+        "source": "Wikipedia (trusted on its own)",
+        "asOf": "career · today"
+      },
+      "cards": [
+        {
+          "text": "On the scorecard, tonight goes to Royce, by a hair. His case was January: Mahomes is seventeen and four in the playoffs, and he has three Super Bowl MVPs.",
+          "audio": "21-0.mp3"
+        }
+      ]
+    },
+    {
+      "line": 22,
+      "speaker": "hal",
+      "speaker_name": "Hal",
+      "text": "That's the board. Thanks for the call, Priya.",
+      "delivery": "warm",
+      "facts": [],
+      "argument": null,
+      "cards": [
+        {
+          "text": "That's the board. Thanks for the call, Priya.",
+          "audio": "22-0.mp3"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "step": 2,
+    "model": "claude-sonnet-5-5",
+    "created": "2026-11-08T18:58:34",
+    "generation_seconds": 176.4,
+    "timings": {
+      "topic_check": 2.1,
+      "research": 32.9,
+      "verify": 17.2,
+      "write": 68.3,
+      "line_check": 33.0,
+      "judge": 13.3,
+      "close": 9.6,
+      "voices": 1.4
+    },
+    "stats_found": 42,
+    "stats_verified": 41,
+    "stats_dropped": 1,
+    "facts_used": 17,
+    "lines_checked": 22,
+    "lines_rewritten": 3,
+    "lines_cut": 0,
+    "writer_input_tokens": 8374,
+    "writer_cache_read_tokens": 0,
+    "writer_output_tokens": 8350,
+    "usage": {
+      "total_usd": 0.627,
+      "by_step": {
+        "topic": {
+          "calls": 1,
+          "input": 1893,
+          "output": 76,
+          "cache_read": 0,
+          "cache_write_5m": 0,
+          "cache_write_1h": 0,
+          "usd": 0.0002
+        },
+        "research": {
+          "calls": 5,
+          "input": 14,
+          "output": 1852,
+          "cache_read": 18278,
+          "cache_write_5m": 11471,
+          "cache_write_1h": 0,
+          "usd": 0.0491
+        },
+        "write": {
+          "calls": 1,
+          "input": 8374,
+          "output": 8350,
+          "cache_read": 0,
+          "cache_write_5m": 0,
+          "cache_write_1h": 50499,
+          "usd": 0.3022
+        },
+        "check": {
+          "calls": 2,
+          "input": 18265,
+          "output": 5040,
+          "cache_read": 0,
+          "cache_write_5m": 0,
+          "cache_write_1h": 0,
+          "usd": 0.0869
+        },
+        "judge": {
+          "calls": 3,
+          "input": 28521,
+          "output": 4962,
+          "cache_read": 0,
+          "cache_write_5m": 0,
+          "cache_write_1h": 0,
+          "usd": 0.1067
+        },
+        "close": {
+          "calls": 4,
+          "input": 36531,
+          "output": 882,
+          "cache_read": 0,
+          "cache_write_5m": 0,
+          "cache_write_1h": 0,
+          "usd": 0.0819
+        }
+      }
+    }
+  },
+  "voices": {
+    "voiced_cards": 29,
+    "cards": 29,
+    "characters": 2969,
+    "failed": [],
+    "used_this_month": 17942
+  }
+}

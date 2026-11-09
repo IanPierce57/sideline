@@ -1,0 +1,420 @@
+{
+  "arguments": {
+    "1": {
+      "host": "royce",
+      "score": 81.8,
+      "base": 81.8,
+      "dropped": false,
+      "lines": [
+        3
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Cites verified playoff record and Super Bowl facts and ties them to 'best,' but it's career postseason success, not current quality. / Cites playoff record and Super Bowl honors that bear on a January-based case for best, though past achievements don't directly show who is best now. / Cites playoff record and Super Bowl honors that bear directly on a best-QB claim, though career résumé is less about right now.",
+      "ratings": {
+        "evidence": 4.33,
+        "reasoning": 3.33,
+        "rebuttal": null,
+        "impact": 4.33,
+        "clarity": 5.0
+      }
+    },
+    "2": {
+      "host": "deacon",
+      "score": 70.0,
+      "base": 70.0,
+      "dropped": false,
+      "lines": [
+        4
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        1
+      ],
+      "note": "Uses verified current EPA and record for Allen and Mahomes's rank, but doesn't really answer the playoff and rings case directly. / Uses this season's EPA and record for Allen and Mahomes's rank, but doesn't engage the playoff case and a 7-game record is thin. / Uses this season's EPA, rank and record for Allen versus Mahomes, but doesn't address the playoff résumé head-on.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 3.0,
+        "rebuttal": 3.0,
+        "impact": 4.0,
+        "clarity": 4.0
+      }
+    },
+    "3": {
+      "host": "lonnie",
+      "score": 61.0,
+      "base": 61.0,
+      "dropped": false,
+      "lines": [
+        5
+      ],
+      "rebuttal": 2.6666666666666665,
+      "answers": [
+        2
+      ],
+      "note": "Verified EPA fact shows Jackson above Allen, a fair probe of Host 2's own metric, but it's phrased as a question. / Fair question that points out Jackson leads EPA, but it's a probe more than an argument and leaves implications unstated. / Fair challenge that Jackson leads the same EPA metric, but it is a question and leaves the implication to the listener.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.0,
+        "rebuttal": 2.67,
+        "impact": 3.0,
+        "clarity": 4.33
+      }
+    },
+    "4": {
+      "host": "deacon",
+      "score": 79.0,
+      "base": 79.0,
+      "dropped": false,
+      "lines": [
+        6
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        3
+      ],
+      "note": "Uses sample size (112 vs 241 dropbacks) and IR status to explain why Jackson's EPA rank falls short; the tape claim is unsupported. / Answers with Jackson's small 112-dropback sample and IR status versus Allen's 241, which is relevant; the tape claims about deep throws are unsupported. / Answers with small sample (112 vs 241 dropbacks) and IR status, both verified and on point; the tape claim is unsupported.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 3.67,
+        "rebuttal": 4.0,
+        "impact": 4.0,
+        "clarity": 4.33
+      }
+    },
+    "5": {
+      "host": "royce",
+      "score": 75.0,
+      "base": 75.0,
+      "dropped": false,
+      "lines": [
+        7
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        2,
+        4
+      ],
+      "note": "Counters Allen's 6-1 with his 8-7 playoff record and cites Mahomes's durability, though compares regular-season record to playoffs. / Counters the 6-1 record with Allen's 8-7 playoff mark and adds Mahomes's availability, with some mismatch between regular-season and playoff scope. / Counters six-and-one with Allen's 8-7 playoff mark and cites Mahomes' availability, though F3 says Mahomes played 14 in 2025 and comparing to Allen's 6-1 mixes scopes.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 3.0,
+        "rebuttal": 4.0,
+        "impact": 4.0,
+        "clarity": 4.0
+      }
+    },
+    "6": {
+      "host": "lonnie",
+      "score": 68.0,
+      "base": 68.0,
+      "dropped": false,
+      "lines": [
+        8
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "Burrow's 23 TDs and EPA rank 7 over Mahomes are verified and relevant, but 'offense runs through him' is unverified and 7th is behind Allen and Jackson. / Introduces Burrow with 23 TDs and 7th in EPA ahead of Mahomes, but doesn't address his injuries and the 'offense runs through him' claim is unsupported. / Burrow's 23 TDs and seventh EPA are verified, but 'offense runs through him' and quick release are unsupported and EPA rank is below Allen's.",
+      "ratings": {
+        "evidence": 3.33,
+        "reasoning": 3.0,
+        "rebuttal": null,
+        "impact": 4.0,
+        "clarity": 4.0
+      }
+    },
+    "7": {
+      "host": "deacon",
+      "score": 80.0,
+      "base": 80.0,
+      "dropped": false,
+      "lines": [
+        9
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        6
+      ],
+      "note": "Verified games-missed data hits Burrow's durability, the main weakness, directly. / Directly hits Burrow's availability weakness with verified games played from last five seasons. / Uses Burrow's games-missed record directly to attack his case, a strong and clear point.",
+      "ratings": {
+        "evidence": 3.67,
+        "reasoning": 4.0,
+        "rebuttal": 4.0,
+        "impact": 4.0,
+        "clarity": 5.0
+      }
+    },
+    "8": {
+      "host": "lonnie",
+      "score": 76.7,
+      "base": 76.7,
+      "dropped": false,
+      "lines": [
+        10
+      ],
+      "rebuttal": 3.6666666666666665,
+      "answers": [
+        7
+      ],
+      "note": "Concedes the durability knock and shows he's played all 8 this year with a 6-2 record comparable to Allen's 6-1. / Concedes the injury history and points to this year's full health and 6-2 record, which is a partial answer given the small sample. / Concedes the injury knock and answers with this year's full availability and 6-2 vs 6-1, a fair like-for-like point.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 3.67,
+        "rebuttal": 3.67,
+        "impact": 3.67,
+        "clarity": 4.33
+      }
+    },
+    "9": {
+      "host": "royce",
+      "score": 71.7,
+      "base": 71.7,
+      "dropped": false,
+      "lines": [
+        11
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        2,
+        6,
+        8
+      ],
+      "note": "Uses verified playoff records to separate players, but cherry-picks and ignores that Allen's 8-7 is worse than Burrow's small-sample 5-2 context and says nothing on 'right now'. / Notes this season doesn't separate Allen and Burrow and moves to playoff records; it's a reasonable pivot though it skips Allen's 8-7 mark. / Argues that the season record is a wash and playoffs decide, citing records, but Mahomes' 17-4 wasn't compared directly and Burrow's 5-2 is a small sample.",
+      "ratings": {
+        "evidence": 4.0,
+        "reasoning": 3.33,
+        "rebuttal": 3.0,
+        "impact": 4.0,
+        "clarity": 4.0
+      }
+    },
+    "10": {
+      "host": "lonnie",
+      "score": 78.0,
+      "base": 78.0,
+      "dropped": false,
+      "lines": [
+        12
+      ],
+      "rebuttal": 4.0,
+      "answers": [
+        1,
+        5,
+        9
+      ],
+      "note": "Reframes to the 'right now' question and points to Mahomes's lower EPA rank this season, tied directly to the question. / Pushes the 'right now' framing and shows Mahomes trailing in this season's EPA, which hits the weak spot in the January argument. / Pins the debate on 'right now' and shows Mahomes is behind in this season's EPA, which hits Host 2's weak spot.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 4.0,
+        "rebuttal": 4.0,
+        "impact": 5.0,
+        "clarity": 5.0
+      }
+    },
+    "11": {
+      "host": "deacon",
+      "score": 22.0,
+      "base": 22.0,
+      "dropped": false,
+      "lines": [
+        13
+      ],
+      "rebuttal": 1.0,
+      "answers": [
+        10
+      ],
+      "note": "Says only 'that's your guy's number,' which adds nothing and is misdirected. / Just redirects Host 1's stat back without adding anything or making a claim. / A vague quip that adds no new fact or argument and doesn't address the point.",
+      "ratings": {
+        "evidence": 1.0,
+        "reasoning": 1.0,
+        "rebuttal": 1.0,
+        "impact": 1.0,
+        "clarity": 2.0
+      }
+    },
+    "12": {
+      "host": "royce",
+      "score": 55.3,
+      "base": 55.3,
+      "dropped": false,
+      "lines": [
+        14
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        10,
+        11
+      ],
+      "note": "Argues EPA misses game value, a fair measure critique, but gives only 14 TDs and games played, which trail Burrow's 23. / Argues EPA isn't the whole story, but the 14 TDs and games played don't show Mahomes is best this year, and Burrow has more TDs. / Argues EPA isn't the whole story, but gives no reason and 14 TDs doesn't show he's better this year.",
+      "ratings": {
+        "evidence": 2.67,
+        "reasoning": 2.33,
+        "rebuttal": 3.0,
+        "impact": 3.0,
+        "clarity": 3.33
+      }
+    },
+    "13": {
+      "host": "lonnie",
+      "score": 64.3,
+      "base": 64.3,
+      "dropped": false,
+      "lines": [
+        15
+      ],
+      "rebuttal": 3.3333333333333335,
+      "answers": [
+        12
+      ],
+      "note": "Verified 23 vs 14 TDs directly counters Host 3's touchdown claim. / Correctly points out Burrow's 23 TDs beat Mahomes's 14, but it's a one-line comparison that doesn't explain why touchdown count is the right yardstick. / Burrow's 23 TDs vs Mahomes' 14 directly undercuts the touchdown point, though terse.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.0,
+        "rebuttal": 3.33,
+        "impact": 3.0,
+        "clarity": 4.33
+      }
+    },
+    "14": {
+      "host": "deacon",
+      "score": 68.3,
+      "base": 63.3,
+      "dropped": true,
+      "lines": [
+        16
+      ],
+      "rebuttal": 3.0,
+      "answers": [
+        12,
+        13
+      ],
+      "note": "Uses Allen's EPA lead over Mahomes and Burrow, but repeats Host 2's earlier point and doesn't answer the touchdown count. / Allen's EPA lead over both is accurate, but it largely repeats his earlier case and doesn't engage the touchdown or playoff points. / Points out Allen's per-dropback EPA beats both rivals, but mostly repeats Host 1's earlier EPA point.",
+      "ratings": {
+        "evidence": 3.0,
+        "reasoning": 3.0,
+        "rebuttal": 3.0,
+        "impact": 3.67,
+        "clarity": 4.0
+      }
+    },
+    "15": {
+      "host": "royce",
+      "score": 40.6,
+      "base": 35.6,
+      "dropped": true,
+      "lines": [
+        18
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "A bare restatement of the earlier Mahomes case with no new fact. / Restates the earlier Mahomes case without new facts or angles. / Final answer restates Mahomes' résumé without new evidence.",
+      "ratings": {
+        "evidence": 1.33,
+        "reasoning": 1.33,
+        "rebuttal": null,
+        "impact": 2.33,
+        "clarity": 3.67
+      }
+    },
+    "16": {
+      "host": "deacon",
+      "score": 40.6,
+      "base": 35.6,
+      "dropped": true,
+      "lines": [
+        19
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "A bare restatement of Host 2's earlier Allen case. / Repeats the earlier Allen case without anything new. / Final answer restates the EPA and availability case without anything new.",
+      "ratings": {
+        "evidence": 1.33,
+        "reasoning": 1.33,
+        "rebuttal": null,
+        "impact": 2.33,
+        "clarity": 3.67
+      }
+    },
+    "17": {
+      "host": "lonnie",
+      "score": 35.6,
+      "base": 35.6,
+      "dropped": false,
+      "lines": [
+        20
+      ],
+      "rebuttal": null,
+      "answers": [],
+      "note": "A bare restatement of Host 1's earlier Burrow case. / Restates the Burrow claim with nothing new. / Final answer restates Burrow's case, with an unsupported claim about the offense running through his arm.",
+      "ratings": {
+        "evidence": 1.33,
+        "reasoning": 1.33,
+        "rebuttal": null,
+        "impact": 2.33,
+        "clarity": 3.67
+      }
+    }
+  },
+  "hosts": {
+    "royce": {
+      "score": 64.9,
+      "arguments": 5,
+      "rebuttal": 3.33
+    },
+    "deacon": {
+      "score": 60.0,
+      "arguments": 6,
+      "rebuttal": 3.0
+    },
+    "lonnie": {
+      "score": 63.9,
+      "arguments": 6,
+      "rebuttal": 3.42
+    }
+  },
+  "ranked": [
+    "royce",
+    "lonnie",
+    "deacon"
+  ],
+  "winner": "royce",
+  "tie": false,
+  "tiebreak": false,
+  "close_call": true,
+  "order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17
+  ],
+  "blind_labels": [
+    {
+      "lonnie": "Host 1",
+      "deacon": "Host 2",
+      "royce": "Host 3"
+    },
+    {
+      "lonnie": "Host 1",
+      "deacon": "Host 2",
+      "royce": "Host 3"
+    },
+    {
+      "deacon": "Host 1",
+      "royce": "Host 2",
+      "lonnie": "Host 3"
+    }
+  ]
+}

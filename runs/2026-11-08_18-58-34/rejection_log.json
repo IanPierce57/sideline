@@ -1,0 +1,71 @@
+{
+  "stats": [
+    {
+      "subject": "Josh Allen",
+      "stat": "games played by season",
+      "scope": "last 5 full seasons and this one",
+      "what_we_found": "2021: 17 of 17; 2022: 16 of 16; 2023: 17 of 17; 2024: 17 of 17; 2025: 17 of 17; 2026: 7 of 7 so far, through Week 9. In his last 5 full seasons he played every game in 5 and missed a quarter or more of his team's games in 0",
+      "reason": "kept, but the sources disagreed: games played differ: 2024: Sleeper 17, nflverse 16; 2025: Sleeper 17, nflverse 16; using Sleeper's"
+    },
+    {
+      "subject": "Joe Burrow",
+      "stat": "games played by season",
+      "scope": "last 5 full seasons and this one",
+      "what_we_found": "2021: 16 of 17; 2022: 16 of 16; 2023: 10 of 17; 2024: 17 of 17; 2025: 8 of 17; 2026: 8 of 8 so far, through Week 9. In his last 5 full seasons he played every game in 2 and missed a quarter or more of his team's games in 2",
+      "reason": "kept, but the sources disagreed: games played differ: 2026: Sleeper 8, nflverse 7; using Sleeper's"
+    },
+    {
+      "subject": "Patrick Mahomes",
+      "stat": "record as a starting QB",
+      "scope": "2026 regular season",
+      "what_we_found": "5-2",
+      "reason": "starts don't match Sleeper (2026: 7 vs 8)"
+    },
+    {
+      "subject": "Patrick Mahomes",
+      "stat": "passing touchdowns",
+      "scope": "2026 regular season",
+      "what_we_found": "14",
+      "reason": "kept, but the sources disagreed: nflverse said 12, Sleeper said 14; using Sleeper's number"
+    },
+    {
+      "subject": "Joe Burrow",
+      "stat": "passing touchdowns",
+      "scope": "2026 regular season",
+      "what_we_found": "23",
+      "reason": "kept, but the sources disagreed: nflverse said 20, Sleeper said 23; using Sleeper's number"
+    }
+  ],
+  "lines": [
+    {
+      "line": 8,
+      "speaker": "lonnie",
+      "said": "Here's mine, and nobody's said it yet. Joe Burrow. Twenty-three touchdown passes, and he's seventh in EPA, ahead of Mahomes. Cincinnati hands him the whole offense, and to my eye the ball comes out of his hands quick. That's a quarterback the offense runs through.",
+      "problem": "uses the stock phrase 'to my eye' after the segment's limit of 2; say it fresh, in other words, or drop it",
+      "action": "rewritten",
+      "now": "Here's mine, and nobody's said it yet. Joe Burrow. Twenty-three touchdown passes, and he's seventh in EPA, ahead of Mahomes. Cincinnati hands him the whole offense, and the ball comes out of his hands quick. That's a quarterback the offense runs through."
+    },
+    {
+      "line": 12,
+      "speaker": "lonnie",
+      "said": "Okay, but you said right now. Mahomes sits behind Burrow and Allen and Lamar in EPA this season. What's he doing this year that says best?",
+      "problem": "Royce said 'right now': Royce never said 'right now'. The caller asked it and Deacon repeated it, and Royce framed best as who you hand January to. (contradicted)",
+      "action": "rewritten",
+      "now": "Okay, but the caller asked who's best right now. Mahomes sits behind Burrow and Allen and Lamar in EPA this season. What's he doing this year that says best?"
+    },
+    {
+      "line": 16,
+      "speaker": "deacon",
+      "said": "And Allen's out-pointing both of them per dropback. Different metric, same answer. Folks at home, that's the case.",
+      "problem": "uses the stock phrase \"folks at home, that's the case\" after the segment's limit of 2; say it fresh, in other words, or drop it",
+      "action": "rewritten",
+      "now": "And Allen's out-pointing both of them per dropback. Different metric, same answer. That's the case."
+    }
+  ],
+  "close": [
+    {
+      "line": 22,
+      "problem": "The caller is named Priya: No fact or script line establishes the caller's name. (unsupported)"
+    }
+  ]
+}
