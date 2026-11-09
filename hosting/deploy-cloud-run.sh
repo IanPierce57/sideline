@@ -36,18 +36,28 @@ take() {            # one line of the pasted .env: NAME=value
     GNEWS_API_KEY) GNEWS="$value" ;;
   esac
 }
-echo "YOUR KEYS: click on the TextEdit window with your .env file, press Cmd+A, then Cmd+C."
-echo "Then click back here in this black box, press Cmd+V, then Return."
-echo "(The keys won't show here. That's normal.)"
-trap 'stty echo </dev/tty 2>/dev/null' EXIT
-stty -echo </dev/tty
-line=""
-IFS= read -r line </dev/tty || true                                # waits for the paste
-take "$line"
-while IFS= read -r -t 2 line </dev/tty; do take "$line"; done      # the rest of the paste
-[ -n "$line" ] && take "$line"                                     # a last line with no Return
-stty echo </dev/tty
-echo
+# Once they work, the keys and the access code are saved privately in this Cloud Shell
+# (only your Google account can see it), so running this again doesn't ask again.
+SAVED="$HOME/.sideline-keys"
+CODE=""
+if [ -f "$SAVED" ]; then
+  # shellcheck disable=SC1090
+  . "$SAVED"
+  echo "Using the keys you pasted before (saved privately in your Cloud Shell)."
+else
+  echo "YOUR KEYS: click on the TextEdit window with your .env file, press Cmd+A, then Cmd+C."
+  echo "Then click back here in this black box, press Cmd+V, then Return."
+  echo "(The keys won't show here. That's normal.)"
+  trap 'stty echo </dev/tty 2>/dev/null' EXIT
+  stty -echo </dev/tty
+  line=""
+  IFS= read -r line </dev/tty || true                                # waits for the paste
+  take "$line"
+  while IFS= read -r -t 2 line </dev/tty; do take "$line"; done      # the rest of the paste
+  [ -n "$line" ] && take "$line"                                     # a last line with no Return
+  stty echo </dev/tty
+  echo
+fi
 
 if [[ "$ANTHROPIC" != sk-ant-* ]]; then
   echo "No Claude key found in what you pasted (the line that starts ANTHROPIC_API_KEY=sk-ant-)."
@@ -72,9 +82,12 @@ else
 fi
 [ -n "$GNEWS" ] && echo "GNews key: found" || echo "GNews key: not found, so the news ticker shows a placeholder"
 
-# The access code for your professor: made up here, shown at the end
-WORDS=(tiger falcon comet rocket bison eagle maple harbor summit canyon river thunder)
-CODE="${WORDS[RANDOM % ${#WORDS[@]}]}-${WORDS[RANDOM % ${#WORDS[@]}]}-$((RANDOM % 900 + 100))"
+# The access code for your professor: made up the first time, shown at the end
+if [ -z "$CODE" ]; then
+  WORDS=(tiger falcon comet rocket bison eagle maple harbor summit canyon river thunder)
+  CODE="${WORDS[RANDOM % ${#WORDS[@]}]}-${WORDS[RANDOM % ${#WORDS[@]}]}-$((RANDOM % 900 + 100))"
+fi
+(umask 077 && printf 'ANTHROPIC=%q\nGOOGLE=%q\nGNEWS=%q\nCODE=%q\n' "$ANTHROPIC" "$GOOGLE" "$GNEWS" "$CODE" > "$SAVED")
 
 VARS="^@^ANTHROPIC_API_KEY=$ANTHROPIC@SIDELINE_ACCESS_CODE=$CODE"
 [ -n "$GOOGLE" ] && VARS="$VARS@GOOGLE_TTS_KEY=$GOOGLE"
