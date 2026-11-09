@@ -38,6 +38,6 @@ To change the limits, add a Space variable named `SIDELINE_DAILY_LIMIT` or `SIDE
 
 - **Free Spaces sleep** after 48 hours with no visitors. Opening the link wakes it up, which takes a minute or two.
 - **The first segment after a restart is slower** (about 3 minutes instead of 2) while it downloads the sports data.
-- **New code from GitHub:** the Space picks it up the next time it builds. To force that, choose **Factory rebuild** from the menu next to the Space's status.
+- **New code from GitHub:** choose **Factory rebuild** from the menu next to the Space's status. That builds it from scratch with the latest code from this repo.
 - **Segments made online stay online.** They're saved inside the Space (the newest 10) and are lost when it restarts. The 10 saved segments in this repo always come back.
 - **Turning it off after grading:** **Settings → Pause Space**, and delete the API key you made for it in the Anthropic console.

@@ -1,6 +1,6 @@
 # Sideline on Hugging Face Spaces (a free Docker Space). Copy this file into the Space as
-# "Dockerfile". It pulls the code from GitHub every time the Space builds, so the Space
-# never needs its own copy of the code. Setup steps: hosting/README.md.
+# "Dockerfile". It pulls the code from GitHub when the Space builds, so the Space never
+# needs its own copy of the code; "Factory rebuild" picks up new commits. Steps: hosting/README.md.
 FROM python:3.11-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends git tzdata ca-certificates \
@@ -12,8 +12,6 @@ USER user
 ENV HOME=/home/user PATH=/home/user/.local/bin:$PATH
 WORKDIR /home/user
 
-# The latest commit on GitHub. When it changes, everything below is rebuilt with the new code.
-ADD https://api.github.com/repos/IanPierce57/sideline/commits/main /tmp/latest-commit.json
 RUN git clone --depth 1 https://github.com/IanPierce57/sideline.git app
 WORKDIR /home/user/app
 RUN pip install --no-cache-dir --user -r requirements.txt
