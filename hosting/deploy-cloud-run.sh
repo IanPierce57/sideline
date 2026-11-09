@@ -4,8 +4,8 @@
 #
 #   git clone https://github.com/IanPierce57/sideline.git && sideline/hosting/deploy-cloud-run.sh
 #
-# It asks for your keys without showing them, turns on Cloud Run, builds the server from
-# this repo, and prints the link. Run it again to update the code or change a key.
+# You paste your .env file once (it never shows); it checks the keys, makes up an access code,
+# turns on Cloud Run, builds the server from this repo, and prints the link. Run it again to update.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 trap 'echo; echo "Something went wrong above. Copy the last few lines and send them to Claude."' ERR
@@ -20,25 +20,61 @@ REGION="us-east1"
 echo "Putting Sideline online in project \"$PROJECT\"."
 echo
 
-secret() {          # read a key without showing it on screen
-  local value
-  read -rsp "$1: " value </dev/tty
-  echo >&2
-  printf '%s' "$value"
+# The keys: paste the whole .env file once. Nothing you paste shows on screen.
+ANTHROPIC="" GOOGLE="" GNEWS=""
+take() {            # one line of the pasted .env: NAME=value
+  local line="${1%$'\r'}" name value
+  line="${line#export }"
+  name="${line%%=*}"
+  value="${line#*=}"
+  value="${value//\"/}"
+  value="${value//\'/}"
+  value="${value//[[:space:]]/}"
+  case "$name" in
+    ANTHROPIC_API_KEY) ANTHROPIC="$value" ;;
+    GOOGLE_TTS_KEY) GOOGLE="$value" ;;
+    GNEWS_API_KEY) GNEWS="$value" ;;
+  esac
 }
+echo "YOUR KEYS: click on the TextEdit window with your .env file, press Cmd+A, then Cmd+C."
+echo "Then click back here in this black box, press Cmd+V, then Return."
+echo "(The keys won't show here. That's normal.)"
+trap 'stty echo </dev/tty 2>/dev/null' EXIT
+stty -echo </dev/tty
+line=""
+IFS= read -r line </dev/tty || true                                # waits for the paste
+take "$line"
+while IFS= read -r -t 2 line </dev/tty; do take "$line"; done      # the rest of the paste
+[ -n "$line" ] && take "$line"                                     # a last line with no Return
+stty echo </dev/tty
+echo
 
-ANTHROPIC="$(secret "Claude (Anthropic) API key, required. Paste it and press Return (it won't show)")"
 if [[ "$ANTHROPIC" != sk-ant-* ]]; then
-  echo "That doesn't look like a Claude key (they start with sk-ant-). Run this again."
+  echo "No Claude key found in what you pasted (the line that starts ANTHROPIC_API_KEY=sk-ant-)."
+  echo "Run this again:  cd ~/sideline && hosting/deploy-cloud-run.sh"
   exit 1
 fi
-GOOGLE="$(secret "Google Text-to-Speech key, for the voices. Paste it, or just press Return to skip")"
-GNEWS="$(secret "GNews key, for the news ticker. Paste it, or just press Return to skip")"
-read -rp "Make up an access code for your professor (letters, numbers, and dashes): " CODE </dev/tty
-if ! [[ "$CODE" =~ ^[A-Za-z0-9-]{4,40}$ ]]; then
-  echo "Use 4 to 40 letters, numbers, or dashes. Run this again."
+if [ "$(curl -s -o /dev/null -w '%{http_code}' https://api.anthropic.com/v1/models \
+      -H "x-api-key: $ANTHROPIC" -H "anthropic-version: 2023-06-01")" != "200" ]; then
+  echo "Claude didn't accept that key. Check it at console.anthropic.com, then run this again."
   exit 1
 fi
+echo "Claude key: works"
+if [ -n "$GOOGLE" ]; then
+  if [ "$(curl -s -o /dev/null -w '%{http_code}' "https://texttospeech.googleapis.com/v1/voices?languageCode=en-US&key=$GOOGLE")" = "200" ]; then
+    echo "Google voices key: works"
+  else
+    echo "Google voices key: didn't work, so new segments will have subtitles only"
+    GOOGLE=""
+  fi
+else
+  echo "Google voices key: not found, so new segments will have subtitles only"
+fi
+[ -n "$GNEWS" ] && echo "GNews key: found" || echo "GNews key: not found, so the news ticker shows a placeholder"
+
+# The access code for your professor: made up here, shown at the end
+WORDS=(tiger falcon comet rocket bison eagle maple harbor summit canyon river thunder)
+CODE="${WORDS[RANDOM % ${#WORDS[@]}]}-${WORDS[RANDOM % ${#WORDS[@]}]}-$((RANDOM % 900 + 100))"
 
 VARS="^@^ANTHROPIC_API_KEY=$ANTHROPIC@SIDELINE_ACCESS_CODE=$CODE"
 [ -n "$GOOGLE" ] && VARS="$VARS@GOOGLE_TTS_KEY=$GOOGLE"
