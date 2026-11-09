@@ -6,7 +6,7 @@ Ian Pierce · Final project · November 2026
 
 ## Try it
 
-**Live version:** the link will be added here once it's online.
+**Live version: [sideline-380036639629.us-east1.run.app](https://sideline-380036639629.us-east1.run.app)**
 
 - To make a new segment, type the **access code** (it's in my submission) in the box next to the question, then type a question and click **Ask the desk**. It takes about 2 minutes, and you're "on hold" with the hosts getting ready while it's made.
 - Without the code you can still watch saved segments: click **Last segment** under the TV.
